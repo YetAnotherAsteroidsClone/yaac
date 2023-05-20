@@ -1,48 +1,38 @@
 package com.yaac.model;
 
 class GameObject{
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
+    protected int rotation = 0;
+    protected int radius = 0;
 
-    private int vx;
-    private int vy;
-
-    protected GameObject(int x, int y, int vx, int vy){
+    protected GameObject(int x, int y){
         this.x = x;
         this.y = y;
-        this.vx = vx;
-        this.vy = vy;
     }
 
     public int getX() {
         return x;
     }
-
     public void setX(int x) {
         this.x = x;
     }
-
     public int getY() {
         return y;
     }
-
     public void setY(int y) {
         this.y = y;
     }
-
-    public int getVx() {
-        return vx;
+    public int getRotation() {
+        return rotation;
     }
-
-    public void setVx(int vx) {
-        this.vx = vx;
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
     }
-
-    public int getVy() {
-        return vy;
+    public int getRadius() {
+        return radius;
     }
-
-    public void setVy(int vy) {
-        this.vy = vy;
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 }

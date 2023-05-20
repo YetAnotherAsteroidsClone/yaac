@@ -1,28 +1,34 @@
 package com.yaac.model;
 
-public class SpaceShip extends GameObject{
-    private int acceleration;
-    private int rotation;
+public class SpaceShip extends MovableObject{
+    private int accelerationCoefficient = 1;
+    private int rotationCoefficient = 1;
 
-    public SpaceShip(int x, int y, int vx, int vy, int acceleration, int rotation){
-        super(x, y, vx, vy);
-        this.acceleration = acceleration;
-        this.rotation = rotation;
+    boolean isShooting = false;
+    boolean isAccelerating = false;
+
+    public SpaceShip(int x, int y){
+        super(x, y);
     }
 
-    public void setAcceleration(int acceleration) {
-        this.acceleration = acceleration;
+    public void setAccelerationCoefficient(int accelerationCoefficient) {
+        this.accelerationCoefficient = accelerationCoefficient;
     }
 
-    public void move(){
-        setX(getX() + getVx());
-        setY(getY() + getVy());
+    public void setRotationCoefficient(int rotationCoefficient) {
+        this.rotationCoefficient = rotationCoefficient;
     }
 
     public void accelerate(){
-        int accX = (int) (acceleration * Math.cos(rotation));
-        int accY = (int) (acceleration * Math.sin(rotation));
+        int accX = (int) (accelerationCoefficient * Math.cos(rotation));
+        int accY = (int) (accelerationCoefficient * Math.sin(rotation));
         setVx(getVx() + accX);
         setVy(getVy() + accY);
+    }
+    public void rotateLeft(){
+        rotation -= rotationCoefficient;
+    }
+    public void rotateRight(){
+        rotation += rotationCoefficient;
     }
 }
