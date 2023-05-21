@@ -1,11 +1,22 @@
 package com.yaac.model;
 
-class GameObject{
+/**
+ *  Classe astratta per la gestione di tutti i componenti <br>
+ *  Implementa posizione, rotazione e raggio (per la collider detection)
+ */
+
+abstract class GameObject{
     protected int x;
     protected int y;
     protected int rotation = 0;
     protected int radius = 0;
 
+
+    /**
+     *  Costruttore della classe GameObject
+     *  @param x posizione x
+     *  @param y posizione y
+     */
     protected GameObject(int x, int y){
         this.x = x;
         this.y = y;

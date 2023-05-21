@@ -1,14 +1,22 @@
 package com.yaac;
 
 public class Settings {
-    private Settings instance = null;
+    private static Settings instance = null;
+    public int width = 800;
+    public int height = 600;
+    public String resourcePath = "/main/resources/";
 
     private Settings(){}
 
-    public Settings getInstance(){
+    public static Settings getInstance(){
         if(instance == null){
             instance = new Settings();
         }
         return instance;
+    }
+
+    public void setDimensions(int width, int height){
+        this.width = width;
+        this.height = height;
     }
 }
