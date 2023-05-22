@@ -3,7 +3,7 @@ package com.yaac.model.GameComponent;
  *  Classe astratta per la gestione di tutti i componenti che si muovono nel gioco <br>
  *  Implementa la classe GameObject e aggiunge i metodi per il movimento
  */
-public class MovableObject extends GameObject{
+public abstract class MovableObject extends GameObject{
     private int vx = 0;
     private int vy = 0;
     boolean isMoving = false;

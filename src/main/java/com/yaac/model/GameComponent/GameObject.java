@@ -5,7 +5,7 @@ package com.yaac.model.GameComponent;
  *  Implementa posizione, rotazione e raggio (per la collider detection)
  */
 
-abstract class GameObject{
+public abstract class GameObject{
     protected int x;
     protected int y;
     protected int rotation = 0;
