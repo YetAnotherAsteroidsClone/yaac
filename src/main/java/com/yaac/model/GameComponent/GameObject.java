@@ -1,4 +1,4 @@
-package com.yaac.model;
+package com.yaac.model.GameComponent;
 
 /**
  *  Classe astratta per la gestione di tutti i componenti <br>

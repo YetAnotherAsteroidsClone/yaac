@@ -1,4 +1,4 @@
-package com.yaac.model;
+package com.yaac.model.GameComponent;
 
 /**
  * Classe dedicata alla gestione dell'astronave
