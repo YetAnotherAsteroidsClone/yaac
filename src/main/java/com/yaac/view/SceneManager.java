@@ -12,6 +12,7 @@ public class SceneManager {
     private static SceneManager instance = new SceneManager();
 
     private JFrame mainFrame;
+    private MainMenu mainMenu;
 
     public static SceneManager getInstance() {return instance;}
 
@@ -20,6 +21,8 @@ public class SceneManager {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.getInstance().width, Settings.getInstance().height);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        mainMenu = new MainMenu();
     }
 
     public void openMainFrame(){
@@ -32,7 +35,7 @@ public class SceneManager {
     }
 
     public void loadMainMenu(){
-        //TODO
+        loadScene(mainMenu);
     }
 
     public void loadSettings(){
