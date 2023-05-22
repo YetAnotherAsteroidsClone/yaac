@@ -2,6 +2,7 @@ package com.yaac;
 
 public class Settings {
     private static Settings instance = null;
+    public static final String TITLE = "YAAC - Yet Another Asteroids Clone";
     public int width = 800;
     public int height = 600;
     public String resourcePath = "/main/resources/";
