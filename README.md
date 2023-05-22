@@ -11,5 +11,7 @@
     - [ ] Test
 * Giovanni:
 * Francesco:
+    - [ ] Main menu
+    - [ ] Credits page
 * Davide:
 
