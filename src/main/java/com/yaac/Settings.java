@@ -1,6 +1,11 @@
 package com.yaac;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Settings {
+    public static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
+    public static final Level logLevel = Level.INFO;
     private static Settings instance = null;
     public static final String TITLE = "YAAC - Yet Another Asteroids Clone";
     public static int width = 800;
