@@ -17,9 +17,8 @@ public class SceneManager {
     public static SceneManager getInstance() {return instance;}
 
     private SceneManager() {
-        Settings.getInstance();
         mainFrame = new JFrame(Settings.TITLE);
-        mainFrame.setSize(Settings.getInstance().width, Settings.getInstance().height);
+        mainFrame.setSize(Settings.width, Settings.height);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainMenu = new MainMenu();

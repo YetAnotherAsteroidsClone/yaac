@@ -28,7 +28,7 @@ public class ObjectAnimation {
      */
     public ObjectAnimation(String style, String object, String action, int numberOfElements) {
         try {
-            String path = Settings.getInstance().resourcePath + style + "/" + object + "/";
+            String path = Settings.resourcePath + style + "/" + object + "/";
             for (int i = 1; i <= numberOfElements; i++) {
                 Image img = ImageIO.read(getClass().getResourceAsStream(path + action + i + ".png"));
                 images.add(img);
