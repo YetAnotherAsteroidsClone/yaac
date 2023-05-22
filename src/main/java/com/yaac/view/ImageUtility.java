@@ -3,6 +3,7 @@ package com.yaac.view;
 import com.yaac.Settings;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +13,12 @@ import java.util.ArrayList;
  * Classe delle utility per il caricamento e la manipolazione delle immagini
  */
 public class ImageUtility {
-    public static BufferedImage loadImage(String source) throws IOException{
-        return ImageIO.read(new File(Settings.resourcePath + source));
+    public static BufferedImage loadImage(String source){
+        try {
+            return ImageIO.read(new File(Settings.resourcePath + source));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -25,16 +30,12 @@ public class ImageUtility {
      * @param height altezza di un frame
      * @return un arrayList di immagini (animazione)
      */
-    public static ArrayList<BufferedImage> loadAnimationFrames(String obj, String name, int nFrames, int width, int height){
+    public static ArrayList<Image> loadAnimationFrames(String obj, String name, int nFrames, int width, int height){
         String source = "GameSprite/" + obj + "/" + name + ".png";
-        BufferedImage animationFile = null;
-        try {
-            animationFile = loadImage(source);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ArrayList<BufferedImage> frames = new ArrayList<>();
+        BufferedImage animationFile = loadImage(source);
+        ArrayList<Image> frames = new ArrayList<>();
         for (int i = 0; i < nFrames; i++) {
+
             frames.add(animationFile.getSubimage(i * width, 0, width, height));
         }
         return frames;
@@ -59,4 +60,19 @@ public class ImageUtility {
         return result;
     }
 
+    /**
+     * Metodo per scalare un'immagine
+     * @param image immagine da scalare
+     * @param width larghezza
+     * @param height altezza
+     * @return l'immagine scalata
+     */
+    public static BufferedImage scaleImage(BufferedImage image, int width, int height) {
+        Image tmp = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 }

@@ -21,4 +21,7 @@ public class ViewSettings {
 
     public static int SpaceShipVisualEffectWidth = 64;
     public static int SpaceShipVisualEffectHeight = 64;
+
+    public static int GameWidth = 1200;
+    public static int GameHeight = 800;
 }
