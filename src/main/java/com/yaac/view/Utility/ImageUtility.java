@@ -1,5 +1,6 @@
 package com.yaac.view.Utility;
 
+import com.yaac.Main;
 import com.yaac.Settings;
 
 import javax.imageio.ImageIO;
@@ -8,14 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Classe delle utility per il caricamento e la manipolazione delle immagini
  */
 public class ImageUtility {
     public static BufferedImage loadImage(String source){
-        try {
-            return ImageIO.read(new File(Settings.resourcePath + source));
+        try {//Main.class.getResource() punta alla cartella resources (è necessario specificare la radice "/")
+            return ImageIO.read(Objects.requireNonNull(Main.class.getResource(source)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
