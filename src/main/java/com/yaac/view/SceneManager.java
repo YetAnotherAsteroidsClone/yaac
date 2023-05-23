@@ -18,7 +18,7 @@ public class SceneManager {
 
     private SceneManager() {
         mainFrame = new JFrame(Settings.TITLE);
-        mainFrame.setSize(ViewSettings.GameWidth, ViewSettings.GameHeight);
+        mainFrame.setSize(Settings.width, Settings.height);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainMenu = new MainMenu();

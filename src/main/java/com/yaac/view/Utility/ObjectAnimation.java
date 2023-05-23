@@ -1,4 +1,4 @@
-package com.yaac.view;
+package com.yaac.view.Utility;
 
 import com.yaac.Settings;
 
