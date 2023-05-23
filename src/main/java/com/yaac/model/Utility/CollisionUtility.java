@@ -1,4 +1,4 @@
-package com.yaac.model;
+package com.yaac.model.Utility;
 
 import com.yaac.model.GameComponent.GameObject;
 
