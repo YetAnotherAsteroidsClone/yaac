@@ -10,7 +10,9 @@ public class Game {
     GameComponentsManager powerUps;
     SpaceShip spaceShip;
 
-    private Game() {}
+    private Game() {
+        this.spaceShip = new SpaceShip(0,0);
+    }
 
     private long tick = 0;
     private int score = 0;
@@ -49,5 +51,17 @@ public class Game {
 
     public void resolveCollisions() {
         //TODO
+    }
+
+    public SpaceShip getSpaceShip(){
+        return spaceShip;
+    }
+
+    public void rotateShipRight(){
+        spaceShip.rotateRight();
+    }
+
+    public void rotateShipLeft(){
+        spaceShip.rotateLeft();
     }
 }

@@ -7,14 +7,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class GameLoop {
-    private GameController gameController;
+    private final GameController gameController;
     private ScheduledExecutorService executor;
 
     public GameLoop(GameController gameController){
         this.gameController = gameController;
     }
 
-    void run() {
+    public void run() {
         if(executor != null)
             return;
         executor = Executors.newSingleThreadScheduledExecutor();

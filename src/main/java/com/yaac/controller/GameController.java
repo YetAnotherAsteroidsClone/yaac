@@ -19,13 +19,14 @@ public class GameController extends KeyAdapter {
         switch (e.getKeyCode()){
             case KeyEvent.VK_UP -> System.out.println("UP");
             case KeyEvent.VK_DOWN -> System.out.println("DOWN");
-            case KeyEvent.VK_LEFT -> System.out.println("LEFT");
-            case KeyEvent.VK_RIGHT -> System.out.println("RIGHT");
+            case KeyEvent.VK_LEFT -> Game.getInstance().rotateShipLeft();
+            case KeyEvent.VK_RIGHT -> Game.getInstance().rotateShipRight();
             case KeyEvent.VK_SPACE -> System.out.println("SPACE");
         }
     }
 
     public void update(){
+        System.out.println("test");
         Game.getInstance().update();
         gamePanel.update();
     }

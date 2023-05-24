@@ -1,5 +1,6 @@
 package com.yaac.view;
 
+import com.yaac.GameLoop;
 import com.yaac.Settings;
 import com.yaac.controller.GameController;
 
@@ -49,9 +50,12 @@ public class SceneManager {
     }
 
     public void loadGame(){
-        gamePanel = new GamePanel();
-        gamePanel.addKeyListener(new GameController(gamePanel));
+        GameController controller = new GameController(gamePanel);
+        gamePanel = new GamePanel(controller);
+        GameLoop gameLoop = new GameLoop(controller);
         loadScene(gamePanel);
+        gamePanel.requestFocus();
+        gameLoop.run();
     }
 
     public void loadShop(){
