@@ -1,6 +1,7 @@
 package com.yaac.view;
 
 import com.yaac.Settings;
+import com.yaac.controller.GameController;
 
 import javax.swing.*;
 
@@ -13,6 +14,8 @@ public class SceneManager {
 
     private JFrame mainFrame;
     private MainMenu mainMenu;
+
+    private GamePanel gamePanel;
 
     public static SceneManager getInstance() {return instance;}
 
@@ -46,7 +49,9 @@ public class SceneManager {
     }
 
     public void loadGame(){
-        //TODO
+        gamePanel = new GamePanel();
+        gamePanel.addKeyListener(new GameController(gamePanel));
+        loadScene(gamePanel);
     }
 
     public void loadShop(){

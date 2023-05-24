@@ -4,7 +4,7 @@ import com.yaac.model.GameComponent.SpaceShip;
 import com.yaac.model.Utility.GameComponentsManager;
 
 public class Game {
-    Game instance = null;
+    static Game instance = null;
     GameComponentsManager asteroids;
     GameComponentsManager bullets;
     GameComponentsManager powerUps;
@@ -16,7 +16,7 @@ public class Game {
     private int score = 0;
     private int lives = 3;
 
-    public Game getInstance() {
+    public static Game getInstance() {
         if(instance == null) {
             instance = new Game();
         }
