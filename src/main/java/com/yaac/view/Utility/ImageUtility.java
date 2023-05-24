@@ -47,17 +47,21 @@ public class ImageUtility {
      * @param angle angolo di rotazione
      * @return l'immagine ruotata
      */
-    public static BufferedImage rotateImage(BufferedImage image, double angle){
-        double sin = Math.abs(Math.sin(Math.toRadians(angle)));
-        double cos = Math.abs(Math.cos(Math.toRadians(angle)));
-        int w = image.getWidth();
-        int h = image.getHeight();
-        int newW = (int)Math.floor(w*cos+h*sin);
-        int newH = (int)Math.floor(h*cos+w*sin);
-        BufferedImage result;
-        result = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-        result.getGraphics().drawImage(image, (newW-w)/2, (newH-h)/2, null);
-        return result;
+    public static BufferedImage rotateImage(BufferedImage image, double angle) {
+        double sin = Math.abs(Math.sin(angle));
+        double cos = Math.abs(Math.cos(angle));
+        int originalWidth = image.getWidth();
+        int originalHeight = image.getHeight();
+        int newWidth = (int) Math.floor(originalWidth * cos + originalHeight * sin);
+        int newHeight = (int) Math.floor(originalHeight * cos + originalWidth * sin);
+        BufferedImage rotatedBI = new BufferedImage(newWidth, newHeight, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = rotatedBI.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.translate((newWidth - originalWidth) / 2, (newHeight - originalHeight) / 2);
+        g2d.rotate(angle, originalWidth / 2, originalHeight / 2);
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+        return rotatedBI;
     }
 
     /**
