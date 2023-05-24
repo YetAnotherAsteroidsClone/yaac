@@ -26,7 +26,6 @@ public class GameController extends KeyAdapter {
     }
 
     public void update(){
-        System.out.println("test");
         Game.getInstance().update();
         gamePanel.update();
     }

@@ -50,8 +50,9 @@ public class SceneManager {
     }
 
     public void loadGame(){
+        gamePanel = new GamePanel();
         GameController controller = new GameController(gamePanel);
-        gamePanel = new GamePanel(controller);
+        gamePanel.addKeyListener(controller);
         GameLoop gameLoop = new GameLoop(controller);
         loadScene(gamePanel);
         gamePanel.requestFocus();

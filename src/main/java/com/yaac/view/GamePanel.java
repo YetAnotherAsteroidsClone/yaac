@@ -10,10 +10,6 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel {
 
-    public GamePanel(GameController controller){
-        this.addKeyListener(controller);
-    }
-
     private BufferedImage spaceship = ImageUtility.loadImage("/GameSprite/Body1.png");
 
     public void paintComponent(Graphics g) {
