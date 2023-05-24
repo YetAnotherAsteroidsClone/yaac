@@ -32,6 +32,20 @@ public class SpaceShip extends MovableObject{
         super(x, y, vx, vy);
     }
 
+
+    @Override
+    public void update() {
+        move();
+    }
+
+    /**
+     * Muove l'astronave in base alla velocità
+     */
+    public void move() {
+        x = x + vx;
+        y = y + vy;
+    }
+
     /**
      * Setter del coefficiente di accelerazione <br>
      * Il coefficiente di accelerazione è un valore che indica quanto rapidamente aumenta la velocità
@@ -60,8 +74,8 @@ public class SpaceShip extends MovableObject{
     public void accelerate(){
         int accX = (int) (accelerationCoefficient * Math.cos(rotation));
         int accY = (int) (accelerationCoefficient * Math.sin(rotation));
-        setVx(getVx() + accX);
-        setVy(getVy() + accY);
+        vx += accX;
+        vy += accY;
     }
 
     /**

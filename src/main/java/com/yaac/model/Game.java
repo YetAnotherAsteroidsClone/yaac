@@ -31,7 +31,6 @@ public class Game {
         return lives;
     }
 
-
     public void update(){
         tick++;
     }
