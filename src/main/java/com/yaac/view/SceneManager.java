@@ -23,6 +23,7 @@ public class SceneManager {
     private SceneManager() {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
+        //mainFrame.setUndecorated(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainMenu = new MainMenu();
@@ -60,6 +61,8 @@ public class SceneManager {
     }
 
     public void loadShop(){
-        //TODO
+        Shop shop = new Shop();
+        loadScene(shop);
+        shop.requestFocus();
     }
 }
