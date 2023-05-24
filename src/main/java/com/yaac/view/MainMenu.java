@@ -13,7 +13,7 @@ public class MainMenu extends JPanel {
 
     public MainMenu() {
         this.addMouseListener(new MainMenuController());
-        background = ImageUtility.loadImage("/GameSprite/Background.png");
+        background = ImageUtility.loadImage("/Background/StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
 
 

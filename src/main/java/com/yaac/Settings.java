@@ -11,5 +11,7 @@ public class Settings {
     public static int height = 600;
     public static String resourcePath = Main.class.getResource("/").getPath();
     public static String gameSpritePath = resourcePath +"/GameSprite/";
-    public static String gameSoundPath = resourcePath +"/GameSound/";
+    public static String menuSpritePath = resourcePath +"/MenuSprite/";
+    public static String gameSoundPath = resourcePath +"/Sounds/";
+    public static String backgroundsPath = resourcePath + "/Background/";
 }
