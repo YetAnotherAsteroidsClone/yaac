@@ -12,7 +12,7 @@ public class Shop extends JPanel {
 
     public Shop(){
         this.addMouseListener(new MainMenuController());
-        background = ImageUtility.loadImage("/GameSprite/Background.png");
+        background = ImageUtility.loadImage(Settings.backgroundsPath + "StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
     }
 
