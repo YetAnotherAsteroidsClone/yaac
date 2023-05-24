@@ -46,4 +46,13 @@ public class Asteroid extends MovableObject{
         this.life -= damage;
         return this.life <= 0;
     }
+
+    public void move() {
+        x = x + vx;
+        y = y + vy;
+    }
+
+    public void update() {
+        move();
+    }
 }

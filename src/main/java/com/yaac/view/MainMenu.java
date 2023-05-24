@@ -4,8 +4,8 @@ import com.yaac.Settings;
 import com.yaac.controller.MainMenuController;
 import com.yaac.view.Utility.ImageUtility;
 
-import javax.swing.JPanel;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class MainMenu extends JPanel {

@@ -1,12 +1,10 @@
 package com.yaac.view.Utility;
 
 import com.yaac.Main;
-import com.yaac.Settings;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -30,7 +28,7 @@ public class ImageUtility {
      * @param nFrames numero di frame dell'animazione
      * @param width larghezza di un frame
      * @param height altezza di un frame
-     * @return un arrayList di immagini (animazione)
+     * @return un arrayList d'immagini (animazione)
      */
     public static ArrayList<Image> loadAnimationFrames(String obj, String name, int nFrames, int width, int height){
         String source = "GameSprite/" + obj + "/" + name + ".png";
@@ -50,15 +48,15 @@ public class ImageUtility {
      * @return l'immagine ruotata
      */
     public static BufferedImage rotateImage(BufferedImage image, double angle){
-        double sin = Math.abs(Math.sin(Math.toRadians(angle))),
-                cos = Math.abs(Math.cos(Math.toRadians(angle)));
+        double sin = Math.abs(Math.sin(Math.toRadians(angle)));
+        double cos = Math.abs(Math.cos(Math.toRadians(angle)));
         int w = image.getWidth();
         int h = image.getHeight();
-        int neww = (int)Math.floor(w*cos+h*sin);
-        int newh = (int)Math.floor(h*cos+w*sin);
-        BufferedImage result = new BufferedImage(neww, newh, BufferedImage.TYPE_INT_ARGB);
-        result = new BufferedImage(neww, newh, BufferedImage.TYPE_INT_ARGB);
-        result.getGraphics().drawImage(image, (neww-w)/2, (newh-h)/2, null);
+        int newW = (int)Math.floor(w*cos+h*sin);
+        int newH = (int)Math.floor(h*cos+w*sin);
+        BufferedImage result;
+        result = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+        result.getGraphics().drawImage(image, (newW-w)/2, (newH-h)/2, null);
         return result;
     }
 

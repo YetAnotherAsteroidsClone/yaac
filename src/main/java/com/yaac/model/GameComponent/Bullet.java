@@ -5,7 +5,7 @@ package com.yaac.model.GameComponent;
  * Estende la classe MovableObject
  * Implementa la gestione del danno
  */
-public class Projectile extends MovableObject{
+public class Bullet extends MovableObject{
     private int damage = 1;
 
     /**
@@ -16,7 +16,7 @@ public class Projectile extends MovableObject{
      * @param vy velocità iniziale su asse y
      * @param damage danno della projectile
      */
-    public Projectile(int x, int y, int vx, int vy, int damage){
+    public Bullet(int x, int y, int vx, int vy, int damage){
         super(x, y, vx, vy);
         this.damage = damage;
     }
@@ -35,5 +35,15 @@ public class Projectile extends MovableObject{
      */
     public int getDamage() {
         return damage;
+    }
+
+    public void move() {
+        x = x + vx;
+        y = y + vy;
+    }
+
+    @Override
+    public void update() {
+        move();
     }
 }
