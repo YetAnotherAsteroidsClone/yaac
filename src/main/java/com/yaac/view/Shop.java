@@ -43,15 +43,20 @@ public class Shop extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
-        g.drawImage((Image) spaceShipImages[0],320,0,null);
         g.drawImage((Image) spaceShipImages[1],420,190,null);
+        g.drawImage((Image) spaceShipImages[0],320,0,null);
         g.setColor(Color.WHITE);
         g.drawLine(200,350,800,350);
-        g.drawRect(40,460,40,40);
-        g.drawRect(90,470,200,30);
-        g.drawRect(380,460,40,40);
-        g.drawRect(430,470,200,30);
-        g.drawRect(720,460,40,40);
-        g.drawRect(770,470,200,30);
+
+        g.drawRect(100,400,40,40);
+        g.drawRect(100,500,40,40);
+        g.drawRect(580,400,40,40);
+        g.drawRect(580,500,40,40);
+
+        g.drawRect(155,410,250,30);
+        g.drawRect(155,510,250,30);
+
+        g.drawRect(635,410,250,30);
+        g.drawRect(635,510,250,30);
     }
 }
