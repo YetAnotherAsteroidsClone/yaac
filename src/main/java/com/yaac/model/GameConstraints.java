@@ -10,10 +10,10 @@ public class GameConstraints {
     private double maxBulletRatio;
     private double maxDurationShield;
 
-    private int lvlMaxSpeed;
-    private int lvlMaxBulletSpeed;
-    private int lvlMaxBulletDamage;
-    private int lvlMaxBulletRatio;
+    private int lvlMaxSpeed=5;
+    private int lvlMaxBulletSpeed=7;
+    private int lvlMaxBulletDamage=4;
+    private int lvlMaxBulletRatio=9;
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed;}

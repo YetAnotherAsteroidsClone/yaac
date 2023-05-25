@@ -42,8 +42,12 @@ public class Shop extends JPanel {
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],0,0);*/
     }
 
-    private void fillPwUpBar(int x, int y, Graphics g, Color c){
-        for(int i=0; i<)
+    private void fillPwUpBar(int x, int y, int levels, Graphics g, Color c){
+        g.setColor(c);
+        for(int i=0; i<levels; i++){
+            g.drawRect(x,y,30,30);
+            x+=30;
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -62,9 +66,15 @@ public class Shop extends JPanel {
 
         //powerup bars
         g.drawRect(155,410,300,30);
+        fillPwUpBar(155,410,gameConstraints.getLvlMaxSpeed(),g, Color.YELLOW);
 
         g.drawRect(155,510,300,30);
+        fillPwUpBar(155,510,gameConstraints.getLvlMaxBulletSpeed(),g, Color.YELLOW);
+
         g.drawRect(635,410,300,30);
+        fillPwUpBar(635,410,gameConstraints.getLvlMaxBulletDamage(),g, Color.YELLOW);
+
         g.drawRect(635,510,300,30);
+        fillPwUpBar(635,510,gameConstraints.getLvlMaxBulletRatio(),g, Color.YELLOW);
     }
 }
