@@ -42,6 +42,10 @@ public class Shop extends JPanel {
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],0,0);*/
     }
 
+    private void fillPwUpBar(int x, int y, Graphics g, Color c){
+        for(int i=0; i<)
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
@@ -50,14 +54,17 @@ public class Shop extends JPanel {
         g.setColor(Color.WHITE);
         g.drawLine(200,350,800,350);
 
+        //powerup images
         g.drawRect(100,400,40,40);
         g.drawRect(100,500,40,40);
         g.drawRect(580,400,40,40);
         g.drawRect(580,500,40,40);
 
-        g.drawRect(155,410,250,30);
-        g.drawRect(155,510,250,30);
-        g.drawRect(635,410,250,30);
-        g.drawRect(635,510,250,30);
+        //powerup bars
+        g.drawRect(155,410,300,30);
+
+        g.drawRect(155,510,300,30);
+        g.drawRect(635,410,300,30);
+        g.drawRect(635,510,300,30);
     }
 }
