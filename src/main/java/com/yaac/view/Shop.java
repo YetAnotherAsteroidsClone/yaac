@@ -1,6 +1,7 @@
 package com.yaac.view;
 import com.yaac.Settings;
 import com.yaac.controller.MainMenuController;
+import com.yaac.model.GameComponent.SpaceShip;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 
@@ -9,10 +10,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Shop extends JPanel {
-    BufferedImage background;/*
+    BufferedImage background;
     BufferedImage[] spaceShipImages = new BufferedImage[3];     //BufferedImage[0] = SPACESHIP; BufferedImage[1] = WEAPON; BufferedImage[2] = ENGINE
-    BufferedImage[] PowerUpImages = new BufferedImage[4];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = SHIELD
-    */
+    //BufferedImage[] PowerUpImages = new BufferedImage[4];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = SHIELD
+
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
     public Shop(){
@@ -20,15 +21,14 @@ public class Shop extends JPanel {
         //bg image
         background = ImageUtility.loadImage("/Background/StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
-        /*
         //spaceship images
         spaceShipImages[0] = ImageUtility.loadImage("/GameSprite/Body1.png");
-        spaceShipImages[0] = ImageUtility.scaleImage(spaceShipImages[0],0,0);
-        spaceShipImages[1] = ImageUtility.loadImage("/GameSprite/");
-        spaceShipImages[1] = ImageUtility.scaleImage(spaceShipImages[1],0,0);
-        spaceShipImages[2] = ImageUtility.loadImage("/GameSprite/");
-        spaceShipImages[2] = ImageUtility.scaleImage(spaceShipImages[2],0,0);
-
+        spaceShipImages[0] = ImageUtility.scaleImage(spaceShipImages[0],350,350);
+        spaceShipImages[1] = ImageUtility.loadImage("/GameSprite/BaseEngine.png");
+        spaceShipImages[1] = ImageUtility.scaleImage(spaceShipImages[1],150,150);
+        spaceShipImages[2] = ImageUtility.loadImage("/GameSprite/Body1.png");
+        spaceShipImages[2] = ImageUtility.scaleImage(spaceShipImages[2],10,10);
+/*
         //PowerUp images
         PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[0] = ImageUtility.scaleImage(PowerUpImages[0],0,0);
@@ -43,6 +43,9 @@ public class Shop extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
-
+        g.drawImage((Image) spaceShipImages[0],320,20,null);
+        g.drawImage((Image) spaceShipImages[1],420,210,null);
+        g.setColor(Color.WHITE);
+        g.drawLine(200,380,800,380);
     }
 }
