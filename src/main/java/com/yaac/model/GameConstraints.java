@@ -3,15 +3,41 @@ package com.yaac.model;
 import com.yaac.Settings;
 
 public class GameConstraints {
-    private int maxSpeed;
-    private int maxAcceleration;
+    private double maxSpeed;
+    private double maxAcceleration;
 
-    private int maxBulletSpeed;
-    private int maxBulletDamage;
-    private int maxBulletRatio;
-    private int maxDurationShield;
+    private double maxBulletSpeed;
+    private double maxBulletDamage;
+    private double maxBulletRatio;
+    private double maxDurationShield;
 
-    public int getMaxSpeed(int x){return maxSpeed;}
+    //GETTERS
+    public double getMaxSpeed() {return maxSpeed;}
+
+    public double getMaxAcceleration() {return maxAcceleration;}
+
+    public double getMaxBulletSpeed() {return maxBulletSpeed;}
+
+    public double getMaxBulletDamage() {return maxBulletDamage;}
+
+    public double getMaxBulletRatio() {return maxBulletRatio;}
+
+    public double getMaxDurationShield() {return maxDurationShield;}
+
+
+    //SETTERS
+    public void setMaxSpeed(double maxSpeed) {this.maxSpeed = maxSpeed;}
+
+    public void setMaxAcceleration(double maxAcceleration) {this.maxAcceleration = maxAcceleration;}
+
+    public void setMaxBulletSpeed(double maxBulletSpeed) {this.maxBulletSpeed = maxBulletSpeed;}
+
+    public void setMaxBulletDamage(double maxBulletDamage) {this.maxBulletDamage = maxBulletDamage;}
+
+    public void setMaxBulletRatio(double maxBulletRatio) {this.maxBulletRatio = maxBulletRatio;}
+
+    public void setMaxDurationShield(double maxDurationShield) {this.maxDurationShield = maxDurationShield;}
+
 
     private GameConstraints(){
         //TODO
