@@ -11,8 +11,8 @@ import java.awt.image.BufferedImage;
 
 public class Shop extends JPanel {
     BufferedImage background;
-    BufferedImage[] spaceShipImages = new BufferedImage[3];     //BufferedImage[0] = SPACESHIP; BufferedImage[1] = WEAPON; BufferedImage[2] = ENGINE
-    //BufferedImage[] PowerUpImages = new BufferedImage[4];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = SHIELD
+    BufferedImage[] spaceShipImages = new BufferedImage[3];     //BufferedImage[0] = SPACESHIP; BufferedImage[1] = ENGINE; BufferedImage[2] = WEAPON
+    //BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
 
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
@@ -37,7 +37,9 @@ public class Shop extends JPanel {
         PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],0,0);
         PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/");
-        PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],0,0);*/
+        PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],0,0);
+        PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/");
+        PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],0,0);*/
     }
 
     public void paintComponent(Graphics g){
@@ -55,7 +57,6 @@ public class Shop extends JPanel {
 
         g.drawRect(155,410,250,30);
         g.drawRect(155,510,250,30);
-
         g.drawRect(635,410,250,30);
         g.drawRect(635,510,250,30);
     }

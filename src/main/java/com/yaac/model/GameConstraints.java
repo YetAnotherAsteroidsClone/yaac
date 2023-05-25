@@ -5,8 +5,13 @@ import com.yaac.Settings;
 public class GameConstraints {
     private int maxSpeed;
     private int maxAcceleration;
+
     private int maxBulletSpeed;
     private int maxBulletDamage;
+    private int maxBulletRatio;
+    private int maxDurationShield;
+
+    public int getMaxSpeed(int x){return maxSpeed;}
 
     private GameConstraints(){
         //TODO
@@ -17,9 +22,4 @@ public class GameConstraints {
             instance = new GameConstraints();
         return instance;
     }
-
-
-    //world dimensions
-    public static int WORLDWIDTH = Settings.width;
-    public static int WORLDHEIGHT = Settings.height;
 }
