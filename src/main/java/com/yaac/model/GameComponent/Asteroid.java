@@ -17,7 +17,7 @@ public class Asteroid extends MovableObject{
      * @param life vita dell'asteroide
      */
     public Asteroid(int x, int y, int vx, int vy, int life) {
-        super(x, y, vx, vy);
+        super(x, y, vx, vy, 0);
         this.life = life;
     }
 
@@ -54,5 +54,13 @@ public class Asteroid extends MovableObject{
 
     public void update() {
         move();
+    }
+
+    /**
+     * Metodo non usato
+     */
+    @Override
+    public boolean toBeDeleted() {
+        return life <= 0;
     }
 }

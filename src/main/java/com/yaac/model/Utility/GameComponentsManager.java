@@ -22,4 +22,18 @@ public class GameComponentsManager extends ArrayList<MovableObject> {
             obj.update();
         }
     }
+
+    public void clearAll(){
+        this.clear();
+    }
+
+    public void clearDeadObjects(){
+        ArrayList<MovableObject> toRemove = new ArrayList<>();
+        for(MovableObject obj : this){
+            if(obj.toBeDeleted()){
+                toRemove.add(obj);
+            }
+        }
+        this.removeAll(toRemove);
+    }
 }

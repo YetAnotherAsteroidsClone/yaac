@@ -1,12 +1,16 @@
 package com.yaac.model.GameComponent;
 
+import com.yaac.model.GameConstraints;
+
 /**
  * Classe dedicata alla gestione dei proiettili
  * Estende la classe MovableObject
  * Implementa la gestione del danno
  */
 public class Bullet extends MovableObject{
-    private int damage = 1;
+    private double damage = 1;
+    private double radius = 5;
+    private boolean collided = false;
 
     /**
      * Costruttore della projectile con parametri
@@ -16,9 +20,22 @@ public class Bullet extends MovableObject{
      * @param vy velocità iniziale su asse y
      * @param damage danno della projectile
      */
-    public Bullet(int x, int y, int vx, int vy, int damage){
-        super(x, y, vx, vy);
+    public Bullet(double x, double y, double vx, double vy, double damage, int rotation){
+        super(x, y, vx, vy, rotation);
         this.damage = damage;
+    }
+
+    @Override
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setCollided(boolean collided) {
+        this.collided = collided;
     }
 
     /**
@@ -33,13 +50,20 @@ public class Bullet extends MovableObject{
      * Getter del danno della projectile
      * @return danno della projectile
      */
-    public int getDamage() {
+    public double getDamage() {
         return damage;
     }
 
     public void move() {
         x = x + vx;
         y = y + vy;
+        if (x > GameConstraints.WORLDWIDTH || x < 0 || y > GameConstraints.WORLDHEIGHT || y < 0) {
+            collided = true;
+        }
+    }
+
+    public boolean toBeDeleted() {
+    	return collided;
     }
 
     @Override

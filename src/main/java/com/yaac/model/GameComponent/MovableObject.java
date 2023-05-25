@@ -14,7 +14,7 @@ public abstract class MovableObject extends GameObject{
      *  @param y posizione y
      */
     public MovableObject(int x, int y){
-        super(x, y);
+        super(x, y, 0);
     }
 
     /**
@@ -24,8 +24,8 @@ public abstract class MovableObject extends GameObject{
      *  @param vx velocità su asse x
      *  @param vy velocità su asse y
      */
-    public MovableObject(int x, int y, int vx, int vy){
-        super(x, y);
+    public MovableObject(double x, double y, double vx, double vy, int rotation){
+        super(x, y, rotation);
         this.vx = vx;
         this.vy = vy;
     }
@@ -35,4 +35,6 @@ public abstract class MovableObject extends GameObject{
      */
 
     public abstract void update();
+
+    public abstract boolean toBeDeleted();
 }

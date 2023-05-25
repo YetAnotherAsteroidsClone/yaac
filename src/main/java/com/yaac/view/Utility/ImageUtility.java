@@ -31,7 +31,7 @@ public class ImageUtility {
         int nFrames = animationFile.getWidth() / animationFile.getHeight();
         ArrayList<Image> frames = new ArrayList<>();
         for (int i = 0; i < nFrames; i++)
-            frames.add(animationFile.getSubimage(i * animationFile.getWidth(), 0, animationFile.getWidth(), animationFile.getWidth()));
+            frames.add(animationFile.getSubimage(i * animationFile.getHeight(), 0, animationFile.getHeight(), animationFile.getHeight()));
         return frames;
     }
 

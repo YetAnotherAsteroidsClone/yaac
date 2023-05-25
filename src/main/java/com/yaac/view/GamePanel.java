@@ -27,6 +27,7 @@ public class GamePanel extends JPanel {
         backgroundL3 = new ObjectAnimation("/Background/GameBackgroundL3.png", 640, 360);
         backgroundL1.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+        backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
     }
 
     public void paintComponent(Graphics g) {
@@ -37,7 +38,12 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
-        g.drawImage(ImageUtility.rotateImage(spaceship, game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 32, (int) game.getSpaceShip().getY() - 32, null);
+        g.drawImage(ImageUtility.rotateImage(spaceship, game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 24, (int) game.getSpaceShip().getY() - 24, null);
+        g.setColor(Color.WHITE);
+        for(int i = 0; i < game.getBullets().size(); i++){
+            g.fillOval((int) game.getBullets().get(i).getX(), (int) game.getBullets().get(i).getY(), (int) game.getBullets().get(i).getRadius(), (int) game.getBullets().get(i).getRadius());
+            System.out.println("Bullet " + i + " X: " + game.getBullets().get(i).getX() + " Y: " + game.getBullets().get(i).getY());
+        }
         tick++;
     }
 

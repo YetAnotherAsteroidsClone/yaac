@@ -1,7 +1,6 @@
 package com.yaac.view;
 import com.yaac.Settings;
 import com.yaac.controller.MainMenuController;
-import com.yaac.model.GameComponent.SpaceShip;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 
@@ -69,12 +68,12 @@ public class Shop extends JPanel {
         fillPwUpBar(155,410,gameConstraints.getLvlMaxSpeed(),g, Color.YELLOW);
 
         g.drawRect(155,510,300,30);
-        fillPwUpBar(155,510,gameConstraints.getLvlMaxBulletSpeed(),g, Color.YELLOW);
+        fillPwUpBar(155,510,gameConstraints.getLvlBulletSpeed(),g, Color.YELLOW);
 
         g.drawRect(635,410,300,30);
-        fillPwUpBar(635,410,gameConstraints.getLvlMaxBulletDamage(),g, Color.YELLOW);
+        fillPwUpBar(635,410,gameConstraints.getLvlBulletDamage(),g, Color.YELLOW);
 
         g.drawRect(635,510,300,30);
-        fillPwUpBar(635,510,gameConstraints.getLvlMaxBulletRatio(),g, Color.YELLOW);
+        fillPwUpBar(635,510,gameConstraints.getLvlBulletRatio(),g, Color.YELLOW);
     }
 }

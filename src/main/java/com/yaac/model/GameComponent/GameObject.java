@@ -17,9 +17,10 @@ public abstract class GameObject{
      *  @param x posizione x
      *  @param y posizione y
      */
-    protected GameObject(int x, int y){
+    protected GameObject(double x, double y, int rotation){
         this.x = x;
         this.y = y;
+        this.rotation = rotation;
     }
 
     public double getX() {

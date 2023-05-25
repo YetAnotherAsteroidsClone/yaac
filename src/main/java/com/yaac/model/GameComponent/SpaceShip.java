@@ -1,5 +1,6 @@
 package com.yaac.model.GameComponent;
 
+import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 
 import static java.lang.Math.min;
@@ -11,11 +12,11 @@ import static java.lang.Math.max;
  * Implementa i metodi per la gestione della accelerazione e della rotazione
  */
 public class SpaceShip extends MovableObject{
-    private int accelerationCoefficient = 2;
-    private int rotationCoefficient = 2;
 
     boolean isShooting = false;
-    boolean isMoving = false;
+    boolean isRotatingLeft = false;
+    boolean isRotatingRight = false;
+    boolean isAccelerating = false;
 
     /**
      * Costruttore di default con posizione iniziale
@@ -34,13 +35,29 @@ public class SpaceShip extends MovableObject{
      * @param vy velocità iniziale su asse y
      */
     public SpaceShip(int x, int y, int vx, int vy){
-        super(x, y, vx, vy);
+        super(x, y, vx, vy, 0);
     }
 
 
     @Override
     public void update() {
+        if(isRotatingLeft)
+            rotateLeft();
+        if(isRotatingRight)
+            rotateRight();
+        if(isAccelerating)
+            accelerate();
+        if(isShooting)
+            shoot();
         move();
+    }
+
+    /**
+     * Metodo non usato
+     */
+    @Override
+    public boolean toBeDeleted() {
+        return false;
     }
 
     /**
@@ -49,36 +66,17 @@ public class SpaceShip extends MovableObject{
      */
     public void move() {
         x = x + vx;
-        if(x > GameConstraints.WORLDWIDTH || x < 20 ){
+        if(x > GameConstraints.WORLDWIDTH || x < 0 ){
             vx = 0;
-            x = min(max(x, 20), GameConstraints.WORLDWIDTH);
+            x = min(max(x, 0), GameConstraints.WORLDWIDTH);
         }
         y = y + vy;
-        if(y > GameConstraints.WORLDHEIGHT || y < 20) {
+        if(y > GameConstraints.WORLDHEIGHT || y < 0) {
             vy = 0;
-            y = min(max(y, 20), GameConstraints.WORLDHEIGHT);
+            y = min(max(y, 0), GameConstraints.WORLDHEIGHT);
         }
     }
 
-    /**
-     * Setter del coefficiente di accelerazione <br>
-     * Il coefficiente di accelerazione è un valore che indica quanto rapidamente aumenta la velocità
-     * durante l'accelerazione per ogni step di gioco
-     * @param accelerationCoefficient coefficiente di accelerazione
-     */
-    public void setAccelerationCoefficient(int accelerationCoefficient) {
-        this.accelerationCoefficient = accelerationCoefficient;
-    }
-
-    /**
-     * Setter del coefficiente di rotazione <br>
-     * Il coefficiente di rotazione è un valore che indica quanto rapidamente ruota l'astronave
-     * durante la virata per ogni step di gioco
-     * @param rotationCoefficient coefficiente di rotazione
-     */
-    public void setRotationCoefficient(int rotationCoefficient) {
-        this.rotationCoefficient = rotationCoefficient;
-    }
 
     /**
      * Accelera l'astronave in base al coefficiente di accelerazione e alla rotazione <br>
@@ -86,25 +84,71 @@ public class SpaceShip extends MovableObject{
      * in base alla direzione dell'astronave
      */
     public void accelerate(){
-        if (!isMoving)
-            isMoving = true;
-        double accX = (accelerationCoefficient * Math.sin(Math.toRadians(rotation)));
-        double accY = - (accelerationCoefficient * Math.cos(Math.toRadians(rotation)));
+        double accX = (GameConstraints.getInstance().getShipAcceleration() * Math.sin(Math.toRadians(rotation)));
+        double accY = - (GameConstraints.getInstance().getShipAcceleration() * Math.cos(Math.toRadians(rotation)));
         vx += accX;
         vy += accY;
+        vx = min(max(vx, -GameConstraints.getInstance().getMaxSpeed()), GameConstraints.getInstance().getMaxSpeed());
+        vy = min(max(vy, -GameConstraints.getInstance().getMaxSpeed()), GameConstraints.getInstance().getMaxSpeed());
     }
 
     /**
      *  Ruota l'astronave a sinistra in base al coefficiente di rotazione
      */
     public void rotateLeft(){
-        rotation -= rotationCoefficient;
+        rotation -= GameConstraints.getInstance().getShipRotation();
     }
 
     /**
      *  Ruota l'astronave a destra in base al coefficiente di rotazione
      */
     public void rotateRight(){
-        rotation += rotationCoefficient;
+        rotation += GameConstraints.getInstance().getShipRotation();
+    }
+
+    public void shoot() {
+        double bulletVX = (GameConstraints.getInstance().getBulletSpeed() * Math.sin(Math.toRadians(rotation)));
+        double bulletVY = - (GameConstraints.getInstance().getBulletSpeed() * Math.cos(Math.toRadians(rotation)));
+        Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(), rotation));
+    }
+
+    public void startShooting() {
+        isShooting = true;
+    }
+
+    public void stopShooting() {
+        isShooting = false;
+    }
+
+    public void startAccelerating() {
+        isAccelerating = true;
+    }
+
+    public void stopAccelerating() {
+        isAccelerating = false;
+    }
+
+    public void startMoving() {
+        isMoving = true;
+    }
+
+    public void stopMoving() {
+        isMoving = false;
+    }
+
+    public void startRotatingLeft() {
+        isRotatingLeft = true;
+    }
+
+    public void stopRotatingLeft() {
+        isRotatingLeft = false;
+    }
+
+    public void startRotatingRight() {
+        isRotatingRight = true;
+    }
+
+    public void stopRotatingRight() {
+        isRotatingRight = false;
     }
 }
