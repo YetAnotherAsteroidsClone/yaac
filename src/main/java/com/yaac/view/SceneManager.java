@@ -61,10 +61,5 @@ public class SceneManager {
         gamePanel.requestFocus();
         gameLoop.run();
     }
-    public void loadShop(){
-        Shop shop = new Shop();
-        loadScene(shop);
-        shop.requestFocus();
-    }
-
+    public void loadShop(){loadScene(shop);}
 }
