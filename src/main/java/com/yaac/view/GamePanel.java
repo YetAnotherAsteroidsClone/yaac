@@ -1,6 +1,5 @@
 package com.yaac.view;
 
-import com.yaac.controller.GameController;
 import com.yaac.model.Game;
 import com.yaac.view.Utility.ImageUtility;
 

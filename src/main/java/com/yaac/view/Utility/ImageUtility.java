@@ -57,8 +57,8 @@ public class ImageUtility {
         BufferedImage rotatedBI = new BufferedImage(newWidth, newHeight, BufferedImage.TRANSLUCENT);
         Graphics2D g2d = rotatedBI.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.translate((newWidth - originalWidth) / 2, (newHeight - originalHeight) / 2);
-        g2d.rotate(angle, originalWidth / 2, originalHeight / 2);
+        //Conversione dell'angolo in gradi ad angolo in radianti (angle*PI/180)
+        g2d.rotate(Math.toRadians(angle), originalWidth / 2, originalHeight / 2);
         g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
         return rotatedBI;
