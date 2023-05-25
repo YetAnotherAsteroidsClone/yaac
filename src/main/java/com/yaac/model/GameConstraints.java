@@ -10,6 +10,7 @@ public class GameConstraints {
     private double bulletRatio = 2;
     private double maxDurationShield;
     private int shipRotation = 5;
+    private double shipDeceleration = 0.95;
 
     private int lvlMaxSpeed=5;
     private int lvlBulletSpeed =7;
@@ -22,6 +23,9 @@ public class GameConstraints {
     public double getBulletSpeed() {return bulletSpeed;}
     public double getBulletDamage() {return bulletDamage;}
     public double getBulletRatio() {return bulletRatio;}
+    public double getShipDeceleration() {
+        return shipDeceleration;
+    }
     public double getMaxDurationShield() {return maxDurationShield;}
     public int getShipRotation() {return shipRotation;}
     public int getLvlMaxSpeed() {return lvlMaxSpeed;}
@@ -35,6 +39,7 @@ public class GameConstraints {
     public void setBulletSpeed(double bulletSpeed) {this.bulletSpeed = bulletSpeed;}
     public void setBulletDamage(double bulletDamage) {this.bulletDamage = bulletDamage;}
     public void setBulletRatio(double bulletRatio) {this.bulletRatio = bulletRatio;}
+    public void setShipDeceleration(double shipDeceleration) {this.shipDeceleration = shipDeceleration;}
     public void setMaxDurationShield(double maxDurationShield) {this.maxDurationShield = maxDurationShield;}
     public void setShipRotation(int shipRotation) {this.shipRotation = shipRotation;}
     public void setLvlMaxSpeed(int lvlMaxSpeed) {this.lvlMaxSpeed = lvlMaxSpeed;}

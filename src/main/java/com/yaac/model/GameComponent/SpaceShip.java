@@ -12,6 +12,7 @@ import static java.lang.Math.max;
  * Implementa i metodi per la gestione della accelerazione e della rotazione
  */
 public class SpaceShip extends MovableObject{
+    int shotTick = 0;
 
     boolean isShooting = false;
     boolean isRotatingLeft = false;
@@ -47,6 +48,8 @@ public class SpaceShip extends MovableObject{
             rotateRight();
         if(isAccelerating)
             accelerate();
+        if(isMoving)
+            decelerate();
         if(isShooting)
             shoot();
         move();
@@ -90,6 +93,18 @@ public class SpaceShip extends MovableObject{
         vy += accY;
         vx = min(max(vx, -GameConstraints.getInstance().getMaxSpeed()), GameConstraints.getInstance().getMaxSpeed());
         vy = min(max(vy, -GameConstraints.getInstance().getMaxSpeed()), GameConstraints.getInstance().getMaxSpeed());
+        isMoving = true;
+    }
+
+    public void decelerate(){
+        vx = vx * GameConstraints.getInstance().getShipDeceleration();
+        vy = vy * GameConstraints.getInstance().getShipDeceleration();
+        if(vx < 0.1 && vx > -0.1)
+            vx = 0;
+        if(vy < 0.1 && vy > -0.1)
+            vy = 0;
+        if(vx == 0 && vy == 0)
+            isMoving = false;
     }
 
     /**
@@ -107,9 +122,12 @@ public class SpaceShip extends MovableObject{
     }
 
     public void shoot() {
-        double bulletVX = (GameConstraints.getInstance().getBulletSpeed() * Math.sin(Math.toRadians(rotation)));
-        double bulletVY = - (GameConstraints.getInstance().getBulletSpeed() * Math.cos(Math.toRadians(rotation)));
-        Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(), rotation));
+        if(shotTick % Math.round(GameConstraints.getInstance().getBulletRatio()) == 0) {
+            double bulletVX = (GameConstraints.getInstance().getBulletSpeed() * Math.sin(Math.toRadians(rotation)));
+            double bulletVY = -(GameConstraints.getInstance().getBulletSpeed() * Math.cos(Math.toRadians(rotation)));
+            Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(), rotation));
+        }
+        shotTick++;
     }
 
     public void startShooting() {
@@ -118,6 +136,7 @@ public class SpaceShip extends MovableObject{
 
     public void stopShooting() {
         isShooting = false;
+        shotTick = 0;
     }
 
     public void startAccelerating() {
