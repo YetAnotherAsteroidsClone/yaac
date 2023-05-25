@@ -19,31 +19,31 @@ public class Shop extends JPanel {
         this.addMouseListener(new MainMenuController());
 
         //bg image
-        background = ImageUtility.loadImage(Settings.backgroundsPath + "StaticBackground.png");
+        background = ImageUtility.loadImage("/Background/StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
 
         //spaceship images
-        spaceShipImages[0] = ImageUtility.loadImage("");
+        spaceShipImages[0] = ImageUtility.loadImage("/GameSprite/Body1.png");
         spaceShipImages[0] = ImageUtility.scaleImage(spaceShipImages[0],0,0);
-        spaceShipImages[1] = ImageUtility.loadImage("");
+        spaceShipImages[1] = ImageUtility.loadImage("/GameSprite/");
         spaceShipImages[1] = ImageUtility.scaleImage(spaceShipImages[1],0,0);
-        spaceShipImages[2] = ImageUtility.loadImage("");
+        spaceShipImages[2] = ImageUtility.loadImage("/GameSprite/");
         spaceShipImages[2] = ImageUtility.scaleImage(spaceShipImages[2],0,0);
 
         //PowerUp images
-        PowerUpImages[0] = ImageUtility.loadImage("");
+        PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[0] = ImageUtility.scaleImage(PowerUpImages[0],0,0);
-        PowerUpImages[1] = ImageUtility.loadImage("");
+        PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],0,0);
-        PowerUpImages[2] = ImageUtility.loadImage("");
+        PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],0,0);
-        PowerUpImages[3] = ImageUtility.loadImage("");
+        PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],0,0);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        //TODO
+        g.drawImage((Image)background,0,0,null);
 
     }
 }
