@@ -12,30 +12,25 @@ import java.util.ArrayList;
  * */
 public class ObjectAnimation {
 
-    private final ArrayList<Image> images = new ArrayList<>();
+    private ArrayList<Image> images = new ArrayList<>();
     private int index = 0;
 
     /**
-     *  Costruttore della classe ObjectAnimation
-     *  @param style stile dell'oggetto
-     *                 (es. "Default", "Speciale")
-     *  @param object oggetto
-     *                 (es. "spaceship", "asteroid", projectile")
-     *  @param action azione dell'oggetto
-     *                 (es. "idle", "move", "shoot")
-     *  @param numberOfElements numero di elementi dell'animazione
-     *                 (es. 3, 4, 5)
+     *  Costruttore della classe ObjectAnimation con immagini quadrate
+     *  @param source percorso dell'immagine
      */
-    public ObjectAnimation(String style, String object, String action, int numberOfElements) {
-        try {
-            String path = Settings.resourcePath + style + "/" + object + "/";
-            for (int i = 1; i <= numberOfElements; i++) {
-                Image img = ImageIO.read(getClass().getResourceAsStream(path + action + i + ".png"));
-                images.add(img);
-            }
-        } catch(IOException exception) {
-            System.out.println("Error loading image: " + exception.getMessage());
-        }
+    public ObjectAnimation(String source) {
+        images = ImageUtility.loadAnimationFrames(source);
+    }
+
+    /**
+     *  Costruttore della classe ObjectAnimation con immagini rettangolari
+     *  @param source percorso dell'immagine
+     *  @param width larghezza
+     *  @param height altezza
+     */
+    public ObjectAnimation(String source, int width, int height) {
+        images = ImageUtility.loadAnimationFrames(source, width, height);
     }
 
     /**
@@ -44,18 +39,23 @@ public class ObjectAnimation {
      *  @param height altezza
      */
     public void scaleImage(int width, int height) {
-        for (Image img : images) {
-            img = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        for (int i = 0; i < images.size(); i++) {
+            images.set(i, images.get(i).getScaledInstance(width, height, Image.SCALE_SMOOTH));
         }
     }
 
-
     /**
      * Metodo per aggiornare l'animazione allo step successivo
-     *  @return immagine
      */
-    public Image update() {
+    public void update() {
         index = (index+1) % images.size();
+    }
+
+    /**
+     * Metodo per ottenere l'immagine corrente
+     * @return immagine corrente
+     */
+    public Image getCurrentFrame() {
         return images.get(index);
     }
 }

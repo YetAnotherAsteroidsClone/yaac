@@ -1,5 +1,6 @@
 package com.yaac.model;
 
+import com.yaac.Settings;
 import com.yaac.model.GameComponent.SpaceShip;
 import com.yaac.model.Utility.GameComponentsManager;
 
@@ -11,7 +12,7 @@ public class Game {
     SpaceShip spaceShip;
 
     private Game() {
-        this.spaceShip = new SpaceShip(0,0);
+        this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
     }
 
     private long tick = 0;
@@ -35,6 +36,7 @@ public class Game {
 
     public void update(){
         tick++;
+        spaceShip.update();
     }
 
     public void addAsteroid() {
@@ -63,5 +65,13 @@ public class Game {
 
     public void rotateShipLeft(){
         spaceShip.rotateLeft();
+    }
+
+    public void accelerateShip(){
+        spaceShip.accelerate();
+    }
+
+    public void deleteInstance(){
+        instance = null;
     }
 }

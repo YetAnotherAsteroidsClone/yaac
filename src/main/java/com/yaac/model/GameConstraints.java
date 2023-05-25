@@ -1,5 +1,7 @@
 package com.yaac.model;
 
+import com.yaac.Settings;
+
 public class GameConstraints {
     private int maxSpeed;
     private int maxAcceleration;
@@ -9,11 +11,15 @@ public class GameConstraints {
     private GameConstraints(){
         //TODO
     }
-    private static GameConstraints instance = new GameConstraints();
-    public static GameConstraints getInstance(){return instance;}
+    private static GameConstraints instance = null;
+    public static GameConstraints getInstance(){
+        if (instance == null)
+            instance = new GameConstraints();
+        return instance;
+    }
 
 
     //world dimensions
-    public static int WORLDWIDTH; // = xxxxx
-    public static int WORLDHEIGHT; // = xxxxx
+    public static int WORLDWIDTH = Settings.width;
+    public static int WORLDHEIGHT = Settings.height;
 }

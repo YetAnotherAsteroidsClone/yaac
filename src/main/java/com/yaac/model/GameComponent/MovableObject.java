@@ -4,8 +4,8 @@ package com.yaac.model.GameComponent;
  *  Implementa la classe GameObject e aggiunge i metodi per il movimento
  */
 public abstract class MovableObject extends GameObject{
-    protected int vx = 0;
-    protected int vy = 0;
+    protected double vx = 0;
+    protected double vy = 0;
     boolean isMoving = false;
 
     /**

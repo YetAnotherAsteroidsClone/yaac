@@ -15,12 +15,12 @@ public class CollisionUtility {
      * @return true se i due oggetti collidono, false altrimenti
      */
     public static boolean checkCollision(GameObject obj1, GameObject obj2){
-        int x1 = obj1.getX();
-        int y1 = obj1.getY();
-        int x2 = obj2.getX();
-        int y2 = obj2.getY();
-        int r1 = obj1.getRadius();
-        int r2 = obj2.getRadius();
+        double x1 = obj1.getX();
+        double y1 = obj1.getY();
+        double x2 = obj2.getX();
+        double y2 = obj2.getY();
+        double r1 = obj1.getRadius();
+        double r2 = obj2.getRadius();
 
         return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) <= (r1+r2)*(r1+r2);
     }
@@ -61,10 +61,10 @@ public class CollisionUtility {
      * @return distanza tra i due oggetti
      */
     public static double distance(GameObject obj1, GameObject obj2){
-        int x1 = obj1.getX();
-        int y1 = obj1.getY();
-        int x2 = obj2.getX();
-        int y2 = obj2.getY();
+        double x1 = obj1.getX();
+        double y1 = obj1.getY();
+        double x2 = obj2.getX();
+        double y2 = obj2.getY();
 
         return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
     }

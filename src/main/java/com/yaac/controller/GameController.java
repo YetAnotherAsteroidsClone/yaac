@@ -17,11 +17,9 @@ public class GameController extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()){
-            case KeyEvent.VK_UP -> System.out.println("UP");
-            case KeyEvent.VK_DOWN -> System.out.println("DOWN");
             case KeyEvent.VK_LEFT -> Game.getInstance().rotateShipLeft();
             case KeyEvent.VK_RIGHT -> Game.getInstance().rotateShipRight();
-            case KeyEvent.VK_SPACE -> System.out.println("SPACE");
+            case KeyEvent.VK_SPACE -> Game.getInstance().accelerateShip();
         }
     }
 

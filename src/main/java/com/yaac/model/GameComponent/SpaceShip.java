@@ -1,16 +1,21 @@
 package com.yaac.model.GameComponent;
 
+import com.yaac.model.GameConstraints;
+
+import static java.lang.Math.min;
+import static java.lang.Math.max;
+
 /**
  * Classe dedicata alla gestione dell'astronave
  * Estende la classe MovableObject
  * Implementa i metodi per la gestione della accelerazione e della rotazione
  */
 public class SpaceShip extends MovableObject{
-    private int accelerationCoefficient = 1;
-    private int rotationCoefficient = 1;
+    private int accelerationCoefficient = 2;
+    private int rotationCoefficient = 2;
 
     boolean isShooting = false;
-    boolean isAccelerating = false;
+    boolean isMoving = false;
 
     /**
      * Costruttore di default con posizione iniziale
@@ -40,10 +45,19 @@ public class SpaceShip extends MovableObject{
 
     /**
      * Muove l'astronave in base alla velocità
+     * Se l'astronave raggiunge i bordi del mondo, la velocità viene azzerata
      */
     public void move() {
         x = x + vx;
+        if(x > GameConstraints.WORLDWIDTH || x < 20 ){
+            vx = 0;
+            x = min(max(x, 20), GameConstraints.WORLDWIDTH);
+        }
         y = y + vy;
+        if(y > GameConstraints.WORLDHEIGHT || y < 20) {
+            vy = 0;
+            y = min(max(y, 20), GameConstraints.WORLDHEIGHT);
+        }
     }
 
     /**
@@ -72,8 +86,10 @@ public class SpaceShip extends MovableObject{
      * in base alla direzione dell'astronave
      */
     public void accelerate(){
-        int accX = (int) (accelerationCoefficient * Math.cos(rotation));
-        int accY = (int) (accelerationCoefficient * Math.sin(rotation));
+        if (!isMoving)
+            isMoving = true;
+        double accX = (accelerationCoefficient * Math.sin(Math.toRadians(rotation)));
+        double accY = - (accelerationCoefficient * Math.cos(Math.toRadians(rotation)));
         vx += accX;
         vy += accY;
     }

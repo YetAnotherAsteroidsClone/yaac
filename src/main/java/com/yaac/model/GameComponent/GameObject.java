@@ -6,10 +6,10 @@ package com.yaac.model.GameComponent;
  */
 
 public abstract class GameObject{
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
     protected int rotation = 0;
-    protected int radius = 0;
+    protected double radius = 0;
 
 
     /**
@@ -22,13 +22,13 @@ public abstract class GameObject{
         this.y = y;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
     public void setX(int x) {
         this.x = x;
     }
-    public int getY() {
+    public double getY() {
         return y;
     }
     public void setY(int y) {
@@ -40,7 +40,7 @@ public abstract class GameObject{
     public void setRotation(int rotation) {
         this.rotation = rotation;
     }
-    public int getRadius() {
+    public double getRadius() {
         return radius;
     }
     public void setRadius(int radius) {

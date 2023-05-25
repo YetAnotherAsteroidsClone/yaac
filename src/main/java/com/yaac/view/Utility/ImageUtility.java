@@ -22,22 +22,32 @@ public class ImageUtility {
     }
 
     /**
-     * Metodo per il caricamento di un animazione
-     * @param obj nome della cartella in cui si trova l'immagine
-     * @param name nome dell'immagine
-     * @param nFrames numero di frame dell'animazione
-     * @param width larghezza di un frame
-     * @param height altezza di un frame
+     * Metodo per il caricamento di un animazione quadrata
+     * @param source nome della cartella in cui si trova l'immagine
      * @return un arrayList d'immagini (animazione)
      */
-    public static ArrayList<Image> loadAnimationFrames(String obj, String name, int nFrames, int width, int height){
-        String source = "GameSprite/" + obj + "/" + name + ".png";
+    public static ArrayList<Image> loadAnimationFrames(String source){
         BufferedImage animationFile = loadImage(source);
+        int nFrames = animationFile.getWidth() / animationFile.getHeight();
         ArrayList<Image> frames = new ArrayList<>();
-        for (int i = 0; i < nFrames; i++) {
+        for (int i = 0; i < nFrames; i++)
+            frames.add(animationFile.getSubimage(i * animationFile.getWidth(), 0, animationFile.getWidth(), animationFile.getWidth()));
+        return frames;
+    }
 
+    /**
+     * Metodo per il caricamento di un animazione rettangolare
+     * @param source nome della cartella in cui si trova l'immagine
+     * @param width larghezza dell'immagine
+     * @param height altezza dell'immagine
+     * @return un arrayList d'immagini (animazione)
+     */
+    public static ArrayList<Image> loadAnimationFrames(String source, int width, int height){
+        BufferedImage animationFile = loadImage(source);
+        int nFrames = animationFile.getWidth() / width;
+        ArrayList<Image> frames = new ArrayList<>();
+        for (int i = 0; i < nFrames; i++)
             frames.add(animationFile.getSubimage(i * width, 0, width, height));
-        }
         return frames;
     }
 

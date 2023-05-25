@@ -15,6 +15,7 @@ public class SceneManager {
 
     private JFrame mainFrame;
     private MainMenu mainMenu;
+    private Shop shop;
 
     private GamePanel gamePanel;
 
@@ -23,7 +24,9 @@ public class SceneManager {
     private SceneManager() {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
-        //mainFrame.setUndecorated(true);
+        mainFrame.setUndecorated(true);
+        mainFrame.setResizable(false);
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainMenu = new MainMenu();
@@ -47,7 +50,8 @@ public class SceneManager {
     }
 
     public void loadCredits(){
-        //TODO
+        shop = new Shop();
+        loadScene(shop);
     }
 
     public void loadGame(){
