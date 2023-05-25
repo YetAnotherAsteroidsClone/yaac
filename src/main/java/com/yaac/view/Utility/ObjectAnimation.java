@@ -44,6 +44,10 @@ public class ObjectAnimation {
         }
     }
 
+    public Image getImage(int index) {
+        return images.get(index);
+    }
+
     /**
      * Metodo per aggiornare l'animazione allo step successivo
      */
@@ -57,5 +61,9 @@ public class ObjectAnimation {
      */
     public Image getCurrentFrame() {
         return images.get(index);
+    }
+
+    public int size() {
+        return images.size();
     }
 }

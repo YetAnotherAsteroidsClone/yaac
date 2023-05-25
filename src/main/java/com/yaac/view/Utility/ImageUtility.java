@@ -89,4 +89,12 @@ public class ImageUtility {
         g2d.dispose();
         return resized;
     }
+
+    public static BufferedImage ImageToBuffered(Image im){
+        BufferedImage bi = new BufferedImage(im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics bg = bi.getGraphics();
+        bg.drawImage(im, 0, 0, null);
+        bg.dispose();
+        return bi;
+    }
 }

@@ -8,6 +8,8 @@ import com.yaac.model.GameConstraints;
  * Implementa la gestione del danno
  */
 public class Bullet extends MovableObject{
+    private long tick = 0;
+
     private double damage = 1;
     private double radius = 5;
     private boolean collided = false;
@@ -54,6 +56,14 @@ public class Bullet extends MovableObject{
         return damage;
     }
 
+    /**
+     * Ritorna il lifetime del proiettile
+     * @return tick della projectile
+     */
+    public long getTick() {
+    	return tick;
+    }
+
     public void move() {
         x = x + vx;
         y = y + vy;
@@ -68,6 +78,7 @@ public class Bullet extends MovableObject{
 
     @Override
     public void update() {
+        tick++;
         move();
     }
 }
