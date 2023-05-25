@@ -19,14 +19,6 @@ public class GameConstraints {
     private int score;
     private int orbs;
 
-    public int getScore() {return score;}
-
-    public void setScore(int score) {this.score = score;}
-
-    public int getOrbs() {return orbs;}
-
-    public void setOrbs(int orbs) {this.orbs = orbs;}
-
     //GETTERS
     public double getMaxSpeed() {return maxSpeed;}
     public double getShipAcceleration() {return shipAcceleration;}
@@ -40,6 +32,8 @@ public class GameConstraints {
     public int getLvlBulletSpeed() {return lvlBulletSpeed;}
     public int getLvlBulletDamage() {return lvlBulletDamage;}
     public int getLvlBulletRatio() {return lvlBulletRatio;}
+    public int getScore() {return score;}
+    public int getOrbs() {return orbs;}
 
     //SETTERS
     public void setMaxSpeed(double maxSpeed) {this.maxSpeed = maxSpeed;}
@@ -54,6 +48,8 @@ public class GameConstraints {
     public void setLvlBulletSpeed(int lvlBulletSpeed) {this.lvlBulletSpeed = lvlBulletSpeed;}
     public void setLvlBulletDamage(int lvlBulletDamage) {this.lvlBulletDamage = lvlBulletDamage;}
     public void setLvlBulletRatio(int lvlBulletRatio) {this.lvlBulletRatio = lvlBulletRatio;}
+    public void setScore(int score) {this.score = score;}
+    public void setOrbs(int orbs) {this.orbs = orbs;}
 
     private GameConstraints(){
         //TODO
