@@ -8,14 +8,24 @@ public class GameConstraints {
     private double bulletSpeed = 10;
     private double bulletDamage = 2;
     private double bulletRatio = 2;
-    private double maxDurationShield;
+    private double maxDurationShield=5;
     private int shipRotation = 5;
     private double shipDeceleration = 0.95;
 
-    private int lvlMaxSpeed=5;
-    private int lvlBulletSpeed =7;
-    private int lvlBulletDamage =4;
-    private int lvlBulletRatio =9;
+    private int lvlMaxSpeed=1;
+    private int lvlBulletSpeed=1;
+    private int lvlBulletDamage=1;
+    private int lvlBulletRatio=1;
+    private int score;
+    private int orbs;
+
+    public int getScore() {return score;}
+
+    public void setScore(int score) {this.score = score;}
+
+    public int getOrbs() {return orbs;}
+
+    public void setOrbs(int orbs) {this.orbs = orbs;}
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed;}
@@ -23,9 +33,7 @@ public class GameConstraints {
     public double getBulletSpeed() {return bulletSpeed;}
     public double getBulletDamage() {return bulletDamage;}
     public double getBulletRatio() {return bulletRatio;}
-    public double getShipDeceleration() {
-        return shipDeceleration;
-    }
+    public double getShipDeceleration() {return shipDeceleration;}
     public double getMaxDurationShield() {return maxDurationShield;}
     public int getShipRotation() {return shipRotation;}
     public int getLvlMaxSpeed() {return lvlMaxSpeed;}

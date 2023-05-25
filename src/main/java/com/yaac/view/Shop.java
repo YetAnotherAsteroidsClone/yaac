@@ -44,9 +44,10 @@ public class Shop extends JPanel {
     private void fillPwUpBar(int x, int y, int levels, Graphics g, Color c){
         g.setColor(c);
         for(int i=0; i<levels; i++){
-            g.drawRect(x,y,30,30);
+            g.fillRect(x,y,30,28);
             x+=30;
         }
+        g.setColor(Color.WHITE);
     }
 
     public void paintComponent(Graphics g){
@@ -58,22 +59,24 @@ public class Shop extends JPanel {
         g.drawLine(200,350,800,350);
 
         //powerup images
-        g.drawRect(100,400,40,40);
-        g.drawRect(100,500,40,40);
-        g.drawRect(580,400,40,40);
-        g.drawRect(580,500,40,40);
+        g.drawRect(80,400,40,40);
+        g.drawRect(80,500,40,40);
+        g.drawRect(550,400,40,40);
+        g.drawRect(550,500,40,40);
 
         //powerup bars
-        g.drawRect(155,410,300,30);
-        fillPwUpBar(155,410,gameConstraints.getLvlMaxSpeed(),g, Color.YELLOW);
+        int barWidth = 301;
+        int barHeight = 30;
+        g.drawRect(135,410,barWidth,barHeight);
+        fillPwUpBar(136,411,gameConstraints.getLvlMaxSpeed(),g, Color.YELLOW);
 
-        g.drawRect(155,510,300,30);
-        fillPwUpBar(155,510,gameConstraints.getLvlBulletSpeed(),g, Color.YELLOW);
+        g.drawRect(135,510,barWidth,barHeight);
+        fillPwUpBar(136,511,gameConstraints.getLvlBulletSpeed(),g, Color.YELLOW);
 
-        g.drawRect(635,410,300,30);
-        fillPwUpBar(635,410,gameConstraints.getLvlBulletDamage(),g, Color.YELLOW);
+        g.drawRect(605,410,barWidth,barHeight);
+        fillPwUpBar(606,411,gameConstraints.getLvlBulletDamage(),g, Color.YELLOW);
 
-        g.drawRect(635,510,300,30);
-        fillPwUpBar(635,510,gameConstraints.getLvlBulletRatio(),g, Color.YELLOW);
+        g.drawRect(605,510,barWidth,barHeight);
+        fillPwUpBar(606,511,gameConstraints.getLvlBulletRatio(),g, Color.YELLOW);
     }
 }
