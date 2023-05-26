@@ -5,14 +5,25 @@ import com.yaac.Settings;
 import com.yaac.controller.GameController;
 import com.yaac.controller.ShopController;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.FontFormatException;
+import java.io.IOException;
 
 /*
     *  Classe dedicata alla gestione delle scene
  */
 public class SceneManager {
 
-    private static SceneManager instance = new SceneManager();
+    private static final SceneManager instance;
+
+    static {
+        try {
+            instance = new SceneManager();
+        } catch (IOException | FontFormatException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private JFrame mainFrame;
     private MainMenu mainMenu;
@@ -22,7 +33,7 @@ public class SceneManager {
 
     public static SceneManager getInstance() {return instance;}
 
-    private SceneManager() {
+    private SceneManager() throws IOException, FontFormatException {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
         mainFrame.setUndecorated(true);

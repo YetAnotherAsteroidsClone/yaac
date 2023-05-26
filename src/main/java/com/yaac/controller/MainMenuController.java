@@ -1,11 +1,8 @@
 package com.yaac.controller;
 
 import com.yaac.Settings;
-import com.yaac.view.GamePanel;
 import com.yaac.view.MainMenu;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;

@@ -1,10 +1,6 @@
 package com.yaac.view.Utility;
 
-import com.yaac.Settings;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.IOException;
+import java.awt.Image;
 import java.util.ArrayList;
 
 /**
