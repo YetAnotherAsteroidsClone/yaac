@@ -10,6 +10,6 @@ public class Main {
         Settings.LOGGER.setLevel(Settings.logLevel);
         Settings.LOGGER.addHandler(new FileHandler("yaac.log"));
         SceneManager.getInstance().openMainFrame();
-        SceneManager.getInstance().loadShop();
+        SceneManager.getInstance().loadMainMenu();
     }
 }
