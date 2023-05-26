@@ -4,8 +4,9 @@ import com.yaac.GameLoop;
 import com.yaac.Settings;
 import com.yaac.controller.GameController;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.FontFormatException;
 import java.io.IOException;
 
 /*
@@ -13,7 +14,7 @@ import java.io.IOException;
  */
 public class SceneManager {
 
-    private static SceneManager instance;
+    private static final SceneManager instance;
 
     static {
         try {

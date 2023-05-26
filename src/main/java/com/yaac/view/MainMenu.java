@@ -5,13 +5,14 @@ import com.yaac.Settings;
 import com.yaac.controller.MainMenuController;
 import com.yaac.view.Utility.ImageUtility;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
 public class MainMenu extends JPanel {

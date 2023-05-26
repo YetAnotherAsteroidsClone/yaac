@@ -4,8 +4,10 @@ import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
