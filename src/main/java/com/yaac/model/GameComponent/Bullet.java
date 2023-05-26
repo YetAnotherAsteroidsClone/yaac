@@ -8,7 +8,7 @@ import com.yaac.model.GameConstraints;
  * Implementa la gestione del danno
  */
 public class Bullet extends MovableObject{
-    private int type = 2;
+    private int type = 0;
 
     private double damage = 1;
     private double radius = 5;

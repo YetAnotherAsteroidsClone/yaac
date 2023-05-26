@@ -7,10 +7,10 @@ public class GameConstraints {
     private double shipAcceleration = 2;
     private double bulletSpeed = 10;
     private double bulletDamage = 2;
-    private double bulletRatio = 4;
+    private double bulletRatio = 6;
     private double maxDurationShield=5;
-    private int shipRotation = 5;
-    private double shipDeceleration = 0.95;
+    private int shipRotation = 7;
+    private double shipDeceleration = 0.90;
 
     private int lvlMaxSpeed=1;
     private int lvlBulletSpeed=1;
