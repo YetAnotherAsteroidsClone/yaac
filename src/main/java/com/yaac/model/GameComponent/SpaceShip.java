@@ -53,6 +53,7 @@ public class SpaceShip extends MovableObject{
         if(isShooting)
             shoot();
         move();
+        tick++;
     }
 
     /**
@@ -61,6 +62,16 @@ public class SpaceShip extends MovableObject{
     @Override
     public boolean toBeDeleted() {
         return false;
+    }
+
+    @Override
+    public int getType() {
+        return 0;
+    }
+
+    @Override
+    public long getTick() {
+        return tick;
     }
 
     /**

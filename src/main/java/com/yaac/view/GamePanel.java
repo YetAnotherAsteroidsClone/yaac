@@ -7,6 +7,7 @@ import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
 
@@ -18,14 +19,18 @@ public class GamePanel extends JPanel {
     private ObjectAnimation backgroundL1;
     private ObjectAnimation backgroundL2;
     private ObjectAnimation backgroundL3;
-    private ObjectAnimation bullet;
+    private ArrayList<ObjectAnimation> bullet;
 
     public GamePanel(){
         spaceship = ImageUtility.loadImage("/GameSprite/Body1.png");
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         backgroundL2 = new ObjectAnimation("/Background/GameBackgroundL2.png", 640, 360);
         backgroundL3 = new ObjectAnimation("/Background/GameBackgroundL3.png", 640, 360);
-        bullet = new ObjectAnimation("/GameSprite/BulletBaseCannon.png");
+        bullet = new ArrayList<>();
+        bullet.add(new ObjectAnimation("/GameSprite/BulletBaseCannon.png"));
+        bullet.add(new ObjectAnimation("/GameSprite/BulletBigCannon.png"));
+        bullet.add(new ObjectAnimation("/GameSprite/BulletRocket.png"));
+        bullet.add(new ObjectAnimation("/GameSprite/BulletZapper.png"));
         backgroundL1.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
@@ -41,8 +46,10 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
         g.drawImage(ImageUtility.rotateImage(spaceship, game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 24, (int) game.getSpaceShip().getY() - 24, null);
         g.setColor(Color.WHITE);
-        for(int i = 0; i < game.getBullets().size(); i++){
-            g.drawImage(ImageUtility.rotateImage(ImageUtility.ImageToBuffered(bullet.getImage(i % bullet.size())), game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 5, (int) game.getBullets().get(i).getY() - 5, null);
+        for(int i = 0; i < game.getBullets().size(); i++) {
+            ObjectAnimation currentBulletTypeAnimation = bullet.get(game.getBullets().get(i).getType());
+            Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) game.getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
+            g.drawImage(ImageUtility.rotateImage((BufferedImage) currentBulletFrame, game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
         }
         tick++;
     }

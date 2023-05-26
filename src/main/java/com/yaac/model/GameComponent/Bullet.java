@@ -8,7 +8,7 @@ import com.yaac.model.GameConstraints;
  * Implementa la gestione del danno
  */
 public class Bullet extends MovableObject{
-    private long tick = 0;
+    private int type = 2;
 
     private double damage = 1;
     private double radius = 5;
@@ -25,6 +25,12 @@ public class Bullet extends MovableObject{
     public Bullet(double x, double y, double vx, double vy, double damage, int rotation){
         super(x, y, vx, vy, rotation);
         this.damage = damage;
+    }
+
+    public Bullet(double x, double y, double vx, double vy, double damage, int rotation, int type){
+        super(x, y, vx, vy, rotation);
+        this.damage = damage;
+        this.type = type;
     }
 
     @Override
@@ -74,6 +80,11 @@ public class Bullet extends MovableObject{
 
     public boolean toBeDeleted() {
     	return collided;
+    }
+
+    @Override
+    public int getType() {
+        return type;
     }
 
     @Override

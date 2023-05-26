@@ -63,4 +63,14 @@ public class Asteroid extends MovableObject{
     public boolean toBeDeleted() {
         return life <= 0;
     }
+
+    @Override
+    public int getType() {
+        return 0;
+    }
+
+    @Override
+    public long getTick() {
+        return tick;
+    }
 }
