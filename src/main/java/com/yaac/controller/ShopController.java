@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 
 public class ShopController extends MouseAdapter {
-    private Shop shop = new Shop();
+    private Shop shop;
     private GameConstraints gameConstraints = GameConstraints.getInstance();
     public ShopController(Shop shop){this.shop=shop;}
     @Override

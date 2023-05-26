@@ -16,6 +16,7 @@ public class GameConstraints {
     private int lvlBulletSpeed=1;
     private int lvlBulletDamage=1;
     private int lvlBulletRatio=1;
+    private boolean shopShield=false;
     private int score;
     private int orbs;
 
@@ -32,6 +33,7 @@ public class GameConstraints {
     public int getLvlBulletSpeed() {return lvlBulletSpeed;}
     public int getLvlBulletDamage() {return lvlBulletDamage;}
     public int getLvlBulletRatio() {return lvlBulletRatio;}
+    public boolean getShopShield() {return shopShield;}
     public int getScore() {return score;}
     public int getOrbs() {return orbs;}
 
@@ -44,10 +46,13 @@ public class GameConstraints {
     public void setShipDeceleration(double shipDeceleration) {this.shipDeceleration = shipDeceleration;}
     public void setMaxDurationShield(double maxDurationShield) {this.maxDurationShield = maxDurationShield;}
     public void setShipRotation(int shipRotation) {this.shipRotation = shipRotation;}
-    public void setLvlMaxSpeed(int lvlMaxSpeed) {this.lvlMaxSpeed = lvlMaxSpeed;}
-    public void setLvlBulletSpeed(int lvlBulletSpeed) {this.lvlBulletSpeed = lvlBulletSpeed;}
-    public void setLvlBulletDamage(int lvlBulletDamage) {this.lvlBulletDamage = lvlBulletDamage;}
-    public void setLvlBulletRatio(int lvlBulletRatio) {this.lvlBulletRatio = lvlBulletRatio;}
+
+    public void setLvlMaxSpeed(int lvlMaxSpeed) {if(lvlMaxSpeed<=10) this.lvlMaxSpeed = lvlMaxSpeed;}
+    public void setLvlBulletSpeed(int lvlBulletSpeed) {if(lvlBulletSpeed<=10) this.lvlBulletSpeed = lvlBulletSpeed;}
+    public void setLvlBulletDamage(int lvlBulletDamage) {if(lvlBulletDamage<=10) this.lvlBulletDamage = lvlBulletDamage;}
+    public void setLvlBulletRatio(int lvlBulletRatio) {if(lvlBulletRatio<=10) this.lvlBulletRatio = lvlBulletRatio;}
+    public void setShopShield(boolean shopShield) {this.shopShield = shopShield;}
+
     public void setScore(int score) {this.score = score;}
     public void setOrbs(int orbs) {this.orbs = orbs;}
 

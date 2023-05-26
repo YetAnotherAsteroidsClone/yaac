@@ -1,5 +1,6 @@
 package com.yaac.view;
 import com.yaac.Settings;
+import com.yaac.controller.ShopController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class Shop extends JPanel {
 
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
+    private ShopController controller = new ShopController(this);
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
     public Shop(){
@@ -47,6 +49,11 @@ public class Shop extends JPanel {
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
         }
+        buttons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1); super.repaint();});
+        buttons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1); super.repaint();});
+        buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1); super.repaint();});
+        buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1); super.repaint();});
+        buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true); super.repaint();});
     }
 
     private void drawShip(int x, int y, Graphics g){
@@ -74,8 +81,22 @@ public class Shop extends JPanel {
         Image image = plusButton.getImage();
         Image resizedImage = image.getScaledInstance(30,30, Image.SCALE_SMOOTH);
         plusButton = new ImageIcon(resizedImage);
-
         b.setIcon(plusButton);
+        this.add(b);
+    }
+
+    private void drawShopShield(Graphics g, JButton b){
+        g.setColor(Color.BLUE);
+        if(gameConstraints.getShopShield()){
+            g.setColor(Color.GREEN);
+        }
+        g.drawRect(widthOffset+470, heightOffset+160, 70,70);
+        b.setBounds(widthOffset+471,heightOffset+161,69,69);
+        ImageIcon shieldButton = new ImageIcon(getClass().getResource("/GameSprite/shieldShop.png"));
+        Image image = shieldButton.getImage();
+        Image resizedImage = image.getScaledInstance(68,68, Image.SCALE_SMOOTH);
+        shieldButton = new ImageIcon(resizedImage);
+        b.setIcon(shieldButton);
         this.add(b);
     }
 
@@ -91,5 +112,8 @@ public class Shop extends JPanel {
         drawBar(widthOffset-530, heightOffset+250, gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
         drawBar(widthOffset, heightOffset+130, gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
         drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
+
+        drawShopShield(g, buttons[4]);
+
     }
 }

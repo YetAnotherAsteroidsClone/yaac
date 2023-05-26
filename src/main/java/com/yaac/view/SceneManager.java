@@ -77,7 +77,6 @@ public class SceneManager {
         gameLoop.run();
     }
     public void loadShop(){
-        shop = new Shop();
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
         loadScene(shop);
