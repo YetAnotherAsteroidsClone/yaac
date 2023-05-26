@@ -3,6 +3,7 @@ package com.yaac.view;
 import com.yaac.GameLoop;
 import com.yaac.Settings;
 import com.yaac.controller.GameController;
+import com.yaac.controller.ShopController;
 
 import javax.swing.*;
 
@@ -64,5 +65,11 @@ public class SceneManager {
         gamePanel.requestFocus();
         gameLoop.run();
     }
-    public void loadShop(){loadScene(shop);}
+    public void loadShop(){
+        shop = new Shop();
+        ShopController controller = new ShopController(shop);
+        shop.addMouseListener(controller);
+        loadScene(shop);
+        shop.requestFocus();
+    }
 }

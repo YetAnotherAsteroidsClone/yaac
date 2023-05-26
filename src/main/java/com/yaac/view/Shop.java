@@ -1,9 +1,7 @@
 package com.yaac.view;
 import com.yaac.Settings;
-import com.yaac.controller.MainMenuController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,9 +9,9 @@ import java.awt.image.BufferedImage;
 public class Shop extends JPanel {
     BufferedImage background;
     private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
-    //private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
+    private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
 
-    private JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
+    public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
 
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
@@ -31,18 +29,20 @@ public class Shop extends JPanel {
         spaceShipImages[1] = ImageUtility.scaleImage(spaceShipImages[1],150,150);
         spaceShipImages[2] = ImageUtility.loadImage("/GameSprite/Body1.png");
         spaceShipImages[2] = ImageUtility.scaleImage(spaceShipImages[2],10,10);
-/*
+
         //PowerUp images
+        /*
         PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[0] = ImageUtility.scaleImage(PowerUpImages[0],0,0);
         PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],0,0);
-        PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/");
-        PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],0,0);
-        PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/");
-        PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],0,0);
-        PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/");
-        PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],0,0);*/
+        */
+        PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/bulletDamage.png");
+        PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],38,38);
+        PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/bulletRatio.png");
+        PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],38,38);
+        PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/shieldShop.png");
+        PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],38,38);
 
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
@@ -53,9 +53,10 @@ public class Shop extends JPanel {
         g.drawImage((Image) spaceShipImages[0], x, y, null);
     }
 
-    private void drawBar(int x, int y, int levels, JButton b, Graphics g){
+    private void drawBar(int x, int y, int levels, BufferedImage img, JButton b, Graphics g){
         g.setColor(Color.WHITE);
         g.drawRect(x-55,y-10,40,40);
+        g.drawImage((Image) img,x-54,y-9,null);
         g.drawRect(x,y,301,30);
         g.setColor(Color.YELLOW);
         int drawX = x+1;
@@ -86,10 +87,9 @@ public class Shop extends JPanel {
         g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
 
 
-        drawBar(widthOffset-530, heightOffset+130, gameConstraints.getLvlMaxSpeed(), buttons[0], g);
-
-        drawBar(widthOffset-530, heightOffset+250, gameConstraints.getLvlBulletSpeed(), buttons[1], g);
-        drawBar(widthOffset, heightOffset+130, gameConstraints.getLvlBulletDamage(), buttons[2], g);
-        drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), buttons[3], g);
+        drawBar(widthOffset-530, heightOffset+130, gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], buttons[0], g);
+        drawBar(widthOffset-530, heightOffset+250, gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
+        drawBar(widthOffset, heightOffset+130, gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
+        drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
     }
 }
