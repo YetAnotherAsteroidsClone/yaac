@@ -10,9 +10,10 @@ import java.awt.image.BufferedImage;
 
 public class Shop extends JPanel {
     BufferedImage background;
-    BufferedImage[] spaceShipImages = new BufferedImage[3];     //BufferedImage[0] = SPACESHIP; BufferedImage[1] = ENGINE; BufferedImage[2] = WEAPON
-    //BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
-    BufferedImage plusButton;
+    private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
+    //private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
+
+    private JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
 
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
@@ -20,6 +21,7 @@ public class Shop extends JPanel {
 
     public Shop(){
         this.addMouseListener(new MainMenuController());
+        this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         //bg image
         background = ImageUtility.loadImage("/Background/StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
@@ -43,15 +45,16 @@ public class Shop extends JPanel {
         PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],0,0);*/
 
-        plusButton = ImageUtility.loadImage("/MenuSprite/plusButton.png");
-        plusButton = ImageUtility.scaleImage(plusButton, 28,28);
+        for(int i=0; i<buttons.length; i++){
+            buttons[i] = new JButton();
+        }
     }
 
     private void drawShip(int x, int y, Graphics g){
         g.drawImage((Image) spaceShipImages[0], x, y, null);
     }
 
-    private void drawBar(int x, int y, int levels, Graphics g){
+    private void drawBar(int x, int y, int levels, JButton b, Graphics g){
         g.setColor(Color.WHITE);
         g.drawRect(x-55,y-10,40,40);
         g.drawRect(x,y,301,30);
@@ -64,18 +67,30 @@ public class Shop extends JPanel {
         g.setColor(Color.WHITE);
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(x+314,y,30,30);
-        g.drawImage(plusButton, x+315,y+1, null);
+
+        b.setBounds(x+315,y+1,28,28);
+
+        ImageIcon plusButton = new ImageIcon(getClass().getResource("/MenuSprite/plusButton.png"));
+        Image image = plusButton.getImage();
+        Image resizedImage = image.getScaledInstance(30,30, Image.SCALE_SMOOTH);
+        plusButton = new ImageIcon(resizedImage);
+
+        b.setIcon(plusButton);
+        this.add(b);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
-        drawShip(widthOffset-175,heightOffset-300, g);
+        drawShip(widthOffset-175,heightOffset-350, g);
         g.setColor(Color.WHITE);
         g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
-        drawBar(widthOffset-377, heightOffset+110, gameConstraints.getLvlMaxSpeed(),g);
-        drawBar(widthOffset-377, heightOffset+210, gameConstraints.getLvlBulletSpeed(),g);
-        drawBar(widthOffset+93, heightOffset+110, gameConstraints.getLvlBulletDamage(),g);
-        drawBar(widthOffset+93, heightOffset+210, gameConstraints.getLvlBulletRatio(),g);
+
+
+        drawBar(widthOffset-530, heightOffset+130, gameConstraints.getLvlMaxSpeed(), buttons[0], g);
+
+        drawBar(widthOffset-530, heightOffset+250, gameConstraints.getLvlBulletSpeed(), buttons[1], g);
+        drawBar(widthOffset, heightOffset+130, gameConstraints.getLvlBulletDamage(), buttons[2], g);
+        drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), buttons[3], g);
     }
 }
