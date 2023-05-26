@@ -37,10 +37,15 @@ public class MainMenu extends JPanel {
         g.setFont(fontTitle);
         g.drawString("YAAC", widthOffset - 130, heightOffset - 230);
         buttons[0] = createButton("GIOCA", widthOffset - 100, heightOffset - 100, 200, 50);
+        buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
         buttons[1] = createButton("NEGOZIO", widthOffset - 100, heightOffset, 200, 50);
+        buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
         buttons[2] = createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 100, 200, 50);
+        buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings());
         buttons[3] = createButton("CREDITI", widthOffset - 100, heightOffset + 200, 200, 50);
+        buttons[3].addActionListener(e -> SceneManager.getInstance().loadCredits());
         buttons[4] = createButton("ESCI", widthOffset - 100, heightOffset + 300, 200, 50);
+        buttons[4].addActionListener(e -> System.exit(0));
 
         for (JButton button : buttons)
             this.add(button);

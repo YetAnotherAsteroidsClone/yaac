@@ -20,7 +20,7 @@ public class Shop extends JPanel {
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
     public Shop(){
-        this.addMouseListener(new MainMenuController());
+        //this.addMouseListener(new MainMenuController());
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         //bg image
         background = ImageUtility.loadImage("/Background/StaticBackground.png");
