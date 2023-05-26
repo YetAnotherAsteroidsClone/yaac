@@ -12,7 +12,10 @@ public class Shop extends JPanel {
     BufferedImage background;
     BufferedImage[] spaceShipImages = new BufferedImage[3];     //BufferedImage[0] = SPACESHIP; BufferedImage[1] = ENGINE; BufferedImage[2] = WEAPON
     //BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
+    BufferedImage plusButton;
 
+    private int widthOffset = Settings.width/2;
+    private int heightOffset = Settings.height/2;
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
     public Shop(){
@@ -39,44 +42,40 @@ public class Shop extends JPanel {
         PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],0,0);
         PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],0,0);*/
+
+        plusButton = ImageUtility.loadImage("/MenuSprite/plusButton.png");
+        plusButton = ImageUtility.scaleImage(plusButton, 28,28);
     }
 
-    private void fillPwUpBar(int x, int y, int levels, Graphics g, Color c){
-        g.setColor(c);
+    private void drawShip(int x, int y, Graphics g){
+        g.drawImage((Image) spaceShipImages[0], x, y, null);
+    }
+
+    private void drawBar(int x, int y, int levels, Graphics g){
+        g.setColor(Color.WHITE);
+        g.drawRect(x-55,y-10,40,40);
+        g.drawRect(x,y,301,30);
+        g.setColor(Color.YELLOW);
+        int drawX = x+1;
         for(int i=0; i<levels; i++){
-            g.fillRect(x,y,30,28);
-            x+=30;
+            g.fillRect(drawX,y+1,30,28);
+            drawX+=30;
         }
         g.setColor(Color.WHITE);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x+314,y,30,30);
+        g.drawImage(plusButton, x+315,y+1, null);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
-        g.drawImage((Image) spaceShipImages[1],420,190,null);
-        g.drawImage((Image) spaceShipImages[0],320,0,null);
+        drawShip(widthOffset-175,heightOffset-300, g);
         g.setColor(Color.WHITE);
-        g.drawLine(200,350,800,350);
-
-        //powerup images
-        g.drawRect(80,400,40,40);
-        g.drawRect(80,500,40,40);
-        g.drawRect(550,400,40,40);
-        g.drawRect(550,500,40,40);
-
-        //powerup bars
-        int barWidth = 301;
-        int barHeight = 30;
-        g.drawRect(135,410,barWidth,barHeight);
-        fillPwUpBar(136,411,gameConstraints.getLvlMaxSpeed(),g, Color.YELLOW);
-
-        g.drawRect(135,510,barWidth,barHeight);
-        fillPwUpBar(136,511,gameConstraints.getLvlBulletSpeed(),g, Color.YELLOW);
-
-        g.drawRect(605,410,barWidth,barHeight);
-        fillPwUpBar(606,411,gameConstraints.getLvlBulletDamage(),g, Color.YELLOW);
-
-        g.drawRect(605,510,barWidth,barHeight);
-        fillPwUpBar(606,511,gameConstraints.getLvlBulletRatio(),g, Color.YELLOW);
+        g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
+        drawBar(widthOffset-377, heightOffset+110, gameConstraints.getLvlMaxSpeed(),g);
+        drawBar(widthOffset-377, heightOffset+210, gameConstraints.getLvlBulletSpeed(),g);
+        drawBar(widthOffset+93, heightOffset+110, gameConstraints.getLvlBulletDamage(),g);
+        drawBar(widthOffset+93, heightOffset+210, gameConstraints.getLvlBulletRatio(),g);
     }
 }
