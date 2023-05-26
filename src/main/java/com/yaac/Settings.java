@@ -10,4 +10,6 @@ public class Settings {
     public static int width = 1365;
     public static int height = 800;
     public static String resourcePath = Main.class.getResource("/").getPath();
+
+    public static final String FONT = "Font.ttf";
 }
