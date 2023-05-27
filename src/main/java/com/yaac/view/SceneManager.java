@@ -26,7 +26,7 @@ public class SceneManager {
         }
     }
 
-    private boolean inGame=false;
+    private boolean inGame=true;
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;
