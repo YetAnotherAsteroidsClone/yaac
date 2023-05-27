@@ -6,6 +6,7 @@ import com.yaac.view.Utility.ImageUtility;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Shop extends JPanel {
     BufferedImage background;
@@ -124,7 +125,13 @@ public class Shop extends JPanel {
         g.drawRect(widthOffset-640,heightOffset-360,40,40);
         JButton mainMenu = new JButton();
         mainMenu.setBounds(widthOffset-639,heightOffset-359,39,39);
-        mainMenu.addActionListener(actionEvent -> {SceneManager.getInstance().loadMainMenu();});
+        mainMenu.addActionListener(actionEvent -> {
+            try {
+                SceneManager.getInstance().loadMainMenu();
+            } catch (IOException | FontFormatException e) {
+                throw new RuntimeException(e);
+            }
+        });
         this.add(mainMenu);
 
         g.setFont(font);
