@@ -38,6 +38,12 @@ public class MainMenu extends JPanel {
         buttons[3] = createButton("CREDITI", widthOffset - 100, heightOffset + 200, 200, 50);
         buttons[4] = createButton("ESCI", widthOffset - 100, heightOffset + 300, 200, 50);
 
+        buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
+        buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
+        buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings());
+        buttons[3].addActionListener(e -> SceneManager.getInstance().loadCredits());
+        buttons[4].addActionListener(e -> System.exit(0));
+
         //icon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/YAAC.png")));
         //Image title = ImageIcon.getImage();
         //title = new JLabel(icon);
@@ -63,12 +69,6 @@ public class MainMenu extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(background, 0, 0, null);
-
-        buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
-        buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
-        buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings());
-        buttons[3].addActionListener(e -> SceneManager.getInstance().loadCredits());
-        buttons[4].addActionListener(e -> System.exit(0));
 
         for (JButton b : buttons) {
             this.add(b);
