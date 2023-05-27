@@ -20,8 +20,7 @@ public class Shop extends JPanel {
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
 
     public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
-    private JButton mainMenu;
-    private JButton back;
+    private JButton mainMenu, back;
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
     private ShopController controller = new ShopController(this);
@@ -61,7 +60,17 @@ public class Shop extends JPanel {
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],38,38);
 
         mainMenu = new JButton();
+        mainMenu.addActionListener(actionEvent -> {
+            try {
+                SceneManager.getInstance().loadMainMenu();
+            } catch (IOException | FontFormatException e) {
+                throw new RuntimeException(e);
+            }
+        });
         back = new JButton();
+        back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
+
+
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
         }
@@ -70,6 +79,17 @@ public class Shop extends JPanel {
         buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1); super.repaint();});
         buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1); super.repaint();});
         buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true); super.repaint();});
+    }
+
+    private void drawButton(JButton button, String path, int x, int y, int width, int height, Color color, Graphics g){
+        g.setColor(color);
+        g.drawRect(x,y,width,height);
+        button.setBounds(x+1,y+1,width-1,height-1);
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource(path));
+        Image image = imageIcon.getImage();
+        Image resizedImage = image.getScaledInstance(width-1,height-1, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(resizedImage);
+        button.setIcon(imageIcon);
     }
 
     private void drawShip(int x, int y, Graphics g){
@@ -87,60 +107,31 @@ public class Shop extends JPanel {
             g.fillRect(drawX,y+1,30,28);
             drawX+=30;
         }
-        g.setColor(Color.WHITE);
-        g.setColor(Color.LIGHT_GRAY);
-        g.fillRect(x+314,y,30,30);
-
-        b.setBounds(x+315,y+1,28,28);
-
-        ImageIcon plusButton = new ImageIcon(getClass().getResource("/MenuSprite/plusButton.png"));
-        Image image = plusButton.getImage();
-        Image resizedImage = image.getScaledInstance(30,30, Image.SCALE_SMOOTH);
-        plusButton = new ImageIcon(resizedImage);
-        b.setIcon(plusButton);
+        drawButton(b,"/MenuSprite/plusButton.png",x+314,y,30,30,Color.LIGHT_GRAY,g);
         this.add(b);
     }
 
     private void drawShopShield(Graphics g, JButton b){
-        g.setColor(Color.BLUE);
+        g.setColor(Color.CYAN);
+        g.setFont(font);
         if(gameConstraints.getShopShield()){
-            g.setColor(Color.GREEN);
+            drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
             //missing "spunta verde"
         }
-        g.setFont(font);
+        else {drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.CYAN,g);}
         g.drawString("missingCost", widthOffset+470, heightOffset+260);
-        g.drawRect(widthOffset+470, heightOffset+160, 70,70);
-        b.setBounds(widthOffset+471,heightOffset+161,69,69);
-        ImageIcon shieldButton = new ImageIcon(getClass().getResource("/GameSprite/shieldShop.png"));
-        Image image = shieldButton.getImage();
-        Image resizedImage = image.getScaledInstance(68,68, Image.SCALE_SMOOTH);
-        shieldButton = new ImageIcon(resizedImage);
-        b.setIcon(shieldButton);
         this.add(b);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
-        g.setColor(Color.WHITE);
-
-        //missing button icons
 
         if(SceneManager.getInstance().isInGame()){
-            g.drawRect(widthOffset-570,heightOffset-360,40,40);
-            back.setBounds(widthOffset-569,heightOffset-359,39,39);
-            back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
+            drawButton(back,"/MenuSprite/BackButton.png",widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
             this.add(back);
         }
-        g.drawRect(widthOffset-640,heightOffset-360,40,40);
-        mainMenu.setBounds(widthOffset-639,heightOffset-359,39,39);
-        mainMenu.addActionListener(actionEvent -> {
-            try {
-                SceneManager.getInstance().loadMainMenu();
-            } catch (IOException | FontFormatException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        drawButton(mainMenu,"/MenuSprite/HomeButton.png",widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
         this.add(mainMenu);
 
         g.setFont(font);
@@ -164,7 +155,5 @@ public class Shop extends JPanel {
         drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
 
         drawShopShield(g, buttons[4]);
-
-
     }
 }
