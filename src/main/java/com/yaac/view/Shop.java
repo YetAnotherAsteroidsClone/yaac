@@ -1,12 +1,17 @@
 package com.yaac.view;
+import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.controller.ShopController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Shop extends JPanel {
     BufferedImage background;
@@ -21,13 +26,16 @@ public class Shop extends JPanel {
     private ShopController controller = new ShopController(this);
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
-    public Shop(){
+    public Shop() throws IOException, FontFormatException {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         //bg image
         background = ImageUtility.loadImage("/Background/StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
 
         font = new Font("font",Font.BOLD,25);
+
+        // Se vuoi cambiare il font ti ho incollato qua la parte di codice che lo fa e ho aggiunto le exception
+        //font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(25f);
 
         //spaceship images
         spaceShipImages[0] = ImageUtility.loadImage("/GameSprite/Body1.png");

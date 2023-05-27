@@ -16,19 +16,30 @@ import java.io.IOException;
  */
 public class SceneManager {
 
-    private static final SceneManager instance = new SceneManager();
+    private static final SceneManager instance;
+
+    static {
+        try {
+            instance = new SceneManager();
+        } catch (IOException | FontFormatException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private boolean inGame=false;
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;
     private Shop shop;
+    private Credits credits;
+
+    private Settings settings;
 
     private GamePanel gamePanel;
 
     public static SceneManager getInstance() {return instance;}
 
-    private SceneManager() {
+    private SceneManager() throws IOException, FontFormatException {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
         mainFrame.setUndecorated(true);
@@ -63,8 +74,9 @@ public class SceneManager {
     }
 
     public void loadCredits(){
-        shop = new Shop();
-        loadScene(shop);
+        //TODO
+        /*credits = new Credits();
+        loadScene(credits);*/
     }
 
     public void loadGame(){
