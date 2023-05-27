@@ -17,8 +17,8 @@ public class GameConstraints {
     private int lvlBulletDamage=1;
     private int lvlBulletRatio=1;
     private boolean shopShield=false;
-    private int score;
-    private int orbs;
+    private int score=0;
+    private int orbs=0;
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed;}

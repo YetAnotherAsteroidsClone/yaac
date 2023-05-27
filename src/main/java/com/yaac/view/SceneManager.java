@@ -1,9 +1,8 @@
 package com.yaac.view;
 
-import com.yaac.Loop;
+import com.yaac.GameLoop;
 import com.yaac.Settings;
 import com.yaac.controller.GameController;
-import com.yaac.controller.MainMenuController;
 import com.yaac.controller.ShopController;
 
 import javax.swing.JFrame;
@@ -16,9 +15,17 @@ import java.io.IOException;
  */
 public class SceneManager {
 
-    private static final SceneManager instance = new SceneManager();
+    private static final SceneManager instance;
 
-    private final JFrame mainFrame;
+    static {
+        try {
+            instance = new SceneManager();
+        } catch (IOException | FontFormatException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private JFrame mainFrame;
     private MainMenu mainMenu;
     private Shop shop;
 
@@ -26,7 +33,7 @@ public class SceneManager {
 
     public static SceneManager getInstance() {return instance;}
 
-    private SceneManager() {
+    private SceneManager() throws IOException, FontFormatException {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
         mainFrame.setUndecorated(true);
@@ -34,7 +41,7 @@ public class SceneManager {
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
+        mainMenu = new MainMenu();
         shop = new Shop();
     }
 
@@ -47,14 +54,8 @@ public class SceneManager {
         mainFrame.revalidate();
     }
 
-    public void loadMainMenu() throws IOException, FontFormatException {
-        mainMenu = new MainMenu();
-        MainMenuController controller = new MainMenuController(mainMenu);
-        Loop mainMenuLoop = new Loop(controller);
-        mainMenu.addMouseListener(controller);
+    public void loadMainMenu(){
         loadScene(mainMenu);
-        mainMenu.requestFocus();
-        mainMenuLoop.run();
     }
 
     public void loadSettings(){
@@ -70,7 +71,7 @@ public class SceneManager {
         gamePanel = new GamePanel();
         GameController controller = new GameController(gamePanel);
         gamePanel.addKeyListener(controller);
-        Loop gameLoop = new Loop(controller);
+        GameLoop gameLoop = new GameLoop(controller);
         loadScene(gamePanel);
         gamePanel.requestFocus();
         gameLoop.run();
@@ -80,14 +81,5 @@ public class SceneManager {
         shop.addMouseListener(controller);
         loadScene(shop);
         shop.requestFocus();
-    }
-
-    /**
-     * Controlla se il pannello è caricato
-     * @param panel
-     * @return true se il pannello è caricato, false altrimenti
-     */
-    public static boolean isLoaded(JPanel panel){
-        return panel.getParent() != null; // Controlla se il JPanel non si trova più all'interno del JFrame principale
     }
 }
