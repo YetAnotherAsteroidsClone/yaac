@@ -20,7 +20,8 @@ public class Shop extends JPanel {
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
 
     public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
-
+    private JButton mainMenu;
+    private JButton back;
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
     private ShopController controller = new ShopController(this);
@@ -58,6 +59,9 @@ public class Shop extends JPanel {
         PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],38,38);
         PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/shieldShop.png");
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],38,38);
+
+        mainMenu = new JButton();
+        back = new JButton();
 
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
@@ -125,13 +129,11 @@ public class Shop extends JPanel {
 
         if(SceneManager.getInstance().isInGame()){
             g.drawRect(widthOffset-570,heightOffset-360,40,40);
-            JButton back = new JButton();
             back.setBounds(widthOffset-569,heightOffset-359,39,39);
             back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
             this.add(back);
         }
         g.drawRect(widthOffset-640,heightOffset-360,40,40);
-        JButton mainMenu = new JButton();
         mainMenu.setBounds(widthOffset-639,heightOffset-359,39,39);
         mainMenu.addActionListener(actionEvent -> {
             try {
