@@ -4,6 +4,7 @@ import com.yaac.Settings;
 import com.yaac.controller.ShopController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
+import com.yaac.view.Utility.ObjectAnimation;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Shop extends JPanel {
-    BufferedImage background;
+    private ObjectAnimation backgroundL1, backgroundL2;
     Font font;
     private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
@@ -29,8 +30,10 @@ public class Shop extends JPanel {
     public Shop() throws IOException, FontFormatException {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         //bg image
-        background = ImageUtility.loadImage("/Background/StaticBackground.png");
-        background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
+        backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
+        backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
+        backgroundL1.scaleImage(Settings.width, Settings.height);
+        backgroundL2.scaleImage(Settings.width, Settings.height);
 
         font = new Font("font",Font.BOLD,25);
 
@@ -125,7 +128,10 @@ public class Shop extends JPanel {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage((Image)background,0,0,null);
+        g.drawImage(backgroundL1.getCurrentFrame(),0, 0, null);
+        g.drawImage(backgroundL2.getCurrentFrame(),0, 0, null);
+        backgroundL1.update();
+        backgroundL2.update();
 
         if(SceneManager.getInstance().isInGame()){
             drawButton(back,"/MenuSprite/BackButton.png",widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
@@ -155,5 +161,9 @@ public class Shop extends JPanel {
         drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
 
         drawShopShield(g, buttons[4]);
+    }
+
+    public void update() {
+        this.repaint();
     }
 }

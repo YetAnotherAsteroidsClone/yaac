@@ -18,6 +18,6 @@ public class Main {
         System.setProperty("swing.aatext", "false");
 
         SceneManager.getInstance().openMainFrame();
-        SceneManager.getInstance().loadShop();
+        SceneManager.getInstance().loadMainMenu();
     }
 }

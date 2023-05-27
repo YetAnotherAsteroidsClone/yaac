@@ -4,12 +4,9 @@ import com.yaac.Settings;
 import com.yaac.view.MainMenu;
 import com.yaac.view.SceneManager;
 
-import javax.sound.sampled.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.logging.Level;
 
 public class MainMenuController extends MouseAdapter implements Updatable {
