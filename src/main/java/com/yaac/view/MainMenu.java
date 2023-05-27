@@ -59,9 +59,6 @@ public class MainMenu extends JPanel {
         title = new JLabel(icon);
         title.setBounds(widthOffset - 300, heightOffset - 300, 600, 200);
 
-
-        //title.setVisible(true);
-
         String commandsText = """
                 COMANDI
                 A -> RUOTA A SINISTRA
@@ -70,9 +67,7 @@ public class MainMenu extends JPanel {
                 BARRA SPAZIATRICE -> SPARA
                 """;
 
-        //title = createLabel(titleText, fontTitle, Color.YELLOW, SwingConstants.CENTER);
         // TODO: commands
-
 
         this.add(title);
         //this.add(commands);
