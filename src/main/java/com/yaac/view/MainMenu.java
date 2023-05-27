@@ -23,8 +23,6 @@ public class MainMenu extends JPanel {
     private JButton[] buttons = new JButton[5];
     //[0]playButton, [1]shopButton, [2]settingsButton, [3]creditsButton, [4]exitButton;
 
-
-
     public MainMenu() throws IOException, FontFormatException {
         this.addMouseListener(new MainMenuController(this));
         background = ImageUtility.loadImage("/Background/StaticBackground.png");
@@ -72,5 +70,9 @@ public class MainMenu extends JPanel {
         button.setBorderPainted(false);
         button.addMouseListener(new MainMenuController(this));
         return button;
+    }
+
+    public void update(){
+        this.repaint();
     }
 }

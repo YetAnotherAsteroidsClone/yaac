@@ -2,14 +2,15 @@ package com.yaac.controller;
 
 import com.yaac.Settings;
 import com.yaac.view.MainMenu;
+import com.yaac.view.SceneManager;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 
-public class MainMenuController extends MouseAdapter {
+public class MainMenuController extends MouseAdapter implements Updatable {
 
-    private MainMenu mainMenu;
+    private final MainMenu mainMenu;
 
     public MainMenuController(MainMenu mainMenu){
         this.mainMenu = mainMenu;
@@ -29,4 +30,13 @@ public class MainMenuController extends MouseAdapter {
     public void mouseExited(MouseEvent e) {
         //TODO
     }
+
+    @Override
+    public boolean update() {
+        if (!SceneManager.isLoaded(this.mainMenu))
+            return false;
+        this.mainMenu.update();
+        return true;
+    }
+
 }

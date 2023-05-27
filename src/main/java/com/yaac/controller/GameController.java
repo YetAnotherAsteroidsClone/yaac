@@ -2,13 +2,14 @@ package com.yaac.controller;
 
 import com.yaac.model.Game;
 import com.yaac.view.GamePanel;
+import com.yaac.view.SceneManager;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class GameController extends KeyAdapter {
+public class GameController extends KeyAdapter implements Updatable {
 
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
 
     public GameController(GamePanel gamePanel){
         this.gamePanel = gamePanel;
@@ -34,8 +35,12 @@ public class GameController extends KeyAdapter {
         }
     }
 
-    public void update(){
+    @Override
+    public boolean update(){
+        if(!SceneManager.isLoaded(this.gamePanel))
+            return false;
         Game.getInstance().update();
         gamePanel.update();
+        return true;
     }
 }
