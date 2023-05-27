@@ -20,7 +20,7 @@ import java.util.Objects;
 public class MainMenu extends JPanel {
     ObjectAnimation backgroundL1, backgroundL2, backgroundL3;
     Font fontButtons;
-    //JLabel title;
+    JLabel title;
     Icon icon;
     private final int widthOffset = Settings.width/2;
     private final int heightOffset = Settings.height/2;
@@ -39,11 +39,11 @@ public class MainMenu extends JPanel {
 
         fontButtons = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
 
-        buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 100, 200, 50, fontButtons);
+        buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 80, 200, 50, fontButtons);
         buttons[1] = MenuUtility.createButton("NEGOZIO", widthOffset - 100, heightOffset, 200, 50, fontButtons);
-        buttons[2] = MenuUtility.createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 100, 200, 50, fontButtons);
-        buttons[3] = MenuUtility.createButton("CREDITI", widthOffset - 100, heightOffset + 200, 200, 50, fontButtons);
-        buttons[4] = MenuUtility.createButton("ESCI", widthOffset - 100, heightOffset + 300, 200, 50, fontButtons);
+        buttons[2] = MenuUtility.createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 80, 200, 50, fontButtons);
+        buttons[3] = MenuUtility.createButton("CREDITI", widthOffset - 100, heightOffset + 160, 200, 50, fontButtons);
+        buttons[4] = MenuUtility.createButton("ESCI", widthOffset - 100, heightOffset + 240, 200, 50, fontButtons);
 
         buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
         buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
@@ -55,9 +55,10 @@ public class MainMenu extends JPanel {
             this.add(b);
         }
 
-        //icon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/YAAC.png")));
-        //Image title = ImageIcon.getImage();
-        //title = new JLabel(icon);
+        icon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/Title.png")));
+        title = new JLabel(icon);
+        title.setBounds(widthOffset - 300, heightOffset - 300, 600, 200);
+
 
         //title.setVisible(true);
 
@@ -73,7 +74,7 @@ public class MainMenu extends JPanel {
         // TODO: commands
 
 
-        //this.add(title);
+        this.add(title);
         //this.add(commands);
     }
 
