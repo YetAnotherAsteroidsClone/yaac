@@ -62,7 +62,6 @@ public class Shop extends JPanel {
 
         mainMenu = new JButton();
         back = new JButton();
-
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
         }
