@@ -4,6 +4,7 @@ import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.controller.MainMenuController;
 import com.yaac.view.Utility.ImageUtility;
+import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 
 import javax.sound.sampled.AudioInputStream;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainMenu extends JPanel {
-    BufferedImage background;
+    ObjectAnimation backgroundL1, backgroundL2, backgroundL3;
     Font fontButtons;
     //JLabel title;
     Icon icon;
@@ -27,22 +28,32 @@ public class MainMenu extends JPanel {
     //[0]playButton, [1]shopButton, [2]settingsButton, [3]creditsButton, [4]exitButton;
 
     public MainMenu() throws IOException, FontFormatException {
-        background = ImageUtility.loadImage("/Background/StaticBackground.png");
-        background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
+        this.setLayout(null);
+        backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
+        backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
+        backgroundL3 = new ObjectAnimation("/Background/MainBackgroundL3.png", 640, 360);
+
+        backgroundL1.scaleImage(Settings.width, Settings.height);
+        backgroundL2.scaleImage(Settings.width, Settings.height);
+        backgroundL3.scaleImage(Settings.width, Settings.height);
 
         fontButtons = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
 
-        buttons[0] = createButton("GIOCA", widthOffset - 100, heightOffset - 100, 200, 50);
-        buttons[1] = createButton("NEGOZIO", widthOffset - 100, heightOffset, 200, 50);
-        buttons[2] = createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 100, 200, 50);
-        buttons[3] = createButton("CREDITI", widthOffset - 100, heightOffset + 200, 200, 50);
-        buttons[4] = createButton("ESCI", widthOffset - 100, heightOffset + 300, 200, 50);
+        buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 100, 200, 50, fontButtons);
+        buttons[1] = MenuUtility.createButton("NEGOZIO", widthOffset - 100, heightOffset, 200, 50, fontButtons);
+        buttons[2] = MenuUtility.createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 100, 200, 50, fontButtons);
+        buttons[3] = MenuUtility.createButton("CREDITI", widthOffset - 100, heightOffset + 200, 200, 50, fontButtons);
+        buttons[4] = MenuUtility.createButton("ESCI", widthOffset - 100, heightOffset + 300, 200, 50, fontButtons);
 
         buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
         buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
         buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings());
         buttons[3].addActionListener(e -> SceneManager.getInstance().loadCredits());
         buttons[4].addActionListener(e -> System.exit(0));
+
+        for (JButton b : buttons) {
+            this.add(b);
+        }
 
         //icon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/YAAC.png")));
         //Image title = ImageIcon.getImage();
@@ -68,32 +79,12 @@ public class MainMenu extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(background, 0, 0, null);
-
-        for (JButton b : buttons) {
-            this.add(b);
-        }
-        this.setVisible(true);
-
-    }
-
-    public JButton createButton(String text, int x, int y, int width, int height) {
-        JButton button = new JButton(text);
-        button.setBounds(x, y, width, height);
-        button.setBackground(Color.GRAY);
-        button.setForeground(Color.WHITE);
-        button.setFont(fontButtons);
-        button.setFocusable(false);
-        button.setBorderPainted(false);
-        return button;
-    }
-
-    public JLabel createLabel(String text, Font font, Color color, int alignment) {
-        JLabel label = new JLabel(text, alignment);
-        label.setForeground(color);
-        label.setFont(font);
-        label.setVisible(true);
-        return label;
+        g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
+        g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
+        g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
+        backgroundL1.update();
+        backgroundL2.update();
+        backgroundL3.update();
     }
 
     public void update(){
