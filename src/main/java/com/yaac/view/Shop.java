@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Shop extends JPanel {
     BufferedImage background;
+    Font font;
     private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
 
@@ -24,6 +25,9 @@ public class Shop extends JPanel {
         //bg image
         background = ImageUtility.loadImage("/Background/StaticBackground.png");
         background = ImageUtility.scaleImage(background, Settings.width, Settings.height);
+
+        font = new Font("font",Font.BOLD,25);
+
         //spaceship images
         spaceShipImages[0] = ImageUtility.loadImage("/GameSprite/Body1.png");
         spaceShipImages[0] = ImageUtility.scaleImage(spaceShipImages[0],350,350);
@@ -89,7 +93,10 @@ public class Shop extends JPanel {
         g.setColor(Color.BLUE);
         if(gameConstraints.getShopShield()){
             g.setColor(Color.GREEN);
+            //missing "spunta verde"
         }
+        g.setFont(font);
+        g.drawString("missingCost", widthOffset+470, heightOffset+260);
         g.drawRect(widthOffset+470, heightOffset+160, 70,70);
         b.setBounds(widthOffset+471,heightOffset+161,69,69);
         ImageIcon shieldButton = new ImageIcon(getClass().getResource("/GameSprite/shieldShop.png"));
@@ -103,17 +110,45 @@ public class Shop extends JPanel {
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         g.drawImage((Image)background,0,0,null);
+        g.setColor(Color.WHITE);
+
+        //missing button icons
+
+        if(SceneManager.getInstance().isInGame()){
+            g.drawRect(widthOffset-570,heightOffset-360,40,40);
+            JButton back = new JButton();
+            back.setBounds(widthOffset-569,heightOffset-359,39,39);
+            back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
+            this.add(back);
+        }
+        g.drawRect(widthOffset-640,heightOffset-360,40,40);
+        JButton mainMenu = new JButton();
+        mainMenu.setBounds(widthOffset-639,heightOffset-359,39,39);
+        mainMenu.addActionListener(actionEvent -> {SceneManager.getInstance().loadMainMenu();});
+        this.add(mainMenu);
+
+        g.setFont(font);
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset+430,heightOffset-360);
+        g.setColor(Color.CYAN);
+        g.drawString("ORBS: "+gameConstraints.getOrbs(),widthOffset+430,heightOffset-325);
+
         drawShip(widthOffset-175,heightOffset-350, g);
+        //missing weapon and engine
+
+
         g.setColor(Color.WHITE);
         g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
 
 
+        //2 PwUpimages missing
         drawBar(widthOffset-530, heightOffset+130, gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], buttons[0], g);
         drawBar(widthOffset-530, heightOffset+250, gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
         drawBar(widthOffset, heightOffset+130, gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
         drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
 
         drawShopShield(g, buttons[4]);
+
 
     }
 }

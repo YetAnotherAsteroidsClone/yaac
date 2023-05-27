@@ -25,6 +25,8 @@ public class SceneManager {
         }
     }
 
+    private boolean inGame=false;
+
     private JFrame mainFrame;
     private MainMenu mainMenu;
     private Shop shop;
@@ -82,4 +84,7 @@ public class SceneManager {
         loadScene(shop);
         shop.requestFocus();
     }
+
+    public boolean isInGame() {return inGame;}
+    public void setInGame(boolean inGame) {this.inGame = inGame;}
 }
