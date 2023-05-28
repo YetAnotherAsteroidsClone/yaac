@@ -37,6 +37,7 @@ public class MainMenu extends JPanel {
         backgroundL2.scaleImage(Settings.width, Settings.height);
         backgroundL3.scaleImage(Settings.width, Settings.height);
 
+
         fontButtons = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
 
         buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 80, 200, 50, fontButtons);

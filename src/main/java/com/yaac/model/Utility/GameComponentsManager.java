@@ -1,6 +1,7 @@
 package com.yaac.model.Utility;
 
-import com.yaac.model.GameComponent.MovableObject;
+import com.yaac.model.GameComponent.GameObject;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * Estende ArrayList<MovableObject>
  * Implementa il metodo update per aggiornare i componenti
  */
-public class GameComponentsManager extends ArrayList<MovableObject> {
+public class GameComponentsManager extends ArrayList<GameObject> {
 
     public GameComponentsManager() {
         super();
@@ -18,7 +19,7 @@ public class GameComponentsManager extends ArrayList<MovableObject> {
      * Aggiorna i componenti del gioco
      */
     public void update(){
-        for(MovableObject obj : this){
+        for(GameObject obj : this){
             obj.update();
         }
     }
@@ -27,13 +28,11 @@ public class GameComponentsManager extends ArrayList<MovableObject> {
         this.clear();
     }
 
-    public void clearDeadObjects(){
-        ArrayList<MovableObject> toRemove = new ArrayList<>();
-        for(MovableObject obj : this){
-            if(obj.toBeDeleted()){
-                toRemove.add(obj);
-            }
-        }
-        this.removeAll(toRemove);
+    public void add(GameComponentsManager obj){
+        this.addAll(obj);
+    }
+
+    public void removeArray(GameComponentsManager obj){
+        this.removeAll(obj);
     }
 }

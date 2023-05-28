@@ -7,12 +7,10 @@ import com.yaac.model.GameConstraints;
  * Estende la classe MovableObject
  * Implementa la gestione del danno
  */
-public class Bullet extends MovableObject{
+public class Bullet extends GameObject{
     private int type = 0;
-
     private double damage = 1;
-    private double radius = 5;
-    private boolean collided = false;
+    private boolean outside = false;
 
     /**
      * Costruttore della projectile con parametri
@@ -23,28 +21,20 @@ public class Bullet extends MovableObject{
      * @param damage danno della projectile
      */
     public Bullet(double x, double y, double vx, double vy, double damage, int rotation){
-        super(x, y, vx, vy, rotation);
+        super(x, y, vx, vy, rotation, 1);
         this.damage = damage;
     }
 
     public Bullet(double x, double y, double vx, double vy, double damage, int rotation, int type){
-        super(x, y, vx, vy, rotation);
+        super(x, y, vx, vy, rotation, 1);
         this.damage = damage;
         this.type = type;
-    }
-
-    @Override
-    public double getRadius() {
-        return radius;
     }
 
     public void setRadius(double radius) {
         this.radius = radius;
     }
 
-    public void setCollided(boolean collided) {
-        this.collided = collided;
-    }
 
     /**
      * Setter del danno della projectile
@@ -62,24 +52,16 @@ public class Bullet extends MovableObject{
         return damage;
     }
 
-    /**
-     * Ritorna il lifetime del proiettile
-     * @return tick della projectile
-     */
-    public long getTick() {
-    	return tick;
-    }
-
     public void move() {
         x = x + vx;
         y = y + vy;
         if (x > GameConstraints.WORLDWIDTH || x < 0 || y > GameConstraints.WORLDHEIGHT || y < 0) {
-            collided = true;
+            outside = true;
         }
     }
 
-    public boolean toBeDeleted() {
-    	return collided;
+    public boolean isOutside() {
+        return outside;
     }
 
     @Override

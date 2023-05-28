@@ -11,9 +11,10 @@ import static java.lang.Math.max;
  * Estende la classe MovableObject
  * Implementa i metodi per la gestione della accelerazione e della rotazione
  */
-public class SpaceShip extends MovableObject{
+public class SpaceShip extends GameObject{
     int shotTick = 0;
 
+    boolean isMoving = false;
     boolean isShooting = false;
     boolean isRotatingLeft = false;
     boolean isRotatingRight = false;
@@ -25,7 +26,8 @@ public class SpaceShip extends MovableObject{
      * @param y posizione y
      */
     public SpaceShip(int x, int y){
-        super(x, y);
+        super(x, y, 0);
+        radius = 24;
     }
 
     /**
@@ -36,7 +38,7 @@ public class SpaceShip extends MovableObject{
      * @param vy velocità iniziale su asse y
      */
     public SpaceShip(int x, int y, int vx, int vy){
-        super(x, y, vx, vy, 0);
+        super(x, y, vx, vy, 0, 24);
     }
 
 
@@ -56,13 +58,6 @@ public class SpaceShip extends MovableObject{
         tick++;
     }
 
-    /**
-     * Metodo non usato
-     */
-    @Override
-    public boolean toBeDeleted() {
-        return false;
-    }
 
     @Override
     public int getType() {
@@ -80,14 +75,14 @@ public class SpaceShip extends MovableObject{
      */
     public void move() {
         x = x + vx;
-        if(x > GameConstraints.WORLDWIDTH || x < 0 ){
+        if(x > GameConstraints.WORLDWIDTH || x < 1 ){
             vx = 0;
-            x = min(max(x, 0), GameConstraints.WORLDWIDTH);
+            x = min(max(x, 1), GameConstraints.WORLDWIDTH);
         }
         y = y + vy;
-        if(y > GameConstraints.WORLDHEIGHT || y < 0) {
+        if(y > GameConstraints.WORLDHEIGHT || y < 1) {
             vy = 0;
-            y = min(max(y, 0), GameConstraints.WORLDHEIGHT);
+            y = min(max(y, 1), GameConstraints.WORLDHEIGHT);
         }
     }
 

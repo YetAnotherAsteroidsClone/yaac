@@ -22,7 +22,7 @@ public class CollisionUtility {
         double r1 = obj1.getRadius();
         double r2 = obj2.getRadius();
 
-        return (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) <= (r1+r2)*(r1+r2);
+        return (Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))) <= (r1+r2);
     }
 
     /**
@@ -31,9 +31,9 @@ public class CollisionUtility {
      * @param obj2 array di oggetti
      * @return true se il primo oggetto collide con almeno un elemento del array, false altrimenti
      */
-    public static boolean bCheckCollision(GameObject obj1, ArrayList<GameObject> obj2){
+    public static boolean bCheckCollision(GameObject obj1, GameComponentsManager obj2){
         for(GameObject obj : obj2){
-            if(checkCollision(obj1, obj))
+            if(checkCollision(obj1, obj) && obj1 != obj)
                 return true;
         }
         return false;
@@ -42,13 +42,13 @@ public class CollisionUtility {
     /**
      * Metodo per la collisione tra un oggetto e un array di oggetti
      * @param obj1 primo oggetto
-     * @param obj2 array di oggetti
+     * @param obj2 GameComponentManager di elementi da controllare
      * @return array di oggetti con cui collide il primo oggetto
      */
-    public static ArrayList<GameObject> checkCollisionArray(GameObject obj1, ArrayList<GameObject> obj2){
-        ArrayList<GameObject> collisionList = new ArrayList<>();
+    public static GameComponentsManager checkCollisionArray(GameComponentsManager obj1, GameComponentsManager obj2){
+        GameComponentsManager collisionList = new GameComponentsManager();
         for(GameObject obj : obj2){
-            if(checkCollision(obj1, obj))
+            if(bCheckCollision(obj, obj1))
                 collisionList.add(obj);
         }
         return collisionList;
@@ -75,7 +75,7 @@ public class CollisionUtility {
      * @param obj2 array di oggetti
      * @return distanza tra il primo oggetto e l'oggetto più vicino
      */
-    public static double distanceArray(GameObject obj1, ArrayList<GameObject> obj2){
+    public static double distanceArray(GameObject obj1, GameComponentsManager obj2){
         double min = Double.MAX_VALUE;
         for(GameObject obj : obj2){
             double dist = distance(obj1, obj);

@@ -1,11 +1,16 @@
 package com.yaac.model.GameComponent;
 
+import com.yaac.model.GameConstraints;
+
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 /**
  * Classe dedicata alla gestione degli asteroidi
  * Estende la classe MovableObject
  * Implementa la gestione della vita
  */
-public class Asteroid extends MovableObject{
+public class Asteroid extends GameObject{
     private int life;
 
     /**
@@ -16,8 +21,8 @@ public class Asteroid extends MovableObject{
      * @param vy velocità iniziale su asse y
      * @param life vita dell'asteroide
      */
-    public Asteroid(int x, int y, int vx, int vy, int life) {
-        super(x, y, vx, vy, 0);
+    public Asteroid(int x, int y, int vx, int vy, int life, int radius) {
+        super(x, y, vx, vy, 0, radius);
         this.life = life;
     }
 
@@ -49,28 +54,31 @@ public class Asteroid extends MovableObject{
 
     public void move() {
         x = x + vx;
+        if(x > GameConstraints.WORLDWIDTH || x < 1){
+            vx = -vx;
+            x = min(max(x, 1), GameConstraints.WORLDWIDTH);
+        }
         y = y + vy;
+        if(y > GameConstraints.WORLDHEIGHT || y < 1) {
+            vy = -vy;
+            y = min(max(y, 1), GameConstraints.WORLDHEIGHT);
+        }
+        rotation += 2;
+    }
+
+    public void bounce(){
+        vx = -vx;
+        vy = -vy;
     }
 
     public void update() {
+        tick++;
         move();
     }
 
-    /**
-     * Metodo non usato
-     */
-    @Override
-    public boolean toBeDeleted() {
-        return life <= 0;
-    }
 
     @Override
     public int getType() {
         return 0;
-    }
-
-    @Override
-    public long getTick() {
-        return tick;
     }
 }
