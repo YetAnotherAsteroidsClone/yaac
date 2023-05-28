@@ -11,6 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -30,14 +31,17 @@ public class Shop extends JPanel{
     private JButton mainMenu, back;
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
-    private ShopController controller = new ShopController(this);
+    private ShopController controller;
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
     public Shop() throws IOException, FontFormatException {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
+
+
         //bg image
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
+
         backgroundL1.scaleImage(Settings.width, Settings.height);
         backgroundL2.scaleImage(Settings.width, Settings.height);
 
@@ -61,7 +65,6 @@ public class Shop extends JPanel{
         PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],0,0);
         */
-
         PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/bulletDamage.png");
         PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],38,38);
         PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/bulletRatio.png");
@@ -84,11 +87,13 @@ public class Shop extends JPanel{
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
         }
+
         buttons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1); super.repaint();});
         buttons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1); super.repaint();});
         buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1); super.repaint();});
         buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1); super.repaint();});
         buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true); super.repaint();});
+
     }
 
     private void drawShip(int x, int y, Graphics g){
@@ -134,8 +139,8 @@ public class Shop extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.drawImage(backgroundL1.getCurrentFrame(),0, 0, null);
-        g.drawImage(backgroundL2.getCurrentFrame(),0, 0, null);
+        g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
+        g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         backgroundL1.update();
         backgroundL2.update();
 
@@ -169,7 +174,5 @@ public class Shop extends JPanel{
         drawShopShield(g, buttons[4]);
     }
 
-    public void update() {
-        this.repaint();
-    }
+    public void update() {this.repaint();}
 }
