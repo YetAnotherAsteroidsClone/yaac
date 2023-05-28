@@ -4,6 +4,8 @@ import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
+import com.yaac.view.Utility.Sound;
+
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,6 +26,7 @@ public class GamePanel extends JPanel {
     private ArrayList<ObjectAnimation> bulletsAnimation;
     private BufferedImage asteroidsImage;
     private ObjectAnimation deadAsteroidsAnimation;
+    //private Sound gameSound;
 
     public GamePanel(){
         spaceshipImage = ImageUtility.loadImage("/GameSprite/Body1.png");
@@ -44,6 +47,9 @@ public class GamePanel extends JPanel {
         backgroundL1.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+
+        //gameSound = new Sound("Music.wav");
+        //gameSound.loop();
     }
 
     public void paintComponent(Graphics g) {
@@ -66,7 +72,7 @@ public class GamePanel extends JPanel {
 
         for(int i = 0; i < game.getDestroyedAsteroids().size(); i++) {
             double asteroidSize = game.getDestroyedAsteroids().get(i).getRadius();
-            Image asteroidCurrentFrame = deadAsteroidsAnimation.getImage((int) game.getDestroyedAsteroids().get(i).getTick() % deadAsteroidsAnimation.size());
+            Image asteroidCurrentFrame = deadAsteroidsAnimation.getImage((int) ((game.getDestroyedAsteroids().get(i).getTick() + 1) / 2) % deadAsteroidsAnimation.size());
             asteroidCurrentFrame = ImageUtility.scaleImage(ImageUtility.ImageToBuffered(asteroidCurrentFrame), (int) (asteroidSize * 5), (int) (asteroidSize * 5));
             asteroidCurrentFrame = ImageUtility.rotateImage((BufferedImage) asteroidCurrentFrame, game.getDestroyedAsteroids().get(i).getRotation());
             g.drawImage(asteroidCurrentFrame, (int) game.getDestroyedAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) game.getDestroyedAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);

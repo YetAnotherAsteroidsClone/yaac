@@ -19,6 +19,7 @@ public class GameConstraints {
     private boolean shopShield=false;
     private int score=0;
     private int orbs=0;
+    private int life=3;
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed;}
@@ -36,6 +37,7 @@ public class GameConstraints {
     public boolean getShopShield() {return shopShield;}
     public int getScore() {return score;}
     public int getOrbs() {return orbs;}
+    public int getLife() {return life;}
 
     //SETTERS
     public void setMaxSpeed(double maxSpeed) {this.maxSpeed = maxSpeed;}
@@ -46,6 +48,7 @@ public class GameConstraints {
     public void setShipDeceleration(double shipDeceleration) {this.shipDeceleration = shipDeceleration;}
     public void setMaxDurationShield(double maxDurationShield) {this.maxDurationShield = maxDurationShield;}
     public void setShipRotation(int shipRotation) {this.shipRotation = shipRotation;}
+    public void setLife(int life) {this.life = life;}
 
     public void setLvlMaxSpeed(int lvlMaxSpeed) {if(lvlMaxSpeed<=10) this.lvlMaxSpeed = lvlMaxSpeed;}
     public void setLvlBulletSpeed(int lvlBulletSpeed) {if(lvlBulletSpeed<=10) this.lvlBulletSpeed = lvlBulletSpeed;}

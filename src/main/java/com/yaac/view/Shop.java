@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Shop extends JPanel {
+public class Shop extends JPanel{
     private ObjectAnimation backgroundL1, backgroundL2;
     Font font;
     private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
@@ -55,6 +55,7 @@ public class Shop extends JPanel {
         PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],0,0);
         */
+
         PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/bulletDamage.png");
         PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],38,38);
         PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/bulletRatio.png");

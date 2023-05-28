@@ -7,6 +7,7 @@ import com.yaac.model.GameComponent.GameObject;
 import com.yaac.model.GameComponent.SpaceShip;
 import com.yaac.model.Utility.CollisionUtility;
 import com.yaac.model.Utility.GameComponentsManager;
+import com.yaac.view.Utility.Sound;
 
 public class Game {
     static Game instance = null;
@@ -14,18 +15,20 @@ public class Game {
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
     GameComponentsManager powerUps;
+    Sound bulletSound;
     SpaceShip spaceShip;
+    int score;
+    int lives;
+    int tick = 0;
 
     private Game() {
         this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
         bullets = new GameComponentsManager();
         asteroids = new GameComponentsManager();
         destroyedAsteroids = new GameComponentsManager();
+        lives = GameConstraints.getInstance().getLife();
+        bulletSound = new Sound("SpaceshipFiring.wav");
     }
-
-    private long tick = 0;
-    private int score = 0;
-    private int lives = 3;
 
     public static Game getInstance() {
         if(instance == null) {
@@ -50,16 +53,16 @@ public class Game {
         if (tick % 50 == 0) {
             addRandomAsteroid();
         }
+        resolveCollisions();
         removeOutsideBullets();
         removeVanishedAsteroids();
-        resolveCollisions();
         tick++;
     }
 
     private void removeVanishedAsteroids() {
         GameComponentsManager vanishedAsteroids = new GameComponentsManager();
         for (GameObject asteroid : destroyedAsteroids) {
-            if (((Asteroid) asteroid).getTick() > 7) {
+            if (((Asteroid) asteroid).getTick() > 14) {
                 vanishedAsteroids.add(asteroid);
             }
         }
@@ -70,8 +73,8 @@ public class Game {
         int dim = (int) (Math.random() * 46) + 46;
         int x = (int) (Math.random() * Settings.width) + 1;
         int y = Math.random() > 0.5 ? 1 : Settings.height;
-        int vx = (int) (Math.random() * 10) - 5;
-        int vy = (int) (Math.random() * 10) - 5;
+        int vx = (int) (Math.random() * 10);
+        int vy = (int) (Math.random() * 10);
         addAsteroid(x, y, vx, vy, dim);
     }
 
@@ -80,6 +83,7 @@ public class Game {
     }
 
     public void addBullet(Bullet b) {
+        bulletSound.play();
         bullets.add(b);
     }
 
@@ -103,6 +107,12 @@ public class Game {
         GameComponentsManager contrastAsteroids = CollisionUtility.checkCollisionArray(asteroids, asteroids);
         for (GameObject obj : contrastAsteroids) {
             ((Asteroid) obj).bounce();
+        }
+        if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
+            lives--;
+            spaceShip.reset();
+            destroyedAsteroids.add(asteroids);
+            asteroids.clear();
         }
         asteroids.removeArray(collidedAsteroids);
         bullets.removeArray(collidedBullets);

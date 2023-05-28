@@ -2,19 +2,12 @@ package com.yaac.view;
 
 import com.yaac.Main;
 import com.yaac.Settings;
-import com.yaac.controller.MainMenuController;
-import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainMenu extends JPanel {
