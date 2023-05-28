@@ -4,7 +4,6 @@ import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -12,9 +11,10 @@ import java.util.Objects;
 
 public class MainMenu extends JPanel {
     ObjectAnimation backgroundL1, backgroundL2, backgroundL3;
-    Font fontButtons;
+    Font font;
     JLabel title;
     Icon icon;
+    JTextArea commands;
     private final int widthOffset = Settings.width/2;
     private final int heightOffset = Settings.height/2;
     private final JButton[] buttons = new JButton[5];
@@ -31,13 +31,13 @@ public class MainMenu extends JPanel {
         backgroundL3.scaleImage(Settings.width, Settings.height);
 
 
-        fontButtons = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
+        font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
 
-        buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 80, 200, 50, fontButtons);
-        buttons[1] = MenuUtility.createButton("NEGOZIO", widthOffset - 100, heightOffset, 200, 50, fontButtons);
-        buttons[2] = MenuUtility.createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 80, 200, 50, fontButtons);
-        buttons[3] = MenuUtility.createButton("CREDITI", widthOffset - 100, heightOffset + 160, 200, 50, fontButtons);
-        buttons[4] = MenuUtility.createButton("ESCI", widthOffset - 100, heightOffset + 240, 200, 50, fontButtons);
+        buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 80, 200, 50, font);
+        buttons[1] = MenuUtility.createButton("NEGOZIO", widthOffset - 100, heightOffset, 200, 50, font);
+        buttons[2] = MenuUtility.createButton("IMPOSTAZIONI", widthOffset - 100, heightOffset + 80, 200, 50, font);
+        buttons[3] = MenuUtility.createButton("CREDITI", widthOffset - 100, heightOffset + 160, 200, 50, font);
+        buttons[4] = MenuUtility.createButton("ESCI", widthOffset - 100, heightOffset + 240, 200, 50, font);
 
         buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
         buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
@@ -62,9 +62,20 @@ public class MainMenu extends JPanel {
                 """;
 
         // TODO: commands
+        commands = new JTextArea(commandsText);
+        commands.setFont(font);
+        commands.setBounds(50, Settings.height - 500, 328, 145);
+        commands.setForeground(Color.YELLOW);
+        commands.setEditable(false);
+        commands.setOpaque(false);
+        commands.setBorder(null);
+        //commands.setLineWrap(true);
+        //commands.setWrapStyleWord(true);
+        commands.setVisible(true);
+
 
         this.add(title);
-        //this.add(commands);
+        this.add(commands);
     }
 
     public void paintComponent(Graphics g) {
