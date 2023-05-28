@@ -4,6 +4,7 @@ import com.yaac.Settings;
 import com.yaac.controller.ShopController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
+import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -90,17 +91,6 @@ public class Shop extends JPanel{
         buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true); super.repaint();});
     }
 
-    private void drawButton(JButton button, String path, int x, int y, int width, int height, Color color, Graphics g){
-        g.setColor(color);
-        g.drawRect(x,y,width,height);
-        button.setBounds(x+1,y+1,width-1,height-1);
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource(path));
-        Image image = imageIcon.getImage();
-        Image resizedImage = image.getScaledInstance(width-1,height-1, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(resizedImage);
-        button.setIcon(imageIcon);
-    }
-
     private void drawShip(int x, int y, Graphics g){
         g.drawImage((Image) spaceShipImages[0], x, y, null);
     }
@@ -116,21 +106,28 @@ public class Shop extends JPanel{
             g.fillRect(drawPwUpX,y+1,30,28);
             drawPwUpX+=30;
         }
-        drawButton(b,"/MenuSprite/plusButton.png",x+314,y,30,30,Color.LIGHT_GRAY,g);
-        this.add(b);
-        g.setColor(orbsColor);
-        g.setFont(font);
-        g.drawString(""+costs[levels], x,y-10);
+        if(levels<10){
+            MenuUtility.drawShopButton(b,"/MenuSprite/plusButton.png",x+314,y,30,30,Color.LIGHT_GRAY,g);
+            this.add(b);
+            g.setColor(orbsColor);
+            g.setFont(font);
+            g.drawString(""+costs[levels-1], x,y-10);
+        }
+        else{
+            if (b!=null){this.remove(b);}
+            g.setColor(Color.YELLOW);
+            g.setFont(font);
+            g.drawString("MAX!", x,y-10);
+        }
     }
 
     private void drawShopShield(Graphics g, JButton b){
-        g.setColor(orbsColor);
         g.setFont(font);
         if(gameConstraints.getShopShield()){
-            drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
+            MenuUtility.drawShopButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
             //missing "spunta verde"
         }
-        else {drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
+        else {MenuUtility.drawShopButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
         g.drawString("missingCost", widthOffset+470, heightOffset+260);
         this.add(b);
     }
@@ -143,10 +140,10 @@ public class Shop extends JPanel{
         backgroundL2.update();
 
         if(SceneManager.getInstance().isInGame()){
-            drawButton(back,"/MenuSprite/BackButton.png",widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
+            MenuUtility.drawShopButton(back,"/MenuSprite/BackButton.png",widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
             this.add(back);
         }
-        drawButton(mainMenu,"/MenuSprite/HomeButton.png",widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
+        MenuUtility.drawShopButton(mainMenu,"/MenuSprite/HomeButton.png",widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
         this.add(mainMenu);
 
         g.setFont(font);
