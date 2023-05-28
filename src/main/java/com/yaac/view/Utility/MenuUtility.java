@@ -24,4 +24,15 @@ public class MenuUtility {
         return label;
     }
 
+    public static JTextArea createTextArea(String text, int x, int y, int width, int height, Font font, Color color) {
+        JTextArea textArea = new JTextArea(text);
+        textArea.setBounds(x, y, width, height);
+        textArea.setForeground(color);
+        textArea.setFont(font);
+        textArea.setVisible(true);
+        textArea.setEditable(false);
+        textArea.setOpaque(false);
+        return textArea;
+    }
+
 }

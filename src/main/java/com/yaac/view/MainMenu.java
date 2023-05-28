@@ -14,7 +14,7 @@ public class MainMenu extends JPanel {
     Font font;
     JLabel title;
     Icon icon;
-    JTextArea commands;
+    JTextArea commands, highScore;
     private final int widthOffset = Settings.width/2;
     private final int heightOffset = Settings.height/2;
     private final JButton[] buttons = new JButton[5];
@@ -30,7 +30,6 @@ public class MainMenu extends JPanel {
         backgroundL2.scaleImage(Settings.width, Settings.height);
         backgroundL3.scaleImage(Settings.width, Settings.height);
 
-
         font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
 
         buttons[0] = MenuUtility.createButton("GIOCA", widthOffset - 100, heightOffset - 80, 200, 50, font);
@@ -45,9 +44,8 @@ public class MainMenu extends JPanel {
         buttons[3].addActionListener(e -> SceneManager.getInstance().loadCredits());
         buttons[4].addActionListener(e -> System.exit(0));
 
-        for (JButton b : buttons) {
+        for (JButton b : buttons)
             this.add(b);
-        }
 
         icon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/Title.png")));
         title = new JLabel(icon);
@@ -60,22 +58,13 @@ public class MainMenu extends JPanel {
                 W -> ACCELERA
                 BARRA SPAZIATRICE -> SPARA
                 """;
-
-        // TODO: commands
-        commands = new JTextArea(commandsText);
-        commands.setFont(font);
-        commands.setBounds(50, Settings.height - 500, 328, 145);
-        commands.setForeground(Color.YELLOW);
-        commands.setEditable(false);
-        commands.setOpaque(false);
-        commands.setBorder(null);
-        //commands.setLineWrap(true);
-        //commands.setWrapStyleWord(true);
-        commands.setVisible(true);
-
+        commands = MenuUtility.createTextArea(commandsText, 15, Settings.height - 170, 328, 160, font, Color.YELLOW);
+        String highScoreText = "HIGHSCORE";
+        highScore = MenuUtility.createTextArea(highScoreText, Settings.width - 200, Settings.height - 170, 200, 160, font, Color.YELLOW);
 
         this.add(title);
         this.add(commands);
+        this.add(highScore);
     }
 
     public void paintComponent(Graphics g) {
