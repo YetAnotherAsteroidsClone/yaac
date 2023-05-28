@@ -19,6 +19,11 @@ public class Shop extends JPanel{
     Font font;
     private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
+    private int[] costs = {1,2,3,4,5,6,7,8,9};
+
+    //COLORS
+    private Color orbsColor = Color.CYAN;
+
 
     public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
     private JButton mainMenu, back;
@@ -106,23 +111,26 @@ public class Shop extends JPanel{
         g.drawImage((Image) img,x-54,y-9,null);
         g.drawRect(x,y,301,30);
         g.setColor(Color.YELLOW);
-        int drawX = x+1;
+        int drawPwUpX = x+1;
         for(int i=0; i<levels; i++){
-            g.fillRect(drawX,y+1,30,28);
-            drawX+=30;
+            g.fillRect(drawPwUpX,y+1,30,28);
+            drawPwUpX+=30;
         }
         drawButton(b,"/MenuSprite/plusButton.png",x+314,y,30,30,Color.LIGHT_GRAY,g);
         this.add(b);
+        g.setColor(orbsColor);
+        g.setFont(font);
+        g.drawString(""+costs[levels], x,y-10);
     }
 
     private void drawShopShield(Graphics g, JButton b){
-        g.setColor(Color.CYAN);
+        g.setColor(orbsColor);
         g.setFont(font);
         if(gameConstraints.getShopShield()){
             drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
             //missing "spunta verde"
         }
-        else {drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.CYAN,g);}
+        else {drawButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
         g.drawString("missingCost", widthOffset+470, heightOffset+260);
         this.add(b);
     }
@@ -144,7 +152,7 @@ public class Shop extends JPanel{
         g.setFont(font);
         g.setColor(Color.LIGHT_GRAY);
         g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset+430,heightOffset-360);
-        g.setColor(Color.CYAN);
+        g.setColor(orbsColor);
         g.drawString("ORBS: "+gameConstraints.getOrbs(),widthOffset+430,heightOffset-325);
 
         drawShip(widthOffset-175,heightOffset-350, g);
