@@ -62,4 +62,8 @@ public class ObjectAnimation {
     public int size() {
         return images.size();
     }
+
+    public Image getDefaultImage() {
+        return images.get(0);
+    }
 }

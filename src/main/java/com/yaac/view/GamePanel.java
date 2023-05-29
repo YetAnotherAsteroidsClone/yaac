@@ -64,7 +64,7 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
-        g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 24, (int) game.getSpaceShip().getY() - 24, null);
+        g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
 
         for(int i = 0; i < game.getAsteroids().size(); i++) {
             double asteroidSize = game.getAsteroids().get(i).getRadius();
