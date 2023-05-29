@@ -25,6 +25,7 @@ public class Shop extends JPanel{
     private ObjectAnimation backgroundL1, backgroundL2;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
     private ImageIcon plusIcon, shieldShopIcon, menuIcon, backIcon;
+    private SpaceShipView spaceShipView;
 
     //BUTTONS
     public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
@@ -96,10 +97,11 @@ public class Shop extends JPanel{
         buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
         buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
 
+        spaceShipView = new SpaceShipView(350,350);
     }
 
     private void drawShip(int x, int y, Graphics g){
-        g.drawImage(ImageUtility.scaleImage((BufferedImage) SpaceShipView.getInstance().getSpaceship().draw(),350,350),x,y,null);
+        g.drawImage(spaceShipView.getSpaceship().draw(), x,y,null);
     }
 
     private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){
