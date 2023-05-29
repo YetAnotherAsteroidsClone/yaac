@@ -74,11 +74,7 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
         g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
 
-        g.setFont(font);
-        g.drawString("SCORE: "+gameConstraints.getScore(),40,50);
-        for(int i=0; i<gameConstraints.getLife();i++){
-            g.drawImage((Image) life,40*(i+1),70,null);
-        }
+
 
 
         for(int i = 0; i < game.getAsteroids().size(); i++) {
@@ -105,6 +101,12 @@ public class GamePanel extends JPanel {
             ObjectAnimation currentBulletTypeAnimation = bulletsAnimation.get(game.getBullets().get(i).getType());
             Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) game.getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
             g.drawImage(ImageUtility.rotateImage((BufferedImage) currentBulletFrame, game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
+        }
+
+        g.setFont(font);
+        g.drawString("SCORE: "+gameConstraints.getScore(),40,50);
+        for(int i=0; i<gameConstraints.getLife();i++){
+            g.drawImage((Image) life,40*(i+1),70,null);
         }
 
         tick++;
