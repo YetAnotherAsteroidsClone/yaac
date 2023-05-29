@@ -2,6 +2,7 @@ package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
+import com.yaac.view.Utility.CompositeSprite;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
@@ -9,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Shop extends JPanel{
@@ -19,8 +22,7 @@ public class Shop extends JPanel{
     private Color powerUpColor;
 
     //IMAGES, ICONS AND ANIMATIONS
-    private ObjectAnimation backgroundL1, backgroundL2, fire;
-    private BufferedImage spaceShipImage, engine;
+    private ObjectAnimation backgroundL1, backgroundL2;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
     private ImageIcon plusIcon, shieldShopIcon, menuIcon, backIcon;
 
@@ -51,15 +53,6 @@ public class Shop extends JPanel{
         backIcon = MenuUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
         plusIcon = MenuUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
         shieldShopIcon = MenuUtility.getImageIcon("/GameSprite/shieldShop.png",68,68);
-
-        //spaceship images
-        spaceShipImage = ImageUtility.loadImage("/GameSprite/Body1.png");
-        spaceShipImage = ImageUtility.scaleImage(spaceShipImage,350,350);
-        engine = ImageUtility.loadImage("/GameSprite/BaseEngine.png");
-        engine = ImageUtility.scaleImage(engine, 200, 200);
-        fire = new ObjectAnimation("/GameSprite/BaseEngine-Powering.png");
-        fire.scaleImage(200,200);
-
 
         //PowerUp images
         /*
@@ -106,10 +99,7 @@ public class Shop extends JPanel{
     }
 
     private void drawShip(int x, int y, Graphics g){
-        g.drawImage((Image) engine,x+75,y+166,null);
-        g.drawImage((Image) spaceShipImage, x, y, null);
-        g.drawImage(fire.getCurrentFrame(), x+75,y+180,null);
-        fire.update();
+        g.drawImage(ImageUtility.scaleImage((BufferedImage) SpaceShipView.getInstance().getSpaceship().draw(),350,350),x,y,null);
     }
 
     private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){

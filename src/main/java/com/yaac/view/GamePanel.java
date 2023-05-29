@@ -2,6 +2,7 @@ package com.yaac.view;
 
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
+import com.yaac.view.Utility.CompositeSprite;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import com.yaac.view.Utility.Sound;
@@ -19,7 +20,6 @@ public class GamePanel extends JPanel {
 
     int tick = 0;
 
-    private BufferedImage spaceshipImage;
     private ObjectAnimation backgroundL1;
     private ObjectAnimation backgroundL2;
     private ObjectAnimation backgroundL3;
@@ -30,8 +30,6 @@ public class GamePanel extends JPanel {
     //private Sound gameSound;
 
     public GamePanel(){
-        spaceshipImage = ImageUtility.loadImage("/GameSprite/Body1.png");
-
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         backgroundL2 = new ObjectAnimation("/Background/GameBackgroundL2.png", 640, 360);
         backgroundL3 = new ObjectAnimation("/Background/GameBackgroundL3.png", 640, 360);
@@ -65,7 +63,7 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
-        g.drawImage(ImageUtility.rotateImage(spaceshipImage, game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 24, (int) game.getSpaceShip().getY() - 24, null);
+        g.drawImage(ImageUtility.rotateImage((BufferedImage) SpaceShipView.getInstance().getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 24, (int) game.getSpaceShip().getY() - 24, null);
 
         for(int i = 0; i < game.getAsteroids().size(); i++) {
             double asteroidSize = game.getAsteroids().get(i).getRadius();
