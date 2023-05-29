@@ -26,6 +26,7 @@ public class GamePanel extends JPanel {
     private ArrayList<ObjectAnimation> bulletsAnimation;
     private BufferedImage asteroidsImage;
     private ObjectAnimation deadAsteroidsAnimation;
+    private ObjectAnimation bulletExplosionAnimation;
     //private Sound gameSound;
 
     public GamePanel(){
@@ -43,10 +44,13 @@ public class GamePanel extends JPanel {
 
         asteroidsImage = ImageUtility.loadImage("/GameSprite/Asteroid.png");
         deadAsteroidsAnimation = new ObjectAnimation("/GameSprite/Asteroid-Explode.png");
+        bulletExplosionAnimation = new ObjectAnimation("/GameSprite/BulletExplosionAnimation.png");
+        bulletExplosionAnimation.scaleImage(32, 32);
 
         backgroundL1.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+
 
         //gameSound = new Sound("Music.wav");
         //gameSound.loop();
@@ -68,6 +72,11 @@ public class GamePanel extends JPanel {
             BufferedImage asteroid = ImageUtility.scaleImage(asteroidsImage, (int) (asteroidSize * 5), (int) (asteroidSize * 5));
             asteroid = ImageUtility.rotateImage(asteroid, game.getAsteroids().get(i).getRotation());
             g.drawImage(asteroid, (int) game.getAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) game.getAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);
+        }
+
+        for(int i = 0; i < game.getDestroyedBullets().size(); i++){
+            Image bulletExplosionFrame = bulletExplosionAnimation.getImage((int) game.getDestroyedBullets().get(i).getTick());
+            g.drawImage(bulletExplosionFrame, (int) game.getDestroyedBullets().get(i).getX() - 25, (int) game.getDestroyedBullets().get(i).getY() - 25, null);
         }
 
         for(int i = 0; i < game.getDestroyedAsteroids().size(); i++) {

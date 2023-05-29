@@ -15,6 +15,7 @@ public class Game {
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
     GameComponentsManager powerUps;
+    GameComponentsManager destroyedBullets;
     Sound bulletSound, gameMusic;
     SpaceShip spaceShip;
     int score;
@@ -26,6 +27,7 @@ public class Game {
         bullets = new GameComponentsManager();
         asteroids = new GameComponentsManager();
         destroyedAsteroids = new GameComponentsManager();
+        destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
         bulletSound = new Sound("SpaceshipFiring.wav");
         gameMusic = new Sound("Music.wav");
@@ -52,23 +54,35 @@ public class Game {
         bullets.update();
         asteroids.update();
         destroyedAsteroids.update();
+        destroyedBullets.update();
         if (tick % 50 == 0) {
             addRandomAsteroid();
         }
         resolveCollisions();
         removeOutsideBullets();
         removeVanishedAsteroids();
+        removeVanishedBullets();
         tick++;
     }
 
     private void removeVanishedAsteroids() {
         GameComponentsManager vanishedAsteroids = new GameComponentsManager();
         for (GameObject asteroid : destroyedAsteroids) {
-            if (((Asteroid) asteroid).getTick() > 14) {
+            if (((Asteroid) asteroid).getTick() > 12) {
                 vanishedAsteroids.add(asteroid);
             }
         }
         destroyedAsteroids.removeArray(vanishedAsteroids);
+    }
+
+    private void removeVanishedBullets() {
+        GameComponentsManager vanishedBullets = new GameComponentsManager();
+        for (GameObject bullet : destroyedBullets) {
+            if (((Bullet) bullet).getTick() > 9) {
+                vanishedBullets.add(bullet);
+            }
+        }
+        destroyedBullets.removeArray(vanishedBullets);
     }
 
     public void addRandomAsteroid() {
@@ -112,6 +126,7 @@ public class Game {
 
     public void resolveCollisions() {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
+        GameComponentsManager newDestroyedBullets = new GameComponentsManager();
         for (GameObject bullet : bullets){
             double damage = ((Bullet) bullet).getDamage();
             for (GameObject asteroid : asteroids){
@@ -120,18 +135,23 @@ public class Game {
                 }
             }
         }
-        GameComponentsManager collidedBullets = CollisionUtility.checkCollisionArray(asteroids, bullets);
+        newDestroyedBullets = CollisionUtility.checkCollisionArray(asteroids, bullets);
         asteroids.removeArray(newDestroyedAsteroids);
-        bullets.removeArray(collidedBullets);
+        bullets.removeArray(newDestroyedBullets);
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
             lives--;
             spaceShip.reset();
             newDestroyedAsteroids.add(asteroids);
+            newDestroyedBullets.add(bullets);
+            bullets.clear();
             asteroids.clear();
         }
         for(GameObject obj : newDestroyedAsteroids)
             ((Asteroid)obj).setTick(0);
+        for(GameObject obj : newDestroyedBullets)
+            ((Bullet) obj).setTick(0);
         destroyedAsteroids.add(newDestroyedAsteroids);
+        destroyedBullets.add(newDestroyedBullets);
     }
 
     public GameComponentsManager getBullets() {
@@ -144,6 +164,10 @@ public class Game {
 
     public GameComponentsManager getDestroyedAsteroids() {
         return destroyedAsteroids;
+    }
+
+    public GameComponentsManager getDestroyedBullets() {
+        return destroyedBullets;
     }
 
     public SpaceShip getSpaceShip(){

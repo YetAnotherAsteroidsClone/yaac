@@ -35,6 +35,10 @@ public class Bullet extends GameObject{
         this.radius = radius;
     }
 
+    public void stop() {
+        vx = 0;
+        vy = 0;
+    }
 
     /**
      * Setter del danno della projectile
