@@ -9,17 +9,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 
+/**
+ * Controller dello shop
+ */
 public class ShopController extends MouseAdapter implements Updatable{
     private Shop shop;
-    private GameConstraints gameConstraints = GameConstraints.getInstance();
 
     public ShopController(Shop shop){this.shop=shop;}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
-    }
-
+    /**
+     * Gestisce il refresh dello shop.
+     */
     @Override
     public boolean update(){
         if(!SceneManager.isLoaded(this.shop))

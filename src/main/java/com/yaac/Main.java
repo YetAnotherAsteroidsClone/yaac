@@ -6,7 +6,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 
-
+//Dove tutto ha inizio
 public class Main {
     public static void main(String[] args) throws IOException, FontFormatException {
         Settings.LOGGER.setLevel(Settings.logLevel);

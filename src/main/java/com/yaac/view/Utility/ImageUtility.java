@@ -95,6 +95,11 @@ public class ImageUtility {
         return resized;
     }
 
+    /**
+     * Metodo per convertire un'immagine in un bufferedImage
+     * @param im immagine da convertire
+     * @return l'immagine convertita
+     */
     public static BufferedImage ImageToBuffered(Image im){
         BufferedImage bi = new BufferedImage(im.getWidth(null), im.getHeight(null), BufferedImage.TYPE_INT_ARGB);
         Graphics bg = bi.getGraphics();

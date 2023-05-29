@@ -17,6 +17,8 @@ public abstract class GameObject{
 
     /**
      *  Costruttore della classe GameObject
+     *  @param x posizione x
+     *  @param y posizione y
      */
     protected GameObject(double x, double y) {
         this.x = x;
@@ -54,10 +56,10 @@ public abstract class GameObject{
      *  Costruttore della classe GameObject con raggio e velocità
      *  @param x posizione x
      *  @param y posizione y
-     *  @param rotation rotazione
-     *  @param radius raggio
      *  @param vx velocità su asse x
      *  @param vy velocità su asse y
+     *  @param rotation rotazione
+     *  @param radius raggio
      */
     protected GameObject(double x, double y, double vx, double vy, int rotation, double radius){
         this.x = x;
@@ -68,7 +70,7 @@ public abstract class GameObject{
         this.radius = radius;
     }
 
-
+    // Getters and Setters
     public double getX() {
         return x;
     }
@@ -100,6 +102,7 @@ public abstract class GameObject{
         this.tick = i;
     }
 
+    // Metodi astratti per le classi figlie
     public abstract void update();
     public abstract int getType();
 }

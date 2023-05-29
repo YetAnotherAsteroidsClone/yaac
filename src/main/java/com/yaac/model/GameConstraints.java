@@ -19,9 +19,9 @@ public class GameConstraints {
 
     private final double maxSpeedCoefficient = 1.1;
     private final double accelerationCoefficient = 1.1;
-    private final double bulletRatioCoefficient = 1.1;
-    private final double bulletSpeedCoefficient = 1.1;
-    private final double bulletDamageCoefficient = 1.1;
+    private final double bulletRatioCoefficient = 1.5;
+    private final double bulletSpeedCoefficient = 1.5;
+    private final double bulletDamageCoefficient = 1.8;
 
     private final int maxGems = 15;
     private final int maxAsteroids = 20;

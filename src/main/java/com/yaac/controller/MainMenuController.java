@@ -1,37 +1,28 @@
 package com.yaac.controller;
 
-import com.yaac.Settings;
 import com.yaac.view.MainMenu;
 import com.yaac.view.SceneManager;
 
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.logging.Level;
 
+/**
+ * Controller del menu principale.
+ */
 public class MainMenuController extends MouseAdapter implements Updatable {
 
     private final MainMenu mainMenu;
 
-    public MainMenuController(MainMenu mainMenu) throws IOException {
+    /**
+     * Costruttore del controller del menu principale.
+     * @param mainMenu menu principale
+     */
+    public MainMenuController(MainMenu mainMenu) {
         this.mainMenu = mainMenu;
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        Settings.LOGGER.log(Level.INFO, "Mouse clicked on: " + e.getX() + " " + e.getY());
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        //TODO
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        //TODO
-    }
-
+    /**
+     * Gestisce il refresh del menu principale.
+     */
     @Override
     public boolean update() {
         if (!SceneManager.isLoaded(this.mainMenu))

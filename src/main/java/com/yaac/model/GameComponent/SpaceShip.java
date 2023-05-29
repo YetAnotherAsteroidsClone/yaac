@@ -41,6 +41,10 @@ public class SpaceShip extends GameObject{
         super(x, y, vx, vy, 0, 24);
     }
 
+    /**
+     * Metodo che aggiorna il comportamento dell'astronave
+     * Gestisce la rotazione, l'accelerazione, la decelerazione e lo sparo
+     */
     @Override
     public void update() {
         if(isRotatingLeft)
@@ -58,6 +62,11 @@ public class SpaceShip extends GameObject{
     }
 
 
+    /**
+     * Metodo che restituisce il tipo di astronave
+     * METODO ATTUALMENTE NON UTILIZZATO
+     * @return tipo di oggetto
+     */
     @Override
     public int getType() {
         return 0;
@@ -96,6 +105,11 @@ public class SpaceShip extends GameObject{
         isMoving = true;
     }
 
+    /**
+     * Decelera l'astronave in base al coefficiente di decelerazione <br>
+     * La velocità viene diminuita e divisa in due componenti, una per asse
+     * in base alla direzione dell'astronave
+     */
     public void decelerate(){
         vx = vx * GameConstraints.getInstance().getShipDeceleration();
         vy = vy * GameConstraints.getInstance().getShipDeceleration();
@@ -121,6 +135,9 @@ public class SpaceShip extends GameObject{
         rotation += GameConstraints.getInstance().getShipRotation();
     }
 
+    /**
+     *  Spara un proiettile in base al coefficiente di sparo
+     */
     public void shoot() {
         if(shotTick % Math.round(GameConstraints.getInstance().getBulletRatio()) == 0) {
             double bulletVX = (GameConstraints.getInstance().getBulletSpeed() * Math.sin(Math.toRadians(rotation)));
@@ -130,52 +147,76 @@ public class SpaceShip extends GameObject{
         shotTick++;
     }
 
+    /**
+     * Inizia lo sparo
+     */
     public void startShooting() {
         isShooting = true;
     }
 
+    /**
+     * Termina lo sparo
+     */
     public void stopShooting() {
         isShooting = false;
         if (shotTick > GameConstraints.getInstance().getBulletRatio())
             shotTick = 1;
     }
 
+    /**
+     * Restituisce lo stato dello sparo
+     * @return true se sta sparando, false altrimenti
+     */
     public boolean isShooting(){
         return isShooting;
     }
 
+    /**
+     * Inizia l'accelerazione
+     */
     public void startAccelerating() {
         isAccelerating = true;
     }
 
+    /**
+     * Termina l'accelerazione
+     */
     public void stopAccelerating() {
         isAccelerating = false;
     }
 
-    public void startMoving() {
-        isMoving = true;
-    }
-
-    public void stopMoving() {
-        isMoving = false;
-    }
-
+    /**
+     * Inizia la rotazione a sinistra
+     */
     public void startRotatingLeft() {
         isRotatingLeft = true;
     }
 
+    /**
+     * Termina la rotazione a sinistra
+     */
     public void stopRotatingLeft() {
         isRotatingLeft = false;
     }
 
+
+    /**
+     * Inizia la rotazione a destra
+     */
     public void startRotatingRight() {
         isRotatingRight = true;
     }
 
+    /**
+     * Termina la rotazione a destra
+     */
     public void stopRotatingRight() {
         isRotatingRight = false;
     }
 
+    /**
+     * Resetta l'astronave
+     */
     public void reset() {
         x = (double) GameConstraints.WORLDWIDTH / 2;
         y = (double) GameConstraints.WORLDHEIGHT / 2;

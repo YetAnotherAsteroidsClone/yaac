@@ -8,6 +8,7 @@ import com.yaac.view.Utility.Sound;
 
 public class Game {
     static Game instance = null;
+
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
@@ -18,11 +19,15 @@ public class Game {
     int gemCount;
     int scoreCount;
     int lives;
-    int tick = 0;
+    int tick;
     int stage;
 
+    /**
+     * Costruttore privato per implementare il pattern Singleton
+     */
     private Game() {
         stage = 0;
+        tick = 0;
         this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
         bullets = new GameComponentsManager();
         asteroids = new GameComponentsManager();
@@ -35,6 +40,9 @@ public class Game {
         gameMusic.loop();
     }
 
+    /**
+     *  Metodo per ottenere l'istanza della classe Game
+     */
     public static Game getInstance() {
         if(instance == null) {
             instance = new Game();
@@ -42,14 +50,61 @@ public class Game {
         return instance;
     }
 
+    // Getters
     public int getScore() {
         return scoreCount;
     }
-
     public int getLives() {
         return lives;
     }
+    public GameComponentsManager getBullets() {
+        return bullets;
+    }
+    public GameComponentsManager getAsteroids() {
+        return asteroids;
+    }
+    public GameComponentsManager getDestroyedAsteroids() {
+        return destroyedAsteroids;
+    }
+    public GameComponentsManager getDestroyedBullets() {
+        return destroyedBullets;
+    }
+    public GameComponentsManager getGems() {
+        return gems;
+    }
+    public SpaceShip getSpaceShip(){
+        return spaceShip;
+    }
 
+    //Metodi per gestire i comandi impartiti dal giocatore
+    public void startRotateRight(){
+        spaceShip.startRotatingRight();
+    }
+    public void startRotateLeft(){
+        spaceShip.startRotatingLeft();
+    }
+    public void startAccelerate(){
+        spaceShip.startAccelerating();
+    }
+    public void startShoot(){
+        spaceShip.startShooting();
+    }
+    public void stopRotateRight(){
+        spaceShip.stopRotatingRight();
+    }
+    public void stopRotateLeft(){
+        spaceShip.stopRotatingLeft();
+    }
+    public void stopAccelerate(){
+        spaceShip.stopAccelerating();
+    }
+    public void stopShot(){
+        spaceShip.stopShooting();
+    }
+
+    /**
+     * Metodo per aggiornare lo stato del gioco
+     */
     public void update(){
         spaceShip.update();
         bullets.update();
@@ -67,6 +122,9 @@ public class Game {
         tick++;
     }
 
+    /**
+     * Metodo per eliminare gli asteroidi distrutti
+     */
     private void removeVanishedAsteroids() {
         GameComponentsManager vanishedAsteroids = new GameComponentsManager();
         for (GameObject asteroid : destroyedAsteroids) {
@@ -77,6 +135,9 @@ public class Game {
         destroyedAsteroids.removeArray(vanishedAsteroids);
     }
 
+    /**
+     * Metodo per eliminare i proiettili distrutti
+     */
     private void removeVanishedBullets() {
         GameComponentsManager vanishedBullets = new GameComponentsManager();
         for (GameObject bullet : destroyedBullets) {
@@ -87,6 +148,9 @@ public class Game {
         destroyedBullets.removeArray(vanishedBullets);
     }
 
+    /**
+     * Metodo per aggiungere un asteroide casuale
+     */
     public void addRandomAsteroid() {
         int dim = (int) (Math.random() * 46) + 24;
         int life = GameConstraints.getInstance().getAsteroidLife(stage, dim);
@@ -101,22 +165,21 @@ public class Game {
         }
         int vx = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeedVariable(stage)) + GameConstraints.getInstance().getAsteroidMinSpeed(stage);
         int vy = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeedVariable(stage)) + GameConstraints.getInstance().getAsteroidMinSpeed(stage);
-        addAsteroid(x, y, vx, vy, dim, life);
+        asteroids.add(new Asteroid(x, y, vx, vy, life, dim));
     }
 
-    public void addAsteroid(int x, int y, int vx, int vy, int size, int life){
-        asteroids.add(new Asteroid(x, y, vx, vy, life,size));
-    }
-
+    /**
+     * Metodo per aggiungere un proiettile
+     * @param b proiettile da aggiungere
+     */
     public void addBullet(Bullet b) {
         bulletSound.play();
         bullets.add(b);
     }
 
-    public void addPowerUp() {
-        //TODO
-    }
-
+    /**
+     * Metodo per rimuovere i proiettili fuori dallo schermo
+     */
     public void removeOutsideBullets(){
         GameComponentsManager outsideBullets = new GameComponentsManager();
         for (GameObject bullet : bullets) {
@@ -127,12 +190,16 @@ public class Game {
         bullets.removeArray(outsideBullets);
     }
 
+    /**
+     * Metodo per risolvere le collisioni
+     * e aggiornare i punteggi
+     */
     public void resolveCollisions() {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
         GameComponentsManager newDestroyedBullets;
         GameComponentsManager newPickedGems = CollisionUtility.checkCollisionElementArray(spaceShip, gems);
         for (GameObject gem : newPickedGems)
-            gemCount += GameConstraints.getInstance().getGemValue(((Gem) gem).getType());
+            gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
         gems.removeArray(newPickedGems);
         for (GameObject bullet : bullets){
             double damage = ((Bullet) bullet).getDamage();
@@ -150,13 +217,13 @@ public class Game {
             if(Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems()){
                 int power = (int) (Math.random() * 100);
                 if(power < 50)
-                    gems.add(new Gem(((Asteroid) asteroid).getX(), ((Asteroid) asteroid).getY(), 1));
+                    gems.add(new Gem(asteroid.getX(), asteroid.getY(), 1));
                 else if(power < 80)
-                    gems.add(new Gem(((Asteroid) asteroid).getX(), ((Asteroid) asteroid).getY(), 2));
+                    gems.add(new Gem(asteroid.getX(), asteroid.getY(), 2));
                 else
-                    gems.add(new Gem(((Asteroid) asteroid).getX(), ((Asteroid) asteroid).getY(), 3));
+                    gems.add(new Gem(asteroid.getX(), asteroid.getY(), 3));
             }
-            if (((Asteroid) asteroid).getRadius() > 30)
+            if (asteroid.getRadius() > 30)
                 asteroids.add(((Asteroid) asteroid).split());
         }
 
@@ -177,63 +244,4 @@ public class Game {
         destroyedBullets.add(newDestroyedBullets);
     }
 
-    public GameComponentsManager getBullets() {
-        return bullets;
-    }
-
-    public GameComponentsManager getAsteroids() {
-        return asteroids;
-    }
-
-    public GameComponentsManager getDestroyedAsteroids() {
-        return destroyedAsteroids;
-    }
-
-    public GameComponentsManager getDestroyedBullets() {
-        return destroyedBullets;
-    }
-
-    public GameComponentsManager getGems() {
-        return gems;
-    }
-
-    public SpaceShip getSpaceShip(){
-        return spaceShip;
-    }
-
-    public void startRotateRight(){
-        spaceShip.startRotatingRight();
-    }
-
-    public void startRotateLeft(){
-        spaceShip.startRotatingLeft();
-    }
-
-    public void startAccelerate(){
-        spaceShip.startAccelerating();
-    }
-
-    public void startShoot(){
-        spaceShip.startShooting();
-    }
-
-    public void stopRotateRight(){
-        spaceShip.stopRotatingRight();
-    }
-
-    public void stopRotateLeft(){
-        spaceShip.stopRotatingLeft();
-    }
-
-    public void stopAccelerate(){
-        spaceShip.stopAccelerating();
-    }
-
-    public void stopShot(){
-        spaceShip.stopShooting();
-    }
-
-    public void deleteInstance(){
-        instance = null;
-    }
 }

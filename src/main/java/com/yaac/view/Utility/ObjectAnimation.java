@@ -41,6 +41,11 @@ public class ObjectAnimation {
         }
     }
 
+    /**
+     * Metodo per ottenere l'immagine di un determinato indice
+     * @param index indice dell'immagine
+     * @return immagine
+     */
     public Image getImage(int index) {
         return images.get(index);
     }
@@ -63,21 +68,31 @@ public class ObjectAnimation {
         return images.get(index);
     }
 
+    /**
+     * Metodo per ottenere il numero di frame dell'animazione
+     * @return dimensione dell'animazione
+     */
     public int size() {
         return images.size();
     }
 
+    /**
+     * Metodo per ottenere l'immagine di default
+     * @return immagine di default
+     */
     public Image getDefaultImage() {
         return images.get(0);
     }
 
-    /** Metodo per disabilitare l'animazione
+    /**
+     * Metodo per disabilitare l'animazione
      */
     public void disable() {
         enabled = false;
     }
 
-    /** Metodo per abilitare l'animazione
+    /**
+     * Metodo per abilitare l'animazione
      */
     public void enable() {
         enabled = true;

@@ -6,10 +6,19 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import java.util.Objects;
 
+/**
+ * Classe che gestisce la riproduzione dei suoni.
+ */
 public class Sound {
+
     private AudioInputStream audioIn;
     private Clip clip;
-    public Sound(String name) { //Riceve come parametro il nome di una risorsa .wav da riprodurre.
+
+    /**
+     * Costruttore della classe Sound.
+     * @param name nome del file audio da riprodurre.
+     */
+    public Sound(String name) {
         try {
             audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/Sounds/" + name)));
             clip = AudioSystem.getClip();
@@ -19,29 +28,49 @@ public class Sound {
             clip = null;
         }
     }
-    public void loop() { //Riproduzione continua
+
+    /**
+     * Metodo che riproduce il file audio in loop.
+     */
+    public void loop() {
         if (clip != null)
             clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-    public void play() { //Riproduce il file
+
+    /**
+     * Metodo che riproduce il file audio.
+     */
+    public void play() {
         if (clip != null) {
             if (clip.getFramePosition() == clip.getFrameLength())
                 clip.setFramePosition(0);
             clip.start();
         }
     }
-    public void pause() { //Interrompe la riproduzione
+
+    /**
+     * Metodo che interrompe la riproduzione del file audio.
+     */
+    public void pause() {
         if (clip != null)
             clip.stop();
     }
-    public void restart() { //Riproduce dall’inizio
+
+    /**
+     * Metodo che riproduce il file audio dall'inizio.
+     */
+    public void restart() {
         if (clip != null) {
             clip.stop();
             clip.setFramePosition(0);
             clip.start();
         }
     }
-    public void reduceVolume() { //Abbassa il volume
+
+    /**
+     * Metodo che riduce il volume del file audio di un'unità.
+     */
+    public void reduceVolume() {
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float value = gainControl.getValue();
@@ -50,7 +79,11 @@ public class Sound {
                 gainControl.setValue(value);
         }
     }
-    public void incrementVolume() { //Aumenta il volume
+
+    /**
+     * Metodo che aumenta il volume del file audio di un'unità.
+     */
+    public void incrementVolume() {
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float value = gainControl.getValue();
@@ -60,6 +93,10 @@ public class Sound {
         }
     }
 
+    /**
+     * Metodo che imposta il volume del file audio.
+     * @param value valore del volume da impostare.
+     */
     public void setVolume(float value) { //Imposta il volume
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -67,5 +104,5 @@ public class Sound {
                 gainControl.setValue(value);
         }
     }
-} //Chiude la definizione della classe Sound
+}
 
