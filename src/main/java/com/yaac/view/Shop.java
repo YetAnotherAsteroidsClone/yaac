@@ -100,12 +100,12 @@ public class Shop extends JPanel{
         pwUpButtons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);});
         pwUpButtons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
         pwUpButtons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
-/*
-        switchWeapon[0].addActionListener(actionEvent -> );
-        switchWeapon[1].addActionListener(actionEvent -> );
-        switchEngine[0].addActionListener(actionEvent -> );
-        switchEngine[1].addActionListener(actionEvent -> );
-*/
+
+        switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeapon(true);});
+        switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeapon(true);});
+        //switchEngine[0].addActionListener(actionEvent -> );
+        //switchEngine[1].addActionListener(actionEvent -> );
+
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeapon(true);
     }

@@ -96,7 +96,7 @@ public class SpaceShipView {
      *  se l'indice sfora il numero di armi disponibili, viene riportato all'inizio
      */
     public void previousWeapon() {
-        currentWeapon = (currentWeapon - 1) % weapons.size();
+        currentWeapon = (currentWeapon - 1 + weapons.size()) % weapons.size();
         spaceship.setAnimation(weapons.get(currentWeapon), 1);
     }
 }
