@@ -75,7 +75,7 @@ public class GamePanel extends JPanel {
         }
 
         for(int i = 0; i < game.getDestroyedBullets().size(); i++){
-            Image bulletExplosionFrame = bulletExplosionAnimation.getImage((int) game.getDestroyedBullets().get(i).getTick());
+            Image bulletExplosionFrame = bulletExplosionAnimation.getImage((int) ((game.getDestroyedBullets().get(i).getTick() + 1) / 2)% bulletExplosionAnimation.size());
             g.drawImage(bulletExplosionFrame, (int) game.getDestroyedBullets().get(i).getX() - 25, (int) game.getDestroyedBullets().get(i).getY() - 25, null);
         }
 

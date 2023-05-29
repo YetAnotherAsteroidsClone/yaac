@@ -68,7 +68,7 @@ public class Game {
     private void removeVanishedAsteroids() {
         GameComponentsManager vanishedAsteroids = new GameComponentsManager();
         for (GameObject asteroid : destroyedAsteroids) {
-            if (((Asteroid) asteroid).getTick() > 12) {
+            if (((Asteroid) asteroid).getTick() > 14) {
                 vanishedAsteroids.add(asteroid);
             }
         }
@@ -78,7 +78,7 @@ public class Game {
     private void removeVanishedBullets() {
         GameComponentsManager vanishedBullets = new GameComponentsManager();
         for (GameObject bullet : destroyedBullets) {
-            if (((Bullet) bullet).getTick() > 9) {
+            if (((Bullet) bullet).getTick() > 18) {
                 vanishedBullets.add(bullet);
             }
         }
@@ -148,8 +148,10 @@ public class Game {
         }
         for(GameObject obj : newDestroyedAsteroids)
             ((Asteroid)obj).setTick(0);
-        for(GameObject obj : newDestroyedBullets)
+        for(GameObject obj : newDestroyedBullets){
+            ((Bullet) obj).stop();
             ((Bullet) obj).setTick(0);
+        }
         destroyedAsteroids.add(newDestroyedAsteroids);
         destroyedBullets.add(newDestroyedBullets);
     }
