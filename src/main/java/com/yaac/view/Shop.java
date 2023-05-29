@@ -33,7 +33,6 @@ public class Shop extends JPanel{
     private int heightOffset = Settings.height/2;
 
     //OTHERS
-    private int[] costs = {1,2,3,4,5,6,7,8,9};
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
 
@@ -48,10 +47,10 @@ public class Shop extends JPanel{
         backgroundL2.scaleImage(Settings.width, Settings.height);
 
         //ImageIcons
-        menuIcon = getImageIcon("/MenuSprite/HomeButton.png",38,38);
-        backIcon = getImageIcon("/MenuSprite/BackButton.png",38,38);
-        plusIcon = getImageIcon("/MenuSprite/plusButton.png",38,38);
-        shieldShopIcon = getImageIcon("/GameSprite/shieldShop.png",68,68);
+        menuIcon = MenuUtility.getImageIcon("/MenuSprite/HomeButton.png",38,38);
+        backIcon = MenuUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
+        plusIcon = MenuUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
+        shieldShopIcon = MenuUtility.getImageIcon("/GameSprite/shieldShop.png",68,68);
 
         //spaceship images
         spaceShipImage = ImageUtility.loadImage("/GameSprite/Body1.png");
@@ -106,14 +105,6 @@ public class Shop extends JPanel{
 
     }
 
-    private ImageIcon getImageIcon(String path, int width,int height){
-        ImageIcon imageIcon = new ImageIcon(MenuUtility.class.getResource(path));
-        Image image = imageIcon.getImage();
-        Image resizedImage = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(resizedImage);
-        return imageIcon;
-    }
-
     private void drawShip(int x, int y, Graphics g){
         g.drawImage((Image) engine,x+75,y+166,null);
         g.drawImage((Image) spaceShipImage, x, y, null);
@@ -139,7 +130,7 @@ public class Shop extends JPanel{
             this.add(b);
             g.setColor(orbsColor);
             g.setFont(font);
-            g.drawString(""+costs[levels-1], x,y-10);
+            g.drawString(""+gameConstraints.getCost(levels-1), x,y-10);
         }
         else{
             if (b!=null){this.remove(b);}

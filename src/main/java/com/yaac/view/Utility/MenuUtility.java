@@ -42,4 +42,12 @@ public class MenuUtility {
         button.setIcon(imageIcon);
     }
 
+    public static ImageIcon getImageIcon(String path, int width,int height){
+        ImageIcon imageIcon = new ImageIcon(MenuUtility.class.getResource(path));
+        Image image = imageIcon.getImage();
+        Image resizedImage = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(resizedImage);
+        return imageIcon;
+    }
+
 }
