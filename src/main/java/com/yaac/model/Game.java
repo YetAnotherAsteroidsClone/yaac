@@ -70,11 +70,18 @@ public class Game {
     }
 
     public void addRandomAsteroid() {
-        int dim = (int) (Math.random() * 46) + 46;
-        int x = (int) (Math.random() * Settings.width) + 1;
-        int y = Math.random() > 0.5 ? 1 : Settings.height;
-        int vx = (int) (Math.random() * 10);
-        int vy = (int) (Math.random() * 10);
+        int dim = (int) (Math.random() * 46) + 24;
+        int x, y;
+        if(Math.random() > 0.5){
+            x = (int) (Math.random() * GameConstraints.WORLDWIDTH) + 1;
+            y = Math.random() > 0.5 ? 1 : GameConstraints.WORLDHEIGHT;
+        }
+        else{
+            x = Math.random() > 0.5 ? 1 : GameConstraints.WORLDWIDTH;
+            y = (int) (Math.random() * GameConstraints.WORLDHEIGHT) + 1;
+        }
+        int vx = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeed()) + 2;
+        int vy = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeed()) + 2;
         addAsteroid(x, y, vx, vy, dim);
     }
 
@@ -104,10 +111,11 @@ public class Game {
     public void resolveCollisions() {
         GameComponentsManager collidedAsteroids =  CollisionUtility.checkCollisionArray(bullets, asteroids);
         GameComponentsManager collidedBullets = CollisionUtility.checkCollisionArray(asteroids, bullets);
+        /* Bounce asteroids
         GameComponentsManager contrastAsteroids = CollisionUtility.checkCollisionArray(asteroids, asteroids);
         for (GameObject obj : contrastAsteroids) {
             ((Asteroid) obj).bounce();
-        }
+        }*/
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
             lives--;
             spaceShip.reset();

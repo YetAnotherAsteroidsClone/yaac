@@ -21,6 +21,7 @@ public class GameConstraints {
     private int orbs=0;
     private int life=3;
     private int highScore=0;
+    private double asteroidMaxSpeed = 8;
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed;}
@@ -74,4 +75,8 @@ public class GameConstraints {
 
     public static int WORLDWIDTH = Settings.width;
     public static int WORLDHEIGHT = Settings.height;
+
+    public double getAsteroidMaxSpeed() {
+        return asteroidMaxSpeed;
+    }
 }
