@@ -47,7 +47,7 @@ public class SpaceShipView {
 
         /*
         * Indici:
-        * Array animazioni: 0 = baseEnginePowering, 1 = weapons
+        * Array animazioni: 0 = EnginePowering/EngineIdle, 1 = weapons
         * Array immagini: 0 = baseEngine
         * Array sprite: 0 = bodies
          */
@@ -82,5 +82,21 @@ public class SpaceShipView {
      */
     public CompositeSprite getSpaceship() {
         return spaceship;
+    }
+
+    /** Imposta l'arma corrente della navicella alla successiva
+     *  se l'indice sfora il numero di armi disponibili, viene riportato all'inizio
+     */
+    public void nextWeapon(){
+        currentWeapon = (currentWeapon + 1) % weapons.size();
+        spaceship.setAnimation(weapons.get(currentWeapon),1);
+    }
+
+    /** Imposta l'arma corrente della navicella alla precedente
+     *  se l'indice sfora il numero di armi disponibili, viene riportato all'inizio
+     */
+    public void previousWeapon() {
+        currentWeapon = (currentWeapon - 1) % weapons.size();
+        spaceship.setAnimation(weapons.get(currentWeapon), 1);
     }
 }
