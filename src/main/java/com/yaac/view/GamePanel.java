@@ -28,8 +28,8 @@ public class GamePanel extends JPanel {
     private BufferedImage asteroidsImage;
     private ObjectAnimation deadAsteroidsAnimation;
     private ObjectAnimation bulletExplosionAnimation;
+    private ArrayList<ObjectAnimation> gemsAnimation;
     private GameConstraints gameConstraints;
-    //private Sound gameSound;
 
     public GamePanel(){
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
@@ -52,15 +52,22 @@ public class GamePanel extends JPanel {
         bulletsAnimation.add(new ObjectAnimation("/GameSprite/BulletRocket.png"));
         bulletsAnimation.add(new ObjectAnimation("/GameSprite/BulletZapper.png"));
 
+        gemsAnimation = new ArrayList<>();
+        gemsAnimation.add(new ObjectAnimation("/GameSprite/GemL1.png"));
+        gemsAnimation.add(new ObjectAnimation("/GameSprite/GemL2.png"));
+        gemsAnimation.add(new ObjectAnimation("/GameSprite/GemL3.png"));
+
+        for (ObjectAnimation gemAnimation : gemsAnimation) {
+            gemAnimation.scaleImage(32, 32);
+        }
+
+
         asteroidsImage = ImageUtility.loadImage("/GameSprite/Asteroid.png");
         deadAsteroidsAnimation = new ObjectAnimation("/GameSprite/Asteroid-Explode.png");
         bulletExplosionAnimation = new ObjectAnimation("/GameSprite/BulletExplosionAnimation.png");
         bulletExplosionAnimation.scaleImage(32, 32);
 
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
-
-        //gameSound = new Sound("Music.wav");
-        //gameSound.loop();
     }
 
     public void paintComponent(Graphics g) {
@@ -73,9 +80,6 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
         g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
-
-
-
 
         for(int i = 0; i < game.getAsteroids().size(); i++) {
             double asteroidSize = game.getAsteroids().get(i).getRadius();
@@ -100,15 +104,20 @@ public class GamePanel extends JPanel {
         for(int i = 0; i < game.getBullets().size(); i++) {
             ObjectAnimation currentBulletTypeAnimation = bulletsAnimation.get(game.getBullets().get(i).getType());
             Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) game.getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
-            g.drawImage(ImageUtility.rotateImage((BufferedImage) currentBulletFrame, game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
+            g.drawImage(ImageUtility.rotateImage(ImageUtility.ImageToBuffered(currentBulletFrame), game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
+        }
+
+        for(int i = 0; i < game.getGems().size(); i++) {
+            ObjectAnimation currentGemTypeAnimation = gemsAnimation.get(game.getGems().get(i).getType() - 1);
+            Image currentGemFrame = currentGemTypeAnimation.getImage((int) (game.getGems().get(i).getTick() / 2 )% currentGemTypeAnimation.size());
+            g.drawImage(currentGemFrame, (int) (game.getGems().get(i).getX() - game.getGems().get(i).getRadius()), (int) (game.getGems().get(i).getY() - game.getGems().get(i).getRadius()), null);
         }
 
         g.setFont(font);
-        g.drawString("SCORE: "+gameConstraints.getScore(),40,50);
-        for(int i=0; i<gameConstraints.getLife();i++){
+        g.drawString("SCORE: " + game.getScore(),40,50);
+        for(int i=0; i < game.getLives();i++){
             g.drawImage((Image) life,40*(i+1),70,null);
         }
-
         tick++;
     }
 

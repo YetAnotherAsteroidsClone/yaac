@@ -2,19 +2,26 @@ package com.yaac.model.GameComponent;
 
 /**
  *  Classe astratta per la gestione di tutti i componenti <br>
- *  Implementa posizione, rotazione e raggio (per la collider detection)
+ *  Implementa posizione, rotazione e velocità <br>
+ *  Implementa il metodo update() per l'aggiornamento dei componenti <br>
  */
-
 public abstract class GameObject{
     protected long tick = 0;
     protected double vx = 0;
     protected double vy = 0;
     protected double x;
     protected double y;
-    protected int rotation;
+    protected int rotation = 0;
     protected double radius = 0;
 
 
+    /**
+     *  Costruttore della classe GameObject
+     */
+    protected GameObject(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 
 
     /**
@@ -86,14 +93,13 @@ public abstract class GameObject{
     public void setRadius(int radius) {
         this.radius = radius;
     }
-
-    public abstract void update();
-    public abstract int getType();
     public long getTick(){
         return tick;
     }
-
     public void setTick(long i) {
         this.tick = i;
     }
+
+    public abstract void update();
+    public abstract int getType();
 }

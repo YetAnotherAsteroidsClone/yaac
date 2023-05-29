@@ -2,8 +2,6 @@ package com.yaac.model.Utility;
 
 import com.yaac.model.GameComponent.GameObject;
 
-import java.util.ArrayList;
-
 /**
  * Classe delle utility per il calcolo delle collisioni
  */
@@ -45,10 +43,25 @@ public class CollisionUtility {
      * @param obj2 GameComponentManager di elementi da controllare
      * @return array di oggetti con cui collide il primo oggetto
      */
-    public static GameComponentsManager checkCollisionArray(GameComponentsManager obj1, GameComponentsManager obj2){
+    public static GameComponentsManager checkCollisionArrayArray(GameComponentsManager obj1, GameComponentsManager obj2){
         GameComponentsManager collisionList = new GameComponentsManager();
         for(GameObject obj : obj2){
             if(bCheckCollision(obj, obj1))
+                collisionList.add(obj);
+        }
+        return collisionList;
+    }
+
+    /**
+     * Metodo per la collisione tra un oggetto e un array di oggetti
+     * @param obj1 primo oggetto
+     * @param obj2 GameComponentManager di elementi da controllare
+     * @return array di oggetti con cui collide il primo oggetto
+     */
+    public static GameComponentsManager checkCollisionElementArray(GameObject obj1, GameComponentsManager obj2){
+        GameComponentsManager collisionList = new GameComponentsManager();
+        for(GameObject obj : obj2){
+            if(checkCollision(obj1, obj))
                 collisionList.add(obj);
         }
         return collisionList;

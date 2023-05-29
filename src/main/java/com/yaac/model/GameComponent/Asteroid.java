@@ -13,6 +13,7 @@ import static java.lang.Math.min;
  */
 public class Asteroid extends GameObject{
     private double life;
+    private double score;
 
     /**
      * Costruttore dell'asteroide con parametri
@@ -25,6 +26,7 @@ public class Asteroid extends GameObject{
     public Asteroid(double x, double y, double vx, double vy, double life, int radius) {
         super(x, y, vx, vy, 0, radius);
         this.life = life;
+        score = radius;
     }
 
     /**
@@ -87,5 +89,9 @@ public class Asteroid extends GameObject{
         gameComponentsManager.add(new Asteroid(x, y, vx , -vy, life/2, (int) radius/2));
         gameComponentsManager.add(new Asteroid(x, y, -vx, vy, life/2, (int) radius/2));
         return gameComponentsManager;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

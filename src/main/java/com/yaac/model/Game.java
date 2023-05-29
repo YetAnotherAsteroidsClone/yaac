@@ -1,10 +1,7 @@
 package com.yaac.model;
 
 import com.yaac.Settings;
-import com.yaac.model.GameComponent.Asteroid;
-import com.yaac.model.GameComponent.Bullet;
-import com.yaac.model.GameComponent.GameObject;
-import com.yaac.model.GameComponent.SpaceShip;
+import com.yaac.model.GameComponent.*;
 import com.yaac.model.Utility.CollisionUtility;
 import com.yaac.model.Utility.GameComponentsManager;
 import com.yaac.view.Utility.Sound;
@@ -14,18 +11,22 @@ public class Game {
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
-    GameComponentsManager powerUps;
+    GameComponentsManager gems;
     GameComponentsManager destroyedBullets;
     Sound bulletSound, gameMusic;
     SpaceShip spaceShip;
-    int score;
+    int gemCount;
+    int scoreCount;
     int lives;
     int tick = 0;
+    int stage;
 
     private Game() {
+        stage = 0;
         this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
         bullets = new GameComponentsManager();
         asteroids = new GameComponentsManager();
+        gems = new GameComponentsManager();
         destroyedAsteroids = new GameComponentsManager();
         destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
@@ -42,7 +43,7 @@ public class Game {
     }
 
     public int getScore() {
-        return score;
+        return scoreCount;
     }
 
     public int getLives() {
@@ -55,7 +56,8 @@ public class Game {
         asteroids.update();
         destroyedAsteroids.update();
         destroyedBullets.update();
-        if (tick % 50 == 0) {
+        gems.update();
+        if (tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids()) {
             addRandomAsteroid();
         }
         resolveCollisions();
@@ -87,6 +89,7 @@ public class Game {
 
     public void addRandomAsteroid() {
         int dim = (int) (Math.random() * 46) + 24;
+        int life = GameConstraints.getInstance().getAsteroidLife(stage, dim);
         int x, y;
         if(Math.random() > 0.5){
             x = (int) (Math.random() * GameConstraints.WORLDWIDTH) + 1;
@@ -96,13 +99,13 @@ public class Game {
             x = Math.random() > 0.5 ? 1 : GameConstraints.WORLDWIDTH;
             y = (int) (Math.random() * GameConstraints.WORLDHEIGHT) + 1;
         }
-        int vx = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeed()) + 2;
-        int vy = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeed()) + 2;
-        addAsteroid(x, y, vx, vy, dim);
+        int vx = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeedVariable(stage)) + GameConstraints.getInstance().getAsteroidMinSpeed(stage);
+        int vy = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeedVariable(stage)) + GameConstraints.getInstance().getAsteroidMinSpeed(stage);
+        addAsteroid(x, y, vx, vy, dim, life);
     }
 
-    public void addAsteroid(int x, int y, int vx, int vy, int size){
-        asteroids.add(new Asteroid(x, y, vx, vy, 20,size));
+    public void addAsteroid(int x, int y, int vx, int vy, int size, int life){
+        asteroids.add(new Asteroid(x, y, vx, vy, life,size));
     }
 
     public void addBullet(Bullet b) {
@@ -127,6 +130,10 @@ public class Game {
     public void resolveCollisions() {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
         GameComponentsManager newDestroyedBullets;
+        GameComponentsManager newPickedGems = CollisionUtility.checkCollisionElementArray(spaceShip, gems);
+        for (GameObject gem : newPickedGems)
+            gemCount += GameConstraints.getInstance().getGemValue(((Gem) gem).getType());
+        gems.removeArray(newPickedGems);
         for (GameObject bullet : bullets){
             double damage = ((Bullet) bullet).getDamage();
             for (GameObject asteroid : asteroids){
@@ -135,13 +142,24 @@ public class Game {
                 }
             }
         }
-        newDestroyedBullets = CollisionUtility.checkCollisionArray(asteroids, bullets);
+        newDestroyedBullets = CollisionUtility.checkCollisionArrayArray(asteroids, bullets);
         asteroids.removeArray(newDestroyedAsteroids);
         bullets.removeArray(newDestroyedBullets);
         for (GameObject asteroid : newDestroyedAsteroids){
+            scoreCount += ((Asteroid) asteroid).getScore();
+            if(Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems()){
+                int power = (int) (Math.random() * 100);
+                if(power < 50)
+                    gems.add(new Gem(((Asteroid) asteroid).getX(), ((Asteroid) asteroid).getY(), 1));
+                else if(power < 80)
+                    gems.add(new Gem(((Asteroid) asteroid).getX(), ((Asteroid) asteroid).getY(), 2));
+                else
+                    gems.add(new Gem(((Asteroid) asteroid).getX(), ((Asteroid) asteroid).getY(), 3));
+            }
             if (((Asteroid) asteroid).getRadius() > 30)
                 asteroids.add(((Asteroid) asteroid).split());
         }
+
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
             lives--;
             spaceShip.reset();
@@ -173,6 +191,10 @@ public class Game {
 
     public GameComponentsManager getDestroyedBullets() {
         return destroyedBullets;
+    }
+
+    public GameComponentsManager getGems() {
+        return gems;
     }
 
     public SpaceShip getSpaceShip(){

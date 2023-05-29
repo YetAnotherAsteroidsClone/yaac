@@ -17,27 +17,31 @@ public class GameConstraints {
     private int lvlBulletDamage=1;
     private int lvlBulletRatio=1;
 
-    private double maxSpeedCoefficient = 1.1;
-    private double accelerationCoefficient = 1.1;
-    private double bulletRatioCoefficient = 1.1;
-    private double bulletSpeedCoefficient = 1.1;
-    private double bulletDamageCoefficient = 1.1;
+    private final double maxSpeedCoefficient = 1.1;
+    private final double accelerationCoefficient = 1.1;
+    private final double bulletRatioCoefficient = 1.1;
+    private final double bulletSpeedCoefficient = 1.1;
+    private final double bulletDamageCoefficient = 1.1;
+
+    private final int maxGems = 15;
+    private final int maxAsteroids = 20;
 
     private boolean shopShield=false;
     private int score=0;
-    private int orbs=0;
-    private int[] costs = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
+    private int gems =0;
+    private final int[] costs = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
     private int shieldCost = 10000;
     private int life=3;
     private int highScore=0;
-    private double asteroidMaxSpeed = 8;
+    private double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
+    private final int[] gemValue = {5, 20, 100};
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed + lvlMaxSpeed * maxSpeedCoefficient;}
     public double getShipAcceleration() {return shipAcceleration + lvlMaxSpeed * accelerationCoefficient;}
     public double getBulletSpeed() {return bulletSpeed + lvlBulletSpeed * bulletSpeedCoefficient;}
     public double getBulletDamage() {return bulletDamage + lvlBulletDamage * bulletDamageCoefficient ;}
-    public double getBulletRatio() {return bulletRatio + lvlBulletRatio * bulletRatioCoefficient;}
+    public double getBulletRatio() {return bulletRatio - lvlBulletRatio * bulletRatioCoefficient;}
 
     public double getShipDeceleration() {return shipDeceleration;}
     public double getMaxDurationShield() {return maxDurationShield;}
@@ -48,13 +52,22 @@ public class GameConstraints {
     public int getLvlBulletRatio() {return lvlBulletRatio;}
     public boolean getShopShield() {return shopShield;}
     public int getScore() {return score;}
-    public int getOrbs() {return orbs;}
+    public int getGems() {return gems;}
     public int getCost(int index){return costs[index];}
     public int getShieldCost() {return shieldCost;}
     public int getLife() {return life;}
     public int getHighScore() {return highScore;}
-    public double getAsteroidMaxSpeed() {
-        return asteroidMaxSpeed;
+    public double getGemChance() {
+        return gemChance;
+    }
+    public int getGemValue(int index) {
+        return gemValue[index - 1];
+    }
+    public int getMaxGems() {
+        return maxGems;
+    }
+    public int getMaxAsteroids() {
+        return maxAsteroids;
     }
 
     //SETTERS
@@ -77,7 +90,7 @@ public class GameConstraints {
     public void setShopShield(boolean shopShield) {this.shopShield = shopShield;}
 
     public void setScore(int score) {this.score = score;}
-    public void setOrbs(int orbs) {this.orbs = orbs;}
+    public void setGems(int gems) {this.gems = gems;}
 
     private GameConstraints(){
         //TODO
@@ -92,4 +105,23 @@ public class GameConstraints {
     public static int WORLDWIDTH = Settings.width;
     public static int WORLDHEIGHT = Settings.height;
 
+    public void addGems(int gemValue) {
+        gems += gemValue;
+    }
+
+    public double getAsteroidMaxSpeedVariable(int stage) {
+        return 5 + stage * 0.5;
+    }
+
+    public int getAsteroidMinSpeed(int stage) {
+        return (int) (stage * 2 + 6);
+    }
+
+    public int getAsteroidsSpawnRate(int stage) {
+        return (int) (100 - stage * 5);
+    }
+
+    public int getAsteroidLife(int stage, int dim) {
+        return (int) (stage * 10 + dim);
+    }
 }

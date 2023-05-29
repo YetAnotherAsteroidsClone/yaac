@@ -190,7 +190,7 @@ public class Shop extends JPanel{
         g.setColor(Color.LIGHT_GRAY);
         g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset+430,heightOffset-360);
         g.setColor(orbsColor);
-        g.drawString("ORBS: "+gameConstraints.getOrbs(),widthOffset+430,heightOffset-325);
+        g.drawString("ORBS: "+gameConstraints.getGems(),widthOffset+430,heightOffset-325);
 
         //draw ship and components
         drawShip(widthOffset-175,heightOffset-350, g);
