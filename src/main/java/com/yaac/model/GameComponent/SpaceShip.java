@@ -140,6 +140,10 @@ public class SpaceShip extends GameObject{
             shotTick = 1;
     }
 
+    public boolean isShooting(){
+        return isShooting;
+    }
+
     public void startAccelerating() {
         isAccelerating = true;
     }

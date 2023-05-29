@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * */
 public class ObjectAnimation {
 
+    private boolean enabled = true;
     private ArrayList<Image> images = new ArrayList<>();
     private int index = 0;
 
@@ -48,7 +49,10 @@ public class ObjectAnimation {
      * Metodo per aggiornare l'animazione allo step successivo
      */
     public void update() {
-        index = (index+1) % images.size();
+        if(enabled)
+            index = (index+1) % images.size();
+        else
+            index = 0;
     }
 
     /**
@@ -65,5 +69,17 @@ public class ObjectAnimation {
 
     public Image getDefaultImage() {
         return images.get(0);
+    }
+
+    /** Metodo per disabilitare l'animazione
+     */
+    public void disable() {
+        enabled = false;
+    }
+
+    /** Metodo per abilitare l'animazione
+     */
+    public void enable() {
+        enabled = true;
     }
 }

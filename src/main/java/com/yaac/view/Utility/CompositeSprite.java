@@ -66,10 +66,45 @@ public class CompositeSprite {
         animations.set(index, animation);
     }
 
+    /** Rimuove un'animazione dlla posizione index
+     * @param index posizione in cui rimuovere l'animazione
+     */
+    public void removeAnimation(int index){
+        animations.remove(index);
+    }
+
+    /** Metodo per l'aggiunta di un'immagine
+     * @param image immagine da aggiungere
+     */
+    public void addImage(Image image){
+        images.add(image);
+    }
+
+    /** Rimuove un'immagine dlla posizione index
+     * @param index posizione in cui rimuovere l'immagine
+     */
+    public void removeImage(int index){
+        images.remove(index);
+    }
+
     /** Metodo per l'aggiornamento dello sprite corrente
      *  se l'indice sfora il numero di sprites disponibili, viene riportato all'inizio
      */
     public void setCurrentSprite(){
         currentSprite = (currentSprite + 1) % sprites.size();
+    }
+
+    /** Metodo wrapper per abilitare l'animazione
+     * @param index posizione dell'animazione da abilitare/disabilitare
+     */
+    public void enableAnimation(int index){
+        animations.get(index).enable();
+    }
+
+    /** Metodo wrapper per disabilitare l'animazione
+     * @param index posizione dell'animazione da abilitare/disabilitare
+     */
+    public void disableAnimation(int index) {
+        animations.get(index).disable();
     }
 }

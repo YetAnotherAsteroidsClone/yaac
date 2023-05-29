@@ -98,6 +98,7 @@ public class Shop extends JPanel{
         buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
 
         spaceShipView = new SpaceShipView(350,350);
+        spaceShipView.setCurrentWeapon(true);
     }
 
     private void drawShip(int x, int y, Graphics g){

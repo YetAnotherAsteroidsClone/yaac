@@ -99,4 +99,7 @@ public class GamePanel extends JPanel {
         super.repaint();
     }
 
+    public SpaceShipView getSpaceShipView() {
+        return spaceShipView;
+    }
 }
