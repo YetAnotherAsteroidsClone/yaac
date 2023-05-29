@@ -11,7 +11,7 @@ import static java.lang.Math.min;
  * Implementa la gestione della vita
  */
 public class Asteroid extends GameObject{
-    private int life;
+    private double life;
 
     /**
      * Costruttore dell'asteroide con parametri
@@ -21,7 +21,7 @@ public class Asteroid extends GameObject{
      * @param vy velocità iniziale su asse y
      * @param life vita dell'asteroide
      */
-    public Asteroid(int x, int y, int vx, int vy, int life, int radius) {
+    public Asteroid(int x, int y, double vx, double vy, double life, int radius) {
         super(x, y, vx, vy, 0, radius);
         this.life = life;
     }
@@ -38,7 +38,7 @@ public class Asteroid extends GameObject{
      * Getter della vita dell'asteroide
      * @return vita dell'asteroide
      */
-    public int getLife() {
+    public double getLife() {
         return life;
     }
 
@@ -47,7 +47,7 @@ public class Asteroid extends GameObject{
      * @param damage danno da applicare
      * @return true se l'asteroide è stato distrutto, false altrimenti
      */
-    public boolean getDamage(int damage){
+    public boolean receiveDamage(double damage){
         this.life -= damage;
         return this.life <= 0;
     }

@@ -111,24 +111,27 @@ public class Game {
     }
 
     public void resolveCollisions() {
-        GameComponentsManager collidedAsteroids =  CollisionUtility.checkCollisionArray(bullets, asteroids);
+        GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
+        for (GameObject bullet : bullets){
+            double damage = ((Bullet) bullet).getDamage();
+            for (GameObject asteroid : asteroids){
+                if(CollisionUtility.checkCollision(bullet, asteroid) && ((Asteroid) asteroid).receiveDamage(damage)) {
+                    newDestroyedAsteroids.add(asteroid);
+                }
+            }
+        }
         GameComponentsManager collidedBullets = CollisionUtility.checkCollisionArray(asteroids, bullets);
-        /* Bounce asteroids
-        GameComponentsManager contrastAsteroids = CollisionUtility.checkCollisionArray(asteroids, asteroids);
-        for (GameObject obj : contrastAsteroids) {
-            ((Asteroid) obj).bounce();
-        }*/
+        asteroids.removeArray(newDestroyedAsteroids);
+        bullets.removeArray(collidedBullets);
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
             lives--;
             spaceShip.reset();
-            destroyedAsteroids.add(asteroids);
+            newDestroyedAsteroids.add(asteroids);
             asteroids.clear();
         }
-        asteroids.removeArray(collidedAsteroids);
-        bullets.removeArray(collidedBullets);
-        for(GameObject obj : collidedAsteroids)
+        for(GameObject obj : newDestroyedAsteroids)
             ((Asteroid)obj).setTick(0);
-        destroyedAsteroids.add(collidedAsteroids);
+        destroyedAsteroids.add(newDestroyedAsteroids);
     }
 
     public GameComponentsManager getBullets() {
