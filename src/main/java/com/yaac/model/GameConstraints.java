@@ -19,7 +19,8 @@ public class GameConstraints {
     private boolean shopShield=false;
     private int score=0;
     private int orbs=0;
-    private int[] costs = {1,2,3,4,5,6,7,8,9};
+    private int[] costs = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
+    private int shieldCost = 10000;
     private int life=3;
     private int highScore=0;
     private double asteroidMaxSpeed = 8;
@@ -41,6 +42,7 @@ public class GameConstraints {
     public int getScore() {return score;}
     public int getOrbs() {return orbs;}
     public int getCost(int index){return costs[index];}
+    public int getShieldCost() {return shieldCost;}
     public int getLife() {return life;}
     public int getHighScore() {return highScore;}
 
