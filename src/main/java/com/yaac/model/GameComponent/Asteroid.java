@@ -1,6 +1,7 @@
 package com.yaac.model.GameComponent;
 
 import com.yaac.model.GameConstraints;
+import com.yaac.model.Utility.GameComponentsManager;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -21,7 +22,7 @@ public class Asteroid extends GameObject{
      * @param vy velocità iniziale su asse y
      * @param life vita dell'asteroide
      */
-    public Asteroid(int x, int y, double vx, double vy, double life, int radius) {
+    public Asteroid(double x, double y, double vx, double vy, double life, int radius) {
         super(x, y, vx, vy, 0, radius);
         this.life = life;
     }
@@ -76,9 +77,15 @@ public class Asteroid extends GameObject{
         move();
     }
 
-
     @Override
     public int getType() {
         return 0;
+    }
+
+    public GameComponentsManager split(){
+        GameComponentsManager gameComponentsManager = new GameComponentsManager();
+        gameComponentsManager.add(new Asteroid(x, y, vx , -vy, life/2, (int) radius/2));
+        gameComponentsManager.add(new Asteroid(x, y, -vx, vy, life/2, (int) radius/2));
+        return gameComponentsManager;
     }
 }

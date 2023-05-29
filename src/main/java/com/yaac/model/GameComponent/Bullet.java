@@ -9,7 +9,7 @@ import com.yaac.model.GameConstraints;
  */
 public class Bullet extends GameObject{
     private int type = 0;
-    private double damage = 1;
+    private double damage;
     private boolean outside = false;
 
     /**

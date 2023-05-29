@@ -11,7 +11,7 @@ public abstract class GameObject{
     protected double vy = 0;
     protected double x;
     protected double y;
-    protected int rotation = 0;
+    protected int rotation;
     protected double radius = 0;
 
 
@@ -91,7 +91,7 @@ public abstract class GameObject{
     public abstract int getType();
     public long getTick(){
         return tick;
-    };
+    }
 
     public void setTick(long i) {
         this.tick = i;

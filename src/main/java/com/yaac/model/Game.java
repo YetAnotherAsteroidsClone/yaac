@@ -68,7 +68,7 @@ public class Game {
     private void removeVanishedAsteroids() {
         GameComponentsManager vanishedAsteroids = new GameComponentsManager();
         for (GameObject asteroid : destroyedAsteroids) {
-            if (((Asteroid) asteroid).getTick() > 14) {
+            if (asteroid.getTick() > 14) {
                 vanishedAsteroids.add(asteroid);
             }
         }
@@ -78,7 +78,7 @@ public class Game {
     private void removeVanishedBullets() {
         GameComponentsManager vanishedBullets = new GameComponentsManager();
         for (GameObject bullet : destroyedBullets) {
-            if (((Bullet) bullet).getTick() > 10) {
+            if (bullet.getTick() > 10) {
                 vanishedBullets.add(bullet);
             }
         }
@@ -126,7 +126,7 @@ public class Game {
 
     public void resolveCollisions() {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
-        GameComponentsManager newDestroyedBullets = new GameComponentsManager();
+        GameComponentsManager newDestroyedBullets;
         for (GameObject bullet : bullets){
             double damage = ((Bullet) bullet).getDamage();
             for (GameObject asteroid : asteroids){
@@ -138,6 +138,10 @@ public class Game {
         newDestroyedBullets = CollisionUtility.checkCollisionArray(asteroids, bullets);
         asteroids.removeArray(newDestroyedAsteroids);
         bullets.removeArray(newDestroyedBullets);
+        for (GameObject asteroid : newDestroyedAsteroids){
+            if (((Asteroid) asteroid).getRadius() > 30)
+                asteroids.add(((Asteroid) asteroid).split());
+        }
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
             lives--;
             spaceShip.reset();
@@ -147,9 +151,9 @@ public class Game {
             asteroids.clear();
         }
         for(GameObject obj : newDestroyedAsteroids)
-            ((Asteroid)obj).setTick(0);
+            obj.setTick(0);
         for(GameObject obj : newDestroyedBullets){
-            ((Bullet) obj).setTick(0);
+            obj.setTick(0);
         }
         destroyedAsteroids.add(newDestroyedAsteroids);
         destroyedBullets.add(newDestroyedBullets);
