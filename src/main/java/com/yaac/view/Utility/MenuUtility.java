@@ -35,14 +35,10 @@ public class MenuUtility {
         return textArea;
     }
 
-    public static void drawShopButton(JButton button, String path, int x, int y, int width, int height, Color color, Graphics g){
+    public static void drawShopButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, Color color, Graphics g){
         g.setColor(color);
         g.drawRect(x,y,width,height);
         button.setBounds(x+1,y+1,width-1,height-1);
-        ImageIcon imageIcon = new ImageIcon(MenuUtility.class.getResource(path));
-        Image image = imageIcon.getImage();
-        Image resizedImage = image.getScaledInstance(width-1,height-1, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(resizedImage);
         button.setIcon(imageIcon);
     }
 

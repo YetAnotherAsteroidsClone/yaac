@@ -1,7 +1,6 @@
 package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
-import com.yaac.controller.ShopController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
@@ -13,37 +12,46 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Shop extends JPanel{
-    private ObjectAnimation backgroundL1, backgroundL2;
+
+    //FONT AND COLORS
     Font font;
-    private BufferedImage spaceShipImage;
-    private BufferedImage engine;
-    private ObjectAnimation fire;
+    private Color orbsColor;
+    private Color powerUpColor;
+
+    //IMAGES, ICONS AND ANIMATIONS
+    private ObjectAnimation backgroundL1, backgroundL2, fire;
+    private BufferedImage spaceShipImage, engine;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
-    private int[] costs = {1,2,3,4,5,6,7,8,9};
+    private ImageIcon plusIcon, shieldShopIcon, menuIcon, backIcon;
 
-    //COLORS
-    private Color orbsColor = Color.CYAN;
-
-
+    //BUTTONS
     public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
     private JButton mainMenu, back;
+
+    //OFFSETS
     private int widthOffset = Settings.width/2;
     private int heightOffset = Settings.height/2;
-    private ShopController controller;
+
+    //OTHERS
+    private int[] costs = {1,2,3,4,5,6,7,8,9};
     private GameConstraints gameConstraints = GameConstraints.getInstance();
 
+
+    //CONSTRUCTOR
     public Shop() throws IOException, FontFormatException {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
-
 
         //bg image
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
-
         backgroundL1.scaleImage(Settings.width, Settings.height);
         backgroundL2.scaleImage(Settings.width, Settings.height);
 
-        font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(35f);
+        //ImageIcons
+        menuIcon = getImageIcon("/MenuSprite/HomeButton.png",38,38);
+        backIcon = getImageIcon("/MenuSprite/BackButton.png",38,38);
+        plusIcon = getImageIcon("/MenuSprite/plusButton.png",38,38);
+        shieldShopIcon = getImageIcon("/GameSprite/shieldShop.png",68,68);
 
         //spaceship images
         spaceShipImage = ImageUtility.loadImage("/GameSprite/Body1.png");
@@ -68,6 +76,12 @@ public class Shop extends JPanel{
         PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/shieldShop.png");
         PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],38,38);
 
+        //Font and colors
+        font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(35f);
+        orbsColor = new Color(100,180,250);
+        powerUpColor = new Color(76,44,254);
+
+        //Buttons
         mainMenu = new JButton();
         mainMenu.addActionListener(actionEvent -> {
             try {
@@ -78,18 +92,26 @@ public class Shop extends JPanel{
         });
         back = new JButton();
         back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
-
-
+        
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
         }
-        
+
+        //PowerUp buttons listener
         buttons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);});
         buttons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);});
         buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);});
         buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
         buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
 
+    }
+
+    private ImageIcon getImageIcon(String path, int width,int height){
+        ImageIcon imageIcon = new ImageIcon(MenuUtility.class.getResource(path));
+        Image image = imageIcon.getImage();
+        Image resizedImage = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(resizedImage);
+        return imageIcon;
     }
 
     private void drawShip(int x, int y, Graphics g){
@@ -104,6 +126,8 @@ public class Shop extends JPanel{
         g.drawRect(x-55,y-10,40,40);
         g.drawImage((Image) img,x-54,y-9,null);
         g.drawRect(x,y,301,30);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x+1,y+1,299,28);
         g.setColor(Color.YELLOW);
         int drawPwUpX = x+1;
         for(int i=0; i<levels; i++){
@@ -111,7 +135,7 @@ public class Shop extends JPanel{
             drawPwUpX+=30;
         }
         if(levels<10){
-            MenuUtility.drawShopButton(b,"/MenuSprite/plusButton.png",x+314,y,30,30,Color.LIGHT_GRAY,g);
+            MenuUtility.drawShopButton(b,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
             this.add(b);
             g.setColor(orbsColor);
             g.setFont(font);
@@ -124,55 +148,61 @@ public class Shop extends JPanel{
             g.drawString("MAX!", x,y-10);
         }
 
-        g.setColor(new Color(76,84,254));
-        g.drawString(pwUp, x+6,y+22);
+        g.setColor(powerUpColor);
+        g.drawString(pwUp, x+8,y+22);
     }
 
     private void drawShopShield(Graphics g, JButton b){
         g.setFont(font);
         if(gameConstraints.getShopShield()){
-            MenuUtility.drawShopButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
+            MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
             //missing "spunta verde"
         }
-        else {MenuUtility.drawShopButton(b,"/GameSprite/shieldShop.png",widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
+        else {MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
         g.drawString("missingCost", widthOffset+470, heightOffset+260);
         this.add(b);
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
+        //background
         g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         backgroundL1.update();
         backgroundL2.update();
 
+        //page buttons
         if(SceneManager.getInstance().isInGame()){
-            MenuUtility.drawShopButton(back,"/MenuSprite/BackButton.png",widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
+            MenuUtility.drawShopButton(back,backIcon,widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
             this.add(back);
         }
-        MenuUtility.drawShopButton(mainMenu,"/MenuSprite/HomeButton.png",widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
+        MenuUtility.drawShopButton(mainMenu,menuIcon,widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
         this.add(mainMenu);
 
+        //show score and orbs
         g.setFont(font);
         g.setColor(Color.LIGHT_GRAY);
         g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset+430,heightOffset-360);
         g.setColor(orbsColor);
         g.drawString("ORBS: "+gameConstraints.getOrbs(),widthOffset+430,heightOffset-325);
 
+        //draw ship and components
         drawShip(widthOffset-175,heightOffset-350, g);
-        //missing weapon and engine
+        //missing weapon
 
-
+        //separator
         g.setColor(Color.WHITE);
         g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
 
-
-        //2 PwUpimages missing
+        //powerup bars
         drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], buttons[0], g);
         drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
         drawBar(widthOffset, heightOffset+130, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
         drawBar(widthOffset, heightOffset+250, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
+        //2 PwUpimages missing
 
+        //purchasable shield
         drawShopShield(g, buttons[4]);
     }
 
