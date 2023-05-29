@@ -71,7 +71,7 @@ public class ImageUtility {
         Graphics2D g2d = rotatedBI.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         //Conversione dell'angolo in gradi ad angolo in radianti (angle*PI/180)
-        g2d.rotate(Math.toRadians(angle), originalWidth / 2, originalHeight / 2);
+        g2d.rotate(Math.toRadians(angle), (double) originalWidth / 2, (double) originalHeight / 2);
         g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
         return rotatedBI;
@@ -85,6 +85,8 @@ public class ImageUtility {
      * @return l'immagine scalata
      */
     public static BufferedImage scaleImage(BufferedImage image, int width, int height) {
+        if(image.getWidth() == width && image.getHeight() == height)
+            return image;
         Image tmp = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = resized.createGraphics();

@@ -1,17 +1,16 @@
 package com.yaac.view;
-
+import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
-
 import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GamePanel extends JPanel {
 
@@ -23,16 +22,29 @@ public class GamePanel extends JPanel {
     private ObjectAnimation backgroundL1;
     private ObjectAnimation backgroundL2;
     private ObjectAnimation backgroundL3;
+    private Font font;
+    private BufferedImage life;
     private ArrayList<ObjectAnimation> bulletsAnimation;
     private BufferedImage asteroidsImage;
     private ObjectAnimation deadAsteroidsAnimation;
     private ObjectAnimation bulletExplosionAnimation;
+    private GameConstraints gameConstraints;
     //private Sound gameSound;
 
     public GamePanel(){
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         backgroundL2 = new ObjectAnimation("/Background/GameBackgroundL2.png", 640, 360);
         backgroundL3 = new ObjectAnimation("/Background/GameBackgroundL3.png", 640, 360);
+        backgroundL1.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+        backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+        backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+
+        gameConstraints = GameConstraints.getInstance();
+
+        life = ImageUtility.loadImage("/GameSprite/Body1.png");
+        life = ImageUtility.scaleImage(life,40,40);
+        try {font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(45f);}
+        catch (FontFormatException | IOException e) {throw new RuntimeException(e);}
 
         bulletsAnimation = new ArrayList<>();
         bulletsAnimation.add(new ObjectAnimation("/GameSprite/BulletBaseCannon.png"));
@@ -44,10 +56,6 @@ public class GamePanel extends JPanel {
         deadAsteroidsAnimation = new ObjectAnimation("/GameSprite/Asteroid-Explode.png");
         bulletExplosionAnimation = new ObjectAnimation("/GameSprite/BulletExplosionAnimation.png");
         bulletExplosionAnimation.scaleImage(32, 32);
-
-        backgroundL1.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
-        backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
-        backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
 
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
 
@@ -64,7 +72,10 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
-        g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) game.getSpaceShip().getX() - 24, (int) game.getSpaceShip().getY() - 24, null);
+        g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
+
+
+
 
         for(int i = 0; i < game.getAsteroids().size(); i++) {
             double asteroidSize = game.getAsteroids().get(i).getRadius();
@@ -92,6 +103,12 @@ public class GamePanel extends JPanel {
             g.drawImage(ImageUtility.rotateImage((BufferedImage) currentBulletFrame, game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
         }
 
+        g.setFont(font);
+        g.drawString("SCORE: "+gameConstraints.getScore(),40,50);
+        for(int i=0; i<gameConstraints.getLife();i++){
+            g.drawImage((Image) life,40*(i+1),70,null);
+        }
+
         tick++;
     }
 
@@ -99,4 +116,7 @@ public class GamePanel extends JPanel {
         super.repaint();
     }
 
+    public SpaceShipView getSpaceShipView() {
+        return spaceShipView;
+    }
 }

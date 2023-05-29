@@ -41,7 +41,6 @@ public class SpaceShip extends GameObject{
         super(x, y, vx, vy, 0, 24);
     }
 
-
     @Override
     public void update() {
         if(isRotatingLeft)
@@ -62,11 +61,6 @@ public class SpaceShip extends GameObject{
     @Override
     public int getType() {
         return 0;
-    }
-
-    @Override
-    public long getTick() {
-        return tick;
     }
 
     /**
@@ -142,7 +136,12 @@ public class SpaceShip extends GameObject{
 
     public void stopShooting() {
         isShooting = false;
-        shotTick = 0;
+        if (shotTick > GameConstraints.getInstance().getBulletRatio())
+            shotTick = 1;
+    }
+
+    public boolean isShooting(){
+        return isShooting;
     }
 
     public void startAccelerating() {
