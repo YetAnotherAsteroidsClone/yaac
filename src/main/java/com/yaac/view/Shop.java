@@ -2,7 +2,6 @@ package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
-import com.yaac.view.Utility.CompositeSprite;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
@@ -10,8 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Shop extends JPanel{
@@ -28,7 +25,9 @@ public class Shop extends JPanel{
     private SpaceShipView spaceShipView;
 
     //BUTTONS
-    public JButton[] buttons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
+    public JButton[] switchWeapon = new JButton[2];
+    public JButton[] switchEngine = new JButton[2];
+    public JButton[] pwUpButtons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
     private JButton mainMenu, back;
 
     //OFFSETS
@@ -85,24 +84,46 @@ public class Shop extends JPanel{
         });
         back = new JButton();
         back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
-        
-        for(int i=0; i<buttons.length; i++){
-            buttons[i] = new JButton();
+
+        for(int i = 0; i<2; i++){
+            switchWeapon[i] = new JButton();
+            switchEngine[i] = new JButton();
         }
 
-        //PowerUp buttons listener
-        buttons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);});
-        buttons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);});
-        buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);});
-        buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
-        buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
+        for(int i = 0; i< pwUpButtons.length; i++){
+            pwUpButtons[i] = new JButton();
+        }
 
+        //buttons listener
+        pwUpButtons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);});
+        pwUpButtons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);});
+        pwUpButtons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);});
+        pwUpButtons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
+        pwUpButtons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
+/*
+        switchWeapon[0].addActionListener(actionEvent -> );
+        switchWeapon[1].addActionListener(actionEvent -> );
+        switchEngine[0].addActionListener(actionEvent -> );
+        switchEngine[1].addActionListener(actionEvent -> );
+*/
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeapon(true);
     }
 
     private void drawShip(int x, int y, Graphics g){
         g.drawImage(spaceShipView.getSpaceship().draw(), x,y,null);
+
+        MenuUtility.drawShopButton(switchWeapon[0],plusIcon,x-85,y+50,50,50,Color.WHITE,g);
+        MenuUtility.drawShopButton(switchWeapon[1],plusIcon,x+370,y+50,50,50,Color.WHITE,g);
+
+        MenuUtility.drawShopButton(switchEngine[0],plusIcon,x-85,y+250,50,50,Color.WHITE,g);
+        MenuUtility.drawShopButton(switchEngine[1],plusIcon,x+370,y+250,50,50,Color.WHITE,g);
+
+        for(int i = 0; i<2; i++){
+            this.add(switchWeapon[i]);
+            this.add(switchEngine[i]);
+        }
+
     }
 
     private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){
@@ -180,14 +201,14 @@ public class Shop extends JPanel{
         g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
 
         //powerup bars
-        drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], buttons[0], g);
-        drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
-        drawBar(widthOffset, heightOffset+130, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
-        drawBar(widthOffset, heightOffset+250, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
+        drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], pwUpButtons[0], g);
+        drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], pwUpButtons[1], g);
+        drawBar(widthOffset, heightOffset+130, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], pwUpButtons[2], g);
+        drawBar(widthOffset, heightOffset+250, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], pwUpButtons[3], g);
         //2 PwUpimages missing
 
         //purchasable shield
-        drawShopShield(g, buttons[4]);
+        drawShopShield(g, pwUpButtons[4]);
     }
 
     public void update() {super.repaint();}
