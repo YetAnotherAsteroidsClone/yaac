@@ -6,12 +6,8 @@ import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
@@ -19,7 +15,9 @@ import java.util.Objects;
 public class Shop extends JPanel{
     private ObjectAnimation backgroundL1, backgroundL2;
     Font font;
-    private BufferedImage[] spaceShipImages = new BufferedImage[3];     //spaceShipImages[0] = SPACESHIP; spaceShipImages[1] = ENGINE; spaceShipImages[2] = WEAPON
+    private BufferedImage spaceShipImage;
+    private BufferedImage engine;
+    private ObjectAnimation fire;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
     private int[] costs = {1,2,3,4,5,6,7,8,9};
 
@@ -45,18 +43,16 @@ public class Shop extends JPanel{
         backgroundL1.scaleImage(Settings.width, Settings.height);
         backgroundL2.scaleImage(Settings.width, Settings.height);
 
-        font = new Font("font",Font.BOLD,25);
-
-        // Se vuoi cambiare il font ti ho incollato qua la parte di codice che lo fa e ho aggiunto le exception
-        //font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(25f);
+        font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(35f);
 
         //spaceship images
-        spaceShipImages[0] = ImageUtility.loadImage("/GameSprite/Body1.png");
-        spaceShipImages[0] = ImageUtility.scaleImage(spaceShipImages[0],350,350);
-        spaceShipImages[1] = ImageUtility.loadImage("/GameSprite/BaseEngine.png");
-        spaceShipImages[1] = ImageUtility.scaleImage(spaceShipImages[1],150,150);
-        spaceShipImages[2] = ImageUtility.loadImage("/GameSprite/Body1.png");
-        spaceShipImages[2] = ImageUtility.scaleImage(spaceShipImages[2],10,10);
+        spaceShipImage = ImageUtility.loadImage("/GameSprite/Body1.png");
+        spaceShipImage = ImageUtility.scaleImage(spaceShipImage,350,350);
+        engine = ImageUtility.loadImage("/GameSprite/BaseEngine.png");
+        engine = ImageUtility.scaleImage(engine, 200, 200);
+        fire = new ObjectAnimation("/GameSprite/BaseEngine-Powering.png");
+        fire.scaleImage(200,200);
+
 
         //PowerUp images
         /*
@@ -87,20 +83,23 @@ public class Shop extends JPanel{
         for(int i=0; i<buttons.length; i++){
             buttons[i] = new JButton();
         }
-
-        buttons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1); super.repaint();});
-        buttons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1); super.repaint();});
-        buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1); super.repaint();});
-        buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1); super.repaint();});
-        buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true); super.repaint();});
+        
+        buttons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);});
+        buttons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);});
+        buttons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);});
+        buttons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
+        buttons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
 
     }
 
     private void drawShip(int x, int y, Graphics g){
-        g.drawImage((Image) spaceShipImages[0], x, y, null);
+        g.drawImage((Image) engine,x+75,y+166,null);
+        g.drawImage((Image) spaceShipImage, x, y, null);
+        g.drawImage(fire.getCurrentFrame(), x+75,y+180,null);
+        fire.update();
     }
 
-    private void drawBar(int x, int y, int levels, BufferedImage img, JButton b, Graphics g){
+    private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){
         g.setColor(Color.WHITE);
         g.drawRect(x-55,y-10,40,40);
         g.drawImage((Image) img,x-54,y-9,null);
@@ -124,6 +123,9 @@ public class Shop extends JPanel{
             g.setFont(font);
             g.drawString("MAX!", x,y-10);
         }
+
+        g.setColor(new Color(76,84,254));
+        g.drawString(pwUp, x+6,y+22);
     }
 
     private void drawShopShield(Graphics g, JButton b){
@@ -166,13 +168,13 @@ public class Shop extends JPanel{
 
 
         //2 PwUpimages missing
-        drawBar(widthOffset-530, heightOffset+130, gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], buttons[0], g);
-        drawBar(widthOffset-530, heightOffset+250, gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
-        drawBar(widthOffset, heightOffset+130, gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
-        drawBar(widthOffset, heightOffset+250, gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
+        drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], buttons[0], g);
+        drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], buttons[1], g);
+        drawBar(widthOffset, heightOffset+130, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], buttons[2], g);
+        drawBar(widthOffset, heightOffset+250, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], buttons[3], g);
 
         drawShopShield(g, buttons[4]);
     }
 
-    public void update() {this.repaint();}
+    public void update() {super.repaint();}
 }

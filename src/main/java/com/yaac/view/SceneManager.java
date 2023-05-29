@@ -91,8 +91,10 @@ public class SceneManager {
     public void loadShop(){
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
+        Loop shopLoop = new Loop(controller);
         loadScene(shop);
         shop.requestFocus();
+        shopLoop.run();
     }
 
 
