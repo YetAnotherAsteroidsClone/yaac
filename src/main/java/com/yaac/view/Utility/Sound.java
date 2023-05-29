@@ -4,13 +4,14 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
+import java.util.Objects;
 
 public class Sound {
     private AudioInputStream audioIn;
     private Clip clip;
     public Sound(String name) { //Riceve come parametro il nome di una risorsa .wav da riprodurre.
         try {
-            audioIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("/Sounds/" + name));
+            audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/Sounds/" + name)));
             clip = AudioSystem.getClip();
             clip.open(audioIn);
         } catch (Exception e) {
