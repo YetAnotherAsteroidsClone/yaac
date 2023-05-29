@@ -15,7 +15,7 @@ public class Game {
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
     GameComponentsManager powerUps;
-    Sound bulletSound;
+    Sound bulletSound, gameMusic;
     SpaceShip spaceShip;
     int score;
     int lives;
@@ -28,6 +28,8 @@ public class Game {
         destroyedAsteroids = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
         bulletSound = new Sound("SpaceshipFiring.wav");
+        gameMusic = new Sound("Music.wav");
+        gameMusic.loop();
     }
 
     public static Game getInstance() {
