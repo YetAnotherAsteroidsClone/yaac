@@ -150,7 +150,7 @@ public class Shop extends JPanel{
             //missing "spunta verde"
         }
         else {MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
-        g.drawString("missingCost", widthOffset+470, heightOffset+260);
+        g.drawString(""+gameConstraints.getShieldCost(), widthOffset+470, heightOffset+260);
         this.add(b);
     }
 
