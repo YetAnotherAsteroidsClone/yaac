@@ -125,9 +125,9 @@ public class Shop extends JPanel{
         }
 
     }
-
     private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){
         g.setColor(Color.WHITE);
+        g.setFont(font);
         g.drawRect(x-55,y-10,40,40);
         g.drawImage((Image) img,x-54,y-9,null);
         g.drawRect(x,y,301,30);
@@ -140,19 +140,18 @@ public class Shop extends JPanel{
             drawPwUpX+=30;
         }
         if(levels<10){
+            g.setColor(orbsColor);
+            g.drawString(""+gameConstraints.getCost(levels-1), x+314,y-10);
             MenuUtility.drawShopButton(b,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
             this.add(b);
-            g.setColor(orbsColor);
-            g.setFont(font);
-            g.drawString(""+gameConstraints.getCost(levels-1), x,y-10);
+            g.setColor(Color.WHITE);
+            g.drawString("LVL "+levels,x,y-10);
         }
         else{
             if (b!=null){this.remove(b);}
             g.setColor(Color.YELLOW);
-            g.setFont(font);
             g.drawString("MAX!", x,y-10);
         }
-
         g.setColor(powerUpColor);
         g.drawString(pwUp, x+8,y+22);
     }
