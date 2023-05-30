@@ -31,6 +31,7 @@ public class GamePanel extends JPanel {
     private ObjectAnimation deadAsteroidsAnimation;
     private ObjectAnimation bulletExplosionAnimation;
     private ArrayList<ObjectAnimation> gemsAnimation;
+    private ObjectAnimation gemCounter;
 
     public GamePanel(){
         super();
@@ -66,6 +67,10 @@ public class GamePanel extends JPanel {
         gemsAnimation.add(new ObjectAnimation("/GameSprite/GemL3.png"));
         for (ObjectAnimation gemAnimation : gemsAnimation) {
             gemAnimation.scaleImage(32, 32);
+
+        gemCounter = new ObjectAnimation("/GameSprite/GemL1.png");
+        gemCounter.scaleImage(45,45);
+
         }
 
         // Caricamento delle animazioni degli asteroidi
@@ -139,13 +144,17 @@ public class GamePanel extends JPanel {
             g.drawImage(currentGemFrame, (int) (game.getGems().get(i).getX() - game.getGems().get(i).getRadius()), (int) (game.getGems().get(i).getY() - game.getGems().get(i).getRadius()), null);
         }
 
-        // Disegna il punteggio e le vite
+        // Disegna il punteggio le vite e il counter delle gemme
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString("SCORE: " + game.getScore(),40,50);
         for(int i=0; i < game.getLives();i++){
             g.drawImage((Image) life,40*(i+1),70,null);
         }
+        g.drawImage(gemCounter.getCurrentFrame(),GameConstraints.WORLDWIDTH-150,20,null);
+        gemCounter.update();
+        g.setColor(Color.WHITE);
+        g.drawString("x" + game.getGemCount(),GameConstraints.WORLDWIDTH-105,55);
     }
 
     /**
