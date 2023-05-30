@@ -134,6 +134,8 @@ public class GamePanel extends JPanel {
 
         // Disegna le gemme
         for(int i = 0; i < game.getGems().size(); i++) {
+            if(game.getGems().get(i).getTick() > 192 && game.getGems().get(i).getTick() % 6 > 3)
+                continue;
             ObjectAnimation currentGemTypeAnimation = gemsAnimation.get(game.getGems().get(i).getType() - 1);
             Image currentGemFrame = currentGemTypeAnimation.getImage((int) (game.getGems().get(i).getTick() / 2 )% currentGemTypeAnimation.size());
             g.drawImage(currentGemFrame, (int) (game.getGems().get(i).getX() - game.getGems().get(i).getRadius()), (int) (game.getGems().get(i).getY() - game.getGems().get(i).getRadius()), null);

@@ -3,6 +3,7 @@ package com.yaac.model;
 import com.yaac.Settings;
 
 public class GameConstraints {
+    public int gemVanishingTime = 240;
     private double maxSpeed = 5;
     private double shipAcceleration = 2;
     private double bulletSpeed = 6;
@@ -68,6 +69,9 @@ public class GameConstraints {
     }
     public int getMaxAsteroids() {
         return maxAsteroids;
+    }
+    public int getGemVanishingTime() {
+        return gemVanishingTime;
     }
 
     //SETTERS
