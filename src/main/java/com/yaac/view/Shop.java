@@ -104,11 +104,26 @@ public class Shop extends JPanel{
         }
 
         //buttons listener
-        pwUpButtons[0].addActionListener(actionEvent -> {gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);});
-        pwUpButtons[1].addActionListener(actionEvent -> {gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);});
-        pwUpButtons[2].addActionListener(actionEvent -> {gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);});
-        pwUpButtons[3].addActionListener(actionEvent -> {gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);});
-        pwUpButtons[4].addActionListener(actionEvent -> {gameConstraints.setShopShield(true);});
+        pwUpButtons[0].addActionListener(actionEvent -> {
+            gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlMaxSpeed()-1));
+            gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);
+        });
+        pwUpButtons[1].addActionListener(actionEvent -> {
+            gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletSpeed()-1));
+            gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);
+        });
+        pwUpButtons[2].addActionListener(actionEvent -> {
+            gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletDamage()-1));
+            gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);
+        });
+        pwUpButtons[3].addActionListener(actionEvent -> {
+            gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletRatio()-1));
+            gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);
+        });
+        pwUpButtons[4].addActionListener(actionEvent -> {
+            gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getShieldCost());
+            gameConstraints.setShopShield(true);
+        });
 
         switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeapon(true);});
         switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeapon(true);});
@@ -168,7 +183,7 @@ public class Shop extends JPanel{
             g.drawString("LVL "+levels,x,y-10);
         }
         else{
-            if (b!=null){this.remove(b);}
+            this.remove(b);
             g.setColor(Color.YELLOW);
             g.drawString("MAX!", x,y-10);
         }
@@ -179,7 +194,7 @@ public class Shop extends JPanel{
     private void drawShopShield(Graphics g, JButton b){
         g.setFont(font);
         if(gameConstraints.getShopShield()){
-            if(b != null){this.remove(b);}
+            this.remove(b);
             g.setColor(Color.GREEN);
             g.drawRect(widthOffset+470,heightOffset+160,70,70);
             g.drawImage(shield.getCurrentFrame(),widthOffset+471,heightOffset+161,null);
@@ -189,7 +204,7 @@ public class Shop extends JPanel{
             g.drawImage(gems.getCurrentFrame(),widthOffset+460, heightOffset+235,null);
             ImageIcon shieldIcon = new ImageIcon(shield.getCurrentFrame());
             if (gameConstraints.getGems() < gameConstraints.getShieldCost()) {
-                if(b != null){this.remove(b);}
+                this.remove(b);
                 g.setColor(Color.RED);
                 g.drawRect(widthOffset+470,heightOffset+160,70,70);
                 g.drawImage(shield.getCurrentFrame(),widthOffset+471,heightOffset+161,null);
@@ -197,9 +212,9 @@ public class Shop extends JPanel{
             }
             else {
                 MenuUtility.drawShopButton(b, shieldIcon, widthOffset + 470, heightOffset + 160, 70, 70, gemsColor, g);
+                this.add(b);
             }
             g.drawString(""+gameConstraints.getShieldCost(), widthOffset+495, heightOffset+265);
-            this.add(b);
         }
     }
 
