@@ -14,14 +14,15 @@ import java.util.Objects;
 public class Shop extends JPanel{
 
     //FONT AND COLORS
-    Font font;
+    Font font, scoreFont;
     private Color gemsColor;
     private Color powerUpColor;
 
     //IMAGES, ICONS AND ANIMATIONS
-    private ObjectAnimation backgroundL1, backgroundL2;
+    private ObjectAnimation backgroundL1, backgroundL2, gems, shield;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
-    private ImageIcon plusIcon, shieldShopIcon, menuIcon, backIcon, right, left;
+    private BufferedImage greenTick, locker;
+    private ImageIcon plusIcon, menuIcon, backIcon, right, left;
     private SpaceShipView spaceShipView;
 
     //BUTTONS
@@ -43,18 +44,25 @@ public class Shop extends JPanel{
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
 
         //bg image
-        backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
-        backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
+        backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png",640,360);
+        backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png",640,360);
         backgroundL1.scaleImage(Settings.width, Settings.height);
         backgroundL2.scaleImage(Settings.width, Settings.height);
 
-        //ImageIcons
+        //ImageIcons and animations
         menuIcon = MenuUtility.getImageIcon("/MenuSprite/HomeButton.png",38,38);
         backIcon = MenuUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
         plusIcon = MenuUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
-        shieldShopIcon = MenuUtility.getImageIcon("/GameSprite/shieldShop.png",68,68);
         right = MenuUtility.getImageIcon("/MenuSprite/rightArrow.png", 48,58);
         left = MenuUtility.getImageIcon("/MenuSprite/leftArrow.png", 48,58);
+        greenTick = ImageUtility.loadImage("/GameSprite/checkmark-64.png");
+        greenTick = ImageUtility.scaleImage(greenTick,50,50);
+        locker = ImageUtility.loadImage("/GameSprite/locker.png");
+        locker = ImageUtility.scaleImage(locker,40,40);
+        gems = new ObjectAnimation("/GameSprite/GemL1.png");
+        gems.scaleImage(35,35);
+        shield = new ObjectAnimation("/GameSprite/ShopShield.png");
+        shield.scaleImage(70,70);
 
         //PowerUp images
         PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/SpeedPwUp.png");
@@ -67,11 +75,10 @@ public class Shop extends JPanel{
         PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],38,38);
         PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/bulletRatio.png");
         PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],38,38);
-        PowerUpImages[4] = ImageUtility.loadImage("/GameSprite/shieldShop.png");
-        PowerUpImages[4] = ImageUtility.scaleImage(PowerUpImages[4],38,38);
 
         //Font and colors
         font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(35f);
+        scoreFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(50f);
         gemsColor = new Color(250,230,0);
         powerUpColor = new Color(76,44,254);
 
@@ -108,6 +115,7 @@ public class Shop extends JPanel{
         switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine();});
         switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();});
 
+        //spaceship
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeapon(true);
         spaceShipView.setPowering(true);
@@ -132,7 +140,7 @@ public class Shop extends JPanel{
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawRect(x-55,y-10,40,40);
-        g.drawImage((Image) img,x-54,y-9,null);
+        g.drawImage(img,x-54,y-9,null);
         g.drawRect(x,y,301,30);
         g.setColor(Color.LIGHT_GRAY);
         g.fillRect(x+1,y+1,299,28);
@@ -143,10 +151,19 @@ public class Shop extends JPanel{
             drawPwUpX+=30;
         }
         if(levels<10){
+            g.drawImage(gems.getCurrentFrame(),x+280,y-45,null);
             g.setColor(gemsColor);
-            g.drawString(""+gameConstraints.getCost(levels-1), x+314,y-10);
-            MenuUtility.drawShopButton(b,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
-            this.add(b);
+            if(gameConstraints.getGems()<gameConstraints.getCost(levels-1)){
+                if(b != null){this.remove(b);}
+                g.setColor(Color.RED);
+                g.drawImage(locker,x+309,y-5,null);
+            }
+            else{
+                MenuUtility.drawShopButton(b,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
+                this.add(b);
+            }
+            g.drawString(""+gameConstraints.getCost(levels-1), x+314,y-15);
+
             g.setColor(Color.WHITE);
             g.drawString("LVL "+levels,x,y-10);
         }
@@ -162,12 +179,28 @@ public class Shop extends JPanel{
     private void drawShopShield(Graphics g, JButton b){
         g.setFont(font);
         if(gameConstraints.getShopShield()){
-            MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
-            //missing "spunta verde"
+            if(b != null){this.remove(b);}
+            g.setColor(Color.GREEN);
+            g.drawRect(widthOffset+470,heightOffset+160,70,70);
+            g.drawImage(shield.getCurrentFrame(),widthOffset+471,heightOffset+161,null);
+            g.drawImage(greenTick,widthOffset+480,heightOffset+170,null);
         }
-        else {MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70, gemsColor,g);}
-        g.drawString(""+gameConstraints.getShieldCost(), widthOffset+470, heightOffset+260);
-        this.add(b);
+        else {
+            g.drawImage(gems.getCurrentFrame(),widthOffset+460, heightOffset+235,null);
+            ImageIcon shieldIcon = new ImageIcon(shield.getCurrentFrame());
+            if (gameConstraints.getGems() < gameConstraints.getShieldCost()) {
+                if(b != null){this.remove(b);}
+                g.setColor(Color.RED);
+                g.drawRect(widthOffset+470,heightOffset+160,70,70);
+                g.drawImage(shield.getCurrentFrame(),widthOffset+471,heightOffset+161,null);
+                g.drawImage(locker,widthOffset+485,heightOffset+175,null);
+            }
+            else {
+                MenuUtility.drawShopButton(b, shieldIcon, widthOffset + 470, heightOffset + 160, 70, 70, gemsColor, g);
+            }
+            g.drawString(""+gameConstraints.getShieldCost(), widthOffset+495, heightOffset+265);
+            this.add(b);
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -181,22 +214,25 @@ public class Shop extends JPanel{
 
         //page buttons
         if(SceneManager.getInstance().isInGame()){
-            MenuUtility.drawShopButton(back,backIcon,widthOffset-570,heightOffset-360,40,40,Color.WHITE,g);
+            MenuUtility.drawShopButton(back,backIcon,widthOffset+530,heightOffset-360,40,40,Color.WHITE,g);
             this.add(back);
         }
-        MenuUtility.drawShopButton(mainMenu,menuIcon,widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
+        MenuUtility.drawShopButton(mainMenu,menuIcon,widthOffset+600,heightOffset-360,40,40,Color.WHITE,g);
         this.add(mainMenu);
 
+
         //show score and gems
-        g.setFont(font);
+        g.setFont(scoreFont);
         g.setColor(Color.LIGHT_GRAY);
-        g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset+430,heightOffset-360);
-        g.setColor(gemsColor);
-        g.drawString("GEMS: "+gameConstraints.getGems(),widthOffset+430,heightOffset-325);
+        g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset-630,heightOffset-340);
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        g.drawImage(gems.getCurrentFrame(),widthOffset-630,heightOffset-320,null);
+        gems.update();
+        g.drawString("x"+gameConstraints.getGems(),widthOffset-590,heightOffset-290);
 
         //draw ship and components
         drawShip(widthOffset-175,heightOffset-350, g);
-        //missing weapon
 
         //separator
         g.setColor(Color.WHITE);
@@ -211,6 +247,7 @@ public class Shop extends JPanel{
 
         //purchasable shield
         drawShopShield(g, pwUpButtons[4]);
+        shield.update();
     }
 
     public void update() {super.repaint();}
