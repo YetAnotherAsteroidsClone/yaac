@@ -15,7 +15,7 @@ public class Shop extends JPanel{
 
     //FONT AND COLORS
     Font font;
-    private Color orbsColor;
+    private Color gemsColor;
     private Color powerUpColor;
 
     //IMAGES, ICONS AND ANIMATIONS
@@ -72,7 +72,7 @@ public class Shop extends JPanel{
 
         //Font and colors
         font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(35f);
-        orbsColor = new Color(100,180,250);
+        gemsColor = new Color(250,230,0);
         powerUpColor = new Color(76,44,254);
 
         //Buttons
@@ -143,7 +143,7 @@ public class Shop extends JPanel{
             drawPwUpX+=30;
         }
         if(levels<10){
-            g.setColor(orbsColor);
+            g.setColor(gemsColor);
             g.drawString(""+gameConstraints.getCost(levels-1), x+314,y-10);
             MenuUtility.drawShopButton(b,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
             this.add(b);
@@ -165,7 +165,7 @@ public class Shop extends JPanel{
             MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70,Color.GREEN,g);
             //missing "spunta verde"
         }
-        else {MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70,orbsColor,g);}
+        else {MenuUtility.drawShopButton(b,shieldShopIcon,widthOffset+470,heightOffset+160,70,70, gemsColor,g);}
         g.drawString(""+gameConstraints.getShieldCost(), widthOffset+470, heightOffset+260);
         this.add(b);
     }
@@ -187,12 +187,12 @@ public class Shop extends JPanel{
         MenuUtility.drawShopButton(mainMenu,menuIcon,widthOffset-640,heightOffset-360,40,40,Color.WHITE,g);
         this.add(mainMenu);
 
-        //show score and orbs
+        //show score and gems
         g.setFont(font);
         g.setColor(Color.LIGHT_GRAY);
         g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset+430,heightOffset-360);
-        g.setColor(orbsColor);
-        g.drawString("ORBS: "+gameConstraints.getGems(),widthOffset+430,heightOffset-325);
+        g.setColor(gemsColor);
+        g.drawString("GEMS: "+gameConstraints.getGems(),widthOffset+430,heightOffset-325);
 
         //draw ship and components
         drawShip(widthOffset-175,heightOffset-350, g);
