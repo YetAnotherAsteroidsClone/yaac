@@ -146,8 +146,6 @@ public class GamePanel extends JPanel {
         for(int i=0; i < game.getLives();i++){
             g.drawImage((Image) life,40*(i+1),70,null);
         }
-        g.setColor(Color.YELLOW);
-        g.drawRect(0, 0, GameConstraints.WORLDWIDTH-1, GameConstraints.WORLDHEIGHT-1);
     }
 
     /**
