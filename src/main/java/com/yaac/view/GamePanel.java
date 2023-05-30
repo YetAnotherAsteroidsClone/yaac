@@ -15,7 +15,7 @@ import java.util.Objects;
 /**
  * Classe che gestisce il pannello di gioco.
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel{
 
     Game game;
     int tick = 0;

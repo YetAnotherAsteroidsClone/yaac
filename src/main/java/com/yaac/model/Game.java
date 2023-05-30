@@ -260,12 +260,7 @@ public class Game {
 
         // Gestione della collisione tra astronave e asteroidi
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
-            lives--;
-            spaceShip.reset();
-            newDestroyedAsteroids.add(asteroids);
-            newDestroyedBullets.add(bullets);
-            bullets.clear();
-            asteroids.clear();
+            loseLife();
         }
 
         // Reset tick per gli oggetti distrutti
@@ -277,6 +272,23 @@ public class Game {
         // Aggiunta degli oggetti distrutti a questo tick alle liste di oggetti distrutti
         destroyedAsteroids.add(newDestroyedAsteroids);
         destroyedBullets.add(newDestroyedBullets);
+    }
+
+    /**
+     * Metodo per perdere una vita
+     */
+    public void loseLife(){
+        lives--;
+        spaceShip.reset();
+        for (GameObject asteroid : asteroids)
+            asteroid.setTick(0);
+        for (GameObject bullet : bullets)
+            bullet.setTick(0);
+        destroyedAsteroids.add(asteroids);
+        destroyedBullets.add(bullets);
+        bullets.clear();
+        asteroids.clear();
+        gems.clear();
     }
 
     /**
