@@ -21,7 +21,7 @@ public class Shop extends JPanel{
     //IMAGES, ICONS AND ANIMATIONS
     private ObjectAnimation backgroundL1, backgroundL2;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
-    private ImageIcon plusIcon, shieldShopIcon, menuIcon, backIcon;
+    private ImageIcon plusIcon, shieldShopIcon, menuIcon, backIcon, right, left;
     private SpaceShipView spaceShipView;
 
     //BUTTONS
@@ -53,11 +53,13 @@ public class Shop extends JPanel{
         backIcon = MenuUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
         plusIcon = MenuUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
         shieldShopIcon = MenuUtility.getImageIcon("/GameSprite/shieldShop.png",68,68);
+        right = MenuUtility.getImageIcon("/MenuSprite/rightArrow.png", 48,58);
+        left = MenuUtility.getImageIcon("/MenuSprite/leftArrow.png", 48,58);
 
         //PowerUp images
+        PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/SpeedPwUp.png");
+        PowerUpImages[0] = ImageUtility.scaleImage(PowerUpImages[0],38,38);
         /*
-        PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/");
-        PowerUpImages[0] = ImageUtility.scaleImage(PowerUpImages[0],0,0);
         PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/");
         PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],0,0);
         */
@@ -113,11 +115,11 @@ public class Shop extends JPanel{
     private void drawShip(int x, int y, Graphics g){
         g.drawImage(spaceShipView.getSpaceship().draw(), x,y,null);
 
-        MenuUtility.drawShopButton(switchWeapon[0],plusIcon,x-85,y+50,50,50,Color.WHITE,g);
-        MenuUtility.drawShopButton(switchWeapon[1],plusIcon,x+370,y+50,50,50,Color.WHITE,g);
+        MenuUtility.drawShopButton(switchWeapon[0],left,x-85,y+50,50,60,null,g);
+        MenuUtility.drawShopButton(switchWeapon[1],right,x+370,y+50,50,60,null,g);
 
-        MenuUtility.drawShopButton(switchEngine[0],plusIcon,x-85,y+250,50,50,Color.WHITE,g);
-        MenuUtility.drawShopButton(switchEngine[1],plusIcon,x+370,y+250,50,50,Color.WHITE,g);
+        MenuUtility.drawShopButton(switchEngine[0],left,x-85,y+250,50,60,null,g);
+        MenuUtility.drawShopButton(switchEngine[1],right,x+370,y+250,50,60,null,g);
 
         for(int i = 0; i<2; i++){
             this.add(switchWeapon[i]);
@@ -200,7 +202,7 @@ public class Shop extends JPanel{
         g.drawLine(widthOffset-300,heightOffset+50,widthOffset+300,heightOffset+50);
 
         //powerup bars
-        drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[2], pwUpButtons[0], g);
+        drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[0], pwUpButtons[0], g);
         drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], pwUpButtons[1], g);
         drawBar(widthOffset, heightOffset+130, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], pwUpButtons[2], g);
         drawBar(widthOffset, heightOffset+250, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], pwUpButtons[3], g);

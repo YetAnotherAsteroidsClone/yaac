@@ -74,8 +74,12 @@ public class MenuUtility {
 
     //TODO: cosa fa?
     public static void drawShopButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, Color color, Graphics g){
-        g.setColor(color);
-        g.drawRect(x,y,width,height);
+        if(color != null) {
+            g.setColor(color);
+            g.drawRect(x, y, width, height);
+        }
+        button.setBackground(new Color(0,0,0,Color.TRANSLUCENT));
+        button.setBorderPainted(false);
         button.setBounds(x+1,y+1,width-1,height-1);
         button.setIcon(imageIcon);
     }
