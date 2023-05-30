@@ -87,6 +87,14 @@ public class CompositeSprite {
         images.remove(index);
     }
 
+    /** Imposta l'immagine alla posizione index
+     * @param image
+     * @param index
+     */
+    public void setImage(Image image, int index){
+        images.set(index, image);
+    }
+
     /** Metodo per l'aggiornamento dello sprite corrente
      *  se l'indice sfora il numero di sprites disponibili, viene riportato all'inizio
      */

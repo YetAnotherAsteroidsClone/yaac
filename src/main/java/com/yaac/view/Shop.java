@@ -105,11 +105,12 @@ public class Shop extends JPanel{
 
         switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeapon(true);});
         switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeapon(true);});
-        //switchEngine[0].addActionListener(actionEvent -> );
-        //switchEngine[1].addActionListener(actionEvent -> );
+        switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine();});
+        switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();});
 
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeapon(true);
+        spaceShipView.setPowering(true);
     }
 
     private void drawShip(int x, int y, Graphics g){

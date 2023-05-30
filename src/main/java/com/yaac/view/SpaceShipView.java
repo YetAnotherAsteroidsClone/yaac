@@ -13,12 +13,10 @@ import java.util.List;
 public class SpaceShipView {
     private ArrayList<Image> bodies;
     private ArrayList<ObjectAnimation> weapons;
-    private ArrayList<Image> engines;
-    private Image baseEngine;
+    private ArrayList<EngineView> engines;
     private CompositeSprite spaceship;
-    private ObjectAnimation baseEnginePowering;
-
     private int currentWeapon = 0;
+    private int currentEngine = 0;
 
     /** Costruttore della classe SpaceShipView
      * @param width larghezza
@@ -41,30 +39,58 @@ public class SpaceShipView {
             weapon.scaleImage(width, height);
             weapon.disable();
         }
-        baseEngine = ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/BaseEngine.png"), width, height);
-        baseEnginePowering = new ObjectAnimation("/GameSprite/BaseEngine-Powering.png");
-        baseEnginePowering.scaleImage(width, height);
+        engines = new ArrayList<>(List.of(
+                new EngineView(
+                        new ObjectAnimation("/GameSprite/BaseEngine-Idle.png"),
+                        new ObjectAnimation("/GameSprite/BaseEngine-Powering.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/BaseEngine.png"), width, height)
+                ),
+                new EngineView(
+                        new ObjectAnimation("/GameSprite/BigEngine-Idle.png"),
+                        new ObjectAnimation("/GameSprite/BigEngine-Powering.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/BigEngine.png"), width, height)
+                ),
+                new EngineView(
+                        new ObjectAnimation("/GameSprite/BurstEngine-Idle.png"),
+                        new ObjectAnimation("/GameSprite/BurstEngine-Powering.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/BurstEngine.png"), width, height)
+                ),
+                new EngineView(
+                        new ObjectAnimation("/GameSprite/SuperChargedEngine-Idle.png"),
+                        new ObjectAnimation("/GameSprite/SuperChargedEngine-Powering.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/SuperChargedEngine.png"), width, height)
+                )
+        ));
+        for(EngineView engine : engines) {
+            engine.getPoweringState().scaleImage(width, height);
+            engine.getIdleState().scaleImage(width, height);
+        }
 
         /*
         * Indici:
-        * Array animazioni: 0 = EnginePowering/EngineIdle, 1 = weapons
+        * Array animazioni: 0 = EnginePowering, 1 = EngineIdle, 2 = weapons
         * Array immagini: 0 = baseEngine
         * Array sprite: 0 = bodies
          */
         spaceship = new CompositeSprite(
-                new ArrayList<>(List.of(baseEnginePowering, weapons.get(currentWeapon))),
-                new ArrayList<>(List.of(baseEngine)),
-                new ArrayList<>(List.of(bodies.get(0))));
+                new ArrayList<>(List.of(engines.get(currentEngine).getPoweringState(), engines.get(currentEngine).getIdleState(), weapons.get(currentWeapon))),
+                new ArrayList<>(List.of(engines.get(currentEngine).getEngine())),
+                new ArrayList<>(List.of(bodies.get(currentEngine))));
+        setPowering(false);
     }
 
     /** Imposta l'animazione del motore
      * @param powering true se il motore è in uso, false altrimenti
      */
     public void setPowering(boolean powering) {
-        if (powering)
+        if (powering) {
             spaceship.enableAnimation(0);
-        else
+            spaceship.disableAnimation(1);
+        }
+        else {
             spaceship.disableAnimation(0);
+            spaceship.enableAnimation(1);
+        }
     }
 
     /** Imposta l'animazione dell'arma corrente
@@ -72,9 +98,9 @@ public class SpaceShipView {
      */
     public void setCurrentWeapon(boolean shooting){
         if(!shooting)
-            spaceship.disableAnimation(1);
+            spaceship.disableAnimation(2);
         else
-            spaceship.enableAnimation(1);
+            spaceship.enableAnimation(2);
     }
 
     /** Ritorna la navicella
@@ -89,7 +115,7 @@ public class SpaceShipView {
      */
     public void nextWeapon(){
         currentWeapon = (currentWeapon + 1) % weapons.size();
-        spaceship.setAnimation(weapons.get(currentWeapon),1);
+        spaceship.setAnimation(weapons.get(currentWeapon),2);
     }
 
     /** Imposta l'arma corrente della navicella alla precedente
@@ -97,6 +123,26 @@ public class SpaceShipView {
      */
     public void previousWeapon() {
         currentWeapon = (currentWeapon - 1 + weapons.size()) % weapons.size();
-        spaceship.setAnimation(weapons.get(currentWeapon), 1);
+        spaceship.setAnimation(weapons.get(currentWeapon), 2);
+    }
+
+    /** Imposta il motore corrente della navicella al successivo
+     * se l'indice sfora il numero di motori disponibili, viene riportato all'inizio
+     */
+    public void nextEngine(){
+        currentEngine = (currentEngine + 1) % engines.size();
+        spaceship.setImage(engines.get(currentEngine).getEngine(), 0);
+        spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
+        spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
+    }
+
+    /** Imposta il motore corrente della navicella al precedente
+     * se l'indice sfora il numero di motori disponibili, viene riportato all'inizio
+     */
+    public void previousEngine() {
+        currentEngine = (currentEngine - 1 + engines.size()) % engines.size();
+        spaceship.setImage(engines.get(currentEngine).getEngine(), 0);
+        spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
+        spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
     }
 }
