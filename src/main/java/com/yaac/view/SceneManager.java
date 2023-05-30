@@ -66,7 +66,7 @@ public class SceneManager {
         mainMenu.addMouseListener(controller);
         loadScene(mainMenu);
         mainMenu.requestFocus();
-        mainMenuLoop.run();
+        mainMenuLoop.start();
     }
 
     public void loadSettings(){
@@ -85,8 +85,9 @@ public class SceneManager {
         gamePanel.addKeyListener(controller);
         Loop gameLoop = new Loop(controller);
         loadScene(gamePanel);
+        controller.setLoop(gameLoop);
         gamePanel.requestFocus();
-        gameLoop.run();
+        gameLoop.start();
     }
     public void loadShop(){
         ShopController controller = new ShopController(shop);
@@ -94,7 +95,7 @@ public class SceneManager {
         Loop shopLoop = new Loop(controller);
         loadScene(shop);
         shop.requestFocus();
-        shopLoop.run();
+        shopLoop.start();
     }
 
 

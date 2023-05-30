@@ -8,6 +8,8 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Classe che gestisce il loop di scena
+ * Suggerimento: Salvare il riferimento al loop per poterlo fermare
+ * @see Updatable
  */
 public class Loop {
     private final Updatable controller;
@@ -17,7 +19,7 @@ public class Loop {
         this.controller = controller;
     }
 
-    public void run() {
+    private void run() {
         if(executor != null)
             return;
         executor = Executors.newSingleThreadScheduledExecutor();
@@ -27,5 +29,18 @@ public class Loop {
         }, 0, 60, TimeUnit.MILLISECONDS);
     }
 
+
+    /** Riprende il loop
+     */
+    public void start(){
+        run();
+    }
+
+    /** Ferma il loop
+     */
+    public void stop(){
+        executor.shutdown();
+        executor = null;
+    }
 
 }
