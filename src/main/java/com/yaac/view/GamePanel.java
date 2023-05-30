@@ -93,6 +93,12 @@ public class GamePanel extends JPanel {
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
 
+        switch (game.getLives()) {
+            case 3 -> spaceShipView.setBody(1);
+            case 2 -> spaceShipView.setBody(2);
+            case 1 -> spaceShipView.setBody(3);
+        }
+
         // Disegna la nave
         g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
 

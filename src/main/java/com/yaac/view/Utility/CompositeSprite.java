@@ -95,11 +95,18 @@ public class CompositeSprite {
         images.set(index, image);
     }
 
-    /** Metodo per l'aggiornamento dello sprite corrente
+    /** Metodo per l'aggiornamento dello sprite corrente allo sprite successivo
      *  se l'indice sfora il numero di sprites disponibili, viene riportato all'inizio
      */
-    public void setCurrentSprite(){
+    public void nextSprite(){
         currentSprite = (currentSprite + 1) % sprites.size();
+    }
+
+    /** Metodo per l'aggiornamento dello sprite corrente
+     * @param index
+     */
+    public void setCurrentSprite(int index){
+        currentSprite = index;
     }
 
     /** Metodo wrapper per abilitare l'animazione

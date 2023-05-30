@@ -17,6 +17,7 @@ public class SpaceShipView {
     private CompositeSprite spaceship;
     private int currentWeapon = 0;
     private int currentEngine = 0;
+    private int currentBody = 0;
 
     /** Costruttore della classe SpaceShipView
      * @param width larghezza
@@ -70,12 +71,12 @@ public class SpaceShipView {
         * Indici:
         * Array animazioni: 0 = EnginePowering, 1 = EngineIdle, 2 = weapons
         * Array immagini: 0 = baseEngine
-        * Array sprite: 0 = bodies
+        * Array sprite: 0 = body1, 1 = body2, 2 = body3, 3 = body4
          */
         spaceship = new CompositeSprite(
                 new ArrayList<>(List.of(engines.get(currentEngine).getPoweringState(), engines.get(currentEngine).getIdleState(), weapons.get(currentWeapon))),
                 new ArrayList<>(List.of(engines.get(currentEngine).getEngine())),
-                new ArrayList<>(List.of(bodies.get(currentEngine))));
+                bodies);
         setPowering(false);
     }
 
@@ -144,5 +145,10 @@ public class SpaceShipView {
         spaceship.setImage(engines.get(currentEngine).getEngine(), 0);
         spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
         spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
+    }
+
+    public void setBody(int index){
+        currentBody = index % bodies.size();
+        spaceship.setCurrentSprite(currentBody);
     }
 }
