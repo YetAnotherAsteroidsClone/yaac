@@ -75,6 +75,15 @@ public class Game {
     public SpaceShip getSpaceShip(){
         return spaceShip;
     }
+    public int getStage(){
+        return stage;
+    }
+    public int getGemCount(){
+        return gemCount;
+    }
+    public int getScoreCount() {
+        return scoreCount;
+    }
 
     //Metodi per gestire i comandi impartiti dal giocatore
     public void startRotateRight(){
@@ -106,19 +115,28 @@ public class Game {
      * Metodo per aggiornare lo stato del gioco
      */
     public void update(){
+        // Update delle componenti del gioco
         spaceShip.update();
         bullets.update();
         asteroids.update();
         destroyedAsteroids.update();
         destroyedBullets.update();
         gems.update();
+
+        // Generazione degli asteroidi
         if (tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids()) {
             addRandomAsteroid();
         }
+
+        // Risolutore delle collisioni
         resolveCollisions();
+
+        // Rimozione delle componenti non necessarie
         removeOutsideBullets();
         removeVanishedAsteroids();
         removeVanishedBullets();
+
+        // Aggiornamento dei tick 
         tick++;
     }
 
@@ -196,11 +214,15 @@ public class Game {
      */
     public void resolveCollisions() {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
-        GameComponentsManager newDestroyedBullets;
+        GameComponentsManager newDestroyedBullets = CollisionUtility.checkCollisionArrayArray(asteroids, bullets);
         GameComponentsManager newPickedGems = CollisionUtility.checkCollisionElementArray(spaceShip, gems);
+
+        // Gestione delle gemme raccolte
         for (GameObject gem : newPickedGems)
             gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
         gems.removeArray(newPickedGems);
+
+        // Gestione delle collisioni tra proiettili e asteroidi
         for (GameObject bullet : bullets){
             double damage = ((Bullet) bullet).getDamage();
             for (GameObject asteroid : asteroids){
@@ -209,24 +231,23 @@ public class Game {
                 }
             }
         }
-        newDestroyedBullets = CollisionUtility.checkCollisionArrayArray(asteroids, bullets);
         asteroids.removeArray(newDestroyedAsteroids);
         bullets.removeArray(newDestroyedBullets);
+
+        // Gestione degli asteroidi distrutti
         for (GameObject asteroid : newDestroyedAsteroids){
             scoreCount += ((Asteroid) asteroid).getScore();
-            if(Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems()){
-                int power = (int) (Math.random() * 100);
-                if(power < 50)
-                    gems.add(new Gem(asteroid.getX(), asteroid.getY(), 1));
-                else if(power < 80)
-                    gems.add(new Gem(asteroid.getX(), asteroid.getY(), 2));
-                else
-                    gems.add(new Gem(asteroid.getX(), asteroid.getY(), 3));
-            }
+
+            // Generazione gemma
+            if(Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems())
+               generatorGem(asteroid.getX(), asteroid.getY());
+
+            // Generazione asteroidi figli
             if (asteroid.getRadius() > 30)
                 asteroids.add(((Asteroid) asteroid).split());
         }
 
+        // Gestione della collisione tra astronave e asteroidi
         if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
             lives--;
             spaceShip.reset();
@@ -235,13 +256,31 @@ public class Game {
             bullets.clear();
             asteroids.clear();
         }
+
+        // Reset tick per gli oggetti distrutti
         for(GameObject obj : newDestroyedAsteroids)
             obj.setTick(0);
-        for(GameObject obj : newDestroyedBullets){
+        for(GameObject obj : newDestroyedBullets)
             obj.setTick(0);
-        }
+
+        // Aggiunta degli oggetti distrutti a questo tick alle liste di oggetti distrutti
         destroyedAsteroids.add(newDestroyedAsteroids);
         destroyedBullets.add(newDestroyedBullets);
+    }
+
+    /**
+     * Metodo per generare una gemma di tipo casuale
+     * @param x coordinata x
+     * @param y coordinata y
+     */
+    public void generatorGem(double x, double y){
+        int power = (int) (Math.random() * 100);
+        if(power < 50)
+            gems.add(new Gem(x, y, 1));
+        else if(power < 80)
+            gems.add(new Gem(x, y, 2));
+        else
+            gems.add(new Gem(x, y, 3));
     }
 
 }

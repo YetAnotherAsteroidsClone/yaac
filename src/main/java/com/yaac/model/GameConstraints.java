@@ -31,7 +31,7 @@ public class GameConstraints {
     private int gems =0;
     private final int[] costs = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
     private int shieldCost = 10000;
-    private int life=3;
+    private int life=4;
     private int highScore=0;
     private double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
     private final int[] gemValue = {5, 20, 100};
