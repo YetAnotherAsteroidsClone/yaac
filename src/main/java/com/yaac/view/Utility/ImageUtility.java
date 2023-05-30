@@ -3,6 +3,7 @@ package com.yaac.view.Utility;
 import com.yaac.Main;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -106,5 +107,9 @@ public class ImageUtility {
         bg.drawImage(im, 0, 0, null);
         bg.dispose();
         return bi;
+    }
+
+    public static ImageIcon ImageToIcon(Image im){
+        return new ImageIcon(im);
     }
 }

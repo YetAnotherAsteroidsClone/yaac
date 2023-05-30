@@ -134,6 +134,7 @@ public class GamePanel extends JPanel {
         }
 
         // Disegna il punteggio e le vite
+        g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString("SCORE: " + game.getScore(),40,50);
         for(int i=0; i < game.getLives();i++){
