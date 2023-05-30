@@ -223,10 +223,5 @@ public class SpaceShip extends GameObject{
         vx = 0;
         vy = 0;
         rotation = 0;
-        isMoving = false;
-        isShooting = false;
-        isRotatingLeft = false;
-        isRotatingRight = false;
-        isAccelerating = false;
     }
 }

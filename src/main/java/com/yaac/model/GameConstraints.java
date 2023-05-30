@@ -110,11 +110,11 @@ public class GameConstraints {
     }
 
     public double getAsteroidMaxSpeedVariable(int stage) {
-        return 5 + stage * 0.5;
+        return 1 + stage * 0.5;
     }
 
     public int getAsteroidMinSpeed(int stage) {
-        return (int) (stage * 2 + 6);
+        return (int) (stage * 2 + 5);
     }
 
     public int getAsteroidsSpawnRate(int stage) {
@@ -122,6 +122,6 @@ public class GameConstraints {
     }
 
     public int getAsteroidLife(int stage, int dim) {
-        return (int) (stage * 10 + dim);
+        return (int) (stage * 5 + dim * 0.8);
     }
 }
