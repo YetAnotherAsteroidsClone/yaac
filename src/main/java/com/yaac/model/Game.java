@@ -135,9 +135,20 @@ public class Game {
         removeOutsideBullets();
         removeVanishedAsteroids();
         removeVanishedBullets();
+        removeVanishedGems();
 
         // Aggiornamento dei tick 
         tick++;
+    }
+
+    private void removeVanishedGems() {
+        GameComponentsManager vanishedGems = new GameComponentsManager();
+        for (GameObject gem : gems) {
+            if (gem.getTick() > GameConstraints.getInstance().getGemVanishingTime()) {
+                vanishedGems.add(gem);
+            }
+        }
+        gems.removeArray(vanishedGems);
     }
 
     /**
