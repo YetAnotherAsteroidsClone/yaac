@@ -227,6 +227,13 @@ public class Game {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
         GameComponentsManager newDestroyedBullets = CollisionUtility.checkCollisionArrayArray(asteroids, bullets);
         GameComponentsManager newPickedGems = CollisionUtility.checkCollisionElementArray(spaceShip, gems);
+        if(Math.random() > 0.9){
+            GameComponentsManager asteroidsCollisions = CollisionUtility.checkCollisionArrayArray(asteroids, asteroids);
+            for (GameObject asteroid : asteroidsCollisions) {
+                ((Asteroid) asteroid).bounce();
+            }
+        }
+
 
         // Gestione delle gemme raccolte
         for (GameObject gem : newPickedGems)
