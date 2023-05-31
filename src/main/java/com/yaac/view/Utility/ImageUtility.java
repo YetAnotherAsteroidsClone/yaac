@@ -109,7 +109,18 @@ public class ImageUtility {
         return bi;
     }
 
-    public static ImageIcon ImageToIcon(Image im){
-        return new ImageIcon(im);
+    /**
+     * Metodo per ottenere un'ImageIcon scalata
+     * @param path Percorso dell'immagine
+     * @param width larghezza dell'ImageIcon
+     * @param height altezza dell'icona
+     */
+    public static ImageIcon getImageIcon(String path, int width,int height){
+        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(MenuUtility.class.getResource(path)));
+        Image image = imageIcon.getImage();
+        Image resizedImage = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(resizedImage);
+        return imageIcon;
     }
+
 }

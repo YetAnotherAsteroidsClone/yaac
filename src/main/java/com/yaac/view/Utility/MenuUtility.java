@@ -95,7 +95,7 @@ public class MenuUtility {
             g.drawRect(x, y, width, height);
         }
         button.setBackground(new Color(0,0,0,Color.TRANSLUCENT));
-        //button.setBorderPainted(false);
+        button.setBorderPainted(false);
         button.setBounds(x+1,y+1,width-1,height-1);
         button.setIcon(imageIcon);
     }

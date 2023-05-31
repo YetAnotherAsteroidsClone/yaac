@@ -50,11 +50,11 @@ public class Shop extends JPanel{
         backgroundL2.scaleImage(Settings.width, Settings.height);
 
         //ImageIcons and animations
-        menuIcon = MenuUtility.getImageIcon("/MenuSprite/HomeButton.png",38,38);
-        backIcon = MenuUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
-        plusIcon = MenuUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
-        right = MenuUtility.getImageIcon("/MenuSprite/rightArrow.png", 48,58);
-        left = MenuUtility.getImageIcon("/MenuSprite/leftArrow.png", 48,58);
+        menuIcon = ImageUtility.getImageIcon("/MenuSprite/HomeButton.png",38,38);
+        backIcon = ImageUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
+        plusIcon = ImageUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
+        right = ImageUtility.getImageIcon("/MenuSprite/rightArrow.png", 48,58);
+        left = ImageUtility.getImageIcon("/MenuSprite/leftArrow.png", 48,58);
         greenTick = ImageUtility.loadImage("/GameSprite/checkmark-64.png");
         greenTick = ImageUtility.scaleImage(greenTick,50,50);
         locker = ImageUtility.loadImage("/GameSprite/locker.png");
@@ -67,10 +67,10 @@ public class Shop extends JPanel{
         //PowerUp images
         PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/SpeedPwUp.png");
         PowerUpImages[0] = ImageUtility.scaleImage(PowerUpImages[0],38,38);
-        /*
-        PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/");
-        PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],0,0);
-        */
+
+        PowerUpImages[1] = ImageUtility.loadImage("/GameSprite/BulletSpeed.png");
+        PowerUpImages[1] = ImageUtility.scaleImage(PowerUpImages[1],38,38);
+
         PowerUpImages[2] = ImageUtility.loadImage("/GameSprite/bulletDamage.png");
         PowerUpImages[2] = ImageUtility.scaleImage(PowerUpImages[2],38,38);
         PowerUpImages[3] = ImageUtility.loadImage("/GameSprite/bulletRatio.png");
@@ -259,10 +259,9 @@ public class Shop extends JPanel{
 
         //powerup bars
         drawBar(widthOffset-530, heightOffset+130, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[0], pwUpButtons[0], g);
-        drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[2], pwUpButtons[1], g);
+        drawBar(widthOffset-530, heightOffset+250, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[1], pwUpButtons[1], g);
         drawBar(widthOffset, heightOffset+130, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], pwUpButtons[2], g);
         drawBar(widthOffset, heightOffset+250, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], pwUpButtons[3], g);
-        //2 PwUpimages missing
 
         //purchasable shield
         drawShopShield(g, pwUpButtons[4]);
