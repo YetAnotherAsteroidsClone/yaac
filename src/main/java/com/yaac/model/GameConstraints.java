@@ -28,8 +28,8 @@ public class GameConstraints {
     private final int maxAsteroids = 20;
 
     private boolean shopShield=false;
-    private int score=0;
-    private int gems =10000;
+    private int score= SaveFileManager.getInstance().getScore();
+    private int gems = SaveFileManager.getInstance().getGems();
     private final int[] costs = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
     private int shieldCost = 10000;
     private int life=4;

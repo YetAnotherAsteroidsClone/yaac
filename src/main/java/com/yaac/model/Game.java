@@ -306,4 +306,8 @@ public class Game {
             gems.add(new Gem(x, y, 3));
     }
 
+
+    public static void reset(){
+        instance = null;
+    }
 }

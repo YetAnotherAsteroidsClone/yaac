@@ -2,11 +2,14 @@ package com.yaac.controller;
 
 import com.yaac.Loop;
 import com.yaac.model.Game;
+import com.yaac.model.SaveFileManager;
 import com.yaac.view.GamePanel;
 import com.yaac.view.SceneManager;
 
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 /**
  * Classe che gestisce gli input da tastiera del gioco
@@ -52,6 +55,15 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_D -> Game.getInstance().stopRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().stopAccelerate(); gamePanel.getSpaceShipView().setPowering(false);}
             case KeyEvent.VK_SPACE -> {Game.getInstance().stopShot(); gamePanel.getSpaceShipView().setCurrentWeapon(false);}
+            case KeyEvent.VK_BACK_SPACE -> {
+                try {
+                    SceneManager.getInstance().loadMainMenu();
+                    SaveFileManager.getInstance().saveData();
+                } catch (IOException | FontFormatException ex) {
+                    throw new RuntimeException(ex);
+                }
+                Game.reset();
+            }
         }
     }
 

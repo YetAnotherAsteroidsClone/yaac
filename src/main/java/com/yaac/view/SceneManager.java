@@ -5,6 +5,7 @@ import com.yaac.Settings;
 import com.yaac.controller.GameController;
 import com.yaac.controller.MainMenuController;
 import com.yaac.controller.ShopController;
+import com.yaac.model.SaveFileManager;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -60,6 +61,7 @@ public class SceneManager {
     }
 
     public void loadMainMenu() throws IOException, FontFormatException {
+        SaveFileManager.getInstance().loadSaveFile();
         mainMenu = new MainMenu();
         MainMenuController controller = new MainMenuController(mainMenu);
         Loop mainMenuLoop = new Loop(controller);
