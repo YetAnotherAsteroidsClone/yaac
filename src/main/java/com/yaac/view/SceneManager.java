@@ -26,14 +26,12 @@ public class SceneManager {
             throw new RuntimeException(e);
         }
     }
-
-    private boolean inGame=false;
+    private boolean inGame=true;
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;
     private Shop shop;
     private Credits credits;
-
     private Settings settings;
 
     private GamePanel gamePanel;
