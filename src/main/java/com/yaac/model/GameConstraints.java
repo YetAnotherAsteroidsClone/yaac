@@ -30,9 +30,10 @@ public class GameConstraints {
     private boolean shopShield=false;
     private int score= SaveFileManager.getInstance().getScore();
     private int gems = SaveFileManager.getInstance().getGems();
-    private final int[] costs = {1000,2000,3000,4000,5000,6000,7000,8000,9000};
-    private int shieldCost = 10000;
+    private final int[] costs = {100,200,300,400,500,600,700,800,900};
+    private int shieldCost = 1000;
     private int life=4;
+    private int checkpoint = SaveFileManager.getInstance().getCheckPoint();
     private int highScore=0;
     private double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
     private final int[] gemValue = {5, 20, 100};
@@ -73,6 +74,7 @@ public class GameConstraints {
     public int getGemVanishingTime() {
         return gemVanishingTime;
     }
+    public int getCheckpoint() {return checkpoint;}
 
     //SETTERS
     public void setMaxSpeed(double maxSpeed) {this.maxSpeed = maxSpeed;}
@@ -95,6 +97,7 @@ public class GameConstraints {
 
     public void setScore(int score) {this.score = score;}
     public void setGems(int gems) {this.gems = gems;}
+    public void setCheckpoint(int checkpoint) {this.checkpoint = checkpoint;}
 
     private GameConstraints(){
         //TODO
@@ -121,9 +124,7 @@ public class GameConstraints {
         return (int) (stage * 2 + 5);
     }
 
-    public int getAsteroidsSpawnRate(int stage) {
-        return (int) (100 - stage * 5);
-    }
+    public int getAsteroidsSpawnRate(int stage) {return (int) (100 - (stage-1) * 5);}
 
     public int getAsteroidLife(int stage, int dim) {
         return (int) (stage * 5 + dim * 0.8);

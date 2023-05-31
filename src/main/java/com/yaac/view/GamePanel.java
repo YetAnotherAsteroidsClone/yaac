@@ -24,10 +24,9 @@ public class GamePanel extends JPanel{
     private ObjectAnimation backgroundL1;
     private ObjectAnimation backgroundL2;
     private ObjectAnimation backgroundL3;
-    private Font font;
-    private BufferedImage life;
+    private Font font, stageFont;
+    private BufferedImage life, asteroidsImage, esc;
     private ArrayList<ObjectAnimation> bulletsAnimation;
-    private BufferedImage asteroidsImage;
     private ObjectAnimation deadAsteroidsAnimation;
     private ObjectAnimation bulletExplosionAnimation;
     private ArrayList<ObjectAnimation> gemsAnimation;
@@ -45,9 +44,11 @@ public class GamePanel extends JPanel{
         backgroundL2.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
         backgroundL3.scaleImage(GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
 
-        // Caricamento della vita e scala l'immagine
+        // Caricamento della vita e del pulsante "esc"
         life = ImageUtility.loadImage("/GameSprite/Body1.png");
         life = ImageUtility.scaleImage(life,40,40);
+        esc = ImageUtility.loadImage("/MenuSprite/EscButton.png");
+        esc = ImageUtility.scaleImage(esc,40,40);
 
         // Caricamento del font
         try {font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(45f);}
@@ -141,7 +142,7 @@ public class GamePanel extends JPanel{
             g.drawImage(currentGemFrame, (int) (game.getGems().get(i).getX() - game.getGems().get(i).getRadius()), (int) (game.getGems().get(i).getY() - game.getGems().get(i).getRadius()), null);
         }
 
-        // Disegna il punteggio le vite e il counter delle gemme
+        // Disegna il punteggio le vite, il counter delle gemme, le istruzioni di pausa e lo stage
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString("SCORE: " + game.getScore(),40,50);
@@ -152,6 +153,12 @@ public class GamePanel extends JPanel{
         gemCounter.update();
         g.setColor(Color.WHITE);
         g.drawString("x" + game.getGemCount(),GameConstraints.WORLDWIDTH-105,55);
+        g.drawImage(esc,25,Settings.height-60,null);
+        g.drawString(": PAUSE",70,Settings.height-30);
+        if(game.getStagePause()){
+            g.setColor(Color.YELLOW);
+            g.drawString("STAGE "+game.getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
+        }
     }
 
     /**

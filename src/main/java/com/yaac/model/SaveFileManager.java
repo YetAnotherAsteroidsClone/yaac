@@ -32,7 +32,7 @@ public class SaveFileManager {
             in.close();
             file.close();
         } catch (IOException e) {
-            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false, 0, 0);
+            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false, 0, 0,1);
             save();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -63,6 +63,7 @@ public class SaveFileManager {
     public void saveData(){
         this.saveFile.setGems(Game.getInstance().getGemCount());
         this.saveFile.setScore(this.saveFile.getScore()+ Game.getInstance().getScore());
+        this.saveFile.setCheckpoint(GameConstraints.getInstance().getCheckpoint());
         GameConstraints.getInstance().setGems(this.saveFile.getGems());
         GameConstraints.getInstance().setScore(this.saveFile.getScore());
         save();
@@ -72,4 +73,5 @@ public class SaveFileManager {
     public int getGems(){return this.saveFile.getGems();}
 
     public int getScore() {return this.saveFile.getScore();}
+    public int getCheckPoint() {return this.saveFile.getCheckpoint();}
 }

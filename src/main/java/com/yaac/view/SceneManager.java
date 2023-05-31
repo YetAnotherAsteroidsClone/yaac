@@ -23,7 +23,7 @@ public class SceneManager {
             throw new RuntimeException(e);
         }
     }
-    private boolean inGame=true;
+    private boolean inGame=false;
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;

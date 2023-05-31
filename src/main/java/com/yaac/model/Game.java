@@ -24,15 +24,23 @@ public class Game {
     int scoreCount;
     int lives;
     int tick;
+    int stageTickTransition;
     int stage;
+    boolean stagePause;
+
+    public boolean getStagePause() {
+        return stagePause;
+    }
 
     /**
      * Costruttore privato per implementare il pattern Singleton
      */
     private Game() {
         onDeathListeners = new ArrayList<>();
-        stage = 0;
+        stage = SaveFileManager.getInstance().getCheckPoint();
+        stagePause = true;
         tick = 0;
+        stageTickTransition =50;
         this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
         bullets = new GameComponentsManager();
         asteroids = new GameComponentsManager();
@@ -86,9 +94,6 @@ public class Game {
     public int getGemCount(){
         return gemCount;
     }
-    public int getScoreCount() {
-        return scoreCount;
-    }
 
     //Metodi per gestire i comandi impartiti dal giocatore
     public void startRotateRight(){
@@ -129,7 +134,7 @@ public class Game {
         gems.update();
 
         // Generazione degli asteroidi
-        if (tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids()) {
+        if (!stagePause && tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids()) {
             addRandomAsteroid();
         }
 
@@ -142,8 +147,16 @@ public class Game {
         removeVanishedBullets();
         removeVanishedGems();
 
+        //cambio stage
+        if (stagePause) {stageChangeTransition();};
+
         // Aggiornamento dei tick 
         tick++;
+    }
+
+    private void stageChangeTransition(){
+        if(stageTickTransition<=0){stagePause = false; stageTickTransition=50;}
+        else{stageTickTransition--;}
     }
 
     private void removeVanishedGems() {
@@ -239,7 +252,6 @@ public class Game {
             }
         }
 
-
         // Gestione delle gemme raccolte
         for (GameObject gem : newPickedGems)
             gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
@@ -257,9 +269,18 @@ public class Game {
         asteroids.removeArray(newDestroyedAsteroids);
         bullets.removeArray(newDestroyedBullets);
 
-        // Gestione degli asteroidi distrutti
+        // Gestione degli asteroidi distrutti, score ed eventuale nuovo stage
         for (GameObject asteroid : newDestroyedAsteroids){
             scoreCount += ((Asteroid) asteroid).getScore();
+            if(scoreCount>=stage*100){
+                stage+=1;
+                if(stage%5==0){GameConstraints.getInstance().setCheckpoint(stage);}
+                stagePause=true;
+                for (GameObject asteroid2 : asteroids)
+                    asteroid2.setTick(0);
+                destroyedAsteroids.add(asteroids);
+                asteroids.clear();
+            }
 
             // Generazione gemma
             if(Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems())
