@@ -2,14 +2,11 @@ package com.yaac.view;
 
 import com.yaac.Loop;
 import com.yaac.Settings;
-import com.yaac.controller.GameController;
-import com.yaac.controller.MainMenuController;
-import com.yaac.controller.ShopController;
+import com.yaac.controller.*;
 import com.yaac.model.SaveFileManager;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.FontFormatException;
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 /*
@@ -32,8 +29,8 @@ public class SceneManager {
     private MainMenu mainMenu;
     private Shop shop;
     private Credits credits;
-    private Settings settings;
-
+    private GameSettings gameSettings;
+    private PauseMenu pauseMenu;
     private GamePanel gamePanel;
 
     public static SceneManager getInstance() {return instance;}
@@ -47,6 +44,7 @@ public class SceneManager {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         shop = new Shop();
+        gameSettings = new GameSettings();
     }
 
     public void openMainFrame(){
@@ -70,13 +68,22 @@ public class SceneManager {
     }
 
     public void loadSettings(){
-        //TODO
+        GameSettingsController controller = new GameSettingsController(gameSettings);
+        Loop gameSettingsLoop = new Loop(controller);
+        gameSettings.addMouseListener(controller);
+        loadScene(gameSettings);
+        gameSettings.requestFocus();
+        gameSettingsLoop.start();
     }
 
     public void loadCredits(){
         //TODO
         /*credits = new Credits();
         loadScene(credits);*/
+    }
+
+    public void loadPauseMenu(){
+        //TODO
     }
 
     public void loadGame(){

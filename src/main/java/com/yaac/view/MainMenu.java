@@ -2,6 +2,8 @@ package com.yaac.view;
 
 import com.yaac.Main;
 import com.yaac.Settings;
+import com.yaac.model.GameConstraints;
+import com.yaac.view.GameSettings;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
@@ -17,7 +19,8 @@ public class MainMenu extends JPanel {
     Font font;
     JLabel title;
     Icon icon;
-    JTextArea commands, highScore;
+    String commandsText, highScoreText;
+    JTextArea commands, highScore, highScoreValue;
     private final int widthOffset = Settings.width/2;
     private final int heightOffset = Settings.height/2;
     private final JButton[] buttons = new JButton[5];
@@ -63,6 +66,7 @@ public class MainMenu extends JPanel {
         icon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/Title.png")));
         title = new JLabel(icon);
         title.setBounds(widthOffset - 300, heightOffset - 300, 600, 200);
+
         String commandsText = """
                 COMANDI
                 A -> RUOTA A SINISTRA
@@ -72,13 +76,17 @@ public class MainMenu extends JPanel {
                 ESC -> PAUSA
                 """;
         commands = MenuUtility.createTextArea(commandsText, 15, Settings.height - 200, 328, 190, font, Color.YELLOW);
-        String highScoreText = "HIGHSCORE";
-        highScore = MenuUtility.createTextArea(highScoreText, Settings.width - 200, Settings.height - 170, 200, 160, font, Color.YELLOW);
+
+        highScore = MenuUtility.createTextArea("HIGHSCORE", Settings.width - 200, Settings.height - 170, 200, 160, font, Color.YELLOW);
+        highScoreText = String.valueOf(GameConstraints.getInstance().getHighScore());
+        highScoreValue = MenuUtility.createTextArea(highScoreText, Settings.width - 200, Settings.height - 120, 200, 160, font, Color.YELLOW);
+
 
         //Aggiunta del titolo e dei testi al pannello
         this.add(title);
         this.add(commands);
         this.add(highScore);
+        this.add(highScoreValue);
     }
 
     /**
