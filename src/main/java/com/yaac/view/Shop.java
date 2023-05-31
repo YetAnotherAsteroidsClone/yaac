@@ -42,7 +42,7 @@ public class Shop extends JPanel{
     //CONSTRUCTOR
     public Shop() throws IOException, FontFormatException {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
-
+        this.setLayout(null);
         //bg image
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png",640,360);
         backgroundL2 = new ObjectAnimation("/Background/MainBackgroundL2.png",640,360);
@@ -130,6 +130,25 @@ public class Shop extends JPanel{
         switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine();});
         switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();});
 
+        for(JButton button : switchWeapon)
+            this.add(button);
+        for(JButton button : switchEngine)
+            this.add(button);
+
+        int xOffset = widthOffset-175;
+        int yOffset = heightOffset-350;
+        MenuUtility.drawJButton(switchWeapon[0],left,xOffset-85,yOffset+50,50,60);
+        MenuUtility.drawJButton(switchWeapon[1],right,xOffset+370,yOffset+50,50,60);
+        MenuUtility.drawJButton(switchEngine[0],left,xOffset-85,yOffset+250,50,60);
+        MenuUtility.drawJButton(switchEngine[1],right,xOffset+370,yOffset+250,50,60);
+
+        //Show score
+        JLabel score = new JLabel("SCORE: " + gameConstraints.getScore());
+        this.add(score);
+        score.setFont(scoreFont);
+        score.setForeground(Color.LIGHT_GRAY);
+        score.setBounds(52,-2,300,100);
+
         //spaceship
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeapon(true);
@@ -138,18 +157,6 @@ public class Shop extends JPanel{
 
     private void drawShip(int x, int y, Graphics g){
         g.drawImage(spaceShipView.getSpaceship().draw(), x,y,null);
-
-        MenuUtility.drawShopButton(switchWeapon[0],left,x-85,y+50,50,60,null,g);
-        MenuUtility.drawShopButton(switchWeapon[1],right,x+370,y+50,50,60,null,g);
-
-        MenuUtility.drawShopButton(switchEngine[0],left,x-85,y+250,50,60,null,g);
-        MenuUtility.drawShopButton(switchEngine[1],right,x+370,y+250,50,60,null,g);
-
-        for(int i = 0; i<2; i++){
-            this.add(switchWeapon[i]);
-            this.add(switchEngine[i]);
-        }
-
     }
     private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){
         g.setColor(Color.WHITE);
@@ -236,13 +243,10 @@ public class Shop extends JPanel{
         this.add(mainMenu);
 
 
-        //show score and gems
-        g.setFont(scoreFont);
-        g.setColor(Color.LIGHT_GRAY);
-        g.drawString("SCORE: "+gameConstraints.getScore(),widthOffset-630,heightOffset-340);
+        //show gems
         g.setFont(font);
         g.setColor(Color.WHITE);
-        g.drawImage(gems.getCurrentFrame(),widthOffset-630,heightOffset-320,null);
+        g.drawImage(gems.getCurrentFrame(),52,80,null);
         gems.update();
         g.drawString("x"+gameConstraints.getGems(),widthOffset-590,heightOffset-290);
 

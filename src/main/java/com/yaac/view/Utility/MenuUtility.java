@@ -72,6 +72,22 @@ public class MenuUtility {
         return textArea;
     }
 
+    /** Disegna un'immagine su un JButton
+     * @param button
+     * @param imageIcon
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
+    public static void drawJButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height){
+        button.setBackground(new Color(0,0,0,Color.TRANSLUCENT));
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setFocusPainted(false);
+        button.setBounds(x+1,y+1,width-1,height-1);
+        button.setIcon(imageIcon);
+    }
+
     //TODO: cosa fa?
     public static void drawShopButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, Color color, Graphics g){
         if(color != null) {
@@ -79,7 +95,7 @@ public class MenuUtility {
             g.drawRect(x, y, width, height);
         }
         button.setBackground(new Color(0,0,0,Color.TRANSLUCENT));
-        button.setBorderPainted(false);
+        //button.setBorderPainted(false);
         button.setBounds(x+1,y+1,width-1,height-1);
         button.setIcon(imageIcon);
     }
