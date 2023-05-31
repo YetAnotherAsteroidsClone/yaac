@@ -13,14 +13,10 @@ public class CollisionUtility {
      * @return true se i due oggetti collidono, false altrimenti
      */
     public static boolean checkCollision(GameObject obj1, GameObject obj2){
-        double x1 = obj1.getX();
-        double y1 = obj1.getY();
-        double x2 = obj2.getX();
-        double y2 = obj2.getY();
         double r1 = obj1.getRadius();
         double r2 = obj2.getRadius();
 
-        return (Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))) <= (r1+r2);
+        return distance(obj1, obj2) <= (r1+r2);
     }
 
     /**

@@ -151,4 +151,9 @@ public class SpaceShipView {
         currentBody = index % bodies.size();
         spaceship.setCurrentSprite(currentBody);
     }
+
+    public void nextBody(){
+        currentBody = (currentBody + 1) % bodies.size();
+        spaceship.setCurrentSprite(currentBody);
+    }
 }

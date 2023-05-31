@@ -4,11 +4,15 @@ import com.yaac.Settings;
 import com.yaac.model.GameComponent.*;
 import com.yaac.model.Utility.CollisionUtility;
 import com.yaac.model.Utility.GameComponentsManager;
+import com.yaac.model.Utility.OnDeathListener;
 import com.yaac.view.Utility.Sound;
+
+import java.util.ArrayList;
 
 public class Game {
     static Game instance = null;
 
+    private ArrayList<OnDeathListener> onDeathListeners;
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
@@ -26,6 +30,7 @@ public class Game {
      * Costruttore privato per implementare il pattern Singleton
      */
     private Game() {
+        onDeathListeners = new ArrayList<>();
         stage = 0;
         tick = 0;
         this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
@@ -296,6 +301,9 @@ public class Game {
         bullets.clear();
         asteroids.clear();
         gems.clear();
+        // Invio evento di morte
+        for(OnDeathListener listener : onDeathListeners)
+            listener.onDeath();
     }
 
     /**
@@ -316,5 +324,9 @@ public class Game {
 
     public static void reset(){
         instance = null;
+    }
+
+    public void addOnDeathListener(OnDeathListener listener){
+        onDeathListeners.add(listener);
     }
 }
