@@ -69,8 +69,9 @@ public class MainMenu extends JPanel {
                 D -> RUOTA A DESTRA
                 W -> ACCELERA
                 BARRA SPAZIATRICE -> SPARA
+                ESC -> PAUSA
                 """;
-        commands = MenuUtility.createTextArea(commandsText, 15, Settings.height - 170, 328, 160, font, Color.YELLOW);
+        commands = MenuUtility.createTextArea(commandsText, 15, Settings.height - 200, 328, 190, font, Color.YELLOW);
         String highScoreText = "HIGHSCORE";
         highScore = MenuUtility.createTextArea(highScoreText, Settings.width - 200, Settings.height - 170, 200, 160, font, Color.YELLOW);
 
