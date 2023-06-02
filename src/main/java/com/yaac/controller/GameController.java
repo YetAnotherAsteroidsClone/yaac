@@ -4,7 +4,9 @@ import com.yaac.Loop;
 import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.GamePanel;
+import com.yaac.view.PauseMenu;
 import com.yaac.view.SceneManager;
+import com.yaac.view.Utility.MenuUtility;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -40,7 +42,8 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_D -> Game.getInstance().startRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().startAccelerate() ; gamePanel.getSpaceShipView().setPowering(true);}
             case KeyEvent.VK_SPACE -> {Game.getInstance().startShoot(); gamePanel.getSpaceShipView().setCurrentWeapon(true);}
-            case KeyEvent.VK_ESCAPE -> {halted = !halted; if(!halted) {loop.start(); /*SceneManager.getInstance().unloadPauseMenu();*/} else {loop.stop(); SceneManager.getInstance().loadPauseMenu();}}
+            case KeyEvent.VK_ESCAPE -> {halted = !halted; if(!halted) {loop.start(); /*SceneManager.getInstance().unloadScene(pauseMenu);*/} else {loop.stop(); SceneManager.getInstance().loadPauseMenu();}}
+            // TODO: unloadScene()
         }
     }
 
@@ -55,15 +58,7 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_D -> Game.getInstance().stopRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().stopAccelerate(); gamePanel.getSpaceShipView().setPowering(false);}
             case KeyEvent.VK_SPACE -> {Game.getInstance().stopShot(); gamePanel.getSpaceShipView().setCurrentWeapon(false);}
-            case KeyEvent.VK_BACK_SPACE -> {
-                try {
-                    SceneManager.getInstance().loadMainMenu();
-                    SaveFileManager.getInstance().saveData();
-                } catch (IOException | FontFormatException ex) {
-                    throw new RuntimeException(ex);
-                }
-                Game.reset();
-            }
+            case KeyEvent.VK_BACK_SPACE -> {SceneManager.getInstance().loadMainMenu(); SaveFileManager.getInstance().saveData(); Game.reset();}
         }
     }
 

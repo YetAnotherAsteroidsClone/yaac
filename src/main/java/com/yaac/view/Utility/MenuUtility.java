@@ -8,6 +8,7 @@ import java.util.Objects;
  * Classe che contiene metodi utili per la creazione di componenti grafici.
  */
 public class MenuUtility {
+    private static Sound music = new Sound("Music.wav");
 
     /**
      * Metodo per la creazione di un bottone.
@@ -107,6 +108,20 @@ public class MenuUtility {
         Image resizedImage = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(resizedImage);
         return imageIcon;
+    }
+
+    public static ObjectAnimation[] createBG(ObjectAnimation[] bg, int windowWidth, int windowHeight) {
+        bg[0] = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
+        bg[1] = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
+        bg[2] = new ObjectAnimation("/Background/MainBackgroundL3.png", 640, 360);
+        bg[0].scaleImage(windowWidth, windowHeight);
+        bg[1].scaleImage(windowWidth, windowHeight);
+        bg[2].scaleImage(windowWidth, windowHeight);
+        return bg;
+    }
+
+    public static Sound getMusic() {
+        return music;
     }
 
 }

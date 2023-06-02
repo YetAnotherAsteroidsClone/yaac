@@ -1,9 +1,12 @@
 package com.yaac.view;
 
 import com.yaac.Loop;
+import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.controller.*;
 import com.yaac.model.SaveFileManager;
+import com.yaac.view.Utility.MenuUtility;
+import com.yaac.view.Utility.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +32,7 @@ public class SceneManager {
     private MainMenu mainMenu;
     private Shop shop;
     private Credits credits;
-    private GameSettings gameSettings;
+    private final GameSettings gameSettings;
     private PauseMenu pauseMenu;
     private GamePanel gamePanel;
 
@@ -56,13 +59,14 @@ public class SceneManager {
         mainFrame.revalidate();
     }
 
-    public void loadMainMenu() throws IOException, FontFormatException {
+    public void loadMainMenu() {
         SaveFileManager.getInstance().loadSaveFile();
         mainMenu = new MainMenu();
         MainMenuController controller = new MainMenuController(mainMenu);
         Loop mainMenuLoop = new Loop(controller);
         mainMenu.addMouseListener(controller);
         loadScene(mainMenu);
+        MenuUtility.getMusic().loop();
         mainMenu.requestFocus();
         mainMenuLoop.start();
     }
@@ -70,20 +74,28 @@ public class SceneManager {
     public void loadSettings(){
         GameSettingsController controller = new GameSettingsController(gameSettings);
         Loop gameSettingsLoop = new Loop(controller);
-        gameSettings.addMouseListener(controller);
+        //gameSettings.addMouseListener(controller);
         loadScene(gameSettings);
         gameSettings.requestFocus();
         gameSettingsLoop.start();
+        MenuUtility.getMusic().play();
     }
 
     public void loadCredits(){
-        //TODO
-        /*credits = new Credits();
-        loadScene(credits);*/
+        credits = new Credits();
+        CreditsController controller = new CreditsController(credits);
+        Loop creditsLoop = new Loop(controller);
+        credits.addKeyListener(controller);
+        loadScene(credits);
+        credits.requestFocus();
+        creditsLoop.start();
     }
 
-    public void loadPauseMenu(){
-        //TODO
+    public void loadPauseMenu() {
+        pauseMenu = new PauseMenu();
+        loadScene(pauseMenu);
+        pauseMenu.requestFocus();
+        MenuUtility.getMusic().pause();
     }
 
     public void loadGame(){
@@ -105,6 +117,9 @@ public class SceneManager {
         shopLoop.start();
     }
 
+    public void unloadScene(JPanel panel){
+        // TODO: serve per togliere la schermata di pausa e tornare al gioco. Magari anche per le impostazioni?
+    }
 
     /**
      * Controlla se il pannello è caricato

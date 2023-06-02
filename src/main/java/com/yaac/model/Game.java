@@ -18,7 +18,7 @@ public class Game {
     GameComponentsManager bullets;
     GameComponentsManager gems;
     GameComponentsManager destroyedBullets;
-    Sound bulletSound, gameMusic;
+    Sound bulletSound;
     SpaceShip spaceShip;
     int gemCount;
     int scoreCount;
@@ -49,8 +49,7 @@ public class Game {
         destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
         bulletSound = new Sound("SpaceshipFiring.wav");
-        gameMusic = new Sound("Music.wav");
-        gameMusic.loop();
+
     }
 
     /**

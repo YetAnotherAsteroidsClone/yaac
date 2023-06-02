@@ -80,13 +80,8 @@ public class Shop extends JPanel{
 
         //Buttons
         mainMenu = new JButton();
-        mainMenu.addActionListener(actionEvent -> {
-            try {
-                SceneManager.getInstance().loadMainMenu();
-            } catch (IOException | FontFormatException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        mainMenu.addActionListener(actionEvent -> SceneManager.getInstance().loadMainMenu());
+
         back = new JButton();
         back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
 
