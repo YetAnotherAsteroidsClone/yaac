@@ -154,7 +154,7 @@ public class GamePanel extends JPanel{
         g.setColor(Color.WHITE);
         g.drawString("x" + game.getGemCount(),GameConstraints.WORLDWIDTH-105,55);
         g.drawImage(esc,25,Settings.height-60,null);
-        g.drawString(": PAUSE",70,Settings.height-30);
+        g.drawString(": PAUSA",70,Settings.height-30);
         if(game.getStagePause()){
             g.setColor(Color.YELLOW);
             g.drawString("STAGE "+game.getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
