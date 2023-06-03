@@ -111,7 +111,6 @@ public class SceneManager {
         gameSettings.requestFocus();
         gameSettings.grabFocus();
         gameSettingsLoop.start();
-        MenuUtility.getMusic().play();
     }
 
     public void loadCredits(){
@@ -168,7 +167,6 @@ public class SceneManager {
 
     public void unloadSettings(){
         unloadScene(gameSettings);
-        MenuUtility.getMusic().play();
         pauseMenu.setVisible(true);
         pauseMenu.requestFocus();
         pauseMenu.grabFocus();
