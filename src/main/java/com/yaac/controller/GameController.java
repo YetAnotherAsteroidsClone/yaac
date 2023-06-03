@@ -4,23 +4,17 @@ import com.yaac.Loop;
 import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.GamePanel;
-import com.yaac.view.PauseMenu;
 import com.yaac.view.SceneManager;
-import com.yaac.view.Utility.MenuUtility;
 
-import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 /**
  * Classe che gestisce gli input da tastiera del gioco
  * e aggiorna la view
  */
 public class GameController extends KeyAdapter implements Updatable {
-
     private final GamePanel gamePanel;
-    private boolean halted = false;
     private Loop loop;
 
     /**
@@ -42,8 +36,7 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_D -> Game.getInstance().startRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().startAccelerate() ; gamePanel.getSpaceShipView().setPowering(true);}
             case KeyEvent.VK_SPACE -> {Game.getInstance().startShoot(); gamePanel.getSpaceShipView().setCurrentWeapon(true);}
-            case KeyEvent.VK_ESCAPE -> {halted = !halted; if(!halted) {loop.start(); /*SceneManager.getInstance().unloadScene(pauseMenu);*/} else {loop.stop(); SceneManager.getInstance().loadPauseMenu();}}
-            // TODO: unloadScene()
+            case KeyEvent.VK_ESCAPE -> {loop.stop(); SceneManager.getInstance().loadPauseMenu();}
         }
     }
 
