@@ -23,6 +23,8 @@ public class GameSettings extends JPanel {
     private final int windowWidth = GameConstraints.WORLDWIDTH;
     private final int windowHeight = GameConstraints.WORLDHEIGHT;
 
+    private boolean layered = false;
+
     public GameSettings() throws IOException, FontFormatException {
         this.setLayout(null);
 
@@ -34,7 +36,8 @@ public class GameSettings extends JPanel {
         backIcon = ImageUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
 
         backButton = new JButton();
-        backButton.addActionListener(e -> SceneManager.getInstance().unloadScene(this));
+        // Se le impostazioni si trovano in un layer allora siamo certi che sono state caricate dal menu di pausa
+        backButton.addActionListener(e -> {if(layered) SceneManager.getInstance().unloadSettings(); else SceneManager.getInstance().loadMainMenu();});
 
         this.add(resolution);
         this.add(music);
@@ -51,5 +54,9 @@ public class GameSettings extends JPanel {
     }
     public void update(){
         this.repaint();
+    }
+
+    public void setLayered(boolean layered) {
+        this.layered = layered;
     }
 }

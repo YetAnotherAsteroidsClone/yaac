@@ -62,7 +62,7 @@ public class MainMenu extends JPanel {
         buttons[4] = MenuUtility.createButton("ESCI", buttonXPos, firstButtonPos + 320, 200, 50, font);
         buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
         buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
-        buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings());
+        buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings(false));
         buttons[3].addActionListener(e -> SceneManager.getInstance().loadCredits());
         buttons[4].addActionListener(e -> System.exit(0));
 

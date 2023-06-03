@@ -4,6 +4,7 @@ import com.yaac.Loop;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.controller.*;
+import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.Sound;
@@ -35,6 +36,8 @@ public class SceneManager {
     private final GameSettings gameSettings;
     private PauseMenu pauseMenu;
     private GamePanel gamePanel;
+    private Loop gameLoop;
+    private JLayeredPane layeredPane;
 
     public static SceneManager getInstance() {return instance;}
 
@@ -45,6 +48,10 @@ public class SceneManager {
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setLayout(null);
+        layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null);
+        mainFrame.setContentPane(layeredPane);
 
         shop = new Shop();
         gameSettings = new GameSettings();
@@ -54,9 +61,22 @@ public class SceneManager {
         mainFrame.setVisible(true);
     }
 
+    /** Carica un JPanel nel layer di default (0) <br>
+     *  Rimuove tutti i JPanel presenti nel layer
+     * @param panel
+     */
     private void loadScene(JPanel panel){
-        mainFrame.setContentPane(panel);
-        mainFrame.revalidate();
+        layeredPane.removeAll();
+        loadScene(panel, JLayeredPane.DEFAULT_LAYER);
+    }
+
+    /** Carica un JPanel nel layer specificato
+     * @param panel
+     * @param layer
+     */
+    private void loadScene(JPanel panel, int layer){
+        layeredPane.add(panel, layer);
+        panel.setBounds(0,0,Settings.width,Settings.height);
     }
 
     public void loadMainMenu() {
@@ -71,12 +91,25 @@ public class SceneManager {
         mainMenuLoop.start();
     }
 
-    public void loadSettings(){
+    /** Carica le impostazioni di gioco
+     * @param layered se true, carica le impostazioni in un layer superiore
+     */
+    public void loadSettings(boolean layered){
         GameSettingsController controller = new GameSettingsController(gameSettings);
         Loop gameSettingsLoop = new Loop(controller);
         //gameSettings.addMouseListener(controller);
-        loadScene(gameSettings);
+        if(layered) { // Le impostazioni sono state chiamate dal menu di pausa
+            loadScene(gameSettings, JLayeredPane.POPUP_LAYER);
+            gameSettings.setLayered(true);
+            pauseMenu.setVisible(false);
+            layeredPane.moveToFront(gameSettings);
+        }
+        else{
+            loadScene(gameSettings);
+            gameSettings.setLayered(false);
+        }
         gameSettings.requestFocus();
+        gameSettings.grabFocus();
         gameSettingsLoop.start();
         MenuUtility.getMusic().play();
     }
@@ -93,21 +126,23 @@ public class SceneManager {
 
     public void loadPauseMenu() {
         pauseMenu = new PauseMenu();
-        loadScene(pauseMenu);
-        pauseMenu.requestFocus();
+        loadScene(pauseMenu, JLayeredPane.DEFAULT_LAYER);
+        pauseMenu.grabFocus();
         MenuUtility.getMusic().pause();
+        layeredPane.moveToFront(pauseMenu);
     }
 
     public void loadGame(){
         gamePanel = new GamePanel();
         GameController controller = new GameController(gamePanel);
         gamePanel.addKeyListener(controller);
-        Loop gameLoop = new Loop(controller);
+        gameLoop = new Loop(controller);
         loadScene(gamePanel);
         controller.setLoop(gameLoop);
         gamePanel.requestFocus();
         gameLoop.start();
     }
+
     public void loadShop(){
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
@@ -117,8 +152,26 @@ public class SceneManager {
         shopLoop.start();
     }
 
-    public void unloadScene(JPanel panel){
-        // TODO: serve per togliere la schermata di pausa e tornare al gioco. Magari anche per le impostazioni?
+    public void unloadPauseMenu(){
+        unloadScene(pauseMenu);
+        pauseMenu = null;
+        MenuUtility.getMusic().play();
+        gamePanel.requestFocus();
+        gameLoop.start();
+    }
+
+    private void unloadScene(JPanel panel){
+        layeredPane.remove(panel);
+        layeredPane.revalidate();
+        layeredPane.repaint();
+    }
+
+    public void unloadSettings(){
+        unloadScene(gameSettings);
+        MenuUtility.getMusic().play();
+        pauseMenu.setVisible(true);
+        pauseMenu.requestFocus();
+        pauseMenu.grabFocus();
     }
 
     /**
