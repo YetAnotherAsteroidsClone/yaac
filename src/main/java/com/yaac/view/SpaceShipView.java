@@ -1,5 +1,6 @@
 package com.yaac.view;
 
+import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.CompositeSprite;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
@@ -15,8 +16,8 @@ public class SpaceShipView {
     private ArrayList<ObjectAnimation> weapons;
     private ArrayList<EngineView> engines;
     private CompositeSprite spaceship;
-    private int currentWeapon = 0;
-    private int currentEngine = 0;
+    private int currentWeapon = SaveFileManager.getInstance().getWeapon();
+    private int currentEngine = SaveFileManager.getInstance().getEngine();
     private int currentBody = 0;
 
     /** Costruttore della classe SpaceShipView
@@ -85,12 +86,12 @@ public class SpaceShipView {
      */
     public void setPowering(boolean powering) {
         if (powering) {
-            spaceship.enableAnimation(0);
-            spaceship.disableAnimation(1);
+            spaceship.enableAnimation(0, true);
+            spaceship.disableAnimation(1, false);
         }
         else {
-            spaceship.disableAnimation(0);
-            spaceship.enableAnimation(1);
+            spaceship.disableAnimation(0, false);
+            spaceship.enableAnimation(1, true);
         }
     }
 
@@ -99,8 +100,9 @@ public class SpaceShipView {
      */
     public void setCurrentEngine(int currentEngine) {
         this.currentEngine = currentEngine;
-        spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
-        spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
+        spaceship.setAnimation(engines.get(this.currentEngine).getPoweringState(), 0);
+        spaceship.setAnimation(engines.get(this.currentEngine).getIdleState(), 1);
+        setPowering(false);
     }
 
     /** Imposta l'animazione dell'arma corrente
@@ -108,9 +110,9 @@ public class SpaceShipView {
      */
     public void setCurrentWeaponAnimation(boolean shooting){
         if(!shooting)
-            spaceship.disableAnimation(2);
+            spaceship.disableAnimation(2, true);
         else
-            spaceship.enableAnimation(2);
+            spaceship.enableAnimation(2, true);
     }
 
     /** Imposta l'arma corrente
@@ -118,7 +120,7 @@ public class SpaceShipView {
      */
     public void setCurrentWeapon(int currentWeapon) {
         this.currentWeapon = currentWeapon;
-        spaceship.setAnimation(weapons.get(currentWeapon), 2);
+        spaceship.setAnimation(weapons.get(this.currentWeapon), 2);
     }
 
     /** Ritorna la navicella

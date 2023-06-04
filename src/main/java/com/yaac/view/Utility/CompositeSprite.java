@@ -41,8 +41,12 @@ public class CompositeSprite {
         Graphics2D g2d = sprite.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for(ObjectAnimation animation : animations){
-            g2d.drawImage(animation.getCurrentFrame(), 0,0, null);
-            animation.update();
+            if(animation.isEnabled() && animation.isDrawable()) {
+                g2d.drawImage(animation.getCurrentFrame(), 0, 0, null);
+                animation.update();
+            }else if(animation.isDrawable()){
+                g2d.drawImage(animation.getDefaultImage(), 0, 0, null);
+            }
         }
         for(Image image : images)
             g2d.drawImage(image, 0, 0, null);
@@ -111,15 +115,19 @@ public class CompositeSprite {
 
     /** Metodo wrapper per abilitare l'animazione
      * @param index posizione dell'animazione da abilitare/disabilitare
+     * @param drawable indica se l'animazione deve essere disegnata o meno
      */
-    public void enableAnimation(int index){
+    public void enableAnimation(int index, boolean drawable){
         animations.get(index).enable();
+        animations.get(index).setDrawable(drawable);
     }
 
     /** Metodo wrapper per disabilitare l'animazione
      * @param index posizione dell'animazione da abilitare/disabilitare
+     * @param drawable indica se l'animazione deve essere disegnata o meno
      */
-    public void disableAnimation(int index) {
+    public void disableAnimation(int index, boolean drawable) {
         animations.get(index).disable();
+        animations.get(index).setDrawable(drawable);
     }
 }

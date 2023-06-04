@@ -13,7 +13,7 @@ import static java.lang.Math.max;
  */
 public class SpaceShip extends GameObject{
     int shotTick = 0;
-
+    int bulletType = 0;
     boolean isMoving = false;
     boolean isShooting = false;
     boolean isRotatingLeft = false;
@@ -37,8 +37,9 @@ public class SpaceShip extends GameObject{
      * @param vx velocità iniziale su asse x
      * @param vy velocità iniziale su asse y
      */
-    public SpaceShip(int x, int y, int vx, int vy){
+    public SpaceShip(int x, int y, int vx, int vy, int bulletType){
         super(x, y, vx, vy, 0, 24);
+        this.bulletType = bulletType;
     }
 
     /**
@@ -142,7 +143,7 @@ public class SpaceShip extends GameObject{
         if(shotTick % Math.round(GameConstraints.getInstance().getBulletRatio()) == 0) {
             double bulletVX = (GameConstraints.getInstance().getBulletSpeed() * Math.sin(Math.toRadians(rotation)));
             double bulletVY = -(GameConstraints.getInstance().getBulletSpeed() * Math.cos(Math.toRadians(rotation)));
-            Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(), rotation));
+            Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(), rotation, bulletType));
         }
         shotTick++;
     }
@@ -223,5 +224,13 @@ public class SpaceShip extends GameObject{
         vx = 0;
         vy = 0;
         rotation = 0;
+    }
+
+    /**
+     * Imposta il tipo di proiettile
+     * @return tipo di proiettile
+     */
+    public void setBulletType(int bulletType){
+        this.bulletType = bulletType;
     }
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * */
 public class ObjectAnimation {
 
-    private boolean enabled = true;
+    private boolean enabled = true, drawable = true;
     private ArrayList<Image> images = new ArrayList<>();
     private int index = 0;
 
@@ -96,5 +96,27 @@ public class ObjectAnimation {
      */
     public void enable() {
         enabled = true;
+    }
+
+    /**
+     * Metodo per disabilitare o abilitare la disegnabilità dell'animazione
+     */
+    public void setDrawable(boolean drawable) {
+        this.drawable = drawable;
+    }
+
+    /**
+     * Metodo per ottenere lo stato dell'animazione
+     * @return stato dell'animazione
+     */
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    /** Metodo per ottenere lo stato della disegnabilità dell'animazione
+     * @return stato della disegnabilità dell'animazione
+     */
+    public boolean isDrawable() {
+        return drawable;
     }
 }

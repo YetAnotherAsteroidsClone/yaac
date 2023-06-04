@@ -3,6 +3,7 @@ import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.JPanel;
@@ -84,7 +85,10 @@ public class GamePanel extends JPanel{
 
         // Caricamento della nave
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
+        spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
+        spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         game.addOnDeathListener(() -> {spaceShipView.nextBody();});
+        game.setBulletType(spaceShipView.getCurrentWeapon());
     }
 
     /**

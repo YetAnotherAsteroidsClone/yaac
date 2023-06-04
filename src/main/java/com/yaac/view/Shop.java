@@ -143,9 +143,7 @@ public class Shop extends JPanel{
 
         //spaceship
         spaceShipView = new SpaceShipView(350,350);
-        spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
         spaceShipView.setCurrentWeaponAnimation(true);
-        spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         spaceShipView.setPowering(true);
     }
 

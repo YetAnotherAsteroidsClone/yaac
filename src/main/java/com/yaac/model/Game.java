@@ -349,4 +349,8 @@ public class Game {
     public void addOnDeathListener(OnDeathListener listener){
         onDeathListeners.add(listener);
     }
+
+    public void setBulletType(int bulletType){
+        this.spaceShip.setBulletType(bulletType);
+    }
 }
