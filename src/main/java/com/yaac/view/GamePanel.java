@@ -19,8 +19,6 @@ import java.util.Objects;
 public class GamePanel extends JPanel{
 
     Game game;
-    int tick = 0;
-
     private SpaceShipView spaceShipView;
     private ObjectAnimation backgroundL1;
     private ObjectAnimation backgroundL2;
@@ -87,7 +85,7 @@ public class GamePanel extends JPanel{
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
         spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
         spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
-        game.addOnDeathListener(() -> {spaceShipView.nextBody();});
+        game.addOnDeathListener(() -> {spaceShipView.nextBody(); SoundEngine.getInstance().playExplosion();});
         game.setBulletType(spaceShipView.getCurrentWeapon());
     }
 
@@ -170,7 +168,6 @@ public class GamePanel extends JPanel{
      */
     public void update(){
         super.repaint();
-        tick++;
     }
 
     //Restituisce la maschera di creazione della nave

@@ -1,14 +1,9 @@
 package com.yaac.view;
 
 import com.yaac.Loop;
-import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.controller.*;
-import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
-import com.yaac.view.Utility.MenuUtility;
-import com.yaac.view.Utility.Sound;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -86,7 +81,8 @@ public class SceneManager {
         Loop mainMenuLoop = new Loop(controller);
         mainMenu.addMouseListener(controller);
         loadScene(mainMenu);
-        MenuUtility.getMusic().loop();
+        SoundEngine.getInstance().start();
+        SoundEngine.getInstance().loopMusic();
         mainMenu.requestFocus();
         mainMenuLoop.start();
     }
@@ -127,7 +123,7 @@ public class SceneManager {
         pauseMenu = new PauseMenu();
         loadScene(pauseMenu, JLayeredPane.DEFAULT_LAYER);
         pauseMenu.grabFocus();
-        MenuUtility.getMusic().pause();
+        SoundEngine.getInstance().stopMusic();
         layeredPane.moveToFront(pauseMenu);
     }
 
@@ -154,7 +150,7 @@ public class SceneManager {
     public void unloadPauseMenu(){
         unloadScene(pauseMenu);
         pauseMenu = null;
-        MenuUtility.getMusic().play();
+        SoundEngine.getInstance().loopMusic();
         gamePanel.requestFocus();
         gameLoop.start();
     }

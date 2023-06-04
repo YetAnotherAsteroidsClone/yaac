@@ -5,6 +5,7 @@ import com.yaac.model.GameComponent.*;
 import com.yaac.model.Utility.CollisionUtility;
 import com.yaac.model.Utility.GameComponentsManager;
 import com.yaac.model.Utility.OnDeathListener;
+import com.yaac.view.SoundEngine;
 import com.yaac.view.Utility.Sound;
 
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ public class Game {
     GameComponentsManager bullets;
     GameComponentsManager gems;
     GameComponentsManager destroyedBullets;
-    Sound bulletSound;
     SpaceShip spaceShip;
     int gemCount;
     int scoreCount;
@@ -48,8 +48,6 @@ public class Game {
         destroyedAsteroids = new GameComponentsManager();
         destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
-        bulletSound = new Sound("SpaceshipFiring.wav");
-
     }
 
     /**
@@ -219,7 +217,7 @@ public class Game {
      * @param b proiettile da aggiungere
      */
     public void addBullet(Bullet b) {
-        bulletSound.play();
+        SoundEngine.getInstance().playBullet();
         bullets.add(b);
     }
 
@@ -271,6 +269,7 @@ public class Game {
         // Gestione degli asteroidi distrutti, score ed eventuale nuovo stage
         for (GameObject asteroid : newDestroyedAsteroids){
             scoreCount += ((Asteroid) asteroid).getScore();
+            SoundEngine.getInstance().playExplosion();
             if(scoreCount>=stage*100){
                 stage+=1;
                 if(stage%5==0){GameConstraints.getInstance().setCheckpoint(stage);}

@@ -8,8 +8,6 @@ import java.util.Objects;
  * Classe che contiene metodi utili per la creazione di componenti grafici.
  */
 public class MenuUtility {
-    private static Sound music = new Sound("Music.wav");
-
     /**
      * Metodo per la creazione di un bottone.
      * @param text testo del bottone
@@ -119,9 +117,4 @@ public class MenuUtility {
         bg[2].scaleImage(windowWidth, windowHeight);
         return bg;
     }
-
-    public static Sound getMusic() {
-        return music;
-    }
-
 }
