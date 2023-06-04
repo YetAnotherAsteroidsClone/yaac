@@ -35,7 +35,7 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_A -> Game.getInstance().startRotateLeft();
             case KeyEvent.VK_D -> Game.getInstance().startRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().startAccelerate() ; gamePanel.getSpaceShipView().setPowering(true);}
-            case KeyEvent.VK_SPACE -> {Game.getInstance().startShoot(); gamePanel.getSpaceShipView().setCurrentWeapon(true);}
+            case KeyEvent.VK_SPACE -> {Game.getInstance().startShoot(); gamePanel.getSpaceShipView().setCurrentWeaponAnimation(true);}
             case KeyEvent.VK_ESCAPE -> {loop.stop(); SceneManager.getInstance().loadPauseMenu();}
         }
     }
@@ -50,7 +50,7 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_A -> Game.getInstance().stopRotateLeft();
             case KeyEvent.VK_D -> Game.getInstance().stopRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().stopAccelerate(); gamePanel.getSpaceShipView().setPowering(false);}
-            case KeyEvent.VK_SPACE -> {Game.getInstance().stopShot(); gamePanel.getSpaceShipView().setCurrentWeapon(false);}
+            case KeyEvent.VK_SPACE -> {Game.getInstance().stopShot(); gamePanel.getSpaceShipView().setCurrentWeaponAnimation(false);}
             case KeyEvent.VK_BACK_SPACE -> {SceneManager.getInstance().loadMainMenu(); SaveFileManager.getInstance().saveData(); Game.reset();}
         }
     }

@@ -44,7 +44,7 @@ public class SaveFileManager {
             this.open();
     }
 
-    private void save(){
+    public void save(){
         try {
             FileOutputStream file = new FileOutputStream("data");
             ObjectOutputStream out = new ObjectOutputStream(file);
@@ -67,11 +67,14 @@ public class SaveFileManager {
         GameConstraints.getInstance().setGems(this.saveFile.getGems());
         GameConstraints.getInstance().setScore(this.saveFile.getScore());
         save();
-
     }
 
     public int getGems(){return this.saveFile.getGems();}
-
     public int getScore() {return this.saveFile.getScore();}
     public int getCheckPoint() {return this.saveFile.getCheckpoint();}
+
+    public void setEngine(int engine) {this.saveFile.setEngine(engine);}
+    public int getEngine() {return this.saveFile.getEngine();}
+    public int getWeapon() {return this.saveFile.getWeapon();}
+    public void setWeapon(int weapon) {this.saveFile.setWeapon(weapon);}
 }

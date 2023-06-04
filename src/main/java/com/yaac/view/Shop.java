@@ -2,6 +2,7 @@ package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
@@ -116,10 +117,12 @@ public class Shop extends JPanel{
             gameConstraints.setShopShield(true);
         });
 
-        switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeapon(true);});
-        switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeapon(true);});
-        switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine();});
-        switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();});
+        switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeaponAnimation(true); SaveFileManager.getInstance().setWeapon(spaceShipView.getCurrentWeapon()); SaveFileManager.getInstance().save();});
+        switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeaponAnimation(true); SaveFileManager.getInstance().setWeapon(spaceShipView.getCurrentWeapon()); SaveFileManager.getInstance().save();});
+        switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine(); SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();});
+        switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();
+            SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();
+        });
 
         for(JButton button : switchWeapon)
             this.add(button);
@@ -140,7 +143,9 @@ public class Shop extends JPanel{
 
         //spaceship
         spaceShipView = new SpaceShipView(350,350);
-        spaceShipView.setCurrentWeapon(true);
+        spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
+        spaceShipView.setCurrentWeaponAnimation(true);
+        spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         spaceShipView.setPowering(true);
     }
 

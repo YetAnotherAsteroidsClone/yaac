@@ -94,14 +94,31 @@ public class SpaceShipView {
         }
     }
 
+    /** Imposta il motore della navicella
+     * @param currentEngine indice del corpo
+     */
+    public void setCurrentEngine(int currentEngine) {
+        this.currentEngine = currentEngine;
+        spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
+        spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
+    }
+
     /** Imposta l'animazione dell'arma corrente
      * @param shooting true se l'arma è in uso, false altrimenti
      */
-    public void setCurrentWeapon(boolean shooting){
+    public void setCurrentWeaponAnimation(boolean shooting){
         if(!shooting)
             spaceship.disableAnimation(2);
         else
             spaceship.enableAnimation(2);
+    }
+
+    /** Imposta l'arma corrente
+     * @param currentWeapon
+     */
+    public void setCurrentWeapon(int currentWeapon) {
+        this.currentWeapon = currentWeapon;
+        spaceship.setAnimation(weapons.get(currentWeapon), 2);
     }
 
     /** Ritorna la navicella
@@ -155,5 +172,19 @@ public class SpaceShipView {
     public void nextBody(){
         currentBody = (currentBody + 1) % bodies.size();
         spaceship.setCurrentSprite(currentBody);
+    }
+
+    /** Ritorna l'indice del motore corrente
+     * @return
+     */
+    public int getCurrentWeapon() {
+        return currentWeapon;
+    }
+
+    /** Ritorna l'indice del motore corrente
+     * @return
+     */
+    public int getCurrentEngine() {
+        return currentEngine;
     }
 }
