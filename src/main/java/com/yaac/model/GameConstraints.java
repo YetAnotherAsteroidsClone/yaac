@@ -68,13 +68,34 @@ public class GameConstraints {
     public int getMaxGems() {
         return maxGems;
     }
-    public int getMaxAsteroids() {
-        return maxAsteroids;
-    }
     public int getGemVanishingTime() {
         return gemVanishingTime;
     }
     public int getCheckpoint() {return checkpoint;}
+
+    //ASTEROIDS CONSTRAINTS
+    public int getMaxAsteroids(int stage) {
+        return maxAsteroids + stage * 2;
+    }
+    public double getAsteroidMaxSpeedVariable(int stage) {
+        return 1 + stage * 0.5;
+    }
+    public int getAsteroidMinSpeed(int stage) {
+        return (int) (stage * 2 + 4);
+    }
+    public int getAsteroidsSpawnRate(int stage) {return (int) (100 - (stage-1) * 5);}
+    public int getAsteroidLife(int stage, int dim) {
+        return (int) (stage * 4 + dim * 0.4);
+    }
+    public int getAsteroidMaxDimensionUpscale(int stage) {
+        return (int) (10 + stage * 0.5);
+    }
+    public int getAsteroidMinDimension(int stage) {
+        return (int)  (30 + stage * 2) ;
+    }
+    public int getAsteroidMinSplitDim(int stage) {
+        return (int) (40 - stage * 2);
+    }
 
     //SETTERS
     public void setMaxSpeed(double maxSpeed) {this.maxSpeed = maxSpeed;}
@@ -116,17 +137,4 @@ public class GameConstraints {
         gems += gemValue;
     }
 
-    public double getAsteroidMaxSpeedVariable(int stage) {
-        return 1 + stage * 0.5;
-    }
-
-    public int getAsteroidMinSpeed(int stage) {
-        return (int) (stage * 2 + 5);
-    }
-
-    public int getAsteroidsSpawnRate(int stage) {return (int) (100 - (stage-1) * 5);}
-
-    public int getAsteroidLife(int stage, int dim) {
-        return (int) (stage * 5 + dim * 0.8);
-    }
 }

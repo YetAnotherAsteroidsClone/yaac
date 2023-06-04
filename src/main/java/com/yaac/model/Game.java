@@ -6,7 +6,6 @@ import com.yaac.model.Utility.CollisionUtility;
 import com.yaac.model.Utility.GameComponentsManager;
 import com.yaac.model.Utility.OnDeathListener;
 import com.yaac.view.SoundEngine;
-import com.yaac.view.Utility.Sound;
 
 import java.util.ArrayList;
 
@@ -131,7 +130,7 @@ public class Game {
         gems.update();
 
         // Generazione degli asteroidi
-        if (!stagePause && tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids()) {
+        if (!stagePause && tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids(stage)) {
             addRandomAsteroid();
         }
 
@@ -196,7 +195,7 @@ public class Game {
      * Metodo per aggiungere un asteroide casuale
      */
     public void addRandomAsteroid() {
-        int dim = (int) (Math.random() * 46) + 24;
+        int dim = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxDimensionUpscale(stage)) + GameConstraints.getInstance().getAsteroidMinDimension(stage);
         int life = GameConstraints.getInstance().getAsteroidLife(stage, dim);
         int x, y;
         if(Math.random() > 0.5){
@@ -285,7 +284,7 @@ public class Game {
                generatorGem(asteroid.getX(), asteroid.getY());
 
             // Generazione asteroidi figli
-            if (asteroid.getRadius() > 30)
+            if (asteroid.getRadius() > GameConstraints.getInstance().getAsteroidMinSplitDim(stage))
                 asteroids.add(((Asteroid) asteroid).split());
         }
 
