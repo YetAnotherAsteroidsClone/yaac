@@ -93,9 +93,8 @@ public class SceneManager {
     public void loadSettings(boolean layered){
         GameSettingsController controller = new GameSettingsController(gameSettings);
         Loop gameSettingsLoop = new Loop(controller);
-        //gameSettings.addMouseListener(controller);
         if(layered) { // Le impostazioni sono state chiamate dal menu di pausa
-            loadScene(gameSettings, JLayeredPane.POPUP_LAYER);
+            loadScene(gameSettings, JLayeredPane.DEFAULT_LAYER);
             gameSettings.setLayered(true);
             pauseMenu.setVisible(false);
             layeredPane.moveToFront(gameSettings);

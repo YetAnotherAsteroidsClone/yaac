@@ -5,13 +5,13 @@ import com.yaac.Settings;
 import com.yaac.controller.GameController;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ImageUtility;
-import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
+
+import static com.yaac.view.Utility.MenuUtility.*;
 
 public class Credits extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3];
@@ -29,7 +29,7 @@ public class Credits extends JPanel {
             throw new RuntimeException(ex);
         }
 
-        MenuUtility.createBG(bg, windowWidth, windowHeight);
+        createBG(bg, windowWidth, windowHeight);
         exitIcon = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/EscButton.png")));
         int buttonsSize = 40;
         exitIcon = ImageUtility.getImageIcon("/MenuSprite/EscButton.png", buttonsSize, buttonsSize);
@@ -37,14 +37,10 @@ public class Credits extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         //Disegno e update dello sfondo
         g.setColor(Color.WHITE);
-        g.drawImage(bg[0].getCurrentFrame(), 0, 0, null);
-        g.drawImage(bg[1].getCurrentFrame(), 0, 0, null);
-        g.drawImage(bg[2].getCurrentFrame(), 0, 0, null);
-        bg[0].update();
-        bg[1].update();
-        bg[2].update();
+        drawAndUpdateBG(g, bg);
         g.drawImage(exitIcon.getImage(), 25, windowHeight - 60, null);
         g.setFont(font);
         g.drawString("Premi ESC per tornare al menu", 80, windowHeight - 30);

@@ -1,5 +1,8 @@
 package com.yaac.view.Utility;
 
+import com.yaac.Settings;
+import com.yaac.view.SceneManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
@@ -26,6 +29,7 @@ public class MenuUtility {
         button.setFont(font);
         button.setFocusable(false);
         button.setBorderPainted(false);
+        button.setVisible(true);
         return button;
     }
 
@@ -87,6 +91,17 @@ public class MenuUtility {
         button.setIcon(imageIcon);
     }
 
+    public static void drawJButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, ImageIcon pressedImageIcon){
+        //change the color of the button when clicked
+        button.setContentAreaFilled(false);
+        button.setOpaque(true);
+        button.setPressedIcon(pressedImageIcon);
+        button.setIcon(imageIcon);
+        button.setBackground(new Color(0,0,0, Color.TRANSLUCENT));
+        button.setBorder(BorderFactory.createEmptyBorder());
+        button.setBounds(x+1,y+1,width-1,height-1);
+    }
+
     //TODO: cosa fa?
     public static void drawShopButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, Color color, Graphics g){
         if(color != null) {
@@ -99,22 +114,46 @@ public class MenuUtility {
         button.setIcon(imageIcon);
     }
 
-    //TODO: da spostare in ImageUtility
-    public static ImageIcon getImageIcon(String path, int width,int height){
-        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(MenuUtility.class.getResource(path)));
-        Image image = imageIcon.getImage();
-        Image resizedImage = image.getScaledInstance(width,height, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(resizedImage);
-        return imageIcon;
-    }
-
-    public static ObjectAnimation[] createBG(ObjectAnimation[] bg, int windowWidth, int windowHeight) {
+    public static void createBG(ObjectAnimation[] bg, int windowWidth, int windowHeight) {
         bg[0] = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         bg[1] = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
         bg[2] = new ObjectAnimation("/Background/MainBackgroundL3.png", 640, 360);
         bg[0].scaleImage(windowWidth, windowHeight);
         bg[1].scaleImage(windowWidth, windowHeight);
         bg[2].scaleImage(windowWidth, windowHeight);
-        return bg;
+    }
+
+    public static void drawAndUpdateBG(Graphics g, ObjectAnimation[] bg) {
+        g.drawImage(bg[0].getCurrentFrame(), 0, 0, null);
+        g.drawImage(bg[1].getCurrentFrame(), 0, 0, null);
+        g.drawImage(bg[2].getCurrentFrame(), 0, 0, null);
+        bg[0].update();
+        bg[1].update();
+        bg[2].update();
+    }
+
+    public static String getResolution() {
+        return Settings.width + "x" + Settings.height;
+    }
+
+    public static void changeResolution() {
+        if (Settings.width == Settings.widths[0] && Settings.height == Settings.heights[0]) {
+            Settings.width = Settings.widths[1];
+            Settings.height = Settings.heights[1];
+        }
+        else {
+            Settings.width = Settings.widths[0];
+            Settings.height = Settings.heights[0];
+        }
+
+    }
+
+
+    public static void drawBox(Graphics g) {
+        g.setColor(new Color(0,0,0,150));
+        int x = Settings.width / 20;
+        int y = Settings.height / 20;
+        g.fillRoundRect(x, y, Settings.width - (x * 2), Settings.height - (y *2), 20, 20);
+
     }
 }

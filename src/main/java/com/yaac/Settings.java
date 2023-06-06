@@ -10,11 +10,11 @@ public class Settings {
     public static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
     public static final Level logLevel = Level.INFO;
     public static final String TITLE = "YAAC - Yet Another Asteroids Clone";
-    public static int width = 1365;     //TODO: e se lo mettessimo a 1280x720?
-    public static int height = 800;
+    public static int width = 1280;
+    public static int height = 720;
     public static String resourcePath = Main.class.getResource("/").getPath();
     public static final int shipSize = (int) (Game.getInstance().getSpaceShip().getRadius()*2);
     public static final String FONT = "Font.ttf";
-
-    public static final Sound gameMusic = new Sound("Music.wav");
+    public static int[] widths = {1280, 1920};
+    public static int[] heights = {720, 1080};
 }

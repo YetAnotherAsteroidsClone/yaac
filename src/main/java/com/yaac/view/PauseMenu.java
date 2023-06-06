@@ -5,21 +5,20 @@ import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
-import com.yaac.view.Utility.MenuUtility;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
+
+import static com.yaac.view.Utility.MenuUtility.*;
 
 public class PauseMenu extends JPanel {
     Font font;
     JLabel title;
-    private final int windowX = GameConstraints.WORLDWIDTH/15;
-    private final int windowY = GameConstraints.WORLDHEIGHT/15;
+    private final int pauseX = GameConstraints.WORLDWIDTH/15;
+    private final int pauseY = GameConstraints.WORLDHEIGHT/15;
     private final JButton[] buttons = new JButton[4];
     // [0] resumeButton, [1] saveButton, [2] settingsButton, [3] exitButton;
 
@@ -32,12 +31,12 @@ public class PauseMenu extends JPanel {
             throw new RuntimeException(ex);
         }
 
-        int widthCenter = GameConstraints.WORLDWIDTH / 2;/*SceneManager.getInstance().unloadScene(pauseMenu);*/
+        int widthCenter = GameConstraints.WORLDWIDTH / 2;
         int heightCenter = GameConstraints.WORLDHEIGHT / 2;
-        buttons[0] = MenuUtility.createButton("RIPRENDI", widthCenter - 100, heightCenter - 80, 200, 50, font);
-        buttons[1] = MenuUtility.createButton("SALVA", widthCenter - 100, heightCenter, 200, 50, font);
-        buttons[2] = MenuUtility.createButton("IMPOSTAZIONI", widthCenter - 100, heightCenter + 80, 200, 50, font);
-        buttons[3] = MenuUtility.createButton("ABBANDONA", widthCenter - 100, heightCenter + 160, 200, 50, font);
+        buttons[0] = createButton("RIPRENDI", widthCenter - 100, heightCenter - 80, 200, 50, font);
+        buttons[1] = createButton("SALVA", widthCenter - 100, heightCenter, 200, 50, font);
+        buttons[2] = createButton("IMPOSTAZIONI", widthCenter - 100, heightCenter + 80, 200, 50, font);
+        buttons[3] = createButton("ABBANDONA", widthCenter - 100, heightCenter + 160, 200, 50, font);
 
         buttons[0].addActionListener(e -> SceneManager.getInstance().unloadPauseMenu());
         buttons[1].addActionListener(e -> SaveFileManager.getInstance().saveData());
@@ -66,8 +65,7 @@ public class PauseMenu extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(new Color(0,0,0,150));
-        g.fillRoundRect(windowX, windowY, Settings.width-(windowX *2),Settings.height-(windowY *2), 20, 20);
+        drawBox(g);
     }
 
     public void update(){
