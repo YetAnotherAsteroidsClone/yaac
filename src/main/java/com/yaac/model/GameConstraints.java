@@ -32,7 +32,7 @@ public class GameConstraints {
     private int gems = SaveFileManager.getInstance().getGems();
     private final int[] costs = {100,200,300,400,500,600,700,800,900};
     private int shieldCost = 1000;
-    private final static int lifes = 4;
+    public final static int lives = 4;
     private int life = SaveFileManager.getInstance().getLives();
     private int checkpoint = SaveFileManager.getInstance().getCheckPoint();
     private int highScore = SaveFileManager.getInstance().getHighScore();

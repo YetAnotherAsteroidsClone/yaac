@@ -89,4 +89,5 @@ public class SaveFileManager {
     public void setCurrentScore(int currentScore) {this.saveFile.setCurrentScore(currentScore);}
     public int getHighScore() {return this.saveFile.getHighScore();}
     public int getLives() {return this.saveFile.getLives();}
+    public void resetLives() {this.saveFile.setLives(GameConstraints.lives); save();}
 }

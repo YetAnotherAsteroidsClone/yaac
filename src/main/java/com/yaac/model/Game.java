@@ -4,6 +4,7 @@ import com.yaac.Settings;
 import com.yaac.model.GameComponent.*;
 import com.yaac.model.Utility.CollisionUtility;
 import com.yaac.model.Utility.GameComponentsManager;
+import com.yaac.model.Utility.GameOverListener;
 import com.yaac.model.Utility.OnDeathListener;
 import com.yaac.view.SoundEngine;
 
@@ -13,6 +14,7 @@ public class Game {
     static Game instance = null;
 
     private ArrayList<OnDeathListener> onDeathListeners;
+    private ArrayList<GameOverListener> gameOverListeners;
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
@@ -36,6 +38,7 @@ public class Game {
      */
     private Game() {
         onDeathListeners = new ArrayList<>();
+        gameOverListeners = new ArrayList<>();
         stage = SaveFileManager.getInstance().getCheckPoint();
         stagePause = true;
         tick = 0;
@@ -319,9 +322,13 @@ public class Game {
         bullets.clear();
         asteroids.clear();
         gems.clear();
-        // Invio evento di morte
-        for(OnDeathListener listener : onDeathListeners)
-            listener.onDeath();
+        if(lives == 0)
+            for(GameOverListener listener : gameOverListeners)
+                listener.onGameOver();
+        else
+            // Invio evento di morte
+            for(OnDeathListener listener : onDeathListeners)
+                listener.onDeath();
     }
 
     /**
@@ -348,8 +355,13 @@ public class Game {
         onDeathListeners.add(listener);
     }
 
+    public void addGameOverListener(GameOverListener listener){
+        gameOverListeners.add(listener);
+    }
+
     public void setBulletType(int bulletType){
         this.spaceShip.setBulletType(bulletType);
     }
     public void setScore(int score) {this.scoreCount = score;}
+    public void resetLives() {this.lives = GameConstraints.lives;}
 }

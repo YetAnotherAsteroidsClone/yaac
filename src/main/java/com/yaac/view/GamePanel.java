@@ -85,8 +85,9 @@ public class GamePanel extends JPanel{
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
         spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
         spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
-        spaceShipView.setBody(SaveFileManager.getInstance().getLives()-1);
+        spaceShipView.setBody(GameConstraints.lives - SaveFileManager.getInstance().getLives());
         game.addOnDeathListener(() -> {spaceShipView.nextBody(); SoundEngine.getInstance().playExplosion();});
+        game.addGameOverListener(() -> {game.resetLives(); SaveFileManager.getInstance().resetLives(); spaceShipView.nextBody(); game.setScore(0);});
         game.setBulletType(spaceShipView.getCurrentWeapon());
 
         game.setScore(SaveFileManager.getInstance().getCurrentScore());
