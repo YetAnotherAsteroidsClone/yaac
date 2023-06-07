@@ -32,9 +32,10 @@ public class GameConstraints {
     private int gems = SaveFileManager.getInstance().getGems();
     private final int[] costs = {100,200,300,400,500,600,700,800,900};
     private int shieldCost = 1000;
-    private int life=4;
+    private final static int lifes = 4;
+    private int life = SaveFileManager.getInstance().getLives();
     private int checkpoint = SaveFileManager.getInstance().getCheckPoint();
-    private int highScore=0;
+    private int highScore = SaveFileManager.getInstance().getHighScore();
     private double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
     private final int[] gemValue = {5, 20, 100};
 

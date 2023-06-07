@@ -13,8 +13,11 @@ public class SaveFile implements Serializable {
     private int engine;
     private int weapon;
     private int checkpoint;
+    private int currentScore;
+    private int highScore;
+    private int lives;
 
-    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, int engine, int weapon, int checkpoint) {
+    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, int engine, int weapon, int checkpoint, int currentScore, int highScore, int lives) {
         this.score = score;
         this.gems = gems;
         this.speedLvl = speedLvl;
@@ -24,7 +27,10 @@ public class SaveFile implements Serializable {
         this.shield = shield;
         this.engine = engine;
         this.weapon = weapon;
-        this.checkpoint=checkpoint;
+        this.checkpoint = checkpoint;
+        this.currentScore = currentScore;
+        this.highScore = highScore;
+        this.lives = lives;
     }
 
     public int getScore() {
@@ -101,4 +107,11 @@ public class SaveFile implements Serializable {
     public int getCheckpoint() {return checkpoint;}
 
     public void setCheckpoint(int checkpoint) {this.checkpoint = checkpoint;}
+
+    public int getCurrentScore() {return currentScore;}
+    public void setCurrentScore(int currentScore) {this.currentScore = currentScore;}
+    public int getHighScore() {return highScore;}
+    public void setHighScore(int highScore) {this.highScore = highScore;}
+    public int getLives() {return this.lives;}
+    public void setLives(int lives) {this.lives = lives;}
 }

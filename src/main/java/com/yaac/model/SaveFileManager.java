@@ -32,7 +32,7 @@ public class SaveFileManager {
             in.close();
             file.close();
         } catch (IOException e) {
-            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false, 0, 0,1);
+            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false, 0, 0,1,0,0,4);
             save();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -61,20 +61,32 @@ public class SaveFileManager {
     }
 
     public void saveData(){
-        this.saveFile.setGems(Game.getInstance().getGemCount());
+        this.saveFile.setGems(this.saveFile.getGems() + Game.getInstance().getGemCount());
         this.saveFile.setScore(this.saveFile.getScore()+ Game.getInstance().getScore());
-        this.saveFile.setCheckpoint(GameConstraints.getInstance().getCheckpoint());
+        this.saveFile.setCheckpoint(Game.getInstance().getStage());
+        this.saveFile.setCurrentScore(Game.getInstance().getScore());
+        if(this.saveFile.getCurrentScore() > this.saveFile.getHighScore()) {
+            this.saveFile.setHighScore(this.saveFile.getCurrentScore());
+            GameConstraints.getInstance().setHighScore(this.saveFile.getHighScore());
+        }
+        this.saveFile.setLives(Game.getInstance().getLives());
+        GameConstraints.getInstance().setLife(this.saveFile.getLives());
         GameConstraints.getInstance().setGems(this.saveFile.getGems());
         GameConstraints.getInstance().setScore(this.saveFile.getScore());
+        GameConstraints.getInstance().setCheckpoint(this.saveFile.getCheckpoint());
         save();
     }
 
     public int getGems(){return this.saveFile.getGems();}
     public int getScore() {return this.saveFile.getScore();}
     public int getCheckPoint() {return this.saveFile.getCheckpoint();}
+    public int getCurrentScore() {return this.saveFile.getCurrentScore();}
 
     public void setEngine(int engine) {this.saveFile.setEngine(engine);}
     public int getEngine() {return this.saveFile.getEngine();}
     public int getWeapon() {return this.saveFile.getWeapon();}
     public void setWeapon(int weapon) {this.saveFile.setWeapon(weapon);}
+    public void setCurrentScore(int currentScore) {this.saveFile.setCurrentScore(currentScore);}
+    public int getHighScore() {return this.saveFile.getHighScore();}
+    public int getLives() {return this.saveFile.getLives();}
 }

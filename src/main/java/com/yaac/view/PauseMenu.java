@@ -42,7 +42,7 @@ public class PauseMenu extends JPanel {
         buttons[1].addActionListener(e -> SaveFileManager.getInstance().saveData());
         buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings(true));
         //È necessario resettare il gioco e salvare i dati quando si esce dal menu di pausa
-        buttons[3].addActionListener(e -> {SceneManager.getInstance().loadMainMenu(); SaveFileManager.getInstance().saveData(); Game.reset();});
+        buttons[3].addActionListener(e -> {SaveFileManager.getInstance().saveData(); SceneManager.getInstance().loadMainMenu(); Game.reset();});
 
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {

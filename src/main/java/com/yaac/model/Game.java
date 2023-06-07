@@ -351,4 +351,5 @@ public class Game {
     public void setBulletType(int bulletType){
         this.spaceShip.setBulletType(bulletType);
     }
+    public void setScore(int score) {this.scoreCount = score;}
 }
