@@ -82,8 +82,9 @@ public class MainMenu extends JPanel {
                 W -> ACCELERA
                 BARRA SPAZIATRICE -> SPARA
                 ESC -> PAUSA
+                BACKSPACE -> ESCI DALLA PARTITA
                 """;
-        commands = createTextArea(commandsText, 15, windowHeight - 200, 328, 190, font, Color.YELLOW);
+        commands = createTextArea(commandsText, 15, windowHeight - 240, 390, 250, font, Color.YELLOW);
         highScore = createLabel("HIGH SCORE", windowX*13, (windowY *13)+30, 200, 30, font, Color.YELLOW);
         highScoreText = String.valueOf(GameConstraints.getInstance().getHighScore());
         highScoreValue = createTextArea(highScoreText, windowX*13, (windowY *13)+60, 200, 30, font, Color.YELLOW);
