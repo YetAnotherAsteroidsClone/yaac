@@ -83,8 +83,7 @@ public class GameSettings extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setFont(font);
-        if (!layered)
-            drawAndUpdateBG(g, bg);
+        drawAndUpdateBG(g, bg);
         drawBox(g);
         drawShopButton(backButton, backIcon, settingsX, settingsY, buttonsSize, buttonsSize, Color.WHITE, g);
     }
