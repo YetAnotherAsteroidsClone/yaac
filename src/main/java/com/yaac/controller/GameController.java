@@ -51,7 +51,7 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_D -> Game.getInstance().stopRotateRight();
             case KeyEvent.VK_W -> {Game.getInstance().stopAccelerate(); gamePanel.getSpaceShipView().setPowering(false);}
             case KeyEvent.VK_SPACE -> {Game.getInstance().stopShot(); gamePanel.getSpaceShipView().setCurrentWeaponAnimation(false);}
-            case KeyEvent.VK_BACK_SPACE -> {SceneManager.getInstance().loadMainMenu(); SaveFileManager.getInstance().saveData(); Game.reset();}
+            case KeyEvent.VK_BACK_SPACE -> {SaveFileManager.getInstance().saveData(); SceneManager.getInstance().loadMainMenu(); Game.reset();}
         }
     }
 
