@@ -31,6 +31,8 @@ public class GameConstraints {
     private int score= SaveFileManager.getInstance().getScore();
     private int gems = SaveFileManager.getInstance().getGems();
     private final int[] costs = {100,200,300,400,500,600,700,800,900};
+    private final int[] unlockWeaponsScore = {500,1500,2500};
+    private final int[] unlockEnginesScore = {1000,2000,3000};
     private int shieldCost = 1000;
     public final static int lives = 4;
     private int life = SaveFileManager.getInstance().getLives();

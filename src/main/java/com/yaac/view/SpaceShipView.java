@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class SpaceShipView {
     private ArrayList<Image> bodies;
-    private ArrayList<ObjectAnimation> weapons;
-    private ArrayList<EngineView> engines;
+    private ArrayList<ObjectAnimation> weapons, locked_weapons;
+    private ArrayList<EngineView> engines, locked_engines;
     private CompositeSprite spaceship;
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
@@ -31,6 +31,7 @@ public class SpaceShipView {
                 ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/Body3.png"), width, height),
                 ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/Body4.png"), width, height)
         ));
+
         weapons = new ArrayList<>(List.of(
                 new ObjectAnimation("/GameSprite/WeaponBaseCannon.png"),
                 new ObjectAnimation("/GameSprite/WeaponBigCannon.png"),
@@ -41,6 +42,17 @@ public class SpaceShipView {
             weapon.scaleImage(width, height);
             weapon.disable();
         }
+
+        locked_weapons = new ArrayList<>(List.of(
+                new ObjectAnimation("/GameSprite/WeaponBigCannon_locked.png"),
+                new ObjectAnimation("/GameSprite/WeaponRocket_locked.png"),
+                new ObjectAnimation("/GameSprite/WeaponZapper_locked.png")
+        ));
+        for(ObjectAnimation weapon : locked_weapons) {
+            weapon.scaleImage(width, height);
+            weapon.disable();
+        }
+
         engines = new ArrayList<>(List.of(
                 new EngineView(
                         new ObjectAnimation("/GameSprite/BaseEngine-Idle.png"),
@@ -67,6 +79,29 @@ public class SpaceShipView {
             engine.getPoweringState().scaleImage(width, height);
             engine.getIdleState().scaleImage(width, height);
         }
+
+        locked_engines = new ArrayList<>(List.of(
+                new EngineView(
+                        null,
+                        new ObjectAnimation("/GameSprite/BigEngine-Powering_locked.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/BigEngine_locked.png"), width, height)
+                ),
+                new EngineView(
+                        null,
+                        new ObjectAnimation("/GameSprite/BurstEngine-Powering_locked.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/BurstEngine_locked.png"), width, height)
+                ),
+                new EngineView(
+                        null,
+                        new ObjectAnimation("/GameSprite/SuperChargedEngine-Powering_locked.png"),
+                        ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/SuperChargedEngine_locked.png"), width, height)
+                )
+        ));
+        for(EngineView engine : locked_engines) {
+            engine.getPoweringState().scaleImage(width, height);
+            engine.getIdleState().scaleImage(width, height);
+        }
+
 
         /*
         * Indici:

@@ -120,9 +120,7 @@ public class Shop extends JPanel{
         switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeaponAnimation(true); SaveFileManager.getInstance().setWeapon(spaceShipView.getCurrentWeapon()); SaveFileManager.getInstance().save();});
         switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeaponAnimation(true); SaveFileManager.getInstance().setWeapon(spaceShipView.getCurrentWeapon()); SaveFileManager.getInstance().save();});
         switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine(); SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();});
-        switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();
-            SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();
-        });
+        switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();});
 
         for(JButton button : switchWeapon)
             this.add(button);
