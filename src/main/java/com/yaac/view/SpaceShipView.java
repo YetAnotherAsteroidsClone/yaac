@@ -16,6 +16,7 @@ public class SpaceShipView {
     private ArrayList<ObjectAnimation> weapons, locked_weapons;
     private ArrayList<EngineView> engines, locked_engines;
     private CompositeSprite spaceship;
+    private ObjectAnimation shield;
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
     private int currentBody = 0;
@@ -97,11 +98,10 @@ public class SpaceShipView {
                         ImageUtility.scaleImage(ImageUtility.loadImage("/GameSprite/SuperChargedEngine_locked.png"), width, height)
                 )
         ));
-        for(EngineView engine : locked_engines) {
+        for(EngineView engine : locked_engines)
             engine.getPoweringState().scaleImage(width, height);
-            engine.getIdleState().scaleImage(width, height);
-        }
-
+        shield = new ObjectAnimation("/GameSprite/PowerUpShield.png");
+        shield.scaleImage(width, height);
 
         /*
         * Indici:
@@ -112,8 +112,9 @@ public class SpaceShipView {
         spaceship = new CompositeSprite(
                 new ArrayList<>(List.of(engines.get(currentEngine).getPoweringState(), engines.get(currentEngine).getIdleState(), weapons.get(currentWeapon))),
                 new ArrayList<>(List.of(engines.get(currentEngine).getEngine())),
-                bodies);
+                bodies,new ArrayList<>(List.of(shield)));
         setPowering(false);
+        setShield(false);
     }
 
     /** Imposta l'animazione del motore
@@ -209,6 +210,16 @@ public class SpaceShipView {
     public void nextBody(){
         currentBody = (currentBody + 1) % bodies.size();
         spaceship.setCurrentSprite(currentBody);
+    }
+
+    /** Imposta l'animazione dello scudo della navicella
+     * @param shield
+     */
+    public void setShield(boolean shield){
+        if(shield)
+            spaceship.enableOverlayAnimation(0, true);
+        else
+            spaceship.disableOverlayAnimation(0, false);
     }
 
     /** Ritorna l'indice del motore corrente

@@ -12,6 +12,9 @@ public class CompositeSprite {
     /** ArrayList contenente le animazioni
      */
     private final ArrayList<ObjectAnimation> animations;
+    /** ArrayList contenente le animazioni disegnate sopra lo sprite
+     */
+    private final ArrayList<ObjectAnimation> overlayAnimations;
     /** ArrayList contenente le immagini
      */
     private final ArrayList<Image> images;
@@ -27,10 +30,11 @@ public class CompositeSprite {
      * @param images ArrayList contenente le immagini
      * @param sprites ArrayList contenente gli sprites
      */
-    public CompositeSprite(ArrayList<ObjectAnimation> animations, ArrayList<Image> images, ArrayList<Image> sprites) {
+    public CompositeSprite(ArrayList<ObjectAnimation> animations, ArrayList<Image> images, ArrayList<Image> sprites, ArrayList<ObjectAnimation> overlayAnimations) {
         this.animations = animations;
         this.images = images;
         this.sprites = sprites;
+        this.overlayAnimations = overlayAnimations;
     }
 
     /** Metodo per il disegno dello sprite corrente
@@ -41,18 +45,24 @@ public class CompositeSprite {
         Graphics2D g2d = sprite.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for(ObjectAnimation animation : animations){
-            if(animation.isEnabled() && animation.isDrawable()) {
-                g2d.drawImage(animation.getCurrentFrame(), 0, 0, null);
-                animation.update();
-            }else if(animation.isDrawable()){
-                g2d.drawImage(animation.getDefaultImage(), 0, 0, null);
-            }
+            animDraw(g2d, 0, 0, animation);
         }
         for(Image image : images)
             g2d.drawImage(image, 0, 0, null);
         g2d.drawImage(sprites.get(currentSprite), 0, 0, null);
+        for(ObjectAnimation animation : overlayAnimations)
+            animDraw(g2d, 0, 0, animation);
         g2d.dispose();
         return sprite;
+    }
+
+    private void animDraw(Graphics2D g2d, int x, int y, ObjectAnimation animation){
+        if(animation.isEnabled() && animation.isDrawable()) {
+            g2d.drawImage(animation.getCurrentFrame(), 0, 0, null);
+            animation.update();
+        }else if(animation.isDrawable()){
+            g2d.drawImage(animation.getDefaultImage(), 0, 0, null);
+        }
     }
 
     /** Metodo per l'aggiunta di un'animazione
@@ -129,5 +139,23 @@ public class CompositeSprite {
     public void disableAnimation(int index, boolean drawable) {
         animations.get(index).disable();
         animations.get(index).setDrawable(drawable);
+    }
+
+    /** Metodo wrapper per abilitare l'animazione dell'overlay
+     * @param index posizione dell'animazione da abilitare/disabilitare
+     * @param drawable indica se l'animazione deve essere disegnata o meno
+     */
+    public void enableOverlayAnimation(int index, boolean drawable){
+        overlayAnimations.get(index).enable();
+        overlayAnimations.get(index).setDrawable(drawable);
+    }
+
+    /** Metodo wrapper per disabilitare l'animazione dell'overlay
+     * @param index posizione dell'animazione da abilitare/disabilitare
+     * @param drawable indica se l'animazione deve essere disegnata o meno
+     */
+    public void disableOverlayAnimation(int index, boolean drawable) {
+        overlayAnimations.get(index).disable();
+        overlayAnimations.get(index).setDrawable(drawable);
     }
 }
