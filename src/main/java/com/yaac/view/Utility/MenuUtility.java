@@ -104,7 +104,17 @@ public class MenuUtility {
         button.setBounds(x+1,y+1,width-1,height-1);
     }
 
-    //TODO: cosa fa?
+    /**
+     * Metodo per disegnare i vari pulsanti nello shop
+     * @param button button
+     * @param imageIcon button icon
+     * @param x x
+     * @param y y
+     * @param width width
+     * @param height height
+     * @param color border color
+     * @param g Graphics
+     * */
     public static void drawShopButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, Color color, Graphics g){
         if(color != null) {
             g.setColor(color);
@@ -116,7 +126,23 @@ public class MenuUtility {
         button.setIcon(imageIcon);
     }
 
-
+    /**
+     * Metodo per disegnare le barre di stato dei PowerUp nel negozio
+     * @param  panel panel
+     * @param button button
+     * @param gemsColor gem color
+     * @param powerUpColor powerUp color
+     * @param pwUpImage powerUp image
+     * @param lockerImage locker icon
+     * @param plusIcon plus icon
+     * @param gemCurrentFrame gem icon animation
+     * @param x x
+     * @param y y
+     * @param font font
+     * @param pwUp powerUp name
+     * @param levels levels
+     * @param g Graphics
+     * */
     public static void drawShopPwUpBar(JPanel panel, JButton button, Color gemsColor, Color powerUpColor, BufferedImage pwUpImage, BufferedImage lockerImage, ImageIcon plusIcon, Image gemCurrentFrame, int x, int y, Font font, String pwUp, int levels, Graphics g){
         g.setColor(Color.WHITE);
         g.setFont(font);
@@ -157,7 +183,23 @@ public class MenuUtility {
         g.drawString(pwUp, x+8,y+22);
     }
 
-
+    /**
+     * Metodo per la creazione di pulsanti per l'acquisto di PwUp da usare in gioco
+     * @param panel panel
+     * @param button button
+     * @param gemsColor gem color
+     * @param currentFrame icon animation
+     * @param gemCurrentFrame gem icon animation
+     * @param lockerImage locker icon
+     * @param cost cost
+     * @param  purchased true if purchased
+     * @param x x
+     * @param y y
+     * @param width width
+     * @param height height
+     * @param font font
+     * @param g Graphics
+     **/
     public static void drawPurchasableShopPwUp(JPanel panel, JButton button, Color gemsColor, Image currentFrame, Image gemCurrentFrame, BufferedImage lockerImage, int cost, boolean purchased, int x, int y, int width, int height, Font font, Graphics g){
         g.setFont(font);
         if(purchased){
