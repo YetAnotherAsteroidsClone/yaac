@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class Game {
     static Game instance = null;
-
     private ArrayList<OnDeathListener> onDeathListeners;
     private ArrayList<GameOverListener> gameOverListeners;
     GameComponentsManager asteroids;
@@ -24,6 +23,8 @@ public class Game {
     int gemCount;
     int scoreCount;
     int lives;
+    boolean pwUpShield;
+    boolean pwUpSpeed;
     int tick;
     int stageTickTransition;
     int stage;
@@ -50,6 +51,9 @@ public class Game {
         destroyedAsteroids = new GameComponentsManager();
         destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
+
+        pwUpShield = GameConstraints.getInstance().getShopShield();
+        pwUpSpeed = GameConstraints.getInstance().getShopBoost();
     }
 
     /**

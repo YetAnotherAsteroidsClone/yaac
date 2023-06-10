@@ -20,8 +20,8 @@ public class Shop extends JPanel{
     private Color powerUpColor;
 
     //IMAGES, ICONS AND ANIMATIONS
-    private ObjectAnimation backgroundL1, backgroundL2, gems, shield;
-    private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD
+    private ObjectAnimation backgroundL1, backgroundL2, gems, shield, boost;
+    private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD; PowerUpImages[5] = BOOST
     private BufferedImage greenTick, locker;
     private ImageIcon plusIcon, menuIcon, backIcon, right, left;
     private SpaceShipView spaceShipView;
@@ -29,7 +29,7 @@ public class Shop extends JPanel{
     //BUTTONS
     public JButton[] switchWeapon = new JButton[2];
     public JButton[] switchEngine = new JButton[2];
-    public JButton[] pwUpButtons = new JButton[5];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD
+    public JButton[] pwUpButtons = new JButton[6];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD; buttons[5] = BOOST
     private JButton mainMenu, back;
 
     //OTHERS
@@ -60,6 +60,8 @@ public class Shop extends JPanel{
         gems.scaleImage(35,35);
         shield = new ObjectAnimation("/GameSprite/ShopShield.png");
         shield.scaleImage(70,70);
+        boost = new ObjectAnimation("/GameSprite/PowerUpSpeed.png");
+        boost.scaleImage(70,70);
 
         //PowerUp images
         PowerUpImages[0] = ImageUtility.loadImage("/GameSprite/SpeedPwUp.png");
@@ -115,6 +117,10 @@ public class Shop extends JPanel{
         pwUpButtons[4].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getShieldCost());
             gameConstraints.setShopShield(true);
+        });
+        pwUpButtons[5].addActionListener(actionEvent -> {
+            gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getBoostCost());
+            gameConstraints.setShopBoost(true);
         });
 
         switchWeapon[0].addActionListener(actionEvent ->
@@ -206,33 +212,6 @@ public class Shop extends JPanel{
         g.drawString(pwUp, x+8,y+22);
     }
 
-    private void drawShopShield(Graphics g, JButton b, int x,int y, int width, int height){
-        g.setFont(font);
-        if(gameConstraints.getShopShield()){
-            this.remove(b);
-            g.setColor(Color.GREEN);
-            g.drawRect(x,y,width,height);
-            g.drawImage(shield.getCurrentFrame(),x+1,y+1,null);
-            g.drawImage(greenTick,x+10,y+10,null);
-        }
-        else {
-            g.drawImage(gems.getCurrentFrame(),x-10, y+75,null);
-            ImageIcon shieldIcon = new ImageIcon(shield.getCurrentFrame());
-            if (gameConstraints.getGems() < gameConstraints.getShieldCost()) {
-                this.remove(b);
-                g.setColor(Color.RED);
-                g.drawRect(x,y,width,height);
-                g.drawImage(shield.getCurrentFrame(),x+1,y+1,null);
-                g.drawImage(locker,x+15,y+15,null);
-            }
-            else {
-                MenuUtility.drawShopButton(b, shieldIcon, x, y, width, height, gemsColor, g);
-                this.add(b);
-            }
-            g.drawString(""+gameConstraints.getShieldCost(), x+25, y+105);
-        }
-    }
-
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
@@ -265,14 +244,16 @@ public class Shop extends JPanel{
         g.drawLine((Settings.width/2)-350,(Settings.height/2)+60,(Settings.width/2)+330,(Settings.height/2)+60);
 
         //powerup bars
-        drawBar(150, Settings.height-250, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[0], pwUpButtons[0], g);
-        drawBar(150, Settings.height-130, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[1], pwUpButtons[1], g);
-        drawBar(Settings.width-685, Settings.height-250, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], pwUpButtons[2], g);
-        drawBar(Settings.width-685, Settings.height-130, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], pwUpButtons[3], g);
+        drawBar(150, Settings.height-230, "Speed", gameConstraints.getLvlMaxSpeed(), PowerUpImages[0], pwUpButtons[0], g);
+        drawBar(150, Settings.height-110, "Bullet speed", gameConstraints.getLvlBulletSpeed(), PowerUpImages[1], pwUpButtons[1], g);
+        drawBar(Settings.width-685, Settings.height-230, "Bullet damage", gameConstraints.getLvlBulletDamage(), PowerUpImages[2], pwUpButtons[2], g);
+        drawBar(Settings.width-685, Settings.height-110, "Bullet ratio", gameConstraints.getLvlBulletRatio(), PowerUpImages[3], pwUpButtons[3], g);
 
-        //purchasable shield
-        drawShopShield(g, pwUpButtons[4],Settings.width-200,Settings.height-230, 70,70);
+        //purchasable shield and boost
+        MenuUtility.drawPurchasableShopPwUp(this,pwUpButtons[4],gemsColor,shield.getCurrentFrame(),gems.getCurrentFrame(),locker,gameConstraints.getShieldCost(),gameConstraints.getShopShield(),Settings.width-200,Settings.height-290,70,70,font,g);
         shield.update();
+        MenuUtility.drawPurchasableShopPwUp(this,pwUpButtons[5],gemsColor,boost.getCurrentFrame(),gems.getCurrentFrame(),locker,gameConstraints.getBoostCost(), gameConstraints.getShopBoost(),Settings.width-200,Settings.height-140,70,70,font,g);
+        boost.update();
     }
 
     public void update() {super.repaint();}

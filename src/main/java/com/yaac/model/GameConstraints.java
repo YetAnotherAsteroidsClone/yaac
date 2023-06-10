@@ -27,19 +27,27 @@ public class GameConstraints {
     private final int maxGems = 15;
     private final int maxAsteroids = 20;
 
+    private boolean shopBoost=false;
+    private int boostCost = 500;
     private boolean shopShield=false;
-    private int score= SaveFileManager.getInstance().getScore();
-    private int gems = SaveFileManager.getInstance().getGems();
+    private int shieldCost = 1000;
+
+    private int score;
+    private int gems;
     private final int[] costs = {100,200,300,400,500,600,700,800,900};
+
     private final int[] unlockWeaponsScore = {500,1500,2500};
     private final int[] unlockEnginesScore = {1000,2000,3000};
-    private int shieldCost = 1000;
+
     public final static int lives = 4;
-    private int life = SaveFileManager.getInstance().getLives();
-    private int checkpoint = SaveFileManager.getInstance().getCheckPoint();
-    private int highScore = SaveFileManager.getInstance().getHighScore();
+    private int life;
+    private int checkpoint;
+    private int highScore;
     private double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
     private final int[] gemValue = {5, 20, 100};
+
+    public static int WORLDWIDTH = Settings.width;
+    public static int WORLDHEIGHT = Settings.height;
 
     //GETTERS
     public double getMaxSpeed() {return maxSpeed + lvlMaxSpeed * maxSpeedCoefficient;}
@@ -56,10 +64,12 @@ public class GameConstraints {
     public int getLvlBulletDamage() {return lvlBulletDamage;}
     public int getLvlBulletRatio() {return lvlBulletRatio;}
     public boolean getShopShield() {return shopShield;}
+    public boolean getShopBoost(){return shopBoost;}
     public int getScore() {return score;}
     public int getGems() {return gems;}
     public int getCost(int index){return costs[index];}
     public int getShieldCost() {return shieldCost;}
+    public int getBoostCost(){return boostCost;}
     public int getLife() {return life;}
     public int getHighScore() {return highScore;}
     public double getGemChance() {
@@ -68,9 +78,7 @@ public class GameConstraints {
     public int getGemValue(int index) {
         return gemValue[index - 1];
     }
-    public int getMaxGems() {
-        return maxGems;
-    }
+    public int getMaxGems() {return maxGems;}
     public int getGemVanishingTime() {
         return gemVanishingTime;
     }
@@ -118,13 +126,18 @@ public class GameConstraints {
     public void setLvlBulletRatio(int lvl) {lvlBulletRatio = Math.min(lvl, 10);}
 
     public void setShopShield(boolean shopShield) {this.shopShield = shopShield;}
+    public void setShopBoost(boolean shopBoost) {this.shopBoost = shopBoost;}
 
     public void setScore(int score) {this.score = score;}
     public void setGems(int gems) {this.gems = gems;}
     public void setCheckpoint(int checkpoint) {this.checkpoint = checkpoint;}
 
     private GameConstraints(){
-        //TODO
+        life = SaveFileManager.getInstance().getLives();
+        checkpoint = SaveFileManager.getInstance().getCheckPoint();
+        highScore = SaveFileManager.getInstance().getHighScore();
+        gems = SaveFileManager.getInstance().getGems();
+        score= SaveFileManager.getInstance().getScore();
     }
     private static GameConstraints instance = null;
     public static GameConstraints getInstance(){
@@ -132,12 +145,4 @@ public class GameConstraints {
             instance = new GameConstraints();
         return instance;
     }
-
-    public static int WORLDWIDTH = Settings.width;
-    public static int WORLDHEIGHT = Settings.height;
-
-    public void addGems(int gemValue) {
-        gems += gemValue;
-    }
-
 }

@@ -1,10 +1,12 @@
 package com.yaac.view.Utility;
 
 import com.yaac.Settings;
+import com.yaac.model.GameConstraints;
 import com.yaac.view.SceneManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
@@ -113,6 +115,33 @@ public class MenuUtility {
         button.setBounds(x+1,y+1,width-1,height-1);
         button.setIcon(imageIcon);
     }
+
+    public static void drawPurchasableShopPwUp(JPanel panel, JButton button, Color gemsColor, Image currentFrame, Image gemCurrentFrame, BufferedImage lockerImage, int cost, boolean purchased, int x, int y, int width, int height, Font font, Graphics g){
+        g.setFont(font);
+        if(purchased){
+            panel.remove(button);
+            g.setColor(Color.GREEN);
+            g.drawRect(x,y,width,height);
+            g.drawImage(currentFrame,x+1,y+1,null);
+        }
+        else{
+            g.drawImage(gemCurrentFrame,x-10,y+75,null);
+            ImageIcon pwUpIcon = new ImageIcon(currentFrame);
+            if(GameConstraints.getInstance().getGems()<cost){
+                panel.remove(button);
+                g.setColor(Color.RED);
+                g.drawRect(x,y,width,height);
+                g.drawImage(currentFrame,x+1,y+1,null);
+                g.drawImage(lockerImage,x+15,y+15,null);
+            }
+            else{
+                drawShopButton(button,pwUpIcon,x,y,width,height,gemsColor,g);
+                panel.add(button);
+            }
+            g.drawString(""+cost,x+25,y+105);
+        }
+    }
+
 
     public static void createBG(ObjectAnimation[] bg, int windowWidth, int windowHeight) {
         bg[0] = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
