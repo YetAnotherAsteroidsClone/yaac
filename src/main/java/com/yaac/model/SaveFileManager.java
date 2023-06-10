@@ -32,7 +32,7 @@ public class SaveFileManager {
             in.close();
             file.close();
         } catch (IOException e) {
-            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false,false, 0, 0,1,0,0,4, new boolean[]{true, false, false, false}, new boolean[]{true, false, false, false});
+            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false,false, 0, 0,1,0,0,4, new boolean[]{true, false, false, false}, new boolean[]{true, false, false, false}, 100);
             save();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -94,6 +94,8 @@ public class SaveFileManager {
     public boolean[] getUnlockedWeapons() {return this.saveFile.getUnlockedWeapons();}
     private boolean isEngineUnlocked(int index) {return getUnlockedEngines()[index];}
     private boolean isWeaponUnlocked(int index) {return getUnlockedWeapons()[index];}
+    public void setVolume(int volume) {this.saveFile.setVolume(volume);}
+    public int getVolume() {return this.saveFile.getVolume();}
 
     /** Metodo per salvare il motore selezionato <br>
      * Se il motore non è sbloccato, non viene salvato
