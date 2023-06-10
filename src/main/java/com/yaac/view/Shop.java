@@ -16,7 +16,7 @@ public class Shop extends JPanel{
 
     //FONT AND COLORS
     Font font, scoreFont;
-    JLabel scoreCount, gemCount;
+    JLabel scoreCount, gemCount, weaponIsLocked, engineIsLocked;
     private Color gemsColor;
     private Color powerUpColor;
 
@@ -157,6 +157,10 @@ public class Shop extends JPanel{
         this.add(scoreCount);
         this.add(gemCount);
 
+        //other labels
+        weaponIsLocked = MenuUtility.createLabel("Weapon is locked!",Settings.width/2-100,20,300,15,font,Color.WHITE);
+
+
         //spaceship
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeaponAnimation(true);
@@ -177,11 +181,9 @@ public class Shop extends JPanel{
         //background
         g.drawImage(backgroundL1.getCurrentFrame(), 0, 0, null);
         g.drawImage(backgroundL2.getCurrentFrame(), 0, 0, null);
-        backgroundL1.update();
-        backgroundL2.update();
 
+        //gem count image
         g.drawImage(gems.getCurrentFrame(),52,80,null);
-        gems.update();
 
         //page buttons
         if(SceneManager.getInstance().isInGame()){
@@ -193,6 +195,10 @@ public class Shop extends JPanel{
 
         //draw ship and components
         g.drawImage(spaceShipView.getSpaceship().draw(),(Settings.width/2)-175,50,null);
+        if(!currentWeaponUnlocked){
+            this.add(weaponIsLocked);
+        }
+        else{this.remove(weaponIsLocked);}
 
         //separator
         g.setColor(Color.WHITE);
@@ -207,6 +213,11 @@ public class Shop extends JPanel{
         //purchasable shield and boost
         MenuUtility.drawPurchasableShopPwUp(this,pwUpButtons[4],gemsColor,shield.getCurrentFrame(),gems.getCurrentFrame(),locker,gameConstraints.getShieldCost(),gameConstraints.getShopShield(),Settings.width-200,Settings.height-290,70,70,font,g);
         MenuUtility.drawPurchasableShopPwUp(this,pwUpButtons[5],gemsColor,boost.getCurrentFrame(),gems.getCurrentFrame(),locker,gameConstraints.getBoostCost(), gameConstraints.getShopBoost(),Settings.width-200,Settings.height-140,70,70,font,g);
+
+        //update animations
+        backgroundL1.update();
+        backgroundL2.update();
+        gems.update();
         shield.update();
         boost.update();
     }
