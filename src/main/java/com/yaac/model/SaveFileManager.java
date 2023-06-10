@@ -32,7 +32,7 @@ public class SaveFileManager {
             in.close();
             file.close();
         } catch (IOException e) {
-            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false, 0, 0,1,0,0,4);
+            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false,false, 0, 0,1,0,0,4, new boolean[]{true, false, false, false}, new boolean[]{true, false, false, false});
             save();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -90,4 +90,30 @@ public class SaveFileManager {
     public int getHighScore() {return this.saveFile.getHighScore();}
     public int getLives() {return this.saveFile.getLives();}
     public void resetLives() {this.saveFile.setLives(GameConstraints.lives); save();}
+    public boolean[] getUnlockedEngines() {return this.saveFile.getUnlockedEngines();}
+    public boolean[] getUnlockedWeapons() {return this.saveFile.getUnlockedWeapons();}
+    private boolean isEngineUnlocked(int index) {return getUnlockedEngines()[index];}
+    private boolean isWeaponUnlocked(int index) {return getUnlockedWeapons()[index];}
+
+    /** Metodo per salvare il motore selezionato <br>
+     * Se il motore non è sbloccato, non viene salvato
+     * @param index
+     */
+    public void saveEngine(int index){
+        if(isEngineUnlocked(index)) {
+            setEngine(index);
+            save();
+        }
+    }
+
+    /** Metodo per salvare l'arma selezionata <br>
+     * Se l'arma non è sbloccata, non viene salvata
+     * @param index
+     */
+    public void saveWeapon(int index){
+        if(isWeaponUnlocked(index)) {
+            setWeapon(index);
+            save();
+        }
+    }
 }

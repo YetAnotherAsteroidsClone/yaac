@@ -84,6 +84,7 @@ public class GamePanel extends JPanel{
         // Caricamento della nave
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
         spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
+        spaceShipView.setCurrentWeaponAnimation(false);
         spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         spaceShipView.setBody(GameConstraints.lives - SaveFileManager.getInstance().getLives());
         game.addOnDeathListener(() -> {spaceShipView.nextBody(); SoundEngine.getInstance().playExplosion();});

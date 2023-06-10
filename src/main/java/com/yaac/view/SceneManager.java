@@ -138,6 +138,7 @@ public class SceneManager {
     }
 
     public void loadShop(){
+        shop.setCurrentGadgets();
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
         Loop shopLoop = new Loop(controller);

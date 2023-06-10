@@ -20,6 +20,7 @@ public class SpaceShipView {
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
     private int currentBody = 0;
+    private boolean idleState = true;
 
     /** Costruttore della classe SpaceShipView
      * @param width larghezza
@@ -39,20 +40,16 @@ public class SpaceShipView {
                 new ObjectAnimation("/GameSprite/WeaponRocket.png"),
                 new ObjectAnimation("/GameSprite/WeaponZapper.png")
         ));
-        for(ObjectAnimation weapon : weapons) {
+        for(ObjectAnimation weapon : weapons)
             weapon.scaleImage(width, height);
-            weapon.disable();
-        }
 
         locked_weapons = new ArrayList<>(List.of(
                 new ObjectAnimation("/GameSprite/WeaponBigCannon_locked.png"),
                 new ObjectAnimation("/GameSprite/WeaponRocket_locked.png"),
                 new ObjectAnimation("/GameSprite/WeaponZapper_locked.png")
         ));
-        for(ObjectAnimation weapon : locked_weapons) {
+        for(ObjectAnimation weapon : locked_weapons)
             weapon.scaleImage(width, height);
-            weapon.disable();
-        }
 
         engines = new ArrayList<>(List.of(
                 new EngineView(
@@ -100,6 +97,19 @@ public class SpaceShipView {
         ));
         for(EngineView engine : locked_engines)
             engine.getPoweringState().scaleImage(width, height);
+        boolean[] unlockedEngines = SaveFileManager.getInstance().getUnlockedEngines();
+        for(int i = 0; i < unlockedEngines.length; i++) {
+            if(!unlockedEngines[i]) {
+                engines.get(i).setEngine(locked_engines.get(i - 1).getEngine());
+                engines.get(i).setPoweringState(locked_engines.get(i - 1).getPoweringState());
+            }
+        }
+        boolean[] unlockedWeapons = SaveFileManager.getInstance().getUnlockedWeapons();
+        for(int i = 0; i < unlockedWeapons.length; i++) {
+            if(!unlockedWeapons[i])
+                weapons.set(i, locked_weapons.get(i-1));
+        }
+
         shield = new ObjectAnimation("/GameSprite/PowerUpShield.png");
         shield.scaleImage(width, height);
 
@@ -124,10 +134,12 @@ public class SpaceShipView {
         if (powering) {
             spaceship.enableAnimation(0, true);
             spaceship.disableAnimation(1, false);
+            idleState = false;
         }
         else {
             spaceship.disableAnimation(0, false);
             spaceship.enableAnimation(1, true);
+            idleState = true;
         }
     }
 
@@ -138,6 +150,7 @@ public class SpaceShipView {
         this.currentEngine = currentEngine;
         spaceship.setAnimation(engines.get(this.currentEngine).getPoweringState(), 0);
         spaceship.setAnimation(engines.get(this.currentEngine).getIdleState(), 1);
+        spaceship.setImage(engines.get(this.currentEngine).getEngine(), 0);
         setPowering(false);
     }
 
@@ -190,6 +203,8 @@ public class SpaceShipView {
         spaceship.setImage(engines.get(currentEngine).getEngine(), 0);
         spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
         spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
+        if(!idleState)
+            spaceship.disableAnimation(1,false);
     }
 
     /** Imposta il motore corrente della navicella al precedente
@@ -200,6 +215,8 @@ public class SpaceShipView {
         spaceship.setImage(engines.get(currentEngine).getEngine(), 0);
         spaceship.setAnimation(engines.get(currentEngine).getPoweringState(), 0);
         spaceship.setAnimation(engines.get(currentEngine).getIdleState(), 1);
+        if(!idleState)
+            spaceship.disableAnimation(1,false);
     }
 
     public void setBody(int index){

@@ -117,10 +117,24 @@ public class Shop extends JPanel{
             gameConstraints.setShopShield(true);
         });
 
-        switchWeapon[0].addActionListener(actionEvent -> {spaceShipView.previousWeapon(); spaceShipView.setCurrentWeaponAnimation(true); SaveFileManager.getInstance().setWeapon(spaceShipView.getCurrentWeapon()); SaveFileManager.getInstance().save();});
-        switchWeapon[1].addActionListener(actionEvent -> {spaceShipView.nextWeapon(); spaceShipView.setCurrentWeaponAnimation(true); SaveFileManager.getInstance().setWeapon(spaceShipView.getCurrentWeapon()); SaveFileManager.getInstance().save();});
-        switchEngine[0].addActionListener(actionEvent -> {spaceShipView.previousEngine(); SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();});
-        switchEngine[1].addActionListener(actionEvent -> {spaceShipView.nextEngine();SaveFileManager.getInstance().setEngine(spaceShipView.getCurrentEngine()); SaveFileManager.getInstance().save();});
+        switchWeapon[0].addActionListener(actionEvent ->
+        {   spaceShipView.previousWeapon();
+            spaceShipView.setCurrentWeaponAnimation(true);
+            SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
+        });
+        switchWeapon[1].addActionListener(actionEvent ->
+        {   spaceShipView.nextWeapon();
+            spaceShipView.setCurrentWeaponAnimation(true);
+            SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
+        });
+        switchEngine[0].addActionListener(actionEvent ->
+        {   spaceShipView.previousEngine();
+            SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
+        });
+        switchEngine[1].addActionListener(actionEvent ->
+        {   spaceShipView.nextEngine();
+            SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
+        });
 
         for(JButton button : switchWeapon)
             this.add(button);
@@ -143,6 +157,13 @@ public class Shop extends JPanel{
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeaponAnimation(true);
         spaceShipView.setPowering(true);
+    }
+
+    public void setCurrentGadgets(){
+        spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
+        spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
+        spaceShipView.setPowering(true);
+        spaceShipView.setCurrentWeaponAnimation(true);
     }
 
     private void drawBar(int x, int y, String pwUp, int levels, BufferedImage img, JButton b, Graphics g){

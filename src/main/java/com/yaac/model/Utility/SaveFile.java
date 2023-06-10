@@ -10,14 +10,17 @@ public class SaveFile implements Serializable {
     private int bulletDmgLvl;
     private int bulletRatioLvl;
     private boolean shield;
+    private boolean speed;
     private int engine;
     private int weapon;
     private int checkpoint;
     private int currentScore;
     private int highScore;
     private int lives;
+    private boolean[] unlockedEngines;
+    private  boolean[] unlockedWeapons;
 
-    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, int engine, int weapon, int checkpoint, int currentScore, int highScore, int lives) {
+    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons) {
         this.score = score;
         this.gems = gems;
         this.speedLvl = speedLvl;
@@ -25,12 +28,15 @@ public class SaveFile implements Serializable {
         this.bulletDmgLvl = bulletDmgLvl;
         this.bulletRatioLvl = bulletRatioLvl;
         this.shield = shield;
+        this.speed = speed;
         this.engine = engine;
         this.weapon = weapon;
         this.checkpoint = checkpoint;
         this.currentScore = currentScore;
         this.highScore = highScore;
         this.lives = lives;
+        this.unlockedEngines = unlockedEngines;
+        this.unlockedWeapons = unlockedWeapons;
     }
 
     public int getScore() {
@@ -114,4 +120,6 @@ public class SaveFile implements Serializable {
     public void setHighScore(int highScore) {this.highScore = highScore;}
     public int getLives() {return this.lives;}
     public void setLives(int lives) {this.lives = lives;}
+    public boolean[] getUnlockedEngines() {return unlockedEngines;}
+    public boolean[] getUnlockedWeapons() {return unlockedWeapons;}
 }
