@@ -12,10 +12,12 @@ import java.util.List;
 /** Classe per la gestione della grafica della navicella
  */
 public class SpaceShipView {
-    private ArrayList<Image> bodies;
-    private ArrayList<ObjectAnimation> weapons, locked_weapons;
-    private ArrayList<EngineView> engines, locked_engines;
-    private CompositeSprite spaceship;
+    private final ArrayList<Image> bodies;
+    private final ArrayList<ObjectAnimation> weapons;
+    private final ArrayList<ObjectAnimation> locked_weapons;
+    private final ArrayList<EngineView> engines;
+    private final ArrayList<EngineView> locked_engines;
+    private final CompositeSprite spaceship;
     private ObjectAnimation shield;
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
@@ -75,7 +77,6 @@ public class SpaceShipView {
         ));
         for(EngineView engine : engines) {
             engine.getPoweringState().scaleImage(width, height);
-            engine.getIdleState().scaleImage(width, height);
         }
 
         locked_engines = new ArrayList<>(List.of(

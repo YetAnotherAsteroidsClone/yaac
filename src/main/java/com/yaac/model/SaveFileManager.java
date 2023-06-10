@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class SaveFileManager {
 
-    private static SaveFileManager instance = new SaveFileManager();
+    private static final SaveFileManager instance = new SaveFileManager();
 
     public static SaveFileManager getInstance() {return instance;}
 

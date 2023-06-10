@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class Game {
     static Game instance = null;
-    private ArrayList<OnDeathListener> onDeathListeners;
-    private ArrayList<GameOverListener> gameOverListeners;
+    private final ArrayList<OnDeathListener> onDeathListeners;
+    private final ArrayList<GameOverListener> gameOverListeners;
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
@@ -151,7 +151,7 @@ public class Game {
         removeVanishedGems();
 
         //cambio stage
-        if (stagePause) {stageChangeTransition();};
+        if (stagePause) {stageChangeTransition();}
 
         // Aggiornamento dei tick 
         tick++;

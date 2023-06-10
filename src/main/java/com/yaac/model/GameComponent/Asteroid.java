@@ -14,7 +14,7 @@ import static java.lang.Math.min;
  */
 public class Asteroid extends GameObject{
     private double life;
-    private double score;
+    private final double score;
 
     /**
      * Costruttore dell'asteroide con parametri

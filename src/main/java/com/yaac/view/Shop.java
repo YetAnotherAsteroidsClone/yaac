@@ -198,7 +198,7 @@ public class Shop extends JPanel{
                 MenuUtility.drawShopButton(b,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
                 this.add(b);
             }
-            g.drawString(""+gameConstraints.getCost(levels-1), x+314,y-15);
+            g.drawString(String.valueOf(gameConstraints.getCost(levels - 1)), x+314,y-15);
 
             g.setColor(Color.WHITE);
             g.drawString("LVL "+levels,x,y-10);

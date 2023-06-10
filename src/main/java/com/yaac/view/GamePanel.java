@@ -19,16 +19,19 @@ import java.util.Objects;
 public class GamePanel extends JPanel{
 
     Game game;
-    private SpaceShipView spaceShipView;
-    private ObjectAnimation backgroundL1;
-    private ObjectAnimation backgroundL2;
-    private ObjectAnimation backgroundL3;
-    private Font font, stageFont;
-    private BufferedImage life, asteroidsImage, esc;
-    private ArrayList<ObjectAnimation> bulletsAnimation;
-    private ObjectAnimation deadAsteroidsAnimation;
-    private ObjectAnimation bulletExplosionAnimation;
-    private ArrayList<ObjectAnimation> gemsAnimation;
+    private final SpaceShipView spaceShipView;
+    private final ObjectAnimation backgroundL1;
+    private final ObjectAnimation backgroundL2;
+    private final ObjectAnimation backgroundL3;
+    private final Font font;
+    private Font stageFont;
+    private BufferedImage life;
+    private final BufferedImage asteroidsImage;
+    private BufferedImage esc;
+    private final ArrayList<ObjectAnimation> bulletsAnimation;
+    private final ObjectAnimation deadAsteroidsAnimation;
+    private final ObjectAnimation bulletExplosionAnimation;
+    private final ArrayList<ObjectAnimation> gemsAnimation;
     private ObjectAnimation gemCounter;
 
     public GamePanel(){
@@ -154,7 +157,7 @@ public class GamePanel extends JPanel{
         g.setFont(font);
         g.drawString("SCORE: " + game.getScore(),40,50);
         for(int i=0; i < game.getLives();i++){
-            g.drawImage((Image) life,40*(i+1),70,null);
+            g.drawImage(life,40*(i+1),70,null);
         }
         g.drawImage(gemCounter.getCurrentFrame(),GameConstraints.WORLDWIDTH-150,20,null);
         gemCounter.update();

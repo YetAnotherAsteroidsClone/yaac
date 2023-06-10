@@ -13,7 +13,7 @@ import java.util.logging.Level;
  * Controller dello shop
  */
 public class ShopController extends MouseAdapter implements Updatable{
-    private Shop shop;
+    private final Shop shop;
 
     public ShopController(Shop shop){this.shop=shop;}
 

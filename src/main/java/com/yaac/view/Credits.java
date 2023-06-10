@@ -18,8 +18,8 @@ public class Credits extends JPanel {
     ImageIcon exitIcon;
     Font font;
     GameController gameController;
-    private int windowWidth = GameConstraints.WORLDWIDTH;
-    private int windowHeight = GameConstraints.WORLDHEIGHT;
+    private final int windowWidth = GameConstraints.WORLDWIDTH;
+    private final int windowHeight = GameConstraints.WORLDHEIGHT;
     public Credits() {
         this.setLayout(null);
 

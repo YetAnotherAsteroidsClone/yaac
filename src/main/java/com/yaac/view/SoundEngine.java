@@ -25,6 +25,7 @@ public class SoundEngine {
     private int currentSound = -1;
     private boolean enabled = true;
     private boolean loop = false;
+    private float volume = 100f;
 
     private void run() {
         if(executor != null)
@@ -85,9 +86,12 @@ public class SoundEngine {
 
     public void loopMusic(){
         synchronized (this) {
+            audio.get(4).setVolume(-10.0f);
             currentSound = 4;
             enabled = true;
             loop = true;
+            // set music volume
+
         }
     }
 
@@ -95,6 +99,14 @@ public class SoundEngine {
         synchronized (this) {
             currentSound = 4;
             enabled = false;
+        }
+    }
+
+    public void setVolume(float volume){
+        synchronized (this) {
+            this.volume = volume;
+            for (Sound sound : audio)
+                sound.setVolume(volume);
         }
     }
 
