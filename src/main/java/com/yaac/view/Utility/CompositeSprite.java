@@ -45,18 +45,18 @@ public class CompositeSprite {
         Graphics2D g2d = sprite.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for(ObjectAnimation animation : animations){
-            animDraw(g2d, 0, 0, animation);
+            animDraw(g2d, animation);
         }
         for(Image image : images)
             g2d.drawImage(image, 0, 0, null);
         g2d.drawImage(sprites.get(currentSprite), 0, 0, null);
         for(ObjectAnimation animation : overlayAnimations)
-            animDraw(g2d, 0, 0, animation);
+            animDraw(g2d, animation);
         g2d.dispose();
         return sprite;
     }
 
-    private void animDraw(Graphics2D g2d, int x, int y, ObjectAnimation animation){
+    private void animDraw(Graphics2D g2d, ObjectAnimation animation){
         if(animation.isEnabled() && animation.isDrawable()) {
             g2d.drawImage(animation.getCurrentFrame(), 0, 0, null);
             animation.update();
