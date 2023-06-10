@@ -116,6 +116,48 @@ public class MenuUtility {
         button.setIcon(imageIcon);
     }
 
+
+    public static void drawShopPwUpBar(JPanel panel, JButton button, Color gemsColor, Color powerUpColor, BufferedImage pwUpImage, BufferedImage lockerImage, ImageIcon plusIcon, Image gemCurrentFrame, int x, int y, Font font, String pwUp, int levels, Graphics g){
+        g.setColor(Color.WHITE);
+        g.setFont(font);
+        g.drawRect(x-55,y-10,40,40);
+        g.drawImage(pwUpImage,x-54,y-9,null);
+        g.drawRect(x,y,301,30);
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(x+1,y+1,299,28);
+        g.setColor(Color.YELLOW);
+        int drawPwUpX = x+1;
+        for(int i=0; i<levels; i++){
+            g.fillRect(drawPwUpX,y+1,30,28);
+            drawPwUpX+=30;
+        }
+        if(levels<10){
+            g.drawImage(gemCurrentFrame,x+280,y-45,null);
+            g.setColor(gemsColor);
+            if(GameConstraints.getInstance().getGems()<GameConstraints.getInstance().getCost(levels-1)){
+                panel.remove(button);
+                g.setColor(Color.RED);
+                g.drawImage(lockerImage,x+309,y-5,null);
+            }
+            else{
+                MenuUtility.drawShopButton(button,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
+                panel.add(button);
+            }
+            g.drawString(""+GameConstraints.getInstance().getCost(levels-1), x+314,y-15);
+
+            g.setColor(Color.WHITE);
+            g.drawString("LVL "+levels,x,y-10);
+        }
+        else{
+            panel.remove(button);
+            g.setColor(Color.YELLOW);
+            g.drawString("MAX!", x,y-10);
+        }
+        g.setColor(powerUpColor);
+        g.drawString(pwUp, x+8,y+22);
+    }
+
+
     public static void drawPurchasableShopPwUp(JPanel panel, JButton button, Color gemsColor, Image currentFrame, Image gemCurrentFrame, BufferedImage lockerImage, int cost, boolean purchased, int x, int y, int width, int height, Font font, Graphics g){
         g.setFont(font);
         if(purchased){
