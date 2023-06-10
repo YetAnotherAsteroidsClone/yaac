@@ -122,4 +122,6 @@ public class SaveFile implements Serializable {
     public void setLives(int lives) {this.lives = lives;}
     public boolean[] getUnlockedEngines() {return unlockedEngines;}
     public boolean[] getUnlockedWeapons() {return unlockedWeapons;}
+    public void setUnlockedEngine(int index) {this.unlockedEngines[index] = true;}
+    public void setUnlockedWeapon(int index) {this.unlockedWeapons[index] = true;}
 }

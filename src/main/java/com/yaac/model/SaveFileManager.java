@@ -99,21 +99,34 @@ public class SaveFileManager {
      * Se il motore non è sbloccato, non viene salvato
      * @param index
      */
-    public void saveEngine(int index){
+    public boolean saveEngine(int index){
         if(isEngineUnlocked(index)) {
             setEngine(index);
             save();
+            return true;
         }
+        return false;
     }
 
     /** Metodo per salvare l'arma selezionata <br>
      * Se l'arma non è sbloccata, non viene salvata
      * @param index
      */
-    public void saveWeapon(int index){
+    public boolean saveWeapon(int index){
         if(isWeaponUnlocked(index)) {
             setWeapon(index);
             save();
         }
+        return false;
+    }
+
+    public void unlockEngine(int index) {
+        this.saveFile.setUnlockedEngine(index);
+        save();
+    }
+
+    public void unlockWeapon(int index) {
+        this.saveFile.setUnlockedWeapon(index);
+        save();
     }
 }

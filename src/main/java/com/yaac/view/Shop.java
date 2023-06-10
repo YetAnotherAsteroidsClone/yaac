@@ -34,6 +34,8 @@ public class Shop extends JPanel{
 
     //OTHERS
     private GameConstraints gameConstraints = GameConstraints.getInstance();
+    private boolean currentEngineUnlocked = true;
+    private boolean currentWeaponUnlocked = true;
 
 
     //CONSTRUCTOR
@@ -126,20 +128,20 @@ public class Shop extends JPanel{
         switchWeapon[0].addActionListener(actionEvent ->
         {   spaceShipView.previousWeapon();
             spaceShipView.setCurrentWeaponAnimation(true);
-            SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
+            currentWeaponUnlocked = SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
         });
         switchWeapon[1].addActionListener(actionEvent ->
         {   spaceShipView.nextWeapon();
             spaceShipView.setCurrentWeaponAnimation(true);
-            SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
+            currentWeaponUnlocked = SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
         });
         switchEngine[0].addActionListener(actionEvent ->
         {   spaceShipView.previousEngine();
-            SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
+            currentEngineUnlocked = SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
         });
         switchEngine[1].addActionListener(actionEvent ->
         {   spaceShipView.nextEngine();
-            SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
+            currentEngineUnlocked = SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
         });
 
         for(JButton button : switchWeapon)
