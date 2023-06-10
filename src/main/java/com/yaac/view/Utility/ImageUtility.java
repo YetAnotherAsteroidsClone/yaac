@@ -32,7 +32,7 @@ public class ImageUtility {
      */
     public static ArrayList<Image> loadAnimationFrames(String source){
         BufferedImage animationFile = loadImage(source);
-        int nFrames = (int) (animationFile.getWidth() / animationFile.getHeight());
+        int nFrames = animationFile.getWidth() / animationFile.getHeight();
         ArrayList<Image> frames = new ArrayList<>();
         for (int i = 0; i < nFrames; i++)
             frames.add(animationFile.getSubimage(i * animationFile.getHeight(), 0, animationFile.getHeight(), animationFile.getHeight()));

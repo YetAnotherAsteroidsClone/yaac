@@ -20,8 +20,8 @@ public class CreditsController extends KeyAdapter implements Updatable {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_ESCAPE -> SceneManager.getInstance().loadMainMenu();
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            SceneManager.getInstance().loadMainMenu();
         }
     }
     @Override

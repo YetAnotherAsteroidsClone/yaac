@@ -92,9 +92,9 @@ public class GameConstraints {
         return 1 + stage * 0.5;
     }
     public int getAsteroidMinSpeed(int stage) {
-        return (int) (stage * 2 + 4);
+        return stage * 2 + 4;
     }
-    public int getAsteroidsSpawnRate(int stage) {return (int) (100 - (stage-1) * 5);}
+    public int getAsteroidsSpawnRate(int stage) {return 100 - (stage-1) * 5;}
     public int getAsteroidLife(int stage, int dim) {
         return (int) (stage * 4 + dim * 0.4);
     }
@@ -102,10 +102,10 @@ public class GameConstraints {
         return (int) (10 + stage * 0.5);
     }
     public int getAsteroidMinDimension(int stage) {
-        return (int)  (30 + stage * 2) ;
+        return 30 + stage * 2;
     }
     public int getAsteroidMinSplitDim(int stage) {
-        return (int) (40 - stage * 2);
+        return 40 - stage * 2;
     }
 
     //SETTERS

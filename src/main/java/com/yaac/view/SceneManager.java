@@ -26,13 +26,13 @@ public class SceneManager {
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;
-    private Shop shop;
+    private final Shop shop;
     private Credits credits;
     private final GameSettings gameSettings;
     private PauseMenu pauseMenu;
     private GamePanel gamePanel;
     private Loop gameLoop;
-    private JLayeredPane layeredPane;
+    private final JLayeredPane layeredPane;
 
     public static SceneManager getInstance() {return instance;}
 

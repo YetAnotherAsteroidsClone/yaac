@@ -2,7 +2,10 @@ package com.yaac.view;
 
 import com.yaac.Main;
 import com.yaac.Settings;
+import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ObjectAnimation;
+import com.yaac.view.Utility.Sound;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -21,24 +24,25 @@ public class GameSettings extends JPanel {
     String res;
     ImageIcon backIcon, leftArrowIcon, rightArrowIcon, leftArrowIconClicked, rightArrowIconClicked;
     ObjectAnimation[] bg =  new ObjectAnimation[3];
-    private final JButton backButton, leftArrowButton, rightArrowButton;
-    private final int windowWidth = Settings.width;
-    private final int windowHeight = Settings.height;
-    private final int settingsX = Settings.width / 20;
-    private final int settingsY = Settings.height / 20;
+    JButton[] leftButtons = new JButton[3];
+    // 0 = leftRes, 1 = leftSound, 2 = leftMusic
+    JButton[] rightButtons = new JButton[3];
+    // 0 = rightRes, 1 = rightSound, 2 = rightMusic
+    private final JButton backButton;
+    private final int settingsX = GameConstraints.WORLDWIDTH / 20;
+    private final int settingsY = GameConstraints.WORLDHEIGHT / 20;
     private final int buttonsSize = 30;
     private boolean layered = false;
 
     public GameSettings() throws IOException, FontFormatException {
         this.setLayout(null);
         if (!layered)
-            createBG(bg, windowWidth, windowHeight);
-
+            createBG(bg, GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
 
         font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
-        resolution = createLabel("RISOLUZIONE DELLO SCHERMO", settingsX * 3, settingsY * 5, 350, 16, font, Color.WHITE);
-        music = createLabel("MUSICA", settingsX * 3, settingsY * 10, 350, 16, font, Color.WHITE);
-        sound = createLabel("EFFETTI SONORI", settingsX * 3, settingsY * 15, 350, 16, font, Color.WHITE);
+        resolution = createLabel("RISOLUZIONE DELLO SCHERMO", settingsX * 3, settingsY * 5+5, 350, 16, font, Color.WHITE);
+        music = createLabel("MUSICA", settingsX * 3, settingsY * 10+5, 350, 16, font, Color.WHITE);
+        sound = createLabel("EFFETTI SONORI", settingsX * 3, settingsY * 15+5, 350, 16, font, Color.WHITE);
 
         backIcon = getImageIcon("/MenuSprite/BackButton.png",buttonsSize, buttonsSize);
         leftArrowIcon = getImageIcon("/MenuSprite/leftArrow.png", buttonsSize, buttonsSize);
@@ -47,37 +51,45 @@ public class GameSettings extends JPanel {
         rightArrowIconClicked = getImageIcon("/MenuSprite/rightArrowClicked.png", buttonsSize, buttonsSize);
 
         backButton = new JButton();
-        rightArrowButton = new JButton();
-        leftArrowButton = new JButton();
+        for (int i = 0; i < leftButtons.length; i++) {
+            leftButtons[i] = new JButton();
+            rightButtons[i] = new JButton();
+        }
+
+        for (int i = 0; i < leftButtons.length; i++) {
+            drawJButton(leftButtons[i], leftArrowIcon, settingsX * 10, settingsY * (5 + (i * 5)), buttonsSize, buttonsSize, leftArrowIconClicked);
+            drawJButton(rightButtons[i], rightArrowIcon, settingsX * 14, settingsY * (5 + (i * 5)), buttonsSize, buttonsSize, rightArrowIconClicked);
+        }
+
+        for (int i = 0; i < leftButtons.length; i++) {
+            this.add(leftButtons[i]);
+            this.add(rightButtons[i]);
+        }
+
 
         // Se le impostazioni si trovano in un layer allora siamo certi che sono state caricate dal menu di pausa
         backButton.addActionListener(e -> {if(layered) SceneManager.getInstance().unloadSettings(); else SceneManager.getInstance().loadMainMenu();});
 
-        drawJButton(leftArrowButton, leftArrowIcon, settingsX * 10 , resolution.getY()-resolution.getHeight()/2, buttonsSize, buttonsSize, leftArrowIconClicked);
-        drawJButton(rightArrowButton, rightArrowIcon, settingsX * 14, resolution.getY()-resolution.getHeight()/2, buttonsSize, buttonsSize, rightArrowIconClicked);
-
-        int resTextMid = leftArrowButton.getX() + buttonsSize + settingsX;
+        int resTextMid = leftButtons[0].getX() + buttonsSize + settingsX;
 
         res = getResolution();
         selectableResolution = createLabel(res, resTextMid, resolution.getY(), 350, 16, font, Color.WHITE);
 
-        rightArrowButton.addActionListener(e -> changeResolution());
-        leftArrowButton.addActionListener(rightArrowButton.getActionListeners()[0]);
+        rightButtons[0].addActionListener(e -> {changeResolution(); selectableResolution.setText(getResolution());});
+        leftButtons[0].addActionListener(rightButtons[0].getActionListeners()[0]);
 
-        selectableResolution = createLabel(res, resTextMid, resolution.getY(), 350, 16, font, Color.WHITE);
-
+        for (int i = 1; i < leftButtons.length; i++) {
+            leftButtons[i].addActionListener(e -> {SoundEngine.getInstance().setVolume();});
+            rightButtons[i].addActionListener(leftButtons[i].getActionListeners()[i]);
+        }
 
         this.add(resolution);
         this.add(music);
         this.add(sound);
         this.add(backButton);
-        this.add(rightArrowButton);
-        this.add(leftArrowButton);
         this.add(selectableResolution);
 
         setBackground(new Color(0,0,0,0));
-
-
     }
 
     public void paintComponent(Graphics g) {
