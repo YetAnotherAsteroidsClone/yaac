@@ -16,7 +16,7 @@ public class Shop extends JPanel{
 
     //FONT AND COLORS
     Font font, scoreFont;
-    JLabel scoreCount, gemCount, weaponIsLocked, engineIsLocked;
+    JLabel scoreCount, gemCount;
     private Color gemsColor;
     private Color powerUpColor;
 
@@ -35,8 +35,8 @@ public class Shop extends JPanel{
 
     //OTHERS
     private GameConstraints gameConstraints = GameConstraints.getInstance();
-    private boolean currentEngineUnlocked = true;
-    private boolean currentWeaponUnlocked = true;
+    private boolean currentWeaponUnlocked;
+    private boolean currentEngineUnlocked;
 
 
     //CONSTRUCTOR
@@ -157,14 +157,12 @@ public class Shop extends JPanel{
         this.add(scoreCount);
         this.add(gemCount);
 
-        //other labels
-        weaponIsLocked = MenuUtility.createLabel("Weapon is locked!",Settings.width/2-100,20,300,15,font,Color.WHITE);
-
-
         //spaceship
         spaceShipView = new SpaceShipView(350,350);
         spaceShipView.setCurrentWeaponAnimation(true);
         spaceShipView.setPowering(true);
+        currentWeaponUnlocked = true;
+        currentEngineUnlocked = true;
     }
 
     public void setCurrentGadgets(){
@@ -195,20 +193,28 @@ public class Shop extends JPanel{
 
         //draw ship and components
         g.drawImage(spaceShipView.getSpaceship().draw(),(Settings.width/2)-175,50,null);
+
+        g.setFont(font);
+        g.setColor(Color.RED);
         if(!currentWeaponUnlocked){
-            this.add(weaponIsLocked);
+            g.drawImage(locker,Settings.width/2-225,20,null);
+            g.drawString("WEAPON AVAILABLE AT SCORE: "+gameConstraints.getUnlockWeaponsScore(spaceShipView.getCurrentWeapon()-1),Settings.width/2-180,50);
         }
-        else{this.remove(weaponIsLocked);}
+
+        if(!currentEngineUnlocked){
+            g.drawImage(locker,Settings.width/2-225,380,null);
+            g.drawString("ENGINE AVAILABLE AT SCORE: "+gameConstraints.getUnlockEnginesScore(spaceShipView.getCurrentEngine()-1),Settings.width/2-180,410);
+        }
 
         //separator
         g.setColor(Color.WHITE);
-        g.drawLine((Settings.width/2)-350,(Settings.height/2)+60,(Settings.width/2)+330,(Settings.height/2)+60);
+        g.drawLine((Settings.width/2)-350,(Settings.height/2)+70,(Settings.width/2)+330,(Settings.height/2)+70);
 
         //powerup bars
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[0],gemsColor,powerUpColor,PowerUpImages[0],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-230,font,"Speed",gameConstraints.getLvlMaxSpeed(),g);
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[1],gemsColor,powerUpColor,PowerUpImages[1],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-110,font,"Bullet speed",gameConstraints.getLvlBulletSpeed(),g);
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[2],gemsColor,powerUpColor,PowerUpImages[2],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-230,font,"Bullet damage",gameConstraints.getLvlBulletDamage(),g);
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[3],gemsColor,powerUpColor,PowerUpImages[3],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-110,font,"Bullet ratio",gameConstraints.getLvlBulletRatio(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[0],gemsColor,powerUpColor,PowerUpImages[0],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-220,font,"Speed",gameConstraints.getLvlMaxSpeed(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[1],gemsColor,powerUpColor,PowerUpImages[1],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-100,font,"Bullet speed",gameConstraints.getLvlBulletSpeed(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[2],gemsColor,powerUpColor,PowerUpImages[2],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-220,font,"Bullet damage",gameConstraints.getLvlBulletDamage(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[3],gemsColor,powerUpColor,PowerUpImages[3],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-100,font,"Bullet ratio",gameConstraints.getLvlBulletRatio(),g);
 
         //purchasable shield and boost
         MenuUtility.drawPurchasableShopPwUp(this,pwUpButtons[4],gemsColor,shield.getCurrentFrame(),gems.getCurrentFrame(),locker,gameConstraints.getShieldCost(),gameConstraints.getShopShield(),Settings.width-200,Settings.height-290,70,70,font,g);

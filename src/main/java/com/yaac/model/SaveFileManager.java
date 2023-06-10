@@ -118,6 +118,7 @@ public class SaveFileManager {
         if(isWeaponUnlocked(index)) {
             setWeapon(index);
             save();
+            return true;
         }
         return false;
     }

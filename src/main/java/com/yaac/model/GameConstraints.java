@@ -83,6 +83,9 @@ public class GameConstraints {
         return gemVanishingTime;
     }
     public int getCheckpoint() {return checkpoint;}
+    public int getUnlockWeaponsScore(int index) {return unlockWeaponsScore[index];}
+    public int getUnlockEnginesScore(int index) {return unlockEnginesScore[index];}
+
 
     //ASTEROIDS CONSTRAINTS
     public int getMaxAsteroids(int stage) {

@@ -26,7 +26,7 @@ public class SceneManager {
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;
-    private final Shop shop;
+    private Shop shop;
     private Credits credits;
     private final GameSettings gameSettings;
     private PauseMenu pauseMenu;
@@ -47,8 +47,6 @@ public class SceneManager {
         layeredPane = new JLayeredPane();
         layeredPane.setLayout(null);
         mainFrame.setContentPane(layeredPane);
-
-        shop = new Shop();
         gameSettings = new GameSettings();
     }
 
@@ -138,6 +136,8 @@ public class SceneManager {
     }
 
     public void loadShop(){
+        try {shop = new Shop();}
+        catch (IOException | FontFormatException e) {throw new RuntimeException(e);}
         shop.setCurrentGadgets();
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
