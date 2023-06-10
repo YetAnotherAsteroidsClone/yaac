@@ -33,6 +33,7 @@ public class GamePanel extends JPanel{
     private final ObjectAnimation bulletExplosionAnimation;
     private final ArrayList<ObjectAnimation> gemsAnimation;
     private ObjectAnimation gemCounter;
+    private ObjectAnimation shieldPwUp, boostPwUp;
 
     public GamePanel(){
         super();
@@ -70,11 +71,16 @@ public class GamePanel extends JPanel{
         gemsAnimation.add(new ObjectAnimation("/GameSprite/GemL3.png"));
         for (ObjectAnimation gemAnimation : gemsAnimation) {
             gemAnimation.scaleImage(32, 32);
-
-        gemCounter = new ObjectAnimation("/GameSprite/GemL1.png");
-        gemCounter.scaleImage(45,45);
-
+            gemCounter = new ObjectAnimation("/GameSprite/GemL1.png");
+            gemCounter.scaleImage(45,45);
         }
+
+        //Caricamento delle animazioni dei PwUp disponibili
+        shieldPwUp = new ObjectAnimation("/GameSprite/ShopShield.png");
+        shieldPwUp.scaleImage(50,50);
+        boostPwUp = new ObjectAnimation("/GameSprite/ShopBoost.png");
+        boostPwUp.scaleImage(50,50);
+
 
         // Caricamento delle animazioni degli asteroidi
         asteroidsImage = ImageUtility.loadImage("/GameSprite/Asteroid.png");
@@ -152,7 +158,7 @@ public class GamePanel extends JPanel{
             g.drawImage(currentGemFrame, (int) (game.getGems().get(i).getX() - game.getGems().get(i).getRadius()), (int) (game.getGems().get(i).getY() - game.getGems().get(i).getRadius()), null);
         }
 
-        // Disegna il punteggio le vite, il counter delle gemme, le istruzioni di pausa e lo stage
+        // OVERLAY: punteggio, vite, gemme, istruzioni di pausa, stage, PwUp disponibili
         g.setColor(Color.WHITE);
         g.setFont(font);
         g.drawString("SCORE: " + game.getScore(),40,50);
@@ -168,6 +174,18 @@ public class GamePanel extends JPanel{
         if(game.getStagePause()){
             g.setColor(Color.YELLOW);
             g.drawString("STAGE "+game.getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
+        }
+        g.setColor(Color.WHITE);
+        if(GameConstraints.getInstance().getShopShield()){
+            g.drawString("S: ",Settings.width-100,Settings.height-80);
+            g.drawImage(shieldPwUp.getCurrentFrame(),Settings.width-70,Settings.height-112,null);
+            shieldPwUp.update();
+        }
+
+        if(GameConstraints.getInstance().getShopBoost()){
+            g.drawString("B: ",Settings.width-100,Settings.height-30);
+            g.drawImage(boostPwUp.getCurrentFrame(),Settings.width-70,Settings.height-62,null);
+            boostPwUp.update();
         }
     }
 

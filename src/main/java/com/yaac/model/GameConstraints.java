@@ -28,8 +28,8 @@ public class GameConstraints {
     private final int maxAsteroids = 20;
 
     private boolean shopBoost=false;
-    private int boostCost = 500;
     private boolean shopShield=false;
+    private int boostCost = 500;
     private int shieldCost = 1000;
 
     private int score;

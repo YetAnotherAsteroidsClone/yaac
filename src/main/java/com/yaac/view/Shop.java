@@ -15,8 +15,8 @@ import java.util.Objects;
 public class Shop extends JPanel{
 
     //FONT AND COLORS
-    Font font, scoreFont;
-    JLabel scoreCount, gemCount;
+    private Font font, scoreFont;
+    private JLabel scoreCount, gemCount;
     private Color gemsColor;
     private Color powerUpColor;
 
@@ -61,7 +61,7 @@ public class Shop extends JPanel{
         gems.scaleImage(35,35);
         shield = new ObjectAnimation("/GameSprite/ShopShield.png");
         shield.scaleImage(70,70);
-        boost = new ObjectAnimation("/GameSprite/PowerUpSpeed.png");
+        boost = new ObjectAnimation("/GameSprite/ShopBoost.png");
         boost.scaleImage(70,70);
 
         //PowerUp images
