@@ -23,7 +23,7 @@ public class Shop extends JPanel{
     //IMAGES, ICONS AND ANIMATIONS
     private ObjectAnimation backgroundL1, backgroundL2, gems, shield, boost;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD; PowerUpImages[5] = BOOST
-    private BufferedImage greenTick, locker;
+    private BufferedImage locker;
     private ImageIcon plusIcon, menuIcon, backIcon, right, left;
     private SpaceShipView spaceShipView;
 
@@ -55,8 +55,6 @@ public class Shop extends JPanel{
         plusIcon = ImageUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
         right = ImageUtility.getImageIcon("/MenuSprite/rightArrow.png", 48,58);
         left = ImageUtility.getImageIcon("/MenuSprite/leftArrow.png", 48,58);
-        greenTick = ImageUtility.loadImage("/GameSprite/checkmark-64.png");
-        greenTick = ImageUtility.scaleImage(greenTick,50,50);
         locker = ImageUtility.loadImage("/GameSprite/locker.png");
         locker = ImageUtility.scaleImage(locker,40,40);
         gems = new ObjectAnimation("/GameSprite/GemL1.png");
