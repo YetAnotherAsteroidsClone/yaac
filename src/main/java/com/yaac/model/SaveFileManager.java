@@ -94,8 +94,8 @@ public class SaveFileManager {
     public boolean[] getUnlockedWeapons() {return this.saveFile.getUnlockedWeapons();}
     private boolean isEngineUnlocked(int index) {return getUnlockedEngines()[index];}
     private boolean isWeaponUnlocked(int index) {return getUnlockedWeapons()[index];}
-    public void setVolume(int volume) {this.saveFile.setVolume(volume);}
-    public int getVolume() {return this.saveFile.getVolume();}
+    public void setVolume(float volume) {this.saveFile.setVolume(volume);}
+    public float getVolume() {return this.saveFile.getVolume();}
 
     /** Metodo per salvare il motore selezionato <br>
      * Se il motore non è sbloccato, non viene salvato

@@ -3,6 +3,7 @@ package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ObjectAnimation;
 import com.yaac.view.Utility.Sound;
 
@@ -78,10 +79,26 @@ public class GameSettings extends JPanel {
         rightButtons[0].addActionListener(e -> {changeResolution(); selectableResolution.setText(getResolution());});
         leftButtons[0].addActionListener(rightButtons[0].getActionListeners()[0]);
 
-        for (int i = 1; i < leftButtons.length; i++) {
-            leftButtons[i].addActionListener(e -> {SoundEngine.getInstance().setVolume();});
-            rightButtons[i].addActionListener(leftButtons[i].getActionListeners()[i]);
-        }
+        rightButtons[1].addActionListener(e -> {
+            SoundEngine.getInstance().setVolume(SaveFileManager.getInstance().getVolume() + 5f);
+            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+        });
+
+        leftButtons[1].addActionListener(e -> {
+            SoundEngine.getInstance().setVolume(SaveFileManager.getInstance().getVolume() - 5f);
+            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+        });
+
+        rightButtons[2].addActionListener(e -> {
+            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume() + 5f);
+            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+        });
+
+        leftButtons[2].addActionListener(e -> {
+            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume() - 5f);
+            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+        });
+
 
         this.add(resolution);
         this.add(music);
