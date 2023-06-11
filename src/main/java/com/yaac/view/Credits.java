@@ -16,9 +16,7 @@ public class Credits extends JPanel {
     ObjectAnimation earth;
     ImageIcon exitIcon;
     Image gameLogo;
-    JTextArea credits;
     Font font;
-    String creditsText;
     public Credits() {
         this.setLayout(null);
         font = loadFont(35f);
@@ -31,16 +29,6 @@ public class Credits extends JPanel {
         exitIcon = ImageUtility.getImageIcon("/MenuSprite/EscButton.png", buttonsSize, buttonsSize);
 
         gameLogo = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/GameLogo.png"))).getImage();
-        /*creditsText = """
-                Emanuele Galardo
-                Giovanni Palermo
-                Davide Petitto
-                Francesco Zuco""";
-        int textWidth = 445;
-        int textHeight = 355;
-        credits = createTextArea(creditsText, Settings.width/2 - textWidth/2, Settings.height/2 - textHeight/2, textWidth, textHeight, font.deriveFont(80f), Color.WHITE);
-        credits.setRows(4);
-        this.add(credits);*/
     }
 
     public void paintComponent(Graphics g) {
