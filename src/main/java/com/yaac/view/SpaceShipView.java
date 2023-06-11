@@ -77,6 +77,7 @@ public class SpaceShipView {
         ));
         for(EngineView engine : engines) {
             engine.getPoweringState().scaleImage(width, height);
+            engine.getIdleState().scaleImage(width, height);
         }
 
         locked_engines = new ArrayList<>(List.of(
