@@ -20,15 +20,27 @@ public class Game {
     GameComponentsManager gems;
     GameComponentsManager destroyedBullets;
     SpaceShip spaceShip;
+    static boolean speedBoostActivated;
+    static boolean shieldActivated;
     int gemCount;
     int scoreCount;
     int lives;
     boolean pwUpShield;
     boolean pwUpSpeed;
     int tick;
+    int tickShield;
+    int tickBoost;
     int stageTickTransition;
     int stage;
     boolean stagePause;
+
+    public static double isBoostActivated() {
+        return speedBoostActivated ? 1.0 : 0.0;
+    }
+
+    public static boolean isShieldActivated() {
+        return shieldActivated;
+    }
 
     public boolean getStagePause() {
         return stagePause;
@@ -54,6 +66,10 @@ public class Game {
 
         pwUpShield = GameConstraints.getInstance().getShopShield();
         pwUpSpeed = GameConstraints.getInstance().getShopBoost();
+        tickShield = 0;
+        tickBoost = 0;
+        speedBoostActivated = false;
+        shieldActivated = false;
     }
 
     /**
@@ -123,6 +139,20 @@ public class Game {
     public void stopShot(){
         spaceShip.stopShooting();
     }
+    public void activateShield(){
+        if (pwUpShield && !shieldActivated) {
+            GameConstraints.getInstance().setShopShield(false);
+            shieldActivated = true;
+            tickShield = 0;
+        }
+    }
+    public void activateBoost(){
+        if (pwUpSpeed && !speedBoostActivated) {
+            GameConstraints.getInstance().setShopBoost(false);
+            speedBoostActivated = true;
+            tickBoost = 0;
+        }
+    }
 
     /**
      * Metodo per aggiornare lo stato del gioco
@@ -153,7 +183,21 @@ public class Game {
         //cambio stage
         if (stagePause) {stageChangeTransition();}
 
-        // Aggiornamento dei tick 
+        // Aggiornamento dei tick
+        if (speedBoostActivated) {
+            tickBoost++;
+            if (tickBoost > GameConstraints.getInstance().getBoostDuration()) {
+                speedBoostActivated = false;
+                tickBoost = 0;
+            }
+        }
+        if (shieldActivated) {
+            tickShield++;
+            if (tickShield > GameConstraints.getInstance().getShieldDuration()) {
+                shieldActivated = false;
+                tickShield = 0;
+            }
+        }
         tick++;
     }
 
@@ -248,7 +292,7 @@ public class Game {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
         GameComponentsManager newDestroyedBullets = CollisionUtility.checkCollisionArrayArray(asteroids, bullets);
         GameComponentsManager newPickedGems = CollisionUtility.checkCollisionElementArray(spaceShip, gems);
-        if(Math.random() > 0.9){
+        if (Math.random() > 0.9) {
             GameComponentsManager asteroidsCollisions = CollisionUtility.checkCollisionArrayArray(asteroids, asteroids);
             for (GameObject asteroid : asteroidsCollisions) {
                 ((Asteroid) asteroid).bounce();
@@ -261,10 +305,10 @@ public class Game {
         gems.removeArray(newPickedGems);
 
         // Gestione delle collisioni tra proiettili e asteroidi
-        for (GameObject bullet : bullets){
+        for (GameObject bullet : bullets) {
             double damage = ((Bullet) bullet).getDamage();
-            for (GameObject asteroid : asteroids){
-                if(CollisionUtility.checkCollision(bullet, asteroid) && ((Asteroid) asteroid).receiveDamage(damage)) {
+            for (GameObject asteroid : asteroids) {
+                if (CollisionUtility.checkCollision(bullet, asteroid) && ((Asteroid) asteroid).receiveDamage(damage)) {
                     newDestroyedAsteroids.add(asteroid);
                 }
             }
@@ -273,13 +317,15 @@ public class Game {
         bullets.removeArray(newDestroyedBullets);
 
         // Gestione degli asteroidi distrutti, score ed eventuale nuovo stage
-        for (GameObject asteroid : newDestroyedAsteroids){
+        for (GameObject asteroid : newDestroyedAsteroids) {
             scoreCount += ((Asteroid) asteroid).getScore();
             SoundEngine.getInstance().playExplosion();
-            if(scoreCount>=stage*100){
-                stage+=1;
-                if(stage%5==0){GameConstraints.getInstance().setCheckpoint(stage);}
-                stagePause=true;
+            if (scoreCount >= stage * 100) {
+                stage += 1;
+                if (stage % 5 == 0) {
+                    GameConstraints.getInstance().setCheckpoint(stage);
+                }
+                stagePause = true;
                 for (GameObject asteroid2 : asteroids)
                     asteroid2.setTick(0);
                 destroyedAsteroids.add(asteroids);
@@ -287,8 +333,8 @@ public class Game {
             }
 
             // Generazione gemma
-            if(Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems())
-               generatorGem(asteroid.getX(), asteroid.getY());
+            if (Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems())
+                generatorGem(asteroid.getX(), asteroid.getY());
 
             // Generazione asteroidi figli
             if (asteroid.getRadius() > GameConstraints.getInstance().getAsteroidMinSplitDim(stage))
@@ -296,10 +342,17 @@ public class Game {
         }
 
         // Gestione della collisione tra astronave e asteroidi
-        if(CollisionUtility.bCheckCollision(spaceShip, asteroids)){
-            loseLife();
+        if (!shieldActivated) {
+            if (CollisionUtility.bCheckCollision(spaceShip, asteroids))
+                loseLife();
         }
-
+        else {
+            GameComponentsManager bouncingAsteroids = CollisionUtility.checkCollisionElementArray(spaceShip, asteroids);
+            for (GameObject asteroid : bouncingAsteroids) {
+                if (Math.random() > 0.5)
+                    ((Asteroid) asteroid).bounce();
+            }
+        }
         // Reset tick per gli oggetti distrutti
         for(GameObject obj : newDestroyedAsteroids)
             obj.setTick(0);
@@ -326,6 +379,8 @@ public class Game {
         bullets.clear();
         asteroids.clear();
         gems.clear();
+        speedBoostActivated = false;
+        shieldActivated = false;
         if(lives == 0)
             for(GameOverListener listener : gameOverListeners)
                 listener.onGameOver();
@@ -354,15 +409,12 @@ public class Game {
     public static void reset(){
         instance = null;
     }
-
     public void addOnDeathListener(OnDeathListener listener){
         onDeathListeners.add(listener);
     }
-
     public void addGameOverListener(GameOverListener listener){
         gameOverListeners.add(listener);
     }
-
     public void setBulletType(int bulletType){
         this.spaceShip.setBulletType(bulletType);
     }

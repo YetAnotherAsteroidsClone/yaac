@@ -9,7 +9,8 @@ public class GameConstraints {
     private double bulletSpeed = 6;
     private double bulletDamage = 10;
     private double bulletRatio = 10;
-    private double maxDurationShield=5;
+    private double shieldDuration = 600;
+    private double boostDuration = 600;
     private int shipRotation = 7;
     private double shipDeceleration = 0.90;
 
@@ -23,14 +24,15 @@ public class GameConstraints {
     private final double bulletRatioCoefficient = 1.5;
     private final double bulletSpeedCoefficient = 1.5;
     private final double bulletDamageCoefficient = 1.8;
+    private final double speedBoostCoefficient = 4.0;
 
     private final int maxGems = 15;
     private final int maxAsteroids = 20;
 
-    private boolean shopBoost=false;
-    private boolean shopShield=false;
-    private int boostCost = 500;
-    private int shieldCost = 1000;
+    private boolean shopBoost = true;
+    private boolean shopShield = true;
+    private final int boostCost = 500;
+    private final int shieldCost = 1000;
 
     private int score;
     private int gems;
@@ -43,21 +45,22 @@ public class GameConstraints {
     private int life;
     private int checkpoint;
     private int highScore;
-    private double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
+    private final double gemChance = 0.7; //valore da 0 a 1 che indica la probabilità di spawnare una gemma (0.1 = 10%)
     private final int[] gemValue = {5, 20, 100};
 
     public static int WORLDWIDTH = Settings.width;
     public static int WORLDHEIGHT = Settings.height;
 
     //GETTERS
-    public double getMaxSpeed() {return maxSpeed + lvlMaxSpeed * maxSpeedCoefficient;}
+    public double getMaxSpeed() {return maxSpeed + lvlMaxSpeed * maxSpeedCoefficient + (speedBoostCoefficient * Game.isBoostActivated());}
     public double getShipAcceleration() {return shipAcceleration + lvlMaxSpeed * accelerationCoefficient;}
     public double getBulletSpeed() {return bulletSpeed + lvlBulletSpeed * bulletSpeedCoefficient;}
     public double getBulletDamage() {return bulletDamage + lvlBulletDamage * bulletDamageCoefficient ;}
     public double getBulletRatio() {return bulletRatio - lvlBulletRatio * bulletRatioCoefficient;}
 
     public double getShipDeceleration() {return shipDeceleration;}
-    public double getMaxDurationShield() {return maxDurationShield;}
+    public double getShieldDuration() {return shieldDuration;}
+    public double getBoostDuration() {return boostDuration;}
     public int getShipRotation() {return shipRotation;}
     public int getLvlMaxSpeed() {return lvlMaxSpeed;}
     public int getLvlBulletSpeed() {return lvlBulletSpeed;}
@@ -118,7 +121,7 @@ public class GameConstraints {
     public void setBulletDamage(double bulletDamage) {this.bulletDamage = bulletDamage;}
     public void setBulletRatio(double bulletRatio) {this.bulletRatio = bulletRatio;}
     public void setShipDeceleration(double shipDeceleration) {this.shipDeceleration = shipDeceleration;}
-    public void setMaxDurationShield(double maxDurationShield) {this.maxDurationShield = maxDurationShield;}
+    public void setShieldDuration(double shieldDuration) {this.shieldDuration = shieldDuration;}
     public void setShipRotation(int shipRotation) {this.shipRotation = shipRotation;}
     public void setLife(int life) {this.life = life;}
     public void setHighScore(int bestScore) {this.highScore = bestScore;}
@@ -130,6 +133,8 @@ public class GameConstraints {
 
     public void setShopShield(boolean shopShield) {this.shopShield = shopShield;}
     public void setShopBoost(boolean shopBoost) {this.shopBoost = shopBoost;}
+    public boolean isShopBoostAvailable() {return shopBoost;}
+    public boolean isShopShieldAvailable() {return shopShield;}
 
     public void setScore(int score) {this.score = score;}
     public void setGems(int gems) {this.gems = gems;}

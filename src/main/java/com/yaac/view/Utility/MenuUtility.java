@@ -295,7 +295,6 @@ public class MenuUtility {
         int x = Settings.width / 20;
         int y = Settings.height / 20;
         g.fillRoundRect(x, y, Settings.width - (x * 2), Settings.height - (y *2), 20, 20);
-
     }
 
     /**
