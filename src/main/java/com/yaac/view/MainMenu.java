@@ -31,8 +31,6 @@ public class MainMenu extends JPanel {
     private final JButton[] buttons = new JButton[5];
     //[0]playButton, [1]shopButton, [2]settingsButton, [3]creditsButton, [4]exitButton;
 
-    private final JButton[] langButtons = new JButton[2];
-
     /**
      * Costruttore del menu principale
      */
@@ -82,33 +80,9 @@ public class MainMenu extends JPanel {
                 BACKSPACE -> ESCI DALLA PARTITA
                 """;
         commands = createTextArea(commandsText, 15, windowHeight - 240, 390, 250, font, Color.YELLOW);
-        highScore = createLabel("HIGH SCORE", windowX*13, (windowY *13)+30, 200, 30, font, Color.YELLOW);
-        highScoreText = String.valueOf(GameConstraints.getInstance().getHighScore());
-        highScoreValue = createTextArea(highScoreText, windowX*13, (windowY *13)+60, 200, 30, font, Color.YELLOW);
-
-        flags[0] = getImageIcon("/MenuSprite/ita.png", 60, 40);
-        flags[1] = getImageIcon("/MenuSprite/eng.png", 60, 40);
-        langButtons[0] = new JButton();
-        langButtons[1] = new JButton();
-
-        drawJButton(langButtons[0], flags[0], GameConstraints.WORLDWIDTH-125, 0, 60, 40);
-        drawJButton(langButtons[1], flags[1], GameConstraints.WORLDWIDTH-60, 0, 60, 40);
-
-        langButtons[0].addActionListener(e -> {
-            // TODO
-        });
-
-        langButtons[1].addActionListener(e -> {
-            // TODO
-        });
-
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);
         this.add(commands);
-        this.add(highScore);
-        this.add(highScoreValue);
-        this.add(langButtons[0]);
-        this.add(langButtons[1]);
     }
 
     /**
@@ -118,6 +92,10 @@ public class MainMenu extends JPanel {
         super.paintComponent(g);
         //Disegno e update dello sfondo
         drawAndUpdateBG(g, bg);
+        g.setColor(Color.YELLOW);
+        g.setFont(font);
+        g.drawString("HIGH SCORE", windowWidth - 200, windowHeight - 50);
+        g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), windowWidth - 200, windowHeight - 20);
     }
 
     /**
