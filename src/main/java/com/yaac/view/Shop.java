@@ -99,26 +99,36 @@ public class Shop extends JPanel{
         //buttons listener
         pwUpButtons[0].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlMaxSpeed()-1));
+            SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);
+            SaveFileManager.getInstance().saveSpeedLvl();
         });
         pwUpButtons[1].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletSpeed()-1));
+            SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);
+            SaveFileManager.getInstance().saveBulletSpeedLvl();
         });
         pwUpButtons[2].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletDamage()-1));
+            SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);
+            SaveFileManager.getInstance().saveBulletDmgLvl();
         });
         pwUpButtons[3].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletRatio()-1));
+            SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);
+            SaveFileManager.getInstance().saveBulletRatioLvl();
         });
         pwUpButtons[4].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getShieldCost());
+            SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopShield(true);
         });
         pwUpButtons[5].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getBoostCost());
+            SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopBoost(true);
         });
 
