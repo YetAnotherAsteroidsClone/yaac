@@ -11,10 +11,6 @@ import java.io.IOException;
 import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.view.Utility.ImageUtility.*;
 
-/*
- * Francesco
- */
-
 public class GameSettings extends JPanel {
     Font font;
     JLabel language, sound, music;

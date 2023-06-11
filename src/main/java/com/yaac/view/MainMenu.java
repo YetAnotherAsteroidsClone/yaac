@@ -4,12 +4,12 @@ import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ObjectAnimation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
 import static com.yaac.view.Utility.MenuUtility.*;
-import static com.yaac.view.Utility.ImageUtility.*;
 
 /**
  * Classe che gestisce la schermata del menu principale.
@@ -76,6 +76,7 @@ public class MainMenu extends JPanel {
                 BACKSPACE -> ESCI DALLA PARTITA
                 """;
         commands = createTextArea(commandsText, 15, Settings.height - 240, 390, 250, font, Color.YELLOW);
+
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);
         this.add(commands);

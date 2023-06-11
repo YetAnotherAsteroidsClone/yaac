@@ -12,7 +12,6 @@ import static com.yaac.view.Utility.MenuUtility.*;
 
 public class Credits extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3];
-
     ObjectAnimation earth;
     ImageIcon exitIcon;
     Image gameLogo;
