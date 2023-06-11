@@ -7,5 +7,3 @@ Gli assets sono presi da https://foozlecc.itch.io/
 * Giovanni
 * Francesco
 * Davide
-
-## TODO

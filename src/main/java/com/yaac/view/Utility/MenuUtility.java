@@ -265,28 +265,6 @@ public class MenuUtility {
     }
 
     /**
-     * Metodo per ottenere una stringa che rappresenta la risoluzione attuale.
-     * @return stringa che rappresenta la risoluzione attuale
-     **/
-    public static String getResolution() {
-        return Settings.width + "x" + Settings.height;
-    }
-
-    /**
-     * Metodo per cambiare la risoluzione.
-     **/
-    public static void changeResolution() {
-        if (Settings.width == Settings.widths[0] && Settings.height == Settings.heights[0]) {
-            Settings.width = Settings.widths[1];
-            Settings.height = Settings.heights[1];
-        }
-        else {
-            Settings.width = Settings.widths[0];
-            Settings.height = Settings.heights[0];
-        }
-    }
-
-    /**
      * Metodo per disegnare un rettangolo con bordi arrotondati.
      * @param g Graphics su cui disegnare
      **/
@@ -295,7 +273,6 @@ public class MenuUtility {
         int x = Settings.width / 20;
         int y = Settings.height / 20;
         g.fillRoundRect(x, y, Settings.width - (x * 2), Settings.height - (y *2), 20, 20);
-
     }
 
     /**
