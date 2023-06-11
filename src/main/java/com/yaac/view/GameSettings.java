@@ -83,6 +83,7 @@ public class GameSettings extends JPanel {
 
         // TODO: CAMBIO LINGUA
         int flagX = 825-flags[0].getIconWidth()/2;
+        drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);
         leftButtons[0].addActionListener(e -> {/*setLanguage();*/drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);});
         rightButtons[0].addActionListener(e -> {/*setLanguage();*/drawJButton(langButtons[0], flags[1], flagX, language.getY()-10, 60, 40);});
 
