@@ -1,7 +1,7 @@
 package com.yaac.view;
 
 import com.yaac.Main;
-import com.yaac.model.GameConstraints;
+import com.yaac.Settings;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
@@ -12,33 +12,22 @@ import static com.yaac.view.Utility.MenuUtility.*;
 
 public class Credits extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3];
+    ObjectAnimation earth;
     ImageIcon exitIcon;
     Image gameLogo;
-    JTextArea credits;
     Font font;
-    String creditsText;
-    private final int windowWidth = GameConstraints.WORLDWIDTH;
-    private final int windowHeight = GameConstraints.WORLDHEIGHT;
     public Credits() {
         this.setLayout(null);
         font = loadFont(35f);
 
-        createBG(bg, windowWidth, windowHeight);
+        createBG(bg, Settings.width, Settings.height);
+
+        earth = new ObjectAnimation("/MenuSprite/Earth.png", 96,96);
+        earth.scaleImage(700, 700);
         int buttonsSize = 40;
         exitIcon = ImageUtility.getImageIcon("/MenuSprite/EscButton.png", buttonsSize, buttonsSize);
 
         gameLogo = new ImageIcon(Objects.requireNonNull(Main.class.getClassLoader().getResource("MenuSprite/GameLogo.png"))).getImage();
-        creditsText = """
-                Sviluppato da:
-                Emanuele Galardo
-                Giovanni Palermo
-                Davide Petitto
-                Francesco Zuco""";
-        int textWidth = 445;
-        int textHeight = 355;
-        credits = createTextArea(creditsText, windowWidth/2 - textWidth/2, windowHeight /2 - textHeight/2, textWidth, textHeight, font.deriveFont(80f), Color.WHITE);
-        credits.setRows(5);
-        this.add(credits);
     }
 
     public void paintComponent(Graphics g) {
@@ -47,10 +36,19 @@ public class Credits extends JPanel {
         //Disegno e update dello sfondo
         drawAndUpdateBG(g, bg);
 
+        g.drawImage(earth.getCurrentFrame(), Settings.width/2-350, Settings.height/2-350, null);
+        earth.update();
+
         g.setColor(Color.WHITE);
         g.setFont(font.deriveFont(35f));
-        g.drawImage(exitIcon.getImage(), 25, windowHeight - 60, null);
-        g.drawString("Premi ESC per tornare al menu", 80, windowHeight - 30);
+        g.drawImage(exitIcon.getImage(), 25, Settings.height - 60, null);
+        g.drawString("Premi ESC per tornare al menu", 80, Settings.height - 30);
+        g.setFont(font.deriveFont(70f));
+        g.setColor(Color.YELLOW);
+        g.drawString("Emanuele Galardo", 20, Settings.height/2 - 100);
+        g.drawString("Giovanni Palermo", 20, Settings.height/2 + 100);
+        g.drawString("Davide Petitto", Settings.width - 370, Settings.height/2 - 100);
+        g.drawString("Francesco Zuco", Settings.width - 370, Settings.height/2 + 100);
     }
 
     public void update(){

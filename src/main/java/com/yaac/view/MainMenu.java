@@ -1,14 +1,15 @@
 package com.yaac.view;
 
 import com.yaac.Main;
+import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
 import com.yaac.view.Utility.ObjectAnimation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
 import static com.yaac.view.Utility.MenuUtility.*;
-import static com.yaac.view.Utility.ImageUtility.*;
 
 /**
  * Classe che gestisce la schermata del menu principale.
@@ -16,18 +17,13 @@ import static com.yaac.view.Utility.ImageUtility.*;
 public class MainMenu extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3]; // Immagini di background
     Font font;
-    JLabel gameLogoLabel, highScore; // Logo del gioco, punteggio massimo
+    JLabel gameLogoLabel; // Logo del gioco, punteggio massimo
     ImageIcon gameLogoIcon; // Icona del logo del gioco
-    ImageIcon[] flags = new ImageIcon[2]; // Icone delle bandiere
-    String commandsText, highScoreText; // Testo dei comandi, testo del punteggio massimo
-    JTextArea commands, highScoreValue; // Area di testo dei comandi, area di testo del punteggio massimo
+    String commandsText; // Testo dei comandi, testo del punteggio massimo
+    JTextArea commands; // Area di testo dei comandi, area di testo del punteggio massimo
 
-    private final int windowWidth = GameConstraints.WORLDWIDTH;
-    private final int windowHeight = GameConstraints.WORLDHEIGHT;
-    private final int windowX = GameConstraints.WORLDWIDTH / 15;
-    private final int windowY = GameConstraints.WORLDHEIGHT / 15;
-    private final int widthCenter = GameConstraints.WORLDWIDTH / 2;
-    private final int heightCenter = GameConstraints.WORLDHEIGHT / 2;
+    private final int widthCenter = Settings.width / 2;
+    private final int heightCenter = Settings.height / 2;
     private final JButton[] buttons = new JButton[5];
     //[0]playButton, [1]shopButton, [2]settingsButton, [3]creditsButton, [4]exitButton;
 
@@ -36,7 +32,7 @@ public class MainMenu extends JPanel {
      */
     public MainMenu() {
         this.setLayout(null);                       //Elimina il layout di default
-        createBG(bg, windowWidth, windowHeight);    // Caricamento e scaling dello sfondo
+        createBG(bg, Settings.width, Settings.height);    // Caricamento e scaling dello sfondo
         font = loadFont(35f);                  // Caricamento del font
 
         int buttonXPos = widthCenter - 100;
@@ -79,7 +75,8 @@ public class MainMenu extends JPanel {
                 ESC -> PAUSA
                 BACKSPACE -> ESCI DALLA PARTITA
                 """;
-        commands = createTextArea(commandsText, 15, windowHeight - 240, 390, 250, font, Color.YELLOW);
+        commands = createTextArea(commandsText, 15, Settings.height - 240, 390, 250, font, Color.YELLOW);
+
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);
         this.add(commands);
@@ -94,8 +91,8 @@ public class MainMenu extends JPanel {
         drawAndUpdateBG(g, bg);
         g.setColor(Color.YELLOW);
         g.setFont(font);
-        g.drawString("HIGH SCORE", windowWidth - 200, windowHeight - 50);
-        g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), windowWidth - 200, windowHeight - 20);
+        g.drawString("HIGH SCORE", Settings.width - 200, Settings.height - 50);
+        g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), Settings.width - 200, Settings.height - 20);
     }
 
     /**

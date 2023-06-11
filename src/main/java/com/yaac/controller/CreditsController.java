@@ -32,7 +32,4 @@ public class CreditsController extends KeyAdapter implements Updatable {
         return true;
     }
 
-    public void setLoop(Loop loop){
-        this.loop = loop;
-    }
 }

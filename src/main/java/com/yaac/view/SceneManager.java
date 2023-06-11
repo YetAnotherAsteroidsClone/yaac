@@ -32,6 +32,8 @@ public class SceneManager {
     private PauseMenu pauseMenu;
     private GamePanel gamePanel;
     private Loop gameLoop;
+
+    private GameOver gameOver;
     private final JLayeredPane layeredPane;
 
     public static SceneManager getInstance() {return instance;}
@@ -121,6 +123,14 @@ public class SceneManager {
         loadScene(pauseMenu, JLayeredPane.DEFAULT_LAYER);
         pauseMenu.grabFocus();
         SoundEngine.getInstance().stopMusic();
+        layeredPane.moveToFront(pauseMenu);
+    }
+
+    public void loadGameOver() {
+        gameOver = new GameOver();
+        loadScene(gameOver, JLayeredPane.DEFAULT_LAYER);
+        gameOver.grabFocus();
+        //SoundEngine.getInstance().stopMusic();
         layeredPane.moveToFront(pauseMenu);
     }
 

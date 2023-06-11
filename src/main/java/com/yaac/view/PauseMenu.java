@@ -1,38 +1,29 @@
 package com.yaac.view;
 
-import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.Game;
-import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.Objects;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 
 public class PauseMenu extends JPanel {
     Font font;
-    JLabel title;
-    private final int pauseX = GameConstraints.WORLDWIDTH/15;
-    private final int pauseY = GameConstraints.WORLDHEIGHT/15;
+    JLabel pauseLabel;
+
+    private final int widthCenter = Settings.width / 2;
+    private final int heightCenter = Settings.height / 2;
     private final JButton[] buttons = new JButton[4];
     // [0] resumeButton, [1] saveButton, [2] settingsButton, [3] exitButton;
 
     public PauseMenu() {
         this.setLayout(null);
 
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
-        } catch (IOException | FontFormatException ex) {
-            throw new RuntimeException(ex);
-        }
+        font = loadFont(35f);
 
-        int widthCenter = GameConstraints.WORLDWIDTH / 2;
-        int heightCenter = GameConstraints.WORLDHEIGHT / 2;
         buttons[0] = createButton("RIPRENDI", widthCenter - 100, heightCenter - 80, 200, 50, font);
         buttons[1] = createButton("SALVA", widthCenter - 100, heightCenter, 200, 50, font);
         buttons[2] = createButton("IMPOSTAZIONI", widthCenter - 100, heightCenter + 80, 200, 50, font);
@@ -51,11 +42,11 @@ public class PauseMenu extends JPanel {
             }
         });
 
-        title = new JLabel("PAUSA", SwingConstants.CENTER);
-        title.setFont(font.deriveFont(100f));
-        title.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
-        title.setForeground(Color.YELLOW);
-        this.add(title);
+        pauseLabel = new JLabel("PAUSA", SwingConstants.CENTER);
+        pauseLabel.setFont(font.deriveFont(100f));
+        pauseLabel.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
+        pauseLabel.setForeground(Color.YELLOW);
+        this.add(pauseLabel);
 
         for (JButton b : buttons)
             this.add(b);
