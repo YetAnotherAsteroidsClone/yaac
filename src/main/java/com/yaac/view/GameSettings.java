@@ -1,16 +1,12 @@
 package com.yaac.view;
 
-import com.yaac.Main;
 import com.yaac.Settings;
-import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ObjectAnimation;
-import com.yaac.view.Utility.Sound;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.util.Objects;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.view.Utility.ImageUtility.*;
@@ -21,29 +17,31 @@ import static com.yaac.view.Utility.ImageUtility.*;
 
 public class GameSettings extends JPanel {
     Font font;
-    JLabel resolution, sound, music, selectableResolution;
-    String res;
+    JLabel language, sound, music;
     ImageIcon backIcon, leftArrowIcon, rightArrowIcon, leftArrowIconClicked, rightArrowIconClicked;
+    ImageIcon[] flags = new ImageIcon[2]; // Icone delle bandiere
+    // [0] = IT, [1] = EN
     ObjectAnimation[] bg =  new ObjectAnimation[3];
     JButton[] leftButtons = new JButton[3];
-    // 0 = leftRes, 1 = leftSound, 2 = leftMusic
+    // 0 = leftLang, 1 = leftSound, 2 = leftMusic
     JButton[] rightButtons = new JButton[3];
-    // 0 = rightRes, 1 = rightSound, 2 = rightMusic
+    // 0 = rightLang, 1 = rightSound, 2 = rightMusic
     private final JButton backButton;
-    private final int settingsX = GameConstraints.WORLDWIDTH / 20;
-    private final int settingsY = GameConstraints.WORLDHEIGHT / 20;
+    private final int settingsY = Settings.height / 20;
     private final int buttonsSize = 30;
+    private final JButton[] langButtons = new JButton[2];
     private boolean layered = false;
 
     public GameSettings() throws IOException, FontFormatException {
         this.setLayout(null);
         if (!layered)
-            createBG(bg, GameConstraints.WORLDWIDTH, GameConstraints.WORLDHEIGHT);
+            createBG(bg, Settings.width, Settings.height);
 
-        font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(35f);
-        resolution = createLabel("RISOLUZIONE DELLO SCHERMO", settingsX * 3, settingsY * 5+5, 350, 16, font, Color.WHITE);
-        music = createLabel("MUSICA", settingsX * 3, settingsY * 10+5, 350, 16, font, Color.WHITE);
-        sound = createLabel("EFFETTI SONORI", settingsX * 3, settingsY * 15+5, 350, 16, font, Color.WHITE);
+        int textX = Settings.width - 1088;
+        font = loadFont(35f);
+        language = createLabel("LINGUA", textX, Settings.height - 535, 350, 16, font, Color.WHITE);
+        music = createLabel("MUSICA", textX, Settings.height - 355, 350, 16, font, Color.WHITE);
+        sound = createLabel("EFFETTI SONORI", textX, Settings.height - 175, 350, 16, font, Color.WHITE);
 
         backIcon = getImageIcon("/MenuSprite/BackButton.png",buttonsSize, buttonsSize);
         leftArrowIcon = getImageIcon("/MenuSprite/leftArrow.png", buttonsSize, buttonsSize);
@@ -57,10 +55,14 @@ public class GameSettings extends JPanel {
             rightButtons[i] = new JButton();
         }
 
-        for (int i = 0; i < leftButtons.length; i++) {
-            drawJButton(leftButtons[i], leftArrowIcon, settingsX * 10, settingsY * (5 + (i * 5)), buttonsSize, buttonsSize, leftArrowIconClicked);
-            drawJButton(rightButtons[i], rightArrowIcon, settingsX * 14, settingsY * (5 + (i * 5)), buttonsSize, buttonsSize, rightArrowIconClicked);
-        }
+        int leftButtonX = Settings.width / 2;
+        int rightButtonX = Settings.width - 300;
+        drawJButton(leftButtons[0], leftArrowIcon, leftButtonX, language.getY()-5, buttonsSize, buttonsSize, leftArrowIconClicked);
+        drawJButton(rightButtons[0], rightArrowIcon, rightButtonX, language.getY()-5, buttonsSize, buttonsSize, rightArrowIconClicked);
+        drawJButton(leftButtons[1], leftArrowIcon, leftButtonX, music.getY()-5, buttonsSize, buttonsSize, leftArrowIconClicked);
+        drawJButton(rightButtons[1], rightArrowIcon, rightButtonX, music.getY()-5, buttonsSize, buttonsSize, rightArrowIconClicked);
+        drawJButton(leftButtons[2], leftArrowIcon, leftButtonX, sound.getY()-5, buttonsSize, buttonsSize, leftArrowIconClicked);
+        drawJButton(rightButtons[2], rightArrowIcon, rightButtonX, sound.getY()-5, buttonsSize, buttonsSize, rightArrowIconClicked);
 
         for (int i = 0; i < leftButtons.length; i++) {
             this.add(leftButtons[i]);
@@ -71,13 +73,19 @@ public class GameSettings extends JPanel {
         // Se le impostazioni si trovano in un layer allora siamo certi che sono state caricate dal menu di pausa
         backButton.addActionListener(e -> {if(layered) SceneManager.getInstance().unloadSettings(); else SceneManager.getInstance().loadMainMenu();});
 
-        int resTextMid = leftButtons[0].getX() + buttonsSize + settingsX;
 
-        res = getResolution();
-        selectableResolution = createLabel(res, resTextMid, resolution.getY(), 350, 16, font, Color.WHITE);
+        flags[0] = getImageIcon("/MenuSprite/ita.png", 60, 40);
+        flags[1] = getImageIcon("/MenuSprite/eng.png", 60, 40);
+        langButtons[0] = new JButton();
+        langButtons[1] = new JButton();
 
-        rightButtons[0].addActionListener(e -> {changeResolution(); selectableResolution.setText(getResolution());});
-        leftButtons[0].addActionListener(rightButtons[0].getActionListeners()[0]);
+        // TODO: getLanguage(), setLanguage()
+
+        // TODO: CAMBIO LINGUA
+        int flagX = 825-flags[0].getIconWidth()/2;
+        leftButtons[0].addActionListener(e -> {/*setLanguage();*/drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);});
+        rightButtons[0].addActionListener(e -> {/*setLanguage();*/drawJButton(langButtons[0], flags[1], flagX, language.getY()-10, 60, 40);});
+
 
         rightButtons[1].addActionListener(e -> {
             SoundEngine.getInstance().setVolume(SaveFileManager.getInstance().getVolume() + 5f);
@@ -99,12 +107,20 @@ public class GameSettings extends JPanel {
             SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
         });
 
+        langButtons[0].addActionListener(e -> {
+            // TODO
+        });
 
-        this.add(resolution);
+        langButtons[1].addActionListener(e -> {
+            // TODO
+        });
+
+        this.add(language);
         this.add(music);
         this.add(sound);
         this.add(backButton);
-        this.add(selectableResolution);
+        this.add(langButtons[0]);
+        this.add(langButtons[1]);
 
         setBackground(new Color(0,0,0,0));
     }
@@ -114,7 +130,7 @@ public class GameSettings extends JPanel {
         g.setFont(font);
         drawAndUpdateBG(g, bg);
         drawBox(g);
-        drawShopButton(backButton, backIcon, settingsX, settingsY, buttonsSize, buttonsSize, Color.WHITE, g);
+        drawShopButton(backButton, backIcon, Settings.width-1216, Settings.height-684, buttonsSize, buttonsSize, Color.WHITE, g);
     }
 
     public void update(){
