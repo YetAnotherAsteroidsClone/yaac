@@ -50,7 +50,6 @@ public class Credits extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font.deriveFont(35f));
         g.drawImage(exitIcon.getImage(), 25, windowHeight - 60, null);
-        g.drawImage(gameLogo, windowWidth/2 - gameLogo.getWidth(null)/2, windowHeight-100, null);
         g.drawString("Premi ESC per tornare al menu", 80, windowHeight - 30);
     }
 
