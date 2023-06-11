@@ -16,16 +16,13 @@ import static com.yaac.view.Utility.ImageUtility.*;
 public class MainMenu extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3]; // Immagini di background
     Font font;
-    JLabel gameLogoLabel, highScore; // Logo del gioco, punteggio massimo
+    JLabel gameLogoLabel; // Logo del gioco, punteggio massimo
     ImageIcon gameLogoIcon; // Icona del logo del gioco
-    ImageIcon[] flags = new ImageIcon[2]; // Icone delle bandiere
-    String commandsText, highScoreText; // Testo dei comandi, testo del punteggio massimo
-    JTextArea commands, highScoreValue; // Area di testo dei comandi, area di testo del punteggio massimo
+    String commandsText; // Testo dei comandi, testo del punteggio massimo
+    JTextArea commands; // Area di testo dei comandi, area di testo del punteggio massimo
 
     private final int windowWidth = GameConstraints.WORLDWIDTH;
     private final int windowHeight = GameConstraints.WORLDHEIGHT;
-    private final int windowX = GameConstraints.WORLDWIDTH / 15;
-    private final int windowY = GameConstraints.WORLDHEIGHT / 15;
     private final int widthCenter = GameConstraints.WORLDWIDTH / 2;
     private final int heightCenter = GameConstraints.WORLDHEIGHT / 2;
     private final JButton[] buttons = new JButton[5];
