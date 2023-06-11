@@ -1,17 +1,19 @@
 package com.yaac.view.Utility;
 
+import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
-import com.yaac.view.SceneManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
  * Classe che contiene metodi utili per la creazione di componenti grafici.
  */
+
 public class MenuUtility {
     /**
      * Metodo per la creazione di un bottone.
@@ -22,7 +24,7 @@ public class MenuUtility {
      * @param height altezza del bottone
      * @param font font del bottone
      * @return il bottone creato
-     */
+     **/
     public static JButton createButton(String text, int x, int y, int width, int height, Font font) {
         JButton button = new JButton(text);
         button.setBounds(x, y, width, height);
@@ -45,7 +47,7 @@ public class MenuUtility {
      * @param font font della label
      * @param color colore della label
      * @return la label creata
-     */
+     **/
     public static JLabel createLabel(String text, int x, int y, int width, int height, Font font, Color color) {
         JLabel label = new JLabel(text);
         label.setBounds(x, y, width, height);
@@ -56,16 +58,16 @@ public class MenuUtility {
     }
 
     /**
-     * Metodo per la creazione di un textArea
-     * @param text testo del textArea
-     * @param x coordinata x del textArea
-     * @param y coordinata y del textArea
-     * @param width larghezza del textArea
-     * @param height altezza del textArea
-     * @param font font del textArea
-     * @param color colore del textArea
-     * @return il textArea creato
-     */
+     * Metodo per la creazione di una textArea
+     * @param text testo della textArea
+     * @param x coordinata x della textArea
+     * @param y coordinata y della textArea
+     * @param width larghezza della textArea
+     * @param height altezza della textArea
+     * @param font font della textArea
+     * @param color colore della textArea
+     * @return la textArea creata
+     **/
     public static JTextArea createTextArea(String text, int x, int y, int width, int height, Font font, Color color) {
         JTextArea textArea = new JTextArea(text);
         textArea.setBounds(x, y, width, height);
@@ -78,13 +80,13 @@ public class MenuUtility {
     }
 
     /** Disegna un'immagine su un JButton
-     * @param button
-     * @param imageIcon
-     * @param x
-     * @param y
-     * @param width
-     * @param height
-     */
+     * @param button bottone da disegnare
+     * @param imageIcon immagine da mostrare sul bottone
+     * @param x coordinata x del bottone
+     * @param y coordinata y del bottone
+     * @param width larghezza del bottone
+     * @param height altezza del bottone
+     **/
     public static void drawJButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height){
         button.setBackground(new Color(0,0,0,Color.TRANSLUCENT));
         button.setBorder(BorderFactory.createEmptyBorder());
@@ -93,6 +95,15 @@ public class MenuUtility {
         button.setIcon(imageIcon);
     }
 
+    /** Disegna un'immagine su un JButton
+     * @param button bottone da disegnare
+     * @param imageIcon immagine da mostrare sul bottone
+     * @param x coordinata x del bottone
+     * @param y coordinata y del bottone
+     * @param width larghezza del bottone
+     * @param height altezza del bottone
+     * @param pressedImageIcon immagine da mostrare quando il bottone viene premuto
+     **/
     public static void drawJButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, ImageIcon pressedImageIcon){
         //change the color of the button when clicked
         button.setContentAreaFilled(false);
@@ -114,7 +125,7 @@ public class MenuUtility {
      * @param height height
      * @param color border color
      * @param g Graphics
-     * */
+     **/
     public static void drawShopButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, Color color, Graphics g){
         if(color != null) {
             g.setColor(color);
@@ -142,7 +153,7 @@ public class MenuUtility {
      * @param pwUp powerUp name
      * @param levels levels
      * @param g Graphics
-     * */
+     **/
     public static void drawShopPwUpBar(JPanel panel, JButton button, Color gemsColor, Color powerUpColor, BufferedImage pwUpImage, BufferedImage lockerImage, ImageIcon plusIcon, Image gemCurrentFrame, int x, int y, Font font, String pwUp, int levels, Graphics g){
         g.setColor(Color.WHITE);
         g.setFont(font);
@@ -226,7 +237,12 @@ public class MenuUtility {
         }
     }
 
-
+    /**
+     * Metodo per caricare e scalare le immagini di sfondo.
+     * @param bg array delle immagini di sfondo
+     * @param windowWidth larghezza della finestra di gioco
+     * @param windowHeight altezza della finestra di gioco
+     **/
     public static void createBG(ObjectAnimation[] bg, int windowWidth, int windowHeight) {
         bg[0] = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
         bg[1] = new ObjectAnimation("/Background/MainBackgroundL2.png", 640, 360);
@@ -236,19 +252,29 @@ public class MenuUtility {
         bg[2].scaleImage(windowWidth, windowHeight);
     }
 
+    /**
+     * Metodo per disegnare e aggiornare le immagini di sfondo.
+     * @param g Graphics su cui disegnare
+     * @param bg array delle immagini di sfondo
+     **/
     public static void drawAndUpdateBG(Graphics g, ObjectAnimation[] bg) {
-        g.drawImage(bg[0].getCurrentFrame(), 0, 0, null);
-        g.drawImage(bg[1].getCurrentFrame(), 0, 0, null);
-        g.drawImage(bg[2].getCurrentFrame(), 0, 0, null);
-        bg[0].update();
-        bg[1].update();
-        bg[2].update();
+        for (ObjectAnimation o : bg) {
+            g.drawImage(o.getCurrentFrame(), 0, 0, null);
+            o.update();
+        }
     }
 
+    /**
+     * Metodo per ottenere una stringa che rappresenta la risoluzione attuale.
+     * @return stringa che rappresenta la risoluzione attuale
+     **/
     public static String getResolution() {
         return Settings.width + "x" + Settings.height;
     }
 
+    /**
+     * Metodo per cambiare la risoluzione.
+     **/
     public static void changeResolution() {
         if (Settings.width == Settings.widths[0] && Settings.height == Settings.heights[0]) {
             Settings.width = Settings.widths[1];
@@ -258,15 +284,30 @@ public class MenuUtility {
             Settings.width = Settings.widths[0];
             Settings.height = Settings.heights[0];
         }
-
     }
 
-
+    /**
+     * Metodo per disegnare un rettangolo con bordi arrotondati.
+     * @param g Graphics su cui disegnare
+     **/
     public static void drawBox(Graphics g) {
         g.setColor(new Color(0,0,0,150));
         int x = Settings.width / 20;
         int y = Settings.height / 20;
         g.fillRoundRect(x, y, Settings.width - (x * 2), Settings.height - (y *2), 20, 20);
 
+    }
+
+    /**
+     * Metodo per il caricamento del font di gioco.
+     * @param size dimensione del font
+     * @return il font di gioco con dimensione size
+     **/
+    public static Font loadFont(float size) {
+        try {
+            return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(size);
+        } catch (IOException | FontFormatException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
