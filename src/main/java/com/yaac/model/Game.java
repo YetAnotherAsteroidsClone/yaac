@@ -2,10 +2,7 @@ package com.yaac.model;
 
 import com.yaac.Settings;
 import com.yaac.model.GameComponent.*;
-import com.yaac.model.Utility.CollisionUtility;
-import com.yaac.model.Utility.GameComponentsManager;
-import com.yaac.model.Utility.GameOverListener;
-import com.yaac.model.Utility.OnDeathListener;
+import com.yaac.model.Utility.*;
 import com.yaac.view.SoundEngine;
 
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ public class Game {
     static Game instance = null;
     private final ArrayList<OnDeathListener> onDeathListeners;
     private final ArrayList<GameOverListener> gameOverListeners;
+    private final ArrayList<OnShieldStatusChangedListener> onShieldStatusChangedListeners;
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
@@ -52,6 +50,7 @@ public class Game {
     private Game() {
         onDeathListeners = new ArrayList<>();
         gameOverListeners = new ArrayList<>();
+        onShieldStatusChangedListeners = new ArrayList<>();
         stage = SaveFileManager.getInstance().getCheckPoint();
         stagePause = true;
         tick = 0;
@@ -63,7 +62,7 @@ public class Game {
         destroyedAsteroids = new GameComponentsManager();
         destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
-
+        gemCount = SaveFileManager.getInstance().getCurrentGems();
         pwUpShield = GameConstraints.getInstance().getShopShield();
         pwUpSpeed = GameConstraints.getInstance().getShopBoost();
         tickShield = 0;
@@ -144,6 +143,8 @@ public class Game {
             GameConstraints.getInstance().setShopShield(false);
             shieldActivated = true;
             tickShield = 0;
+            for(OnShieldStatusChangedListener listener : onShieldStatusChangedListeners)
+                listener.onShieldStatusChanged();
         }
     }
     public void activateBoost(){
@@ -196,12 +197,16 @@ public class Game {
             if (tickShield > GameConstraints.getInstance().getShieldDuration()) {
                 shieldActivated = false;
                 tickShield = 0;
+                for(OnShieldStatusChangedListener listener : onShieldStatusChangedListeners)
+                    listener.onShieldStatusChanged();
             }
         }
         tick++;
     }
 
     private void stageChangeTransition(){
+        if(stage % 5 == 0) //Autosalvataggio ogni 5 stage
+            SaveFileManager.getInstance().saveData();
         if(stageTickTransition<=0){stagePause = false; stageTickTransition=50;}
         else{stageTickTransition--;}
     }
@@ -300,8 +305,10 @@ public class Game {
         }
 
         // Gestione delle gemme raccolte
-        for (GameObject gem : newPickedGems)
+        for (GameObject gem : newPickedGems) {
             gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
+            GameConstraints.getInstance().setGems(GameConstraints.getInstance().getGems() + GameConstraints.getInstance().getGemValue(gem.getType()));
+        }
         gems.removeArray(newPickedGems);
 
         // Gestione delle collisioni tra proiettili e asteroidi
@@ -319,12 +326,10 @@ public class Game {
         // Gestione degli asteroidi distrutti, score ed eventuale nuovo stage
         for (GameObject asteroid : newDestroyedAsteroids) {
             scoreCount += ((Asteroid) asteroid).getScore();
+            GameConstraints.getInstance().setScore(GameConstraints.getInstance().getScore() + (int)((Asteroid) asteroid).getScore());
             SoundEngine.getInstance().playExplosion();
             if (scoreCount >= stage * 100) {
                 stage += 1;
-                if (stage % 5 == 0) {
-                    GameConstraints.getInstance().setCheckpoint(stage);
-                }
                 stagePause = true;
                 for (GameObject asteroid2 : asteroids)
                     asteroid2.setTick(0);
@@ -405,6 +410,12 @@ public class Game {
             gems.add(new Gem(x, y, 3));
     }
 
+    public void resetGame(){
+        stage = 1;
+        lives = GameConstraints.lives;
+        scoreCount = 0;
+        gemCount = 0;
+    }
 
     public static void reset(){
         instance = null;
@@ -415,9 +426,15 @@ public class Game {
     public void addGameOverListener(GameOverListener listener){
         gameOverListeners.add(listener);
     }
+    public void addOnShieldStatusChangedListener(OnShieldStatusChangedListener listener){
+        onShieldStatusChangedListeners.add(listener);
+    }
     public void setBulletType(int bulletType){
         this.spaceShip.setBulletType(bulletType);
     }
     public void setScore(int score) {this.scoreCount = score;}
-    public void resetLives() {this.lives = GameConstraints.lives;}
+
+    public boolean isShielded(){
+        return shieldActivated;
+    }
 }
