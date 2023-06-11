@@ -26,6 +26,10 @@ public class GameConstraints {
     private final double bulletDamageCoefficient = 1.8;
     private final double speedBoostCoefficient = 4.0;
 
+    private final double[] weaponSpeedCoefficient = {1, 0.4, 1.5, 2};
+    private final double[] weaponDamageCoefficient = {1, 4, 1.2, 0.3};
+    private final double[] weaponRatioCoefficient = {1, 0.6, 1, 1.1};
+
     private final int maxGems = 15;
     private final int maxAsteroids = 20;
 
@@ -54,9 +58,9 @@ public class GameConstraints {
     //GETTERS
     public double getMaxSpeed() {return maxSpeed + lvlMaxSpeed * maxSpeedCoefficient + (speedBoostCoefficient * Game.isBoostActivated());}
     public double getShipAcceleration() {return shipAcceleration + lvlMaxSpeed * accelerationCoefficient;}
-    public double getBulletSpeed() {return bulletSpeed + lvlBulletSpeed * bulletSpeedCoefficient;}
-    public double getBulletDamage() {return bulletDamage + lvlBulletDamage * bulletDamageCoefficient ;}
-    public double getBulletRatio() {return bulletRatio - lvlBulletRatio * bulletRatioCoefficient;}
+    public double getBulletSpeed(int bulletType) {return (bulletSpeed + lvlBulletSpeed * bulletSpeedCoefficient) * weaponSpeedCoefficient[bulletType];}
+    public double getBulletDamage(int bulletType) {return (bulletDamage + lvlBulletDamage * bulletDamageCoefficient) * weaponDamageCoefficient[bulletType];}
+    public double getBulletRatio(int bulletType) {return bulletRatio - (lvlBulletRatio * bulletRatioCoefficient) * weaponRatioCoefficient[bulletType];}
 
     public double getShipDeceleration() {return shipDeceleration;}
     public double getShieldDuration() {return shieldDuration;}
@@ -92,26 +96,26 @@ public class GameConstraints {
 
     //ASTEROIDS CONSTRAINTS
     public int getMaxAsteroids(int stage) {
-        return maxAsteroids + stage * 2;
+        return maxAsteroids + stage;
     }
     public double getAsteroidMaxSpeedVariable(int stage) {
-        return 1 + stage * 0.5;
+        return 1 + stage * 0.25;
     }
     public int getAsteroidMinSpeed(int stage) {
-        return stage * 2 + 4;
+        return stage + 4;
     }
-    public int getAsteroidsSpawnRate(int stage) {return 100 - (stage-1) * 5;}
+    public int getAsteroidsSpawnRate(int stage) {return 100 - (stage-1) * 2;}
     public int getAsteroidLife(int stage, int dim) {
-        return (int) (stage * 4 + dim * 0.4);
+        return (int) (stage * 3 + dim * 0.4);
     }
     public int getAsteroidMaxDimensionUpscale(int stage) {
-        return (int) (10 + stage * 0.5);
+        return (int) (10 + stage * 0.25);
     }
     public int getAsteroidMinDimension(int stage) {
-        return 30 + stage * 2;
+        return 35 + stage * 2;
     }
     public int getAsteroidMinSplitDim(int stage) {
-        return 40 - stage * 2;
+        return 50 - stage * 2;
     }
 
     //SETTERS

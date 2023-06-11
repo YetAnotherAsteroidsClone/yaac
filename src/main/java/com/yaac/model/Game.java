@@ -295,21 +295,52 @@ public class Game {
      */
     public void resolveCollisions() {
         GameComponentsManager newDestroyedAsteroids = new GameComponentsManager();
-        GameComponentsManager newDestroyedBullets = CollisionUtility.checkCollisionArrayArray(asteroids, bullets);
+        GameComponentsManager newDestroyedBullets = new GameComponentsManager();
         GameComponentsManager newPickedGems = CollisionUtility.checkCollisionElementArray(spaceShip, gems);
+        GameComponentsManager newMissileExplosions = new GameComponentsManager();
+
+        // Gestione della collisione tra astronave e asteroidi
+        if (!shieldActivated) {
+            if (CollisionUtility.bCheckCollision(spaceShip, asteroids))
+                loseLife();
+        }
+        else {
+            GameComponentsManager collidedAsteroids = CollisionUtility.checkCollisionElementArray(spaceShip, asteroids);
+            for (GameObject asteroid : collidedAsteroids) {
+                scoreCount += ((Asteroid) asteroid).getScore();
+            }
+            newDestroyedAsteroids.add(collidedAsteroids);
+            asteroids.removeArray(collidedAsteroids);
+        }
+
+        //Gestione delle collisioni tra proiettili
+        for (GameObject bullet : bullets) {
+            switch (bullet.getType()) {
+                case 0:
+                case 1:
+                    if (CollisionUtility.bCheckCollision(bullet, asteroids)) {
+                        bullet.setRadius(30);
+                        newDestroyedBullets.add(bullet);
+                    }
+                    break;
+                case 2:
+                    if (CollisionUtility.bCheckCollision(bullet, asteroids)) {
+                        newDestroyedBullets.add(bullet);
+                        newMissileExplosions.add(new Bullet(bullet.getX(), bullet.getY(), 0, 0, ((Bullet)bullet).getDamage(), 0, 0, 124));
+                    }
+                    break;
+                case 3:
+                    break;
+            }
+        }
+
+        // Gestione delle collisioni tra asteroidi
         if (Math.random() > 0.9) {
             GameComponentsManager asteroidsCollisions = CollisionUtility.checkCollisionArrayArray(asteroids, asteroids);
             for (GameObject asteroid : asteroidsCollisions) {
                 ((Asteroid) asteroid).bounce();
             }
         }
-
-        // Gestione delle gemme raccolte
-        for (GameObject gem : newPickedGems) {
-            gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
-            GameConstraints.getInstance().setGems(GameConstraints.getInstance().getGems() + GameConstraints.getInstance().getGemValue(gem.getType()));
-        }
-        gems.removeArray(newPickedGems);
 
         // Gestione delle collisioni tra proiettili e asteroidi
         for (GameObject bullet : bullets) {
@@ -320,8 +351,23 @@ public class Game {
                 }
             }
         }
+        for(GameObject explosion : newMissileExplosions){
+            for (GameObject asteroid : asteroids) {
+                if (CollisionUtility.checkCollision(explosion, asteroid) && ((Asteroid) asteroid).receiveDamage(((Bullet) explosion).getDamage())) {
+                    newDestroyedAsteroids.add(asteroid);
+                }
+            }
+        }
         asteroids.removeArray(newDestroyedAsteroids);
         bullets.removeArray(newDestroyedBullets);
+        newDestroyedBullets.add(newMissileExplosions);
+
+        // Gestione delle gemme raccolte
+        for (GameObject gem : newPickedGems) {
+            gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
+            GameConstraints.getInstance().setGems(GameConstraints.getInstance().getGems() + GameConstraints.getInstance().getGemValue(gem.getType()));
+        }
+        gems.removeArray(newPickedGems);
 
         // Gestione degli asteroidi distrutti, score ed eventuale nuovo stage
         for (GameObject asteroid : newDestroyedAsteroids) {
@@ -346,18 +392,7 @@ public class Game {
                 asteroids.add(((Asteroid) asteroid).split());
         }
 
-        // Gestione della collisione tra astronave e asteroidi
-        if (!shieldActivated) {
-            if (CollisionUtility.bCheckCollision(spaceShip, asteroids))
-                loseLife();
-        }
-        else {
-            GameComponentsManager bouncingAsteroids = CollisionUtility.checkCollisionElementArray(spaceShip, asteroids);
-            for (GameObject asteroid : bouncingAsteroids) {
-                if (Math.random() > 0.5)
-                    ((Asteroid) asteroid).bounce();
-            }
-        }
+
         // Reset tick per gli oggetti distrutti
         for(GameObject obj : newDestroyedAsteroids)
             obj.setTick(0);
@@ -380,6 +415,7 @@ public class Game {
         for (GameObject bullet : bullets)
             bullet.setTick(0);
         destroyedAsteroids.add(asteroids);
+        SoundEngine.getInstance().playExplosion();
         destroyedBullets.add(bullets);
         bullets.clear();
         asteroids.clear();

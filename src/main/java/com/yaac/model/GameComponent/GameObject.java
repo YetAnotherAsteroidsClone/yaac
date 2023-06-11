@@ -105,4 +105,12 @@ public abstract class GameObject{
     // Metodi astratti per le classi figlie
     public abstract void update();
     public abstract int getType();
+
+    public double getVx() {
+        return vx;
+    }
+
+    public double getVy() {
+        return vy;
+    }
 }

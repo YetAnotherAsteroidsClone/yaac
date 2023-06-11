@@ -120,6 +120,14 @@ public class GamePanel extends JPanel{
         // Disegna la nave
         g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
 
+        // Disegna i proiettili
+        for(int i = 0; i < game.getBullets().size(); i++) {
+            ObjectAnimation currentBulletTypeAnimation = bulletsAnimation.get(game.getBullets().get(i).getType());
+            Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) game.getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
+            g.drawImage(ImageUtility.rotateImage(ImageUtility.ImageToBuffered(currentBulletFrame), game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
+        }
+
+
         // Disegna gli asteroidi
         for(int i = 0; i < game.getAsteroids().size(); i++) {
             double asteroidSize = game.getAsteroids().get(i).getRadius();
@@ -130,8 +138,10 @@ public class GamePanel extends JPanel{
 
         // Disegna l'esplosione dei proiettili
         for(int i = 0; i < game.getDestroyedBullets().size(); i++){
-            Image bulletExplosionFrame = bulletExplosionAnimation.getImage((int) ((game.getDestroyedBullets().get(i).getTick() + 1) / 2)% bulletExplosionAnimation.size());
-            g.drawImage(bulletExplosionFrame, (int) game.getDestroyedBullets().get(i).getX() - 25, (int) game.getDestroyedBullets().get(i).getY() - 25, null);
+            double bulletSize = game.getDestroyedBullets().get(i).getRadius();
+            Image bulletExplosionFrameUnscaled = bulletExplosionAnimation.getImage((int) ((game.getDestroyedBullets().get(i).getTick() + 1) / 2) % bulletExplosionAnimation.size());
+            BufferedImage bulletExplosion = ImageUtility.scaleImage(ImageUtility.ImageToBuffered(bulletExplosionFrameUnscaled) , (int) bulletSize, (int) bulletSize);
+            g.drawImage(bulletExplosion, (int) (game.getDestroyedBullets().get(i).getX() - bulletSize * 0.8), (int) (game.getDestroyedBullets().get(i).getY() - bulletSize * 0.8), null);
         }
 
         // Disegna l'esplosione degli asteroidi
@@ -141,13 +151,6 @@ public class GamePanel extends JPanel{
             asteroidCurrentFrame = ImageUtility.scaleImage(ImageUtility.ImageToBuffered(asteroidCurrentFrame), (int) (asteroidSize * 5), (int) (asteroidSize * 5));
             asteroidCurrentFrame = ImageUtility.rotateImage((BufferedImage) asteroidCurrentFrame, game.getDestroyedAsteroids().get(i).getRotation());
             g.drawImage(asteroidCurrentFrame, (int) game.getDestroyedAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) game.getDestroyedAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);
-        }
-
-        // Disegna i proiettili
-        for(int i = 0; i < game.getBullets().size(); i++) {
-            ObjectAnimation currentBulletTypeAnimation = bulletsAnimation.get(game.getBullets().get(i).getType());
-            Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) game.getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
-            g.drawImage(ImageUtility.rotateImage(ImageUtility.ImageToBuffered(currentBulletFrame), game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
         }
 
         // Disegna le gemme

@@ -40,6 +40,12 @@ public class Bullet extends GameObject{
         this.type = type;
     }
 
+    public Bullet(double x, double y, double vx, double vy, double damage, int rotation, int type, int radius){
+        super(x, y, vx, vy, rotation, radius);
+        this.damage = damage;
+        this.type = type;
+    }
+
     // Getter e setter
     public void setRadius(double radius) {
         this.radius = radius;

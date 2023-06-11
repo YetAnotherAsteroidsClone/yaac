@@ -19,6 +19,7 @@ public class SpaceShipView {
     private final ArrayList<EngineView> locked_engines;
     private final CompositeSprite spaceship;
     private ObjectAnimation shield;
+    private ObjectAnimation boost;
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
     private int currentBody = 0;

@@ -140,10 +140,10 @@ public class SpaceShip extends GameObject{
      *  Spara un proiettile in base al coefficiente di sparo
      */
     public void shoot() {
-        if(shotTick % Math.round(GameConstraints.getInstance().getBulletRatio()) == 0) {
-            double bulletVX = (GameConstraints.getInstance().getBulletSpeed() * Math.sin(Math.toRadians(rotation)));
-            double bulletVY = -(GameConstraints.getInstance().getBulletSpeed() * Math.cos(Math.toRadians(rotation)));
-            Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(), rotation, bulletType));
+        if(shotTick % Math.round(GameConstraints.getInstance().getBulletRatio(bulletType)) == 0) {
+            double bulletVX = (GameConstraints.getInstance().getBulletSpeed(bulletType) * Math.sin(Math.toRadians(rotation)));
+            double bulletVY = -(GameConstraints.getInstance().getBulletSpeed(bulletType) * Math.cos(Math.toRadians(rotation)));
+            Game.getInstance().addBullet(new Bullet(x, y, bulletVX, bulletVY, GameConstraints.getInstance().getBulletDamage(bulletType), rotation, bulletType));
         }
         shotTick++;
     }
@@ -160,7 +160,7 @@ public class SpaceShip extends GameObject{
      */
     public void stopShooting() {
         isShooting = false;
-        if (shotTick > GameConstraints.getInstance().getBulletRatio())
+        if (shotTick > GameConstraints.getInstance().getBulletRatio(bulletType))
             shotTick = 1;
     }
 
