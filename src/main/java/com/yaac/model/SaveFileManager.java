@@ -32,7 +32,7 @@ public class SaveFileManager {
             in.close();
             file.close();
         } catch (IOException e) {
-            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false,false, 0, 0,1,0,0,4, new boolean[]{true, false, false, false}, new boolean[]{true, false, false, false}, 100);
+            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false,false, 0, 0,1,0,0,0,4, new boolean[]{true, false, false, false}, new boolean[]{true, false, false, false}, 100);
             save();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -44,6 +44,8 @@ public class SaveFileManager {
             this.open();
     }
 
+    /** Metodo per salvare il file di salvataggio
+     */
     public void save(){
         try {
             FileOutputStream file = new FileOutputStream("data");
@@ -60,11 +62,14 @@ public class SaveFileManager {
         this.saveFile = saveFile;
     }
 
+    /** Metodo per salvare i dati di gioco
+     */
     public void saveData(){
-        this.saveFile.setGems(this.saveFile.getGems() + Game.getInstance().getGemCount());
-        this.saveFile.setScore(this.saveFile.getScore()+ Game.getInstance().getScore());
+        this.saveFile.setGems(GameConstraints.getInstance().getGems());
+        this.saveFile.setScore(GameConstraints.getInstance().getScore());
         this.saveFile.setCheckpoint(Game.getInstance().getStage());
         this.saveFile.setCurrentScore(Game.getInstance().getScore());
+        this.saveFile.setCurrentGems(Game.getInstance().getGemCount());
         if(this.saveFile.getCurrentScore() > this.saveFile.getHighScore()) {
             this.saveFile.setHighScore(this.saveFile.getCurrentScore());
             GameConstraints.getInstance().setHighScore(this.saveFile.getHighScore());
@@ -74,19 +79,30 @@ public class SaveFileManager {
         GameConstraints.getInstance().setGems(this.saveFile.getGems());
         GameConstraints.getInstance().setScore(this.saveFile.getScore());
         GameConstraints.getInstance().setCheckpoint(this.saveFile.getCheckpoint());
+        for(int i = 0; i < 3; i++) {
+            if (this.saveFile.getScore() >= GameConstraints.getInstance().getUnlockWeaponsScore(i))
+                this.saveFile.setUnlockedWeapon(i + 1);
+            if (this.saveFile.getScore() >= GameConstraints.getInstance().getUnlockEnginesScore(i))
+                this.saveFile.setUnlockedEngine(i + 1);
+        }
         save();
     }
+
+    public void saveSpeedLvl(){this.saveFile.setSpeedLvl(GameConstraints.getInstance().getLvlMaxSpeed()); save();}
+    public void saveBulletSpeedLvl(){this.saveFile.setBulletSpeedLvl(GameConstraints.getInstance().getLvlBulletSpeed()); save();}
+    public void saveBulletDmgLvl(){this.saveFile.setBulletDmgLvl(GameConstraints.getInstance().getLvlBulletDamage()); save();}
+    public void saveBulletRatioLvl(){this.saveFile.setBulletRatioLvl(GameConstraints.getInstance().getLvlBulletRatio()); save();}
 
     public int getGems(){return this.saveFile.getGems();}
     public int getScore() {return this.saveFile.getScore();}
     public int getCheckPoint() {return this.saveFile.getCheckpoint();}
     public int getCurrentScore() {return this.saveFile.getCurrentScore();}
-
+    public int getCurrentGems() {return this.saveFile.getCurrentGems();}
     public void setEngine(int engine) {this.saveFile.setEngine(engine);}
     public int getEngine() {return this.saveFile.getEngine();}
     public int getWeapon() {return this.saveFile.getWeapon();}
     public void setWeapon(int weapon) {this.saveFile.setWeapon(weapon);}
-    public void setCurrentScore(int currentScore) {this.saveFile.setCurrentScore(currentScore);}
+    public void resetCurrent() {this.saveFile.setCurrentScore(0); this.saveFile.setCurrentGems(0); save();}
     public int getHighScore() {return this.saveFile.getHighScore();}
     public int getLives() {return this.saveFile.getLives();}
     public void resetLives() {this.saveFile.setLives(GameConstraints.lives); save();}
@@ -94,6 +110,7 @@ public class SaveFileManager {
     public boolean[] getUnlockedWeapons() {return this.saveFile.getUnlockedWeapons();}
     private boolean isEngineUnlocked(int index) {return getUnlockedEngines()[index];}
     private boolean isWeaponUnlocked(int index) {return getUnlockedWeapons()[index];}
+    public void updateGems(){this.saveFile.setGems(GameConstraints.getInstance().getGems()); save();}
     public void setVolume(float volume) {this.saveFile.setVolume(volume);}
     public float getVolume() {return this.saveFile.getVolume();}
 
@@ -121,15 +138,5 @@ public class SaveFileManager {
             return true;
         }
         return false;
-    }
-
-    public void unlockEngine(int index) {
-        this.saveFile.setUnlockedEngine(index);
-        save();
-    }
-
-    public void unlockWeapon(int index) {
-        this.saveFile.setUnlockedWeapon(index);
-        save();
     }
 }

@@ -15,13 +15,14 @@ public class SaveFile implements Serializable {
     private int weapon;
     private int checkpoint;
     private int currentScore;
+    private int currentGems;
     private int highScore;
     private int lives;
     private float volume;
     private boolean[] unlockedEngines;
     private  boolean[] unlockedWeapons;
 
-    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons, float volume) {
+    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int currentGems, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons, float volume) {
         this.score = score;
         this.gems = gems;
         this.speedLvl = speedLvl;
@@ -34,6 +35,7 @@ public class SaveFile implements Serializable {
         this.weapon = weapon;
         this.checkpoint = checkpoint;
         this.currentScore = currentScore;
+        this.currentGems = currentGems;
         this.highScore = highScore;
         this.lives = lives;
         this.unlockedEngines = unlockedEngines;
@@ -118,6 +120,8 @@ public class SaveFile implements Serializable {
 
     public int getCurrentScore() {return currentScore;}
     public void setCurrentScore(int currentScore) {this.currentScore = currentScore;}
+    public int getCurrentGems() {return currentGems;}
+    public void setCurrentGems(int currentGems) {this.currentGems = currentGems;}
     public int getHighScore() {return highScore;}
     public void setHighScore(int highScore) {this.highScore = highScore;}
     public int getLives() {return this.lives;}
