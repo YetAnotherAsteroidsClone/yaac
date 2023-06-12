@@ -1,5 +1,7 @@
 package com.yaac.view;
 
+import com.yaac.Settings;
+import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ObjectAnimation;
 
@@ -86,6 +88,8 @@ public class GameSettings extends JPanel {
 
         int flagX = 825-flags[0].getIconWidth()/2;
         drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);
+        leftButtons[0].addActionListener(e -> {Language.getInstance().setLanguage(Language.languageList.ITA);drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);});
+        rightButtons[0].addActionListener(e -> {Language.getInstance().setLanguage(Language.languageList.ENG);drawJButton(langButtons[0], flags[1], flagX, language.getY()-10, 60, 40);});
 
         // cambio della lingua
         leftButtons[0].addActionListener(e -> {

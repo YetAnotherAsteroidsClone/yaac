@@ -28,7 +28,7 @@ public class SceneManager {
     private MainMenu mainMenu;
     private Shop shop;
     private Credits credits;
-    private final GameSettings gameSettings;
+    private GameSettings gameSettings;
     private PauseMenu pauseMenu;
     private GamePanel gamePanel;
     private Loop gameLoop;
@@ -49,7 +49,6 @@ public class SceneManager {
         layeredPane = new JLayeredPane();
         layeredPane.setLayout(null);
         mainFrame.setContentPane(layeredPane);
-        gameSettings = new GameSettings();
     }
 
     public void openMainFrame(){
@@ -91,6 +90,7 @@ public class SceneManager {
      * @param layered se true, carica le impostazioni in un layer superiore
      */
     public void loadSettings(boolean layered){
+        gameSettings = new GameSettings();
         GameSettingsController controller = new GameSettingsController(gameSettings);
         Loop gameSettingsLoop = new Loop(controller);
         if(layered) { // Le impostazioni sono state chiamate dal menu di pausa
