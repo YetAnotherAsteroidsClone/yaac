@@ -1,6 +1,7 @@
 package com.yaac;
 
 import com.yaac.model.Game;
+import com.yaac.model.Language;
 import com.yaac.view.Utility.Sound;
 
 import java.util.logging.Level;
@@ -15,5 +16,5 @@ public class Settings {
     public static String resourcePath = Main.class.getResource("/").getPath();
     public static final int shipSize = (int) (Game.getInstance().getSpaceShip().getRadius()*2);
     public static final String FONT = "Font.ttf";
-    public static String language = "it";
+    public static Language.languageList language = Language.languageList.ITA;
 }

@@ -3,6 +3,7 @@ package com.yaac.view.Utility;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.Language;
 
 import javax.swing.*;
 import java.awt.*;
@@ -290,17 +291,26 @@ public class MenuUtility {
             throw new RuntimeException(ex);
         }
     }
-    public static ImageIcon changeLanguageFlag(ImageIcon[] flags) {
-        if (Settings.language.equals("it"))
-            return flags[0];
-        else
-            return flags[1];
+    public static void setNextLanguage(){
+        Language.languageList[] allLanguages = Language.languageList.values();
+        for(int i=0; i<allLanguages.length; i++){
+            System.out.println(i);
+            if(allLanguages[i]==Settings.language){
+                if(i==allLanguages.length-1){Language.setLanguage(allLanguages[0]);}
+                else{Language.setLanguage(allLanguages[i+1]);}
+                return;
+            }
+        }
+    }
+    public static void setPreviousLanguage(){
+        Language.languageList[] allLanguages = Language.languageList.values();
+        for(int i=0; i<allLanguages.length; i++){
+            if(allLanguages[i]==Settings.language){
+                if(i==0){Language.setLanguage(allLanguages[allLanguages.length-1]);}
+                else{Language.setLanguage(allLanguages[i-1]);}
+                return;
+            }
+        }
     }
 
-    public static void changeLanguage() {
-        if (Settings.language.equals("it"))
-            Settings.language = "en";
-        else
-            Settings.language = "it";
-    }
 }
