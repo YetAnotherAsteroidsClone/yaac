@@ -28,7 +28,7 @@ public class GameSettings extends JPanel {
     private final JButton[] langButtons = new JButton[2];
     private boolean layered = false;
 
-    public GameSettings() throws IOException, FontFormatException {
+    public GameSettings() {
         this.setLayout(null);
         if (!layered)
             createBG(bg, Settings.width, Settings.height);

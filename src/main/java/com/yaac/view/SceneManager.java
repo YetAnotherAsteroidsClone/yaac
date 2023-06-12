@@ -130,7 +130,6 @@ public class SceneManager {
         gameOver = new GameOver();
         loadScene(gameOver, JLayeredPane.DEFAULT_LAYER);
         gameOver.grabFocus();
-        //SoundEngine.getInstance().stopMusic();
         layeredPane.moveToFront(pauseMenu);
     }
 

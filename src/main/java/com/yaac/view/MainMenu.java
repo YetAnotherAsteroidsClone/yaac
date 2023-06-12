@@ -31,9 +31,9 @@ public class MainMenu extends JPanel {
      * Costruttore del menu principale
      */
     public MainMenu() {
-        this.setLayout(null);                       //Elimina il layout di default
-        createBG(bg, Settings.width, Settings.height);    // Caricamento e scaling dello sfondo
-        font = loadFont(35f);                  // Caricamento del font
+        this.setLayout(null);                               //Elimina il layout di default
+        createBG(bg, Settings.width, Settings.height);      // Caricamento e scaling dello sfondo
+        font = loadFont(35f);                           // Caricamento del font
 
         int buttonXPos = widthCenter - 100;
         int buttonWidth = 200;
@@ -75,7 +75,7 @@ public class MainMenu extends JPanel {
                 ESC -> PAUSA
                 BACKSPACE -> ESCI DALLA PARTITA
                 """;
-        commands = createTextArea(commandsText, 15, Settings.height - 240, 390, 250, font, Color.YELLOW);
+        commands = createTextArea(commandsText, 15, Settings.height - 225, 390, 250, font.deriveFont(34f), Color.YELLOW);
 
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);
@@ -91,8 +91,8 @@ public class MainMenu extends JPanel {
         drawAndUpdateBG(g, bg);
         g.setColor(Color.YELLOW);
         g.setFont(font);
-        g.drawString("HIGH SCORE", Settings.width - 200, Settings.height - 50);
-        g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), Settings.width - 200, Settings.height - 20);
+        g.drawString("HIGH SCORE", Settings.width - 160, Settings.height - 50);
+        g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), Settings.width - 160, Settings.height - 20);
     }
 
     /**
