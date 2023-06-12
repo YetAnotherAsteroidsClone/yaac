@@ -27,13 +27,18 @@ public class MenuUtility {
      **/
     public static JButton createButton(String text, int x, int y, int width, int height, Font font) {
         JButton button = new JButton(text);
+        button.setContentAreaFilled(false);
         button.setBounds(x, y, width, height);
-        button.setBackground(Color.GRAY);
         button.setForeground(Color.WHITE);
         button.setFont(font);
         button.setFocusable(false);
         button.setBorderPainted(false);
-        button.setVisible(true);
+        button.setIcon(new ImageIcon(Objects.requireNonNull(Main.class.getResource("/MenuSprite/buttonColor0.png"))));
+        button.setHorizontalTextPosition(JButton.CENTER);
+        button.setVerticalTextPosition(JButton.CENTER);
+        button.setRolloverIcon(new ImageIcon(Objects.requireNonNull(Main.class.getResource("/MenuSprite/buttonColor1.png"))));
+
+
         return button;
     }
 
@@ -105,11 +110,9 @@ public class MenuUtility {
      * @param pressedImageIcon immagine da mostrare quando il bottone viene premuto
      **/
     public static void drawJButton(JButton button, ImageIcon imageIcon, int x, int y, int width, int height, ImageIcon pressedImageIcon){
-        //change the color of the button when clicked
         button.setContentAreaFilled(false);
-        button.setOpaque(true);
-        button.setPressedIcon(pressedImageIcon);
         button.setIcon(imageIcon);
+        button.setPressedIcon(pressedImageIcon);
         button.setBackground(new Color(0,0,0, Color.TRANSLUCENT));
         button.setBorder(BorderFactory.createEmptyBorder());
         button.setBounds(x+1,y+1,width-1,height-1);
@@ -286,5 +289,18 @@ public class MenuUtility {
         } catch (IOException | FontFormatException ex) {
             throw new RuntimeException(ex);
         }
+    }
+    public static ImageIcon changeLanguageFlag(ImageIcon[] flags) {
+        if (Settings.language.equals("it"))
+            return flags[0];
+        else
+            return flags[1];
+    }
+
+    public static void changeLanguage() {
+        if (Settings.language.equals("it"))
+            Settings.language = "en";
+        else
+            Settings.language = "it";
     }
 }

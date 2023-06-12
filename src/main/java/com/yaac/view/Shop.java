@@ -51,10 +51,10 @@ public class Shop extends JPanel{
 
         //ImageIcons and animations
         menuIcon = ImageUtility.getImageIcon("/MenuSprite/HomeButton.png",38,38);
-        backIcon = ImageUtility.getImageIcon("/MenuSprite/BackButton.png",38,38);
+        backIcon = ImageUtility.getImageIcon("/MenuSprite/BackButton0.png",38,38);
         plusIcon = ImageUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
-        right = ImageUtility.getImageIcon("/MenuSprite/rightArrow.png", 48,58);
-        left = ImageUtility.getImageIcon("/MenuSprite/leftArrow.png", 48,58);
+        right = ImageUtility.getImageIcon("/MenuSprite/rightArrow0.png", 48,58);
+        left = ImageUtility.getImageIcon("/MenuSprite/leftArrow0.png", 48,58);
         locker = ImageUtility.loadImage("/GameSprite/locker.png");
         locker = ImageUtility.scaleImage(locker,40,40);
         gems = new ObjectAnimation("/GameSprite/GemL1.png");

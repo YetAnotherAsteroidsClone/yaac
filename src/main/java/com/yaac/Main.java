@@ -12,8 +12,7 @@ public class Main {
         Settings.LOGGER.setLevel(Settings.logLevel);
         Settings.LOGGER.addHandler(new FileHandler("yaac.log"));
 
-        // Ho trovato online queste due impostazioni che mi sono servite per non far vedere il titolo nel main menu
-        // sfocato. Se non le metto, il font viene sfocato e non so perché.
+        // Queste due impostazioni servono a migliorare la qualità del font
         System.setProperty("awt.useSystemAAFontSettings","off");
         System.setProperty("swing.aatext", "false");
 
