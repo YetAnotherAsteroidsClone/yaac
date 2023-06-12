@@ -3,6 +3,7 @@ package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.Language;
 import com.yaac.view.Utility.ObjectAnimation;
 
 import javax.swing.*;
@@ -41,11 +42,11 @@ public class MainMenu extends JPanel {
         int firstButtonPos = heightCenter - 80; // Posizione del primo bottone
 
         //Caricamento dei bottoni e aggiunta dei relativi listener
-        buttons[0] = createButton("GIOCA", buttonXPos, firstButtonPos, buttonWidth, buttonHeight, font);
-        buttons[1] = createButton("NEGOZIO", buttonXPos, firstButtonPos + 80, buttonWidth, buttonHeight, font);
-        buttons[2] = createButton("IMPOSTAZIONI", buttonXPos, firstButtonPos + 160, 200, 50, font);
-        buttons[3] = createButton("CREDITI", buttonXPos, firstButtonPos + 240, 200, 50, font);
-        buttons[4] = createButton("ESCI", buttonXPos, firstButtonPos + 320, 200, 50, font);
+        buttons[0] = createButton(Language.allStrings.get(0), buttonXPos, firstButtonPos, buttonWidth, buttonHeight, font);
+        buttons[1] = createButton(Language.allStrings.get(1), buttonXPos, firstButtonPos + 80, buttonWidth, buttonHeight, font);
+        buttons[2] = createButton(Language.allStrings.get(2), buttonXPos, firstButtonPos + 160, 200, 50, font);
+        buttons[3] = createButton(Language.allStrings.get(3), buttonXPos, firstButtonPos + 240, 200, 50, font);
+        buttons[4] = createButton(Language.allStrings.get(4), buttonXPos, firstButtonPos + 320, 200, 50, font);
         buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
         buttons[1].addActionListener(e -> SceneManager.getInstance().loadShop());
         buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings(false));

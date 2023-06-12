@@ -3,10 +3,12 @@ package com.yaac.view;
 import com.yaac.Settings;
 import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
+import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.view.Utility.ImageUtility.*;
@@ -18,7 +20,7 @@ public class GameSettings extends JPanel {
     ImageIcon[] settingsIcons = new ImageIcon[6];
     // [0] backIcon [1] leftArrowIcon [2] rightArrowIcon [3] leftArrowIconClicked
     // [4] rightArrowIconClicked, [5] backIconClicked
-    ImageIcon[] flags = new ImageIcon[2]; // Icone delle bandiere
+    BufferedImage[] flags = new BufferedImage[2]; // immagini delle bandiere
     // [0] = IT, [1] = EN
     ObjectAnimation[] bg =  new ObjectAnimation[3];
     JButton[] leftButtons = new JButton[3];
@@ -81,26 +83,14 @@ public class GameSettings extends JPanel {
         backButton.addActionListener(e -> {if(layered) SceneManager.getInstance().unloadSettings(); else SceneManager.getInstance().loadMainMenu();});
 
         // creazione delle bandiere e dei bottoni per la lingua
-        flags[0] = getImageIcon("/MenuSprite/ita.png", 60, 40);
-        flags[1] = getImageIcon("/MenuSprite/eng.png", 60, 40);
-        langButtons[0] = new JButton();
-        langButtons[1] = new JButton();
+        flags[0] = loadImage("/MenuSprite/ita.png");
+        flags[0] = scaleImage(flags[0],60,40);
+        flags[1] = loadImage("/MenuSprite/eng.png");
+        flags[1] = scaleImage(flags[1],60,40);
+        leftButtons[0].addActionListener(e -> {MenuUtility.setPreviousLanguage();});
+        rightButtons[0].addActionListener(e -> {MenuUtility.setNextLanguage();});
 
-        int flagX = 825-flags[0].getIconWidth()/2;
-        drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);
-        leftButtons[0].addActionListener(e -> {Language.getInstance().setLanguage(Language.languageList.ITA);drawJButton(langButtons[0], flags[0], flagX, language.getY()-10, 60, 40);});
-        rightButtons[0].addActionListener(e -> {Language.getInstance().setLanguage(Language.languageList.ENG);drawJButton(langButtons[0], flags[1], flagX, language.getY()-10, 60, 40);});
-
-        // cambio della lingua
-        leftButtons[0].addActionListener(e -> {
-            changeLanguage();
-            drawJButton(langButtons[0], changeLanguageFlag(flags), flagX, language.getY()-10, 60, 40);
-        });
-        rightButtons[0].addActionListener(e -> {
-            changeLanguage();
-            drawJButton(langButtons[0], changeLanguageFlag(flags), flagX, language.getY()-10, 60, 40);
-        });
-
+        
         // cambio del volume della musica
         rightButtons[1].addActionListener(e -> {
             SoundEngine.getInstance().setVolume(SaveFileManager.getInstance().getVolume() + 5f);
@@ -127,8 +117,6 @@ public class GameSettings extends JPanel {
         this.add(music);
         this.add(sound);
         this.add(backButton);
-        this.add(langButtons[0]);
-        this.add(langButtons[1]);
 
         setBackground(new Color(0,0,0,0));
     }
@@ -137,6 +125,11 @@ public class GameSettings extends JPanel {
         super.paintComponent(g);
         drawAndUpdateBG(g, bg);
         drawBox(g);
+        switch (Settings.language){
+            case ITA -> g.drawImage(flags[0], width/2+160,language.getY()-10,null );
+            case ENG -> g.drawImage(flags[1],width/2+160,language.getY()-10,null);
+        }
+
     }
 
     public void update(){
