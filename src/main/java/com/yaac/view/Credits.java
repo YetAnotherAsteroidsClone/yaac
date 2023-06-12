@@ -2,6 +2,7 @@ package com.yaac.view;
 
 import com.yaac.Main;
 import com.yaac.Settings;
+import com.yaac.model.Language;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
@@ -42,7 +43,7 @@ public class Credits extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(font.deriveFont(35f));
         g.drawImage(exitIcon.getImage(), 25, Settings.height - 60, null);
-        g.drawString("Premi ESC per tornare al menu", 80, Settings.height - 30);
+        g.drawString(Language.allStrings.get(12), 80, Settings.height - 30);
         g.setFont(font.deriveFont(70f));
         g.setColor(Color.YELLOW);
         g.drawString("Emanuele Galardo", 20, Settings.height/2 - 100);

@@ -42,9 +42,9 @@ public class GameSettings extends JPanel {
         font = loadFont(35f);
 
         // creazione delle label
-        language = createLabel("LINGUA", textX, height - 535, 350, 16, font, Color.WHITE);
-        music = createLabel("MUSICA", textX, height - 355, 350, 16, font, Color.WHITE);
-        sound = createLabel("EFFETTI SONORI", textX, height - 175, 350, 16, font, Color.WHITE);
+        language = createLabel(Language.allStrings.get(13), textX, height - 535, 350, 16, font, Color.WHITE);
+        music = createLabel(Language.allStrings.get(14), textX, height - 355, 350, 16, font, Color.WHITE);
+        sound = createLabel(Language.allStrings.get(15), textX, height - 175, 350, 16, font, Color.WHITE);
 
         // creazione delle icone del menu delle impostazioni
         settingsIcons[0] = getImageIcon("/MenuSprite/BackButton0.png",buttonsSize+10, buttonsSize+10);

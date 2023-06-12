@@ -294,7 +294,6 @@ public class MenuUtility {
     public static void setNextLanguage(){
         Language.languageList[] allLanguages = Language.languageList.values();
         for(int i=0; i<allLanguages.length; i++){
-            System.out.println(i);
             if(allLanguages[i]==Settings.language){
                 if(i==allLanguages.length-1){Language.setLanguage(allLanguages[0]);}
                 else{Language.setLanguage(allLanguages[i+1]);}

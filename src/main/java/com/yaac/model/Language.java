@@ -8,13 +8,11 @@ import java.util.ArrayList;
 
 public class Language {
     public enum languageList {ITA, ENG}
-    private static languageList language;
     public static ArrayList<String> allStrings;
 
     private Language(){
-        language=Settings.language;
         allStrings = new ArrayList<>();
-        readLanguage(language);
+        readLanguage(Settings.language);
     }
 
     public static void readLanguage(languageList l){
@@ -34,11 +32,8 @@ public class Language {
 
     private static Language instance = new Language();
     public static Language getInstance(){return instance;}
-
-    public static languageList getLanguage() {return language;}
-    public static void setLanguage(languageList l) {
-        language = l;
-        Settings.language = l;
-        readLanguage(language);
+    public static void setLanguage(languageList newLanguage) {
+        Settings.language = newLanguage;
+        readLanguage(newLanguage);
     }
 }

@@ -70,8 +70,8 @@ public class MainMenu extends JPanel {
         commandsText = Language.allStrings.get(5)+"\n"+Language.allStrings.get(6)+"\n"+Language.allStrings.get(7)+"\n"+Language.allStrings.get(8)+"\n"+Language.allStrings.get(9)+"\n"+Language.allStrings.get(10);
         commands = createTextArea(commandsText, 15, Settings.height - 200, 390, 250, font.deriveFont(34f), Color.YELLOW);
 
-        highscore = createLabel(Language.allStrings.get(11),Settings.width - 220, Settings.height - 70,200,20, font, Color.YELLOW);
-        numHighScore = createLabel(""+GameConstraints.getInstance().getHighScore(),Settings.width - 220,Settings.height - 40,200,20, font, Color.WHITE);
+        highscore = createLabel(Language.allStrings.get(11),Settings.width - 250, Settings.height - 70,300,20, font, Color.YELLOW);
+        numHighScore = createLabel(""+GameConstraints.getInstance().getHighScore(),Settings.width - 250,Settings.height - 40,300,20, font, Color.WHITE);
 
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);
@@ -87,9 +87,6 @@ public class MainMenu extends JPanel {
         super.paintComponent(g);
         //Disegno e update dello sfondo
         drawAndUpdateBG(g, bg);
-        g.setColor(Color.YELLOW);
-        g.setFont(font);
-        //g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), Settings.width - 220, Settings.height - 20);
     }
 
     /**

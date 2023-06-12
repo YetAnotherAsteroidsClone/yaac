@@ -2,6 +2,7 @@ package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.MenuUtility;
@@ -175,7 +176,7 @@ public class Shop extends JPanel{
         MenuUtility.drawJButton(switchEngine[1],right,(Settings.width/2)+195,300,50,60);
 
         //Show score and gem count
-        scoreCount = MenuUtility.createLabel("SCORE: " + gameConstraints.getScore(),52,40,300,25,scoreFont,Color.LIGHT_GRAY);
+        scoreCount = MenuUtility.createLabel(Language.allStrings.get(16) + ": " + gameConstraints.getScore(),50,40,300,25,scoreFont,Color.LIGHT_GRAY);
         gemCount = MenuUtility.createLabel("x"+gameConstraints.getGems(),90,95,300,15,font,Color.WHITE);
         this.add(scoreCount);
         this.add(gemCount);
@@ -221,12 +222,12 @@ public class Shop extends JPanel{
         g.setColor(Color.RED);
         if(!currentWeaponUnlocked){
             g.drawImage(locker,Settings.width/2-225,20,null);
-            g.drawString("WEAPON AVAILABLE AT SCORE: "+gameConstraints.getUnlockWeaponsScore(spaceShipView.getCurrentWeapon()-1),Settings.width/2-180,50);
+            g.drawString(Language.allStrings.get(17) + ": "+gameConstraints.getUnlockWeaponsScore(spaceShipView.getCurrentWeapon()-1),Settings.width/2-180,50);
         }
 
         if(!currentEngineUnlocked){
             g.drawImage(locker,Settings.width/2-225,380,null);
-            g.drawString("ENGINE AVAILABLE AT SCORE: "+gameConstraints.getUnlockEnginesScore(spaceShipView.getCurrentEngine()-1),Settings.width/2-180,410);
+            g.drawString(Language.allStrings.get(18) + ": "+gameConstraints.getUnlockEnginesScore(spaceShipView.getCurrentEngine()-1),Settings.width/2-180,410);
         }
 
         //separator
@@ -234,10 +235,10 @@ public class Shop extends JPanel{
         g.drawLine((Settings.width/2)-350,(Settings.height/2)+70,(Settings.width/2)+330,(Settings.height/2)+70);
 
         //powerup bars
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[0],gemsColor,powerUpColor,PowerUpImages[0],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-220,font,"Speed",gameConstraints.getLvlMaxSpeed(),g);
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[1],gemsColor,powerUpColor,PowerUpImages[1],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-100,font,"Bullet speed",gameConstraints.getLvlBulletSpeed(),g);
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[2],gemsColor,powerUpColor,PowerUpImages[2],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-220,font,"Bullet damage",gameConstraints.getLvlBulletDamage(),g);
-        MenuUtility.drawShopPwUpBar(this,pwUpButtons[3],gemsColor,powerUpColor,PowerUpImages[3],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-100,font,"Bullet ratio",gameConstraints.getLvlBulletRatio(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[0],gemsColor,powerUpColor,PowerUpImages[0],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-220,font,Language.allStrings.get(19),gameConstraints.getLvlMaxSpeed(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[1],gemsColor,powerUpColor,PowerUpImages[1],locker,plusIcon,gems.getCurrentFrame(),150, Settings.height-100,font,Language.allStrings.get(20),gameConstraints.getLvlBulletSpeed(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[2],gemsColor,powerUpColor,PowerUpImages[2],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-220,font,Language.allStrings.get(21),gameConstraints.getLvlBulletDamage(),g);
+        MenuUtility.drawShopPwUpBar(this,pwUpButtons[3],gemsColor,powerUpColor,PowerUpImages[3],locker,plusIcon,gems.getCurrentFrame(),Settings.width-685, Settings.height-100,font,Language.allStrings.get(22),gameConstraints.getLvlBulletRatio(),g);
 
         //purchasable shield and boost
         MenuUtility.drawPurchasableShopPwUp(this,pwUpButtons[4],gemsColor,shield.getCurrentFrame(),gems.getCurrentFrame(),locker,gameConstraints.getShieldCost(),gameConstraints.getShopShield(),Settings.width-200,Settings.height-290,70,70,font,g);
