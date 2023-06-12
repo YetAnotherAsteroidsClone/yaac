@@ -18,7 +18,7 @@ import static com.yaac.view.Utility.MenuUtility.*;
 public class MainMenu extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3]; // Immagini di background
     Font font;
-    JLabel gameLogoLabel; // Logo del gioco, punteggio massimo
+    JLabel gameLogoLabel, highscore, numHighScore; // Logo del gioco, punteggio massimo
     ImageIcon gameLogoIcon; // Icona del logo del gioco
     String commandsText; // Testo dei comandi, testo del punteggio massimo
     JTextArea commands; // Area di testo dei comandi, area di testo del punteggio massimo
@@ -67,19 +67,16 @@ public class MainMenu extends JPanel {
 
         gameLogoLabel.setBounds(widthCenter - gameLogoWidth/2, heightCenter - 280, gameLogoWidth, gameLogoHeight);
 
-        commandsText = """
-                COMANDI
-                A -> RUOTA A SINISTRA
-                D -> RUOTA A DESTRA
-                W -> ACCELERA
-                BARRA SPAZIATRICE -> SPARA
-                ESC -> PAUSA
-                BACKSPACE -> ESCI DALLA PARTITA
-                """;
-        commands = createTextArea(commandsText, 15, Settings.height - 225, 390, 250, font.deriveFont(34f), Color.YELLOW);
+        commandsText = Language.allStrings.get(5)+"\n"+Language.allStrings.get(6)+"\n"+Language.allStrings.get(7)+"\n"+Language.allStrings.get(8)+"\n"+Language.allStrings.get(9)+"\n"+Language.allStrings.get(10);
+        commands = createTextArea(commandsText, 15, Settings.height - 200, 390, 250, font.deriveFont(34f), Color.YELLOW);
+
+        highscore = createLabel(Language.allStrings.get(11),Settings.width - 220, Settings.height - 70,200,20, font, Color.YELLOW);
+        numHighScore = createLabel(""+GameConstraints.getInstance().getHighScore(),Settings.width - 220,Settings.height - 40,200,20, font, Color.WHITE);
 
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);
+        this.add(highscore);
+        this.add(numHighScore);
         this.add(commands);
     }
 
@@ -92,8 +89,7 @@ public class MainMenu extends JPanel {
         drawAndUpdateBG(g, bg);
         g.setColor(Color.YELLOW);
         g.setFont(font);
-        g.drawString("HIGH SCORE", Settings.width - 160, Settings.height - 50);
-        g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), Settings.width - 160, Settings.height - 20);
+        //g.drawString(String.valueOf(GameConstraints.getInstance().getHighScore()), Settings.width - 220, Settings.height - 20);
     }
 
     /**
