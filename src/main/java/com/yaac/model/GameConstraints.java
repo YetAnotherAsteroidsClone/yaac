@@ -33,8 +33,8 @@ public class GameConstraints {
     private final int maxGems = 15;
     private final int maxAsteroids = 20;
 
-    private boolean shopBoost = SaveFileManager.getInstance().speed();
-    private boolean shopShield = SaveFileManager.getInstance().shield();
+    private boolean shopBoost;
+    private boolean shopShield;
     private final int boostCost = 500;
     private final int shieldCost = 1000;
 
@@ -137,8 +137,6 @@ public class GameConstraints {
 
     public void setShopShield(boolean shopShield) {this.shopShield = shopShield;}
     public void setShopBoost(boolean shopBoost) {this.shopBoost = shopBoost;}
-    public boolean isShopBoostAvailable() {return shopBoost;}
-    public boolean isShopShieldAvailable() {return shopShield;}
 
     public void setScore(int score) {this.score = score;}
     public void setGems(int gems) {this.gems = gems;}
@@ -150,6 +148,8 @@ public class GameConstraints {
         highScore = SaveFileManager.getInstance().getHighScore();
         gems = SaveFileManager.getInstance().getGems();
         score= SaveFileManager.getInstance().getScore();
+        shopBoost = SaveFileManager.getInstance().speed();
+        shopShield = SaveFileManager.getInstance().shield();
     }
     private static GameConstraints instance = null;
     public static GameConstraints getInstance(){

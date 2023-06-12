@@ -20,8 +20,7 @@ public class GameSettings extends JPanel {
     ImageIcon[] settingsIcons = new ImageIcon[6];
     // [0] backIcon [1] leftArrowIcon [2] rightArrowIcon [3] leftArrowIconClicked
     // [4] rightArrowIconClicked, [5] backIconClicked
-    BufferedImage[] flags = new BufferedImage[2]; // immagini delle bandiere
-    // [0] = IT, [1] = EN
+    BufferedImage[] flags = new BufferedImage[Language.languageList.values().length]; // immagini delle bandiere
     ObjectAnimation[] bg =  new ObjectAnimation[3];
     JButton[] leftButtons = new JButton[3];
     // 0 = leftLang, 1 = leftSound, 2 = leftMusic
