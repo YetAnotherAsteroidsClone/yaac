@@ -3,6 +3,7 @@ package com.yaac.view;
 import javax.swing.*;
 import java.awt.*;
 import com.yaac.Settings;
+import com.yaac.model.Language;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 
@@ -16,17 +17,17 @@ public class GameOver extends JPanel {
     public GameOver() {
         this.setLayout(null);
         font = loadFont(35f);
-    buttons[0] = createButton("RIPROVA", widthCenter - 100, heightCenter - 80, 200, 50, font);
-    buttons[1] = createButton("MENU", widthCenter - 100, heightCenter, 200, 50, font);
-    buttons[2] = createButton("NEGOZIO", widthCenter - 100, heightCenter + 80, 200, 50, font);
-    buttons[3] = createButton("ESCI", widthCenter - 100, heightCenter + 160, 200, 50, font);
+    buttons[0] = createButton(Language.allStrings.get(29), widthCenter - 100, heightCenter - 80, 200, 50, font);
+    buttons[1] = createButton(Language.allStrings.get(30), widthCenter - 100, heightCenter, 200, 50, font);
+    buttons[2] = createButton(Language.allStrings.get(1), widthCenter - 100, heightCenter + 80, 200, 50, font);
+    buttons[3] = createButton(Language.allStrings.get(28), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
     buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
     buttons[1].addActionListener(e -> SceneManager.getInstance().loadMainMenu());
     buttons[2].addActionListener(e -> SceneManager.getInstance().loadShop());
     buttons[3].addActionListener(e -> System.exit(0));
 
-    gameOverLabel = new JLabel("GAME OVER", SwingConstants.CENTER);
+    gameOverLabel = new JLabel(Language.allStrings.get(31) + "!", SwingConstants.CENTER);
     gameOverLabel.setFont(font.deriveFont(100f));
     gameOverLabel.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
     gameOverLabel.setForeground(Color.RED);

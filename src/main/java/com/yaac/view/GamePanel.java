@@ -3,6 +3,7 @@ import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
+import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ImageUtility;
 import com.yaac.view.Utility.ObjectAnimation;
@@ -165,7 +166,7 @@ public class GamePanel extends JPanel{
         // OVERLAY: punteggio, vite, gemme, istruzioni di pausa, stage, PwUp disponibili
         g.setColor(Color.WHITE);
         g.setFont(font);
-        g.drawString("SCORE: " + game.getScore(),40,50);
+        g.drawString(Language.allStrings.get(16) + ": " + game.getScore(),40,50);
         for(int i=0; i < game.getLives();i++){
             g.drawImage(life,40*(i+1),70,null);
         }
@@ -174,10 +175,10 @@ public class GamePanel extends JPanel{
         g.setColor(Color.WHITE);
         g.drawString("x" + game.getGemCount(),GameConstraints.WORLDWIDTH-105,55);
         g.drawImage(esc,25,Settings.height-60,null);
-        g.drawString(": PAUSA",70,Settings.height-30);
+        g.drawString(": " + Language.allStrings.get(23),70,Settings.height-30);
         if(game.getStagePause()){
             g.setColor(Color.YELLOW);
-            g.drawString("STAGE "+game.getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
+            g.drawString(Language.allStrings.get(24) + " " + game.getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
         }
         g.setColor(Color.WHITE);
         if(GameConstraints.getInstance().getShopShield()){

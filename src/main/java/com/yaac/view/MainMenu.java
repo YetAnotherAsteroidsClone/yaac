@@ -67,7 +67,7 @@ public class MainMenu extends JPanel {
 
         gameLogoLabel.setBounds(widthCenter - gameLogoWidth/2, heightCenter - 280, gameLogoWidth, gameLogoHeight);
 
-        commandsText = Language.allStrings.get(5)+"\n"+Language.allStrings.get(6)+"\n"+Language.allStrings.get(7)+"\n"+Language.allStrings.get(8)+"\n"+Language.allStrings.get(9)+"\n"+Language.allStrings.get(10);
+        commandsText = Language.allStrings.get(5)+"\n"+ "A -> " + Language.allStrings.get(6)+"\n"+ "D -> " + Language.allStrings.get(7)+"\n"+ "W -> " + Language.allStrings.get(8) +"\n"+ Language.allStrings.get(9) + " -> " + Language.allStrings.get(32) +"\n"+Language.allStrings.get(10) + " -> " + Language.allStrings.get(23);
         commands = createTextArea(commandsText, 15, Settings.height - 200, 390, 250, font.deriveFont(34f), Color.YELLOW);
 
         highscore = createLabel(Language.allStrings.get(11),Settings.width - 250, Settings.height - 70,300,20, font, Color.YELLOW);

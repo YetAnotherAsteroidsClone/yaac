@@ -4,6 +4,7 @@ import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.GameConstraints;
 import com.yaac.model.Language;
+import com.yaac.view.GameSettings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -291,25 +292,27 @@ public class MenuUtility {
             throw new RuntimeException(ex);
         }
     }
-    public static void setNextLanguage(){
+    public static void setNextLanguage(GameSettings settings){
         Language.languageList[] allLanguages = Language.languageList.values();
         for(int i=0; i<allLanguages.length; i++){
             if(allLanguages[i]==Settings.language){
                 if(i==allLanguages.length-1){Language.setLanguage(allLanguages[0]);}
                 else{Language.setLanguage(allLanguages[i+1]);}
-                return;
+                break;
             }
         }
+        settings.updateStrings();
     }
-    public static void setPreviousLanguage(){
+    public static void setPreviousLanguage(GameSettings settings){
         Language.languageList[] allLanguages = Language.languageList.values();
         for(int i=0; i<allLanguages.length; i++){
             if(allLanguages[i]==Settings.language){
                 if(i==0){Language.setLanguage(allLanguages[allLanguages.length-1]);}
                 else{Language.setLanguage(allLanguages[i-1]);}
-                return;
+                break;
             }
         }
+        settings.updateStrings();
     }
 
 }

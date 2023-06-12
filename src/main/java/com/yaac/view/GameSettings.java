@@ -38,9 +38,9 @@ public class GameSettings extends JPanel {
         if (!layered)
             createBG(bg, width, height);
 
+
         int textX = width - 1088;
         font = loadFont(35f);
-
         // creazione delle label
         language = createLabel(Language.allStrings.get(13), textX, height - 535, 350, 16, font, Color.WHITE);
         music = createLabel(Language.allStrings.get(14), textX, height - 355, 350, 16, font, Color.WHITE);
@@ -87,8 +87,8 @@ public class GameSettings extends JPanel {
         flags[0] = scaleImage(flags[0],60,40);
         flags[1] = loadImage("/MenuSprite/eng.png");
         flags[1] = scaleImage(flags[1],60,40);
-        leftButtons[0].addActionListener(e -> {MenuUtility.setPreviousLanguage();});
-        rightButtons[0].addActionListener(e -> {MenuUtility.setNextLanguage();});
+        leftButtons[0].addActionListener(e -> {MenuUtility.setPreviousLanguage(this);});
+        rightButtons[0].addActionListener(e -> {MenuUtility.setNextLanguage(this);});
 
         
         // cambio del volume della musica
@@ -132,6 +132,11 @@ public class GameSettings extends JPanel {
 
     }
 
+    public void updateStrings(){
+        language.setText(Language.allStrings.get(13));
+        music.setText(Language.allStrings.get(14));
+        sound.setText(Language.allStrings.get(15));
+    }
     public void update(){
         this.repaint();
     }

@@ -2,6 +2,7 @@ package com.yaac.view;
 
 import com.yaac.Settings;
 import com.yaac.model.Game;
+import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +25,10 @@ public class PauseMenu extends JPanel {
 
         font = loadFont(35f);
 
-        buttons[0] = createButton("RIPRENDI", widthCenter - 100, heightCenter - 80, 200, 50, font);
-        buttons[1] = createButton("SALVA", widthCenter - 100, heightCenter, 200, 50, font);
-        buttons[2] = createButton("IMPOSTAZIONI", widthCenter - 100, heightCenter + 80, 200, 50, font);
-        buttons[3] = createButton("ABBANDONA", widthCenter - 100, heightCenter + 160, 200, 50, font);
+        buttons[0] = createButton(Language.allStrings.get(25), widthCenter - 100, heightCenter - 80, 200, 50, font);
+        buttons[1] = createButton(Language.allStrings.get(26), widthCenter - 100, heightCenter, 200, 50, font);
+        buttons[2] = createButton(Language.allStrings.get(27), widthCenter - 100, heightCenter + 80, 200, 50, font);
+        buttons[3] = createButton(Language.allStrings.get(28), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
         buttons[0].addActionListener(e -> SceneManager.getInstance().unloadPauseMenu());
         buttons[1].addActionListener(e -> SaveFileManager.getInstance().saveData());
@@ -42,7 +43,7 @@ public class PauseMenu extends JPanel {
             }
         });
 
-        pauseLabel = new JLabel("PAUSA", SwingConstants.CENTER);
+        pauseLabel = new JLabel(Language.allStrings.get(23), SwingConstants.CENTER);
         pauseLabel.setFont(font.deriveFont(100f));
         pauseLabel.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
         pauseLabel.setForeground(Color.YELLOW);
