@@ -125,11 +125,13 @@ public class Shop extends JPanel{
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getShieldCost());
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopShield(true);
+            SaveFileManager.getInstance().setShield(gameConstraints.getShopShield());
         });
         pwUpButtons[5].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getBoostCost());
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopBoost(true);
+            SaveFileManager.getInstance().setSpeed(gameConstraints.getShopBoost());
         });
 
         switchWeapon[0].addActionListener(actionEvent ->

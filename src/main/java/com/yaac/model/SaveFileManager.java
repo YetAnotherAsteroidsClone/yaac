@@ -114,6 +114,11 @@ public class SaveFileManager {
     public void setVolume(float volume) {this.saveFile.setVolume(volume);}
     public float getVolume() {return this.saveFile.getVolume();}
 
+    public boolean shield() {return this.saveFile.shield();}
+    public void setShield(boolean shield) {this.saveFile.setShield(shield); save();}
+    public boolean speed() {return this.saveFile.speed();}
+    public void setSpeed(boolean speed) {this.saveFile.setSpeed(speed); save();}
+
     /** Metodo per salvare il motore selezionato <br>
      * Se il motore non è sbloccato, non viene salvato
      * @param index

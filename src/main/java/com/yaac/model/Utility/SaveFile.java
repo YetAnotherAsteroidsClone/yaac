@@ -91,13 +91,16 @@ public class SaveFile implements Serializable {
         this.bulletRatioLvl = bulletRatioLvl;
     }
 
-    public boolean isShield() {
+    public boolean shield() {
         return shield;
     }
 
     public void setShield(boolean shield) {
         this.shield = shield;
     }
+
+    public boolean speed() {return speed;}
+    public void setSpeed(boolean speed) {this.speed = speed;}
 
     public int getEngine() {
         return engine;

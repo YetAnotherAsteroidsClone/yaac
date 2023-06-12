@@ -33,8 +33,8 @@ public class GameConstraints {
     private final int maxGems = 15;
     private final int maxAsteroids = 20;
 
-    private boolean shopBoost = true;
-    private boolean shopShield = true;
+    private boolean shopBoost = SaveFileManager.getInstance().speed();
+    private boolean shopShield = SaveFileManager.getInstance().shield();
     private final int boostCost = 500;
     private final int shieldCost = 1000;
 
