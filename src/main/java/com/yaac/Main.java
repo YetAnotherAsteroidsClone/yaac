@@ -8,7 +8,7 @@ import java.util.logging.FileHandler;
 
 //Dove tutto ha inizio
 public class Main {
-    public static void main(String[] args) throws IOException, FontFormatException {
+    public static void main(String[] args) throws IOException {
         Settings.LOGGER.setLevel(Settings.logLevel);
         Settings.LOGGER.addHandler(new FileHandler("yaac.log"));
 

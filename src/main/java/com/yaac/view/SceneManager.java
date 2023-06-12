@@ -7,6 +7,7 @@ import com.yaac.model.SaveFileManager;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.logging.Level;
 
 /*
     *  Classe dedicata alla gestione delle scene
@@ -85,6 +86,7 @@ public class SceneManager {
         SoundEngine.getInstance().loopMusic();
         mainMenu.requestFocus();
         mainMenuLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Main menu loaded");
     }
 
     /** Carica le impostazioni di gioco
@@ -106,6 +108,7 @@ public class SceneManager {
         gameSettings.requestFocus();
         gameSettings.grabFocus();
         gameSettingsLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Game settings loaded");
     }
 
     public void loadCredits(){
@@ -116,6 +119,7 @@ public class SceneManager {
         loadScene(credits);
         credits.requestFocus();
         creditsLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Credits loaded");
     }
 
     public void loadPauseMenu() {
@@ -124,6 +128,7 @@ public class SceneManager {
         pauseMenu.grabFocus();
         SoundEngine.getInstance().stopMusic();
         layeredPane.moveToFront(pauseMenu);
+        Settings.LOGGER.log(Level.INFO, "Game paused");
     }
 
     public void loadGameOver() {
@@ -142,6 +147,7 @@ public class SceneManager {
         controller.setLoop(gameLoop);
         gamePanel.requestFocus();
         gameLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Game started");
     }
 
     public void loadShop(){
@@ -154,6 +160,7 @@ public class SceneManager {
         loadScene(shop);
         shop.requestFocus();
         shopLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Shop opened");
     }
 
     public void unloadPauseMenu(){
@@ -162,6 +169,7 @@ public class SceneManager {
         SoundEngine.getInstance().loopMusic();
         gamePanel.requestFocus();
         gameLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Game resumed");
     }
 
     private void unloadScene(JPanel panel){
@@ -175,6 +183,7 @@ public class SceneManager {
         pauseMenu.setVisible(true);
         pauseMenu.requestFocus();
         pauseMenu.grabFocus();
+        Settings.LOGGER.log(Level.INFO, "Settings closed");
     }
 
     /**

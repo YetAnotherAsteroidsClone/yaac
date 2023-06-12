@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public class Shop extends JPanel{
 
@@ -101,36 +102,42 @@ public class Shop extends JPanel{
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlMaxSpeed()-1));
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);
+            Settings.LOGGER.log(Level.INFO, "Speed upgraded at level "+gameConstraints.getLvlMaxSpeed());
             SaveFileManager.getInstance().saveSpeedLvl();
         });
         pwUpButtons[1].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletSpeed()-1));
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);
+            Settings.LOGGER.log(Level.INFO, "Bullet speed upgraded at level "+gameConstraints.getLvlBulletSpeed());
             SaveFileManager.getInstance().saveBulletSpeedLvl();
         });
         pwUpButtons[2].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletDamage()-1));
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);
+            Settings.LOGGER.log(Level.INFO, "Bullet damage upgraded at level "+gameConstraints.getLvlBulletDamage());
             SaveFileManager.getInstance().saveBulletDmgLvl();
         });
         pwUpButtons[3].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletRatio()-1));
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);
+            Settings.LOGGER.log(Level.INFO, "Bullet ratio upgraded at level "+gameConstraints.getLvlBulletRatio());
             SaveFileManager.getInstance().saveBulletRatioLvl();
         });
         pwUpButtons[4].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getShieldCost());
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopShield(true);
+            Settings.LOGGER.log(Level.INFO, "Shield bought");
             SaveFileManager.getInstance().setShield(gameConstraints.getShopShield());
         });
         pwUpButtons[5].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getBoostCost());
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopBoost(true);
+            Settings.LOGGER.log(Level.INFO, "Boost bought");
             SaveFileManager.getInstance().setSpeed(gameConstraints.getShopBoost());
         });
 
@@ -138,19 +145,23 @@ public class Shop extends JPanel{
         {   spaceShipView.previousWeapon();
             spaceShipView.setCurrentWeaponAnimation(true);
             currentWeaponUnlocked = SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
+            Settings.LOGGER.log(Level.INFO, "Weapon changed to "+spaceShipView.getCurrentWeapon());
         });
         switchWeapon[1].addActionListener(actionEvent ->
         {   spaceShipView.nextWeapon();
             spaceShipView.setCurrentWeaponAnimation(true);
             currentWeaponUnlocked = SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
+            Settings.LOGGER.log(Level.INFO, "Weapon changed to "+spaceShipView.getCurrentWeapon());
         });
         switchEngine[0].addActionListener(actionEvent ->
         {   spaceShipView.previousEngine();
             currentEngineUnlocked = SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
+            Settings.LOGGER.log(Level.INFO, "Engine changed to "+spaceShipView.getCurrentEngine());
         });
         switchEngine[1].addActionListener(actionEvent ->
         {   spaceShipView.nextEngine();
             currentEngineUnlocked = SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
+            Settings.LOGGER.log(Level.INFO, "Engine changed to "+spaceShipView.getCurrentEngine());
         });
 
         for(JButton button : switchWeapon)

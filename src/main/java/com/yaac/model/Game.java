@@ -6,6 +6,7 @@ import com.yaac.model.Utility.*;
 import com.yaac.view.SoundEngine;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Game {
     static Game instance = null;
@@ -265,6 +266,7 @@ public class Game {
         int vx = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeedVariable(stage)) + GameConstraints.getInstance().getAsteroidMinSpeed(stage);
         int vy = (int) (Math.random() * GameConstraints.getInstance().getAsteroidMaxSpeedVariable(stage)) + GameConstraints.getInstance().getAsteroidMinSpeed(stage);
         asteroids.add(new Asteroid(x, y, vx, vy, life, dim));
+        Settings.LOGGER.log(Level.INFO, "Asteroid added with dimension: " + dim + " and life: " + life + " at position: " + x + ", " + y);
     }
 
     /**
@@ -274,6 +276,7 @@ public class Game {
     public void addBullet(Bullet b) {
         SoundEngine.getInstance().playBullet();
         bullets.add(b);
+        Settings.LOGGER.log(Level.INFO, "Bullet added at position: " + b.getX() + ", " + b.getY());
     }
 
     /**
@@ -321,6 +324,7 @@ public class Game {
                     if (CollisionUtility.bCheckCollision(bullet, asteroids)) {
                         bullet.setRadius(30);
                         newDestroyedBullets.add(bullet);
+                        Settings.LOGGER.log(Level.INFO, "Bullet destroyed at position: " + bullet.getX() + ", " + bullet.getY());
                     }
                     break;
                 case 2:
@@ -348,6 +352,7 @@ public class Game {
             for (GameObject asteroid : asteroids) {
                 if (CollisionUtility.checkCollision(bullet, asteroid) && ((Asteroid) asteroid).receiveDamage(damage)) {
                     newDestroyedAsteroids.add(asteroid);
+                    Settings.LOGGER.log(Level.INFO, "Asteroid destroyed at position: " + asteroid.getX() + ", " + asteroid.getY());
                 }
             }
         }
@@ -355,6 +360,7 @@ public class Game {
             for (GameObject asteroid : asteroids) {
                 if (CollisionUtility.checkCollision(explosion, asteroid) && ((Asteroid) asteroid).receiveDamage(((Bullet) explosion).getDamage())) {
                     newDestroyedAsteroids.add(asteroid);
+                    Settings.LOGGER.log(Level.INFO, "Missile explosion destroyed asteroid at position: " + asteroid.getX() + ", " + asteroid.getY());
                 }
             }
         }
@@ -366,6 +372,7 @@ public class Game {
         for (GameObject gem : newPickedGems) {
             gemCount += GameConstraints.getInstance().getGemValue(gem.getType());
             GameConstraints.getInstance().setGems(GameConstraints.getInstance().getGems() + GameConstraints.getInstance().getGemValue(gem.getType()));
+            Settings.LOGGER.log(Level.INFO, "Pickup gem of type " + gem.getType() + " at position: " + gem.getX() + ", " + gem.getY() + " with value: " + GameConstraints.getInstance().getGemValue(gem.getType()));
         }
         gems.removeArray(newPickedGems);
 
@@ -376,6 +383,7 @@ public class Game {
             SoundEngine.getInstance().playExplosion();
             if (scoreCount >= stage * 100) {
                 stage += 1;
+                Settings.LOGGER.log(Level.INFO, "Stage " + stage + " reached!");
                 stagePause = true;
                 for (GameObject asteroid2 : asteroids)
                     asteroid2.setTick(0);
@@ -422,13 +430,17 @@ public class Game {
         gems.clear();
         speedBoostActivated = false;
         shieldActivated = false;
-        if(lives == 0)
-            for(GameOverListener listener : gameOverListeners)
+        if(lives == 0) {
+            for (GameOverListener listener : gameOverListeners)
                 listener.onGameOver();
-        else
+            Settings.LOGGER.log(Level.INFO, "Game Over. Score: " + scoreCount + " Gems: " + gemCount + " Stage: " + stage);
+        }
+        else {
             // Invio evento di morte
-            for(OnDeathListener listener : onDeathListeners)
+            for (OnDeathListener listener : onDeathListeners)
                 listener.onDeath();
+            Settings.LOGGER.log(Level.INFO, "Death lives left: " + lives);
+        }
     }
 
     /**
