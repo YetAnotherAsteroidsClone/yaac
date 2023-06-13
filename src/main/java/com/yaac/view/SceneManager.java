@@ -3,7 +3,6 @@ package com.yaac.view;
 import com.yaac.Loop;
 import com.yaac.Settings;
 import com.yaac.controller.*;
-import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -145,7 +144,6 @@ public class SceneManager {
         gameOver = null;
         SoundEngine.getInstance().loopMusic();
         gamePanel.requestFocus();
-        Game.getInstance().resetGame();
         gameLoop.start();
         Settings.LOGGER.log(Level.INFO, "Game restarted");
     }

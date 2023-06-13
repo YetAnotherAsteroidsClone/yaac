@@ -13,6 +13,8 @@ public class Settings {
     public static final String TITLE = "YAAC - Yet Another Asteroids Clone";
     public static int width = 1280;
     public static int height = 720;
+    public static int superSecretCounter = 0;
+    public static boolean superSecretValue = true;
     public static String resourcePath = Main.class.getResource("/").getPath();
     public static final int shipSize = (int) (Game.getInstance().getSpaceShip().getRadius()*2);
     public static final String FONT = "Font.ttf";

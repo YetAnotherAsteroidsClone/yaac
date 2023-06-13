@@ -163,4 +163,10 @@ public class SaveFileManager {
         }
         return false;
     }
+
+    public void cheatCode(){
+        if(this.saveFile.getScore() < GameConstraints.getInstance().getUnlockEnginesScore(2))
+            this.saveFile.setScore(9999);
+        this.saveFile.setGems(999999);
+    }
 }
