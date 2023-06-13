@@ -123,7 +123,7 @@ public class SaveFileManager {
     public int getEngine() {return this.saveFile.getEngine();}
     public int getWeapon() {return this.saveFile.getWeapon();}
     public void setWeapon(int weapon) {this.saveFile.setWeapon(weapon);}
-    public void resetCurrent() {this.saveFile.setCurrentScore(0); this.saveFile.setCurrentGems(0); save();}
+    public void resetCurrent() {this.saveFile.setCurrentScore(0); this.saveFile.setCurrentGems(0); this.saveFile.setCheckpoint(1); save();}
     public int getHighScore() {return this.saveFile.getHighScore();}
     public int getLives() {return this.saveFile.getLives();}
     public void resetLives() {this.saveFile.setLives(GameConstraints.lives); save();}
