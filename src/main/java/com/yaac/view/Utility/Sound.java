@@ -124,5 +124,10 @@ public class Sound {
                 gainControl.setValue(value);
         }
     }
+
+    public static int decibelPercentage(float db){
+        // Decibel to percentage
+        return (int) (Math.pow(10, db / 20) * 100);
+    }
 }
 

@@ -5,6 +5,7 @@ import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
+import com.yaac.view.Utility.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,7 @@ public class GameSettings extends JPanel {
     private final JButton[] langButtons = new JButton[2];
     private boolean layered = false;
 
+    private JLabel musicVolume, soundVolume;
     public GameSettings() {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         this.setLayout(null);
@@ -45,6 +47,8 @@ public class GameSettings extends JPanel {
         language = createLabel(Language.allStrings.get(13), textX, 535, 350, 16, font, Color.WHITE);
         music = createLabel(Language.allStrings.get(14), textX, 355, 350, 16, font, Color.WHITE);
         sound = createLabel(Language.allStrings.get(15), textX, 175, 350, 16, font, Color.WHITE);
+        musicVolume = createLabel(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())), width/2+160, 355, 350, 16, font, Color.WHITE);
+        soundVolume = createLabel(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())), width/2+160, 175, 350, 16, font, Color.WHITE);
 
         // creazione delle icone del menu delle impostazioni
         settingsIcons[0] = getImageIcon("/MenuSprite/BackButton0.png",buttonsSize+10, buttonsSize+10);
@@ -94,25 +98,31 @@ public class GameSettings extends JPanel {
         // cambio del volume della musica
         rightButtons[1].addActionListener(e -> {
             SoundEngine.getInstance().increaseMusicVolume();
+            musicVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())));
         });
 
         leftButtons[1].addActionListener(e -> {
             SoundEngine.getInstance().decreaseMusicVolume();
+            musicVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())));
         });
 
         // cambio del volume degli effetti sonori
         rightButtons[2].addActionListener(e -> {
             SoundEngine.getInstance().increaseVolume();
+            soundVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())));
         });
 
         leftButtons[2].addActionListener(e -> {
             SoundEngine.getInstance().decreaseVolume();
+            soundVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())));
         });
 
         this.add(language);
         this.add(music);
         this.add(sound);
         this.add(backButton);
+        this.add(musicVolume);
+        this.add(soundVolume);
 
         setBackground(new Color(0,0,0,0));
     }
