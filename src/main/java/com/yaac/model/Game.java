@@ -6,6 +6,7 @@ import com.yaac.model.Utility.*;
 import com.yaac.view.SoundEngine;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Level;
 
 public class Game {
@@ -155,6 +156,7 @@ public class Game {
         if (pwUpShield && !shieldActivated) {
             GameConstraints.getInstance().setShopShield(false);
             shieldActivated = true;
+            Settings.LOGGER.log(Level.INFO, "Shield activated");
             tickShield = 0;
             for(OnShieldStatusChangedListener listener : onShieldStatusChangedListeners)
                 listener.onShieldStatusChanged();
@@ -164,6 +166,7 @@ public class Game {
         if (pwUpSpeed && !speedBoostActivated) {
             GameConstraints.getInstance().setShopBoost(false);
             speedBoostActivated = true;
+            Settings.LOGGER.log(Level.INFO, "Boost activated");
             tickBoost = 0;
         }
     }
@@ -204,6 +207,7 @@ public class Game {
             tickBoost++;
             if (tickBoost > GameConstraints.getInstance().getBoostDuration()) {
                 speedBoostActivated = false;
+                Settings.LOGGER.log(Level.INFO, "Boost deactivated");
                 tickBoost = 0;
             }
         }
@@ -211,6 +215,7 @@ public class Game {
             tickShield++;
             if (tickShield > GameConstraints.getInstance().getShieldDuration()) {
                 shieldActivated = false;
+                Settings.LOGGER.log(Level.INFO, "Shield deactivated");
                 tickShield = 0;
                 for(OnShieldStatusChangedListener listener : onShieldStatusChangedListeners)
                     listener.onShieldStatusChanged();
