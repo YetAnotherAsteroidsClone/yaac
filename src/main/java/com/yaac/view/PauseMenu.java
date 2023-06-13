@@ -19,6 +19,7 @@ public class PauseMenu extends JPanel {
     private final int heightCenter = Settings.height / 2;
     private final JButton[] buttons = new JButton[4];
     // [0] resumeButton, [1] saveButton, [2] settingsButton, [3] exitButton;
+    private Language.languageList lang = Settings.language;
 
     public PauseMenu() {
         this.setLayout(null);
@@ -34,7 +35,9 @@ public class PauseMenu extends JPanel {
         buttons[1].addActionListener(e -> SaveFileManager.getInstance().saveData());
         buttons[2].addActionListener(e -> SceneManager.getInstance().loadSettings(true));
         //È necessario resettare il gioco e salvare i dati quando si esce dal menu di pausa
-        buttons[3].addActionListener(e -> {SaveFileManager.getInstance().saveData(); SceneManager.getInstance().loadMainMenu(); Game.reset();});
+        buttons[3].addActionListener(e -> {
+            SceneManager.getInstance().loadMainMenu();
+            Game.reset();});
 
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -43,10 +46,7 @@ public class PauseMenu extends JPanel {
             }
         });
 
-        pauseLabel = new JLabel(Language.allStrings.get(23), SwingConstants.CENTER);
-        pauseLabel.setFont(font.deriveFont(100f));
-        pauseLabel.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
-        pauseLabel.setForeground(Color.YELLOW);
+        generateLabel();
         this.add(pauseLabel);
 
         for (JButton b : buttons)
@@ -58,6 +58,28 @@ public class PauseMenu extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawBox(g);
+        if(lang != Settings.language)
+            updateLanguage();
+    }
+
+    private void updateLanguage(){
+        lang = Settings.language;
+        this.remove(pauseLabel);
+        //Se non viene ricreato il label avviene un bug che rende visibile i confini della label rendendone lo sfondo più scuro
+        generateLabel();
+        this.add(pauseLabel);
+        buttons[0].setText(Language.allStrings.get(25));
+        buttons[1].setText(Language.allStrings.get(26));
+        buttons[2].setText(Language.allStrings.get(27));
+        buttons[3].setText(Language.allStrings.get(28));
+    }
+
+
+    private void generateLabel(){
+        pauseLabel = new JLabel(Language.allStrings.get(23), SwingConstants.CENTER);
+        pauseLabel.setFont(font.deriveFont(100f));
+        pauseLabel.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
+        pauseLabel.setForeground(Color.YELLOW);
     }
 
     public void update(){
