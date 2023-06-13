@@ -24,7 +24,7 @@ public class SceneManager {
             throw new RuntimeException(e);
         }
     }
-    private boolean inGame=false;
+    private boolean inGame;
 
     private final JFrame mainFrame;
     private MainMenu mainMenu;
@@ -34,7 +34,6 @@ public class SceneManager {
     private PauseMenu pauseMenu;
     private GamePanel gamePanel;
     private Loop gameLoop;
-
     private GameOver gameOver;
     private final JLayeredPane layeredPane;
 
@@ -76,6 +75,7 @@ public class SceneManager {
     }
 
     public void loadMainMenu() {
+        inGame = false;
         SaveFileManager.getInstance().loadSaveFile();
         mainMenu = new MainMenu();
         MainMenuController controller = new MainMenuController(mainMenu);
@@ -151,6 +151,7 @@ public class SceneManager {
     }
 
     public void loadGame(){
+        inGame = true;
         gamePanel = new GamePanel();
         GameController controller = new GameController(gamePanel);
         gamePanel.addKeyListener(controller);

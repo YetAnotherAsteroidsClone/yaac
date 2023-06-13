@@ -35,5 +35,6 @@ public class Language {
     public static void setLanguage(languageList newLanguage) {
         Settings.language = newLanguage;
         readLanguage(newLanguage);
+        SaveFileManager.getInstance().saveData();
     }
 }

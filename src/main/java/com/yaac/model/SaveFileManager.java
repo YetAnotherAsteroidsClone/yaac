@@ -46,7 +46,8 @@ public class SaveFileManager {
                     0, 0,1,0,0,
                     0,4,
                     new boolean[]{true, false, false, false},
-                    new boolean[]{true, false, false, false}, 0,0);
+                    new boolean[]{true, false, false, false}, 0,0,
+                    Language.languageList.ITA);
             save();
             Settings.LOGGER.log(Level.INFO, "New save file created");
         } catch (ClassNotFoundException e) {
@@ -85,6 +86,7 @@ public class SaveFileManager {
         this.saveFile.setCheckpoint(Game.getInstance().getStage());
         this.saveFile.setCurrentScore(Game.getInstance().getScore());
         this.saveFile.setCurrentGems(Game.getInstance().getGemCount());
+        this.saveFile.setLanguage(Settings.language);
         if(this.saveFile.getCurrentScore() > this.saveFile.getHighScore()) {
             this.saveFile.setHighScore(this.saveFile.getCurrentScore());
             GameConstraints.getInstance().setHighScore(this.saveFile.getHighScore());
@@ -134,6 +136,7 @@ public class SaveFileManager {
     public void setShield(boolean shield) {this.saveFile.setShield(shield); save();}
     public boolean speed() {return this.saveFile.speed();}
     public void setSpeed(boolean speed) {this.saveFile.setSpeed(speed); save();}
+    public Language.languageList getLanguage(){return this.saveFile.getLanguage();}
 
     /** Metodo per salvare il motore selezionato <br>
      * Se il motore non è sbloccato, non viene salvato

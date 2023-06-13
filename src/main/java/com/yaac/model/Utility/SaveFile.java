@@ -1,5 +1,7 @@
 package com.yaac.model.Utility;
 
+import com.yaac.model.Language;
+
 import java.io.Serializable;
 
 public class SaveFile implements Serializable {
@@ -22,8 +24,11 @@ public class SaveFile implements Serializable {
     private float musicVolume;
     private boolean[] unlockedEngines;
     private  boolean[] unlockedWeapons;
+    private Language.languageList language;
 
-    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int currentGems, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons, float volume, float musicVolume) {
+
+
+    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int currentGems, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons, float volume, float musicVolume, Language.languageList language) {
         this.score = score;
         this.gems = gems;
         this.speedLvl = speedLvl;
@@ -43,6 +48,7 @@ public class SaveFile implements Serializable {
         this.unlockedWeapons = unlockedWeapons;
         this.volume = volume;
         this.musicVolume = musicVolume;
+        this.language = language;
     }
 
     public int getScore() {
@@ -137,6 +143,17 @@ public class SaveFile implements Serializable {
     public void setUnlockedWeapon(int index) {this.unlockedWeapons[index] = true;}
     public void setVolume(float volume) {this.volume = volume;}
     public float getVolume() {return this.volume;}
+    public boolean isShield() {return shield;}
+
+    public boolean isSpeed() {return speed;}
+
+    public void setUnlockedEngines(boolean[] unlockedEngines) {this.unlockedEngines = unlockedEngines;}
+
+    public void setUnlockedWeapons(boolean[] unlockedWeapons) {this.unlockedWeapons = unlockedWeapons;}
+
+    public Language.languageList getLanguage() {return language;}
+
+    public void setLanguage(Language.languageList language) {this.language = language;}
     public float getMusicVolume() {return musicVolume;}
     public void setMusicVolume(float musicVolume) {this.musicVolume = musicVolume;}
 }
