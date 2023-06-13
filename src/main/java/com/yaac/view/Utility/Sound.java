@@ -100,12 +100,8 @@ public class Sound {
     public void setVolume(float value) { //Imposta il volume
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            int range = (int) ((gainControl.getMinimum()*-1) - (int) gainControl.getMaximum());
-            float gain = ((gainControl.getMinimum()*-1) * value) / 100;
-            if (gain > 0)
-                gain-=range;
-            if (gain >= gainControl.getMinimum() && gain <= gainControl.getMaximum())
-                gainControl.setValue(gain);
+            if (value >= gainControl.getMinimum() && value <= gainControl.getMaximum())
+                gainControl.setValue(value);
         }
     }
 }
