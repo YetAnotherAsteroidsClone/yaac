@@ -82,8 +82,7 @@ public class Sound {
                 value = -13;
             else
                 value -= 1.0f;
-            if (value >= gainControl.getMinimum())
-                gainControl.setValue(value);
+            gainControl.setValue(value);
             return value;
         }
         return 0;
@@ -106,8 +105,9 @@ public class Sound {
                 value = 0;
             else
                 value += 2.0f;
-            if (value <= 0) // 0db = 100%
-                gainControl.setValue(value);
+            if(value > 0)
+                value = 0; // 0db = 100%
+            gainControl.setValue(value);
             return value;
         }
         return 0;
