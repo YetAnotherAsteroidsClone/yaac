@@ -125,6 +125,11 @@ public class Sound {
         }
     }
 
+    /**
+     * Metodo che restituisce il volume in percentuale.
+     * @param db valore del volume in Decibel.
+     * @return valore del volume.
+     */
     public static int decibelPercentage(float db){
         // Decibel to percentage
         return (int) (Math.pow(10, db / 20) * 100);
