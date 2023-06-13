@@ -70,8 +70,8 @@ public class PauseMenu extends JPanel {
         this.add(pauseLabel);
         buttons[0].setText(Language.allStrings.get(25));
         buttons[1].setText(Language.allStrings.get(26));
-        buttons[2].setText(Language.allStrings.get(27));
-        buttons[3].setText(Language.allStrings.get(28));
+        buttons[2].setText(Language.allStrings.get(2));
+        buttons[3].setText(Language.allStrings.get(4));
     }
 
 

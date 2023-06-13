@@ -94,6 +94,8 @@ public class GameSettings extends JPanel {
         flags[0] = scaleImage(flags[0],60,40);
         flags[1] = loadImage("/MenuSprite/eng.png");
         flags[1] = scaleImage(flags[1],60,40);
+        flags[2] = loadImage("/MenuSprite/cal.png");
+        flags[2] = scaleImage(flags[2],60,40);
         leftButtons[0].addActionListener(e -> MenuUtility.setPreviousLanguage(this));
         rightButtons[0].addActionListener(e -> MenuUtility.setNextLanguage(this));
 
@@ -137,6 +139,7 @@ public class GameSettings extends JPanel {
         switch (Settings.language){
             case ITA -> g.drawImage(flags[0], width/2+160,language.getY()-10,null );
             case ENG -> g.drawImage(flags[1],width/2+160,language.getY()-10,null);
+            case CAL -> g.drawImage(flags[2],width/2+160,language.getY()-10,null);
         }
 
     }

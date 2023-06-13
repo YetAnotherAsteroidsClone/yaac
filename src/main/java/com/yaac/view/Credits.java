@@ -108,7 +108,7 @@ public class Credits extends JPanel {
         earthButton.setBorderPainted(false);
 
         // Easter egg label
-        JLabel easterEggCompleted = MenuUtility.createLabel(Language.allStrings.get(33), 0, 10,width,25,font.deriveFont(50f), Color.YELLOW);
+        JLabel easterEggCompleted = MenuUtility.createLabel(Language.allStrings.get(10), 0, 10,width,25,font.deriveFont(50f), Color.YELLOW);
         easterEggCompleted.setVisible(false);
         easterEggCompleted.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(easterEggCompleted);
