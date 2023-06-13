@@ -71,8 +71,8 @@ public class Game {
         destroyedBullets = new GameComponentsManager();
         lives = GameConstraints.getInstance().getLife();
         gemCount = SaveFileManager.getInstance().getCurrentGems();
-        pwUpShield = GameConstraints.getInstance().getShopShield();
-        pwUpSpeed = GameConstraints.getInstance().getShopBoost();
+        updatePwUpShield();
+        updatePwUpBoost();
         tickShield = 0;
         tickBoost = 0;
         speedBoostActivated = false;
@@ -523,5 +523,13 @@ public class Game {
         spaceShip.stopRotatingRight();
         spaceShip.stopRotatingLeft();
         spaceShip.stopAccelerating();
+    }
+
+    public void updatePwUpShield(){
+        pwUpShield = GameConstraints.getInstance().getShopShield();
+    }
+
+    public void updatePwUpBoost(){
+        pwUpSpeed = GameConstraints.getInstance().getShopBoost();
     }
 }
