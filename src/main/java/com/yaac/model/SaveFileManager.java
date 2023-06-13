@@ -105,6 +105,10 @@ public class SaveFileManager {
         save();
     }
 
+    public int getSpeedLvl(){return this.saveFile.getSpeedLvl();}
+    public int getBulletSpeedLvl(){return this.saveFile.getBulletSpeedLvl();}
+    public int getBulletDmgLvl(){return this.saveFile.getBulletDmgLvl();}
+    public int getBulletRatioLvl(){return this.saveFile.getBulletRatioLvl();}
     public void saveSpeedLvl(){this.saveFile.setSpeedLvl(GameConstraints.getInstance().getLvlMaxSpeed()); save();}
     public void saveBulletSpeedLvl(){this.saveFile.setBulletSpeedLvl(GameConstraints.getInstance().getLvlBulletSpeed()); save();}
     public void saveBulletDmgLvl(){this.saveFile.setBulletDmgLvl(GameConstraints.getInstance().getLvlBulletDamage()); save();}
@@ -164,9 +168,16 @@ public class SaveFileManager {
         return false;
     }
 
+    /** Sblocca: motori, armi e fornisce molte gemme
+     */
     public void cheatCode(){
+        /*
         if(this.saveFile.getScore() < GameConstraints.getInstance().getUnlockEnginesScore(2))
-            this.saveFile.setScore(9999);
-        this.saveFile.setGems(999999);
+            this.saveFile.setScore(9999);*/
+        this.saveFile.setUnlockedWeapons(new boolean[]{true,true,true,true});
+        this.saveFile.setUnlockedEngines(new boolean[]{true,true,true,true});
+        GameConstraints.getInstance().setGems(999999);
+        this.saveFile.setGems(GameConstraints.getInstance().getGems());
+        save();
     }
 }

@@ -14,10 +14,10 @@ public class GameConstraints {
     private int shipRotation = 7;
     private double shipDeceleration = 0.90;
 
-    private int lvlMaxSpeed=1;
-    private int lvlBulletSpeed=1;
-    private int lvlBulletDamage=1;
-    private int lvlBulletRatio=1;
+    private int lvlMaxSpeed;
+    private int lvlBulletSpeed;
+    private int lvlBulletDamage;
+    private int lvlBulletRatio;
 
     private final double maxSpeedCoefficient = 1.1;
     private final double accelerationCoefficient = 1.1;
@@ -150,6 +150,10 @@ public class GameConstraints {
         score= SaveFileManager.getInstance().getScore();
         shopBoost = SaveFileManager.getInstance().speed();
         shopShield = SaveFileManager.getInstance().shield();
+        lvlBulletDamage = SaveFileManager.getInstance().getBulletDmgLvl();
+        lvlBulletRatio = SaveFileManager.getInstance().getBulletRatioLvl();
+        lvlBulletSpeed = SaveFileManager.getInstance().getBulletSpeedLvl();
+        lvlMaxSpeed = SaveFileManager.getInstance().getSpeedLvl();
     }
     private static GameConstraints instance = null;
     public static GameConstraints getInstance(){
