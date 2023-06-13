@@ -69,28 +69,48 @@ public class Sound {
 
     /**
      * Metodo che riduce il volume del file audio di un'unità.
+     * @return valore del volume dopo la riduzione.
      */
-    public void reduceVolume() {
+    public float reduceVolume() {
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float value = gainControl.getValue();
-            value -= 1.0f;
+            // Pseudo regolare cambio volume
+            if(value <= -13)
+                value=-80;
+            else if(value <= -10)
+                value = -13;
+            else
+                value -= 1.0f;
             if (value >= gainControl.getMinimum())
                 gainControl.setValue(value);
+            return value;
         }
+        return 0;
     }
 
     /**
      * Metodo che aumenta il volume del file audio di un'unità.
+     * @return valore del volume dopo l'aumento.
      */
-    public void incrementVolume() {
+    public float incrementVolume() {
         if (clip != null) {
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             float value = gainControl.getValue();
-            value += 1.0f;
-            if (value <= gainControl.getMaximum())
+            // Pseudo regolare cambio volume
+            if(value == -80)
+                value = -13;
+            else if(value == -13)
+                value = -10;
+            else if(value <= 0 && value >= -1)
+                value = 0;
+            else
+                value += 2.0f;
+            if (value <= 0) // 0db = 100%
                 gainControl.setValue(value);
+            return value;
         }
+        return 0;
     }
 
     /**

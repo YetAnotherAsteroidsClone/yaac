@@ -1,5 +1,6 @@
 package com.yaac.view;
 
+import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.Sound;
 
 import java.util.ArrayList;
@@ -25,9 +26,13 @@ public class SoundEngine {
     private int currentSound = -1;
     private boolean enabled = true;
     private boolean loop = false;
-    private float volume = 0f;
+    private float volume = SaveFileManager.getInstance().getVolume();
+    private float musicVolume = SaveFileManager.getInstance().getMusicVolume();
 
     private void run() {
+        for(int i = 0; i < audio.size() - 1; i++)
+            audio.get(i).setVolume(volume);
+        audio.get(4).setVolume(musicVolume);
         if(executor != null)
             return;
         executor = Executors.newSingleThreadScheduledExecutor();
@@ -101,11 +106,33 @@ public class SoundEngine {
         }
     }
 
-    public void setVolume(float volume){
+    public void increaseVolume(){
         synchronized (this) {
-            this.volume = volume;
-            for (Sound sound : audio)
-                sound.setVolume(volume);
+            for (int i = 0; i < audio.size()-1; i++)
+                volume = audio.get(i).incrementVolume();
+            SaveFileManager.getInstance().setVolume(volume);
+        }
+    }
+
+    public void decreaseVolume(){
+        synchronized (this) {
+            for (int i = 0; i < audio.size()-1; i++)
+                volume = audio.get(i).reduceVolume();
+            SaveFileManager.getInstance().setVolume(volume);
+        }
+    }
+
+    public void increaseMusicVolume(){
+        synchronized (this) {
+            musicVolume = audio.get(4).incrementVolume();
+            SaveFileManager.getInstance().setMusicVolume(musicVolume);
+        }
+    }
+
+    public void decreaseMusicVolume(){
+        synchronized (this) {
+            musicVolume = audio.get(4).reduceVolume();
+            SaveFileManager.getInstance().setMusicVolume(musicVolume);
         }
     }
 

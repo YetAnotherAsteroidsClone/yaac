@@ -46,7 +46,7 @@ public class SaveFileManager {
                     0, 0,1,0,0,
                     0,4,
                     new boolean[]{true, false, false, false},
-                    new boolean[]{true, false, false, false}, 100);
+                    new boolean[]{true, false, false, false}, 0,0);
             save();
             Settings.LOGGER.log(Level.INFO, "New save file created");
         } catch (ClassNotFoundException e) {
@@ -126,9 +126,10 @@ public class SaveFileManager {
     private boolean isEngineUnlocked(int index) {return getUnlockedEngines()[index];}
     private boolean isWeaponUnlocked(int index) {return getUnlockedWeapons()[index];}
     public void updateGems(){this.saveFile.setGems(GameConstraints.getInstance().getGems()); save();}
-    public void setVolume(float volume) {this.saveFile.setVolume(volume);}
+    public void setVolume(float volume) {this.saveFile.setVolume(volume); save();}
     public float getVolume() {return this.saveFile.getVolume();}
-
+    public float getMusicVolume() {return this.saveFile.getMusicVolume();}
+    public void setMusicVolume(float musicVolume) {this.saveFile.setMusicVolume(musicVolume); save();}
     public boolean shield() {return this.saveFile.shield();}
     public void setShield(boolean shield) {this.saveFile.setShield(shield); save();}
     public boolean speed() {return this.saveFile.speed();}

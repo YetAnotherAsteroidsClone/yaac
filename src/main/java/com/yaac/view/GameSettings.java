@@ -93,24 +93,20 @@ public class GameSettings extends JPanel {
         
         // cambio del volume della musica
         rightButtons[1].addActionListener(e -> {
-            SoundEngine.getInstance().setVolume(SaveFileManager.getInstance().getVolume() + 5f);
-            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+            SoundEngine.getInstance().increaseMusicVolume();
         });
 
         leftButtons[1].addActionListener(e -> {
-            SoundEngine.getInstance().setVolume(SaveFileManager.getInstance().getVolume() - 5f);
-            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+            SoundEngine.getInstance().decreaseMusicVolume();
         });
 
         // cambio del volume degli effetti sonori
         rightButtons[2].addActionListener(e -> {
-            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume() + 5f);
-            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+            SoundEngine.getInstance().increaseVolume();
         });
 
         leftButtons[2].addActionListener(e -> {
-            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume() - 5f);
-            SaveFileManager.getInstance().setVolume(SaveFileManager.getInstance().getVolume());
+            SoundEngine.getInstance().decreaseVolume();
         });
 
         this.add(language);
