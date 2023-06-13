@@ -3,11 +3,14 @@ package com.yaac.view.Utility;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import com.yaac.model.Utility.DrawListener;
 
 /** Classe che rappresenta un oggetto composto da più immagini
  * Utilizzata per la gestione delle animazioni e gli sprites
  */
 public class CompositeSprite {
+
+    private final ArrayList<DrawListener> drawListeners;
 
     /** ArrayList contenente le animazioni
      */
@@ -18,9 +21,15 @@ public class CompositeSprite {
     /** ArrayList contenente le immagini
      */
     private final ArrayList<Image> images;
+    /** Immagini abilitate
+     */
+    private boolean imagesEnabled;
     /** ArrayList contenente gli sprites
      */
     private final ArrayList<Image> sprites;
+    /** Sprite abilitato
+     */
+    private boolean spriteEnabled;
     /** Indice dello sprite corrente
      */
     private int currentSprite = 0;
@@ -35,6 +44,9 @@ public class CompositeSprite {
         this.images = images;
         this.sprites = sprites;
         this.overlayAnimations = overlayAnimations;
+        this.drawListeners = new ArrayList<>();
+        this.spriteEnabled = true;
+        this.imagesEnabled = true;
     }
 
     /** Metodo per il disegno dello sprite corrente
@@ -48,11 +60,15 @@ public class CompositeSprite {
             animDraw(g2d, animation);
         }
         for(Image image : images)
-            g2d.drawImage(image, 0, 0, null);
-        g2d.drawImage(sprites.get(currentSprite), 0, 0, null);
+            if(imagesEnabled)
+                g2d.drawImage(image, 0, 0, null);
+        if(spriteEnabled)
+            g2d.drawImage(sprites.get(currentSprite), 0, 0, null);
         for(ObjectAnimation animation : overlayAnimations)
             animDraw(g2d, animation);
         g2d.dispose();
+        for(DrawListener drawListener : drawListeners)
+            drawListener.drawAction();
         return sprite;
     }
 
@@ -158,4 +174,18 @@ public class CompositeSprite {
         overlayAnimations.get(index).disable();
         overlayAnimations.get(index).setDrawable(drawable);
     }
+
+    public void addDrawListener(DrawListener drawListener){
+        drawListeners.add(drawListener);
+    }
+
+    /** Imposta lo stato dello sprite (se da disegnare o meno)
+     * @param spriteEnabled true se va disegnato, false altrimenti
+     */
+    public void setSprite(boolean spriteEnabled) {this.spriteEnabled = spriteEnabled;}
+
+    /** Imposta lo stato delle immagini (se da disegnare o meno)
+     * @param imagesEnabled true se va disegnato, false altrimenti
+     */
+    public void setImages(boolean imagesEnabled) {this.imagesEnabled = imagesEnabled;}
 }

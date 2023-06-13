@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import com.yaac.Loop;
 
 /**
  * Classe che gestisce il pannello di gioco.
@@ -20,6 +21,7 @@ import java.util.Objects;
 public class GamePanel extends JPanel{
 
     Game game;
+    Loop loop;
     private final SpaceShipView spaceShipView;
     private final ObjectAnimation backgroundL1;
     private final ObjectAnimation backgroundL2;
@@ -94,11 +96,22 @@ public class GamePanel extends JPanel{
         // Caricamento della nave
         spaceShipView = new SpaceShipView(Settings.shipSize, Settings.shipSize);
         spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
-        spaceShipView.setCurrentWeaponAnimation(false);
         spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         spaceShipView.setBody(GameConstraints.lives - SaveFileManager.getInstance().getLives());
-        game.addOnDeathListener(() -> {spaceShipView.nextBody(); SoundEngine.getInstance().playExplosion();});
-        game.addGameOverListener(() -> {SaveFileManager.getInstance().saveData(); SaveFileManager.getInstance().resetCurrent(); SaveFileManager.getInstance().resetLives(); game.resetGame(); spaceShipView.nextBody();});
+        game.addOnDeathListener(() -> {
+            spaceShipView.setExplosion(true);
+            spaceShipView.nextBody();
+            SoundEngine.getInstance().playExplosion();});
+        game.addGameOverListener(() -> {
+            spaceShipView.setExplosion(true);
+            SoundEngine.getInstance().playExplosion();
+            SaveFileManager.getInstance().saveData();
+            SaveFileManager.getInstance().resetCurrent();
+            SaveFileManager.getInstance().resetLives();
+            loop.stop();
+            SceneManager.getInstance().loadGameOver();
+            game.stopAllActions();
+            spaceShipView.nextBody();});
         game.addOnShieldStatusChangedListener(() -> spaceShipView.setShield(game.isShielded()));
         game.setBulletType(spaceShipView.getCurrentWeapon());
 
@@ -204,5 +217,9 @@ public class GamePanel extends JPanel{
     //Restituisce la maschera di creazione della nave
     public SpaceShipView getSpaceShipView() {
         return spaceShipView;
+    }
+
+    public void addLoop(Loop loop){
+        this.loop = loop;
     }
 }

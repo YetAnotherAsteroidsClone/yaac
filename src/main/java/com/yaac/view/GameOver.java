@@ -22,7 +22,7 @@ public class GameOver extends JPanel {
     buttons[2] = createButton(Language.allStrings.get(1), widthCenter - 100, heightCenter + 80, 200, 50, font);
     buttons[3] = createButton(Language.allStrings.get(28), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
-    buttons[0].addActionListener(e -> SceneManager.getInstance().loadGame());
+    buttons[0].addActionListener(e -> SceneManager.getInstance().unloadGameOver());
     buttons[1].addActionListener(e -> SceneManager.getInstance().loadMainMenu());
     buttons[2].addActionListener(e -> SceneManager.getInstance().loadShop());
     buttons[3].addActionListener(e -> System.exit(0));

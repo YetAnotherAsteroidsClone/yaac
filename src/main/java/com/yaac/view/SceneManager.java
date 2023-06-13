@@ -3,6 +3,7 @@ package com.yaac.view;
 import com.yaac.Loop;
 import com.yaac.Settings;
 import com.yaac.controller.*;
+import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -135,7 +136,18 @@ public class SceneManager {
         gameOver = new GameOver();
         loadScene(gameOver, JLayeredPane.DEFAULT_LAYER);
         gameOver.grabFocus();
-        layeredPane.moveToFront(pauseMenu);
+        layeredPane.moveToFront(gameOver);
+        Settings.LOGGER.log(Level.INFO, "Game over screen loaded");
+    }
+
+    public void unloadGameOver(){
+        unloadScene(gameOver);
+        gameOver = null;
+        SoundEngine.getInstance().loopMusic();
+        gamePanel.requestFocus();
+        Game.getInstance().resetGame();
+        gameLoop.start();
+        Settings.LOGGER.log(Level.INFO, "Game restarted");
     }
 
     public void loadGame(){
@@ -146,6 +158,7 @@ public class SceneManager {
         loadScene(gamePanel);
         controller.setLoop(gameLoop);
         gamePanel.requestFocus();
+        gamePanel.addLoop(gameLoop);
         gameLoop.start();
         Settings.LOGGER.log(Level.INFO, "Game started");
     }

@@ -1,5 +1,6 @@
 package com.yaac.model;
 
+import com.yaac.Settings;
 import com.yaac.model.Utility.SaveFile;
 
 import java.io.FileInputStream;
@@ -7,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
 
 public class SaveFileManager {
 
@@ -29,11 +31,24 @@ public class SaveFileManager {
             FileInputStream file = new FileInputStream("data");
             ObjectInputStream in = new ObjectInputStream(file);
             this.saveFile = (SaveFile) in.readObject();
+            if(this.saveFile.getLives() == 0) {
+                Settings.LOGGER.log(Level.INFO, "Save file found, but lives are 0, resetting");
+                this.saveFile.setLives(GameConstraints.lives);
+            }
             in.close();
             file.close();
         } catch (IOException e) {
-            this.saveFile = new SaveFile(0, 0, 1, 1, 1, 1, false,false, 0, 0,1,0,0,0,4, new boolean[]{true, false, false, false}, new boolean[]{true, false, false, false}, 100);
+            Settings.LOGGER.log(Level.INFO, "Save file not found, creating new one");
+            this.saveFile = new SaveFile(
+                    0, 0,
+                    1, 1, 1, 1,
+                    false,false,
+                    0, 0,1,0,0,
+                    0,4,
+                    new boolean[]{true, false, false, false},
+                    new boolean[]{true, false, false, false}, 100);
             save();
+            Settings.LOGGER.log(Level.INFO, "New save file created");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

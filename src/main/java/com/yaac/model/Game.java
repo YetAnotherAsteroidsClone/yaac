@@ -32,6 +32,8 @@ public class Game {
     int stageTickTransition;
     int stage;
     boolean stagePause;
+    boolean deathPause;
+    int deathTick;
 
     public static double isBoostActivated() {
         return speedBoostActivated ? 1.0 : 0.0;
@@ -43,6 +45,9 @@ public class Game {
 
     public boolean getStagePause() {
         return stagePause;
+    }
+    public boolean getDeathPause() {
+        return deathPause;
     }
 
     /**
@@ -56,6 +61,7 @@ public class Game {
         stagePause = true;
         tick = 0;
         stageTickTransition =50;
+        deathTick = 10;
         this.spaceShip = new SpaceShip(Settings.width/2,Settings.height/2);
         bullets = new GameComponentsManager();
         asteroids = new GameComponentsManager();
@@ -116,16 +122,22 @@ public class Game {
 
     //Metodi per gestire i comandi impartiti dal giocatore
     public void startRotateRight(){
-        spaceShip.startRotatingRight();
+        if(!deathPause)
+            spaceShip.startRotatingRight();
     }
     public void startRotateLeft(){
-        spaceShip.startRotatingLeft();
+        if(!deathPause)
+            spaceShip.startRotatingLeft();
     }
     public void startAccelerate(){
-        spaceShip.startAccelerating();
+        if(!deathPause)
+            spaceShip.startAccelerating();
     }
     public void startShoot(){
-        spaceShip.startShooting();
+        if(!deathPause)
+            spaceShip.startShooting();
+        if(deathPause && spaceShip.isShooting())
+            stopShot();
     }
     public void stopRotateRight(){
         spaceShip.stopRotatingRight();
@@ -169,7 +181,7 @@ public class Game {
         gems.update();
 
         // Generazione degli asteroidi
-        if (!stagePause && tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids(stage)) {
+        if (!deathPause && !stagePause && tick % GameConstraints.getInstance().getAsteroidsSpawnRate(stage) == 0 && asteroids.size() < GameConstraints.getInstance().getMaxAsteroids(stage)) {
             addRandomAsteroid();
         }
 
@@ -184,6 +196,8 @@ public class Game {
 
         //cambio stage
         if (stagePause) {stageChangeTransition();}
+
+        if (deathPause) {deathPauseTransition();}
 
         // Aggiornamento dei tick
         if (speedBoostActivated) {
@@ -210,6 +224,15 @@ public class Game {
             SaveFileManager.getInstance().saveData();
         if(stageTickTransition<=0){stagePause = false; stageTickTransition=50;}
         else{stageTickTransition--;}
+    }
+
+    private void deathPauseTransition(){
+        spaceShip.stopShooting();
+        spaceShip.stopRotatingRight();
+        spaceShip.stopRotatingLeft();
+        spaceShip.stopAccelerating();
+        if(deathTick<=0){deathPause = false; deathTick=10; spaceShip.reset();}
+        else{deathTick--;}
     }
 
     private void removeVanishedGems() {
@@ -417,7 +440,6 @@ public class Game {
      */
     public void loseLife(){
         lives--;
-        spaceShip.reset();
         for (GameObject asteroid : asteroids)
             asteroid.setTick(0);
         for (GameObject bullet : bullets)
@@ -439,6 +461,7 @@ public class Game {
             // Invio evento di morte
             for (OnDeathListener listener : onDeathListeners)
                 listener.onDeath();
+            deathPause = true;
             Settings.LOGGER.log(Level.INFO, "Death lives left: " + lives);
         }
     }
@@ -463,6 +486,7 @@ public class Game {
         lives = GameConstraints.lives;
         scoreCount = 0;
         gemCount = 0;
+        spaceShip.reset();
     }
 
     public static void reset(){
@@ -484,5 +508,15 @@ public class Game {
 
     public boolean isShielded(){
         return shieldActivated;
+    }
+
+    /**
+     * Metodo per fermare tutte le azioni della navicella
+     */
+    public void stopAllActions(){
+        spaceShip.stopShooting();
+        spaceShip.stopRotatingRight();
+        spaceShip.stopRotatingLeft();
+        spaceShip.stopAccelerating();
     }
 }

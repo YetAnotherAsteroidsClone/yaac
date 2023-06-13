@@ -1,5 +1,6 @@
 package com.yaac.view;
 
+import com.yaac.model.Game;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.CompositeSprite;
 import com.yaac.view.Utility.ImageUtility;
@@ -18,12 +19,11 @@ public class SpaceShipView {
     private final ArrayList<EngineView> engines;
     private final ArrayList<EngineView> locked_engines;
     private final CompositeSprite spaceship;
-    private ObjectAnimation shield;
-    private ObjectAnimation boost;
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
     private int currentBody = 0;
     private boolean idleState = true;
+    private boolean explosion = false;
 
     /** Costruttore della classe SpaceShipView
      * @param width larghezza
@@ -113,21 +113,29 @@ public class SpaceShipView {
                 weapons.set(i, locked_weapons.get(i-1));
         }
 
-        shield = new ObjectAnimation("/GameSprite/PowerUpShield.png");
+        ObjectAnimation shield = new ObjectAnimation("/GameSprite/PowerUpShield.png");
         shield.scaleImage(width, height);
+
+        ObjectAnimation boost = new ObjectAnimation("/GameSprite/ShopBoost.png");
+        boost.scaleImage(width, height);
+
+        ObjectAnimation explosion = new ObjectAnimation("/GameSprite/BulletExplosionAnimation.png");
+        explosion.scaleImage(width, height);
 
         /*
         * Indici:
-        * Array animazioni: 0 = EnginePowering, 1 = EngineIdle, 2 = weapons
+        * Array animazioni: 0 = EnginePowering, 1 = EngineIdle, 2 = weapons, 3 = explosion
         * Array immagini: 0 = baseEngine
         * Array sprite: 0 = body1, 1 = body2, 2 = body3, 3 = body4
          */
         spaceship = new CompositeSprite(
-                new ArrayList<>(List.of(engines.get(currentEngine).getPoweringState(), engines.get(currentEngine).getIdleState(), weapons.get(currentWeapon))),
+                new ArrayList<>(List.of(engines.get(currentEngine).getPoweringState(), engines.get(currentEngine).getIdleState(), weapons.get(currentWeapon), explosion)),
                 new ArrayList<>(List.of(engines.get(currentEngine).getEngine())),
-                bodies,new ArrayList<>(List.of(shield)));
-        setPowering(false);
-        setShield(false);
+                bodies,new ArrayList<>(List.of(shield, boost)));
+        enableAnimations();
+        //Se è stata attivata un'esplosione disattiva l'animazione dopo che è stata eseguita una volta
+        spaceship.addDrawListener(()->{if(this.explosion && !Game.getInstance().getDeathPause()) setExplosion(false);});
+        setExplosion(false);
     }
 
     /** Imposta l'animazione del motore
@@ -242,6 +250,13 @@ public class SpaceShipView {
             spaceship.disableOverlayAnimation(0, false);
     }
 
+    public void setBoost(boolean boost){
+        if(boost)
+            spaceship.enableOverlayAnimation(1, true);
+        else
+            spaceship.disableOverlayAnimation(1, false);
+    }
+
     /** Ritorna l'indice del motore corrente
      * @return
      */
@@ -254,5 +269,44 @@ public class SpaceShipView {
      */
     public int getCurrentEngine() {
         return currentEngine;
+    }
+
+    /** Disabilita tutte le animazioni della navicella
+     * @return
+     */
+    private void disableAnimations(){
+        spaceship.disableAnimation(0, false);
+        spaceship.disableAnimation(1, false);
+        spaceship.disableAnimation(2, false);
+        spaceship.setSprite(false);
+        spaceship.setImages(false);
+    }
+
+    /** Abilita le animazioni della navicella
+     * @return
+     */
+    public void enableAnimations(){
+        setPowering(false);
+        setCurrentWeaponAnimation(false);
+        setShield(false);
+        setBoost(false);
+        spaceship.setSprite(true);
+        spaceship.setImages(true);
+    }
+
+    /** Imposta l'animazione dell'esplosione della navicella
+     * @param explosion
+     */
+    public void setExplosion(boolean explosion){
+        if(explosion) {
+            spaceship.enableAnimation(3, true);
+            disableAnimations();
+            this.explosion = true;
+        }
+        else {
+            spaceship.disableAnimation(3, false);
+            enableAnimations();
+            this.explosion = false;
+        }
     }
 }
