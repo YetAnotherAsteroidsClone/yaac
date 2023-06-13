@@ -90,12 +90,16 @@ public class GameSettings extends JPanel {
         });
 
         // creazione delle bandiere e dei bottoni per la lingua
-        flags[0] = loadImage("/MenuSprite/ita.png");
+        flags[0] = loadImage("/Languages/ita.png");
         flags[0] = scaleImage(flags[0],60,40);
-        flags[1] = loadImage("/MenuSprite/eng.png");
+        flags[1] = loadImage("/Languages/eng.png");
         flags[1] = scaleImage(flags[1],60,40);
-        flags[2] = loadImage("/MenuSprite/cal.png");
+        flags[2] = loadImage("/Languages/spa.png");
         flags[2] = scaleImage(flags[2],60,40);
+        flags[3] = loadImage("/Languages/fra.png");
+        flags[3] = scaleImage(flags[3],60,40);
+        flags[4] = loadImage("/Languages/cal.png");
+        flags[4] = scaleImage(flags[4],60,40);
         leftButtons[0].addActionListener(e -> MenuUtility.setPreviousLanguage(this));
         rightButtons[0].addActionListener(e -> MenuUtility.setNextLanguage(this));
 
@@ -139,7 +143,9 @@ public class GameSettings extends JPanel {
         switch (Settings.language){
             case ITA -> g.drawImage(flags[0], width/2+160,language.getY()-10,null );
             case ENG -> g.drawImage(flags[1],width/2+160,language.getY()-10,null);
-            case CAL -> g.drawImage(flags[2],width/2+160,language.getY()-10,null);
+            case SPA -> g.drawImage(flags[2],width/2+160,language.getY()-10,null);
+            case FRA -> g.drawImage(flags[3],width/2+160,language.getY()-10,null);
+            case CAL -> g.drawImage(flags[4],width/2+160,language.getY()-10,null);
         }
 
     }
