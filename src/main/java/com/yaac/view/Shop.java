@@ -1,6 +1,7 @@
 package com.yaac.view;
 import com.yaac.Main;
 import com.yaac.Settings;
+import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
@@ -105,6 +106,7 @@ public class Shop extends JPanel{
             gameConstraints.setLvlMaxSpeed(gameConstraints.getLvlMaxSpeed()+1);
             Settings.LOGGER.log(Level.INFO, "Speed upgraded at level "+gameConstraints.getLvlMaxSpeed());
             SaveFileManager.getInstance().saveSpeedLvl();
+            gemCount.setText("x"+gameConstraints.getGems());
         });
         pwUpButtons[1].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletSpeed()-1));
@@ -112,6 +114,7 @@ public class Shop extends JPanel{
             gameConstraints.setLvlBulletSpeed(gameConstraints.getLvlBulletSpeed()+1);
             Settings.LOGGER.log(Level.INFO, "Bullet speed upgraded at level "+gameConstraints.getLvlBulletSpeed());
             SaveFileManager.getInstance().saveBulletSpeedLvl();
+            gemCount.setText("x"+gameConstraints.getGems());
         });
         pwUpButtons[2].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletDamage()-1));
@@ -119,6 +122,7 @@ public class Shop extends JPanel{
             gameConstraints.setLvlBulletDamage(gameConstraints.getLvlBulletDamage()+1);
             Settings.LOGGER.log(Level.INFO, "Bullet damage upgraded at level "+gameConstraints.getLvlBulletDamage());
             SaveFileManager.getInstance().saveBulletDmgLvl();
+            gemCount.setText("x"+gameConstraints.getGems());
         });
         pwUpButtons[3].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getCost(gameConstraints.getLvlBulletRatio()-1));
@@ -126,20 +130,25 @@ public class Shop extends JPanel{
             gameConstraints.setLvlBulletRatio(gameConstraints.getLvlBulletRatio()+1);
             Settings.LOGGER.log(Level.INFO, "Bullet ratio upgraded at level "+gameConstraints.getLvlBulletRatio());
             SaveFileManager.getInstance().saveBulletRatioLvl();
+            gemCount.setText("x"+gameConstraints.getGems());
         });
         pwUpButtons[4].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getShieldCost());
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopShield(true);
+            Game.getInstance().updatePwUpShield();
             Settings.LOGGER.log(Level.INFO, "Shield bought");
             SaveFileManager.getInstance().setShield(gameConstraints.getShopShield());
+            gemCount.setText("x"+gameConstraints.getGems());
         });
         pwUpButtons[5].addActionListener(actionEvent -> {
             gameConstraints.setGems(gameConstraints.getGems()-gameConstraints.getBoostCost());
             SaveFileManager.getInstance().updateGems();
             gameConstraints.setShopBoost(true);
+            Game.getInstance().updatePwUpBoost();
             Settings.LOGGER.log(Level.INFO, "Boost bought");
             SaveFileManager.getInstance().setSpeed(gameConstraints.getShopBoost());
+            gemCount.setText("x"+gameConstraints.getGems());
         });
 
         switchWeapon[0].addActionListener(actionEvent ->
