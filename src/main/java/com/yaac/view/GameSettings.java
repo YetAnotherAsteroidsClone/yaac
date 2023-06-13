@@ -18,28 +18,26 @@ import static com.yaac.Settings.*;
 public class GameSettings extends JPanel {
     Font font;
     JLabel language, sound, music;
+
+    // [0] backIcon [1] leftArrowIcon [2] rightArrowIcon
+    // [3] leftArrowIconClicked [4] rightArrowIconClicked, [5] backIconClicked
     ImageIcon[] settingsIcons = new ImageIcon[6];
-    // [0] backIcon [1] leftArrowIcon [2] rightArrowIcon [3] leftArrowIconClicked
-    // [4] rightArrowIconClicked, [5] backIconClicked
     BufferedImage[] flags = new BufferedImage[Language.languageList.values().length]; // immagini delle bandiere
     ObjectAnimation[] bg =  new ObjectAnimation[3];
-    JButton[] leftButtons = new JButton[3];
-    // 0 = leftLang, 1 = leftSound, 2 = leftMusic
-    JButton[] rightButtons = new JButton[3];
-    // 0 = rightLang, 1 = rightSound, 2 = rightMusic
-    private final JButton backButton;
-    private final int settingsY = height / 20;
-    private final int buttonsSize = 30;
-    private final JButton[] langButtons = new JButton[2];
-    private boolean layered = false;
 
-    private JLabel musicVolume, soundVolume;
+    // 0 = leftLang, 1 = leftSound, 2 = leftMusic
+    JButton[] leftButtons = new JButton[3];
+
+    // 0 = rightLang, 1 = rightSound, 2 = rightMusic
+    JButton[] rightButtons = new JButton[3];
+    private boolean layered = false;
+    private final JLabel musicVolume;
+    private final JLabel soundVolume;
     public GameSettings() {
-        this.setPreferredSize(new Dimension(Settings.width, Settings.height));
+        this.setPreferredSize(new Dimension(width, height));
         this.setLayout(null);
         if (!layered)
             createBG(bg, width, height);
-
 
         int textX = 192;
         font = loadFont(35f);
@@ -51,14 +49,15 @@ public class GameSettings extends JPanel {
         soundVolume = createLabel(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())), width/2+160, 175, 350, 16, font, Color.WHITE);
 
         // creazione delle icone del menu delle impostazioni
-        settingsIcons[0] = getImageIcon("/MenuSprite/BackButton0.png",buttonsSize+10, buttonsSize+10);
+        int buttonsSize = 30;
+        settingsIcons[0] = getImageIcon("/MenuSprite/BackButton0.png", buttonsSize +10, buttonsSize +10);
         settingsIcons[1] = getImageIcon("/MenuSprite/leftArrow0.png", buttonsSize, buttonsSize);
         settingsIcons[2] = getImageIcon("/MenuSprite/rightArrow0.png", buttonsSize, buttonsSize);
         settingsIcons[3] = getImageIcon("/MenuSprite/leftArrow1.png", buttonsSize, buttonsSize);
         settingsIcons[4] = getImageIcon("/MenuSprite/rightArrow1.png", buttonsSize, buttonsSize);
-        settingsIcons[5] = getImageIcon("/MenuSprite/backButton1.png", buttonsSize+10, buttonsSize+10);
+        settingsIcons[5] = getImageIcon("/MenuSprite/backButton1.png", buttonsSize +10, buttonsSize +10);
 
-        backButton = new JButton();
+        JButton backButton = new JButton();
         backButton.setRolloverIcon(settingsIcons[5]);
         drawJButton(backButton, settingsIcons[0], width-1216, height-684, buttonsSize, buttonsSize, settingsIcons[5]);
 
@@ -84,15 +83,19 @@ public class GameSettings extends JPanel {
         }
 
         // Se le impostazioni si trovano in un layer allora siamo certi che sono state caricate dal menu di pausa
-        backButton.addActionListener(e -> {if(layered) SceneManager.getInstance().unloadSettings(); else SceneManager.getInstance().loadMainMenu();});
+        backButton.addActionListener(e -> {
+            if (layered)
+                SceneManager.getInstance().unloadSettings();
+            else SceneManager.getInstance().loadMainMenu();
+        });
 
         // creazione delle bandiere e dei bottoni per la lingua
         flags[0] = loadImage("/MenuSprite/ita.png");
         flags[0] = scaleImage(flags[0],60,40);
         flags[1] = loadImage("/MenuSprite/eng.png");
         flags[1] = scaleImage(flags[1],60,40);
-        leftButtons[0].addActionListener(e -> {MenuUtility.setPreviousLanguage(this);});
-        rightButtons[0].addActionListener(e -> {MenuUtility.setNextLanguage(this);});
+        leftButtons[0].addActionListener(e -> MenuUtility.setPreviousLanguage(this));
+        rightButtons[0].addActionListener(e -> MenuUtility.setNextLanguage(this));
 
         
         // cambio del volume della musica
