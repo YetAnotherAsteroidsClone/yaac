@@ -27,7 +27,6 @@ public class GamePanel extends JPanel{
     private final ObjectAnimation backgroundL2;
     private final ObjectAnimation backgroundL3;
     private final Font font;
-    private Font stageFont;
     private BufferedImage life;
     private final BufferedImage asteroidsImage;
     private BufferedImage esc;

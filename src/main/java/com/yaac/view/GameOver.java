@@ -34,7 +34,9 @@ public class GameOver extends JPanel {
             Game.getInstance().resetGame();
             SceneManager.getInstance().loadMainMenu();});
         buttons[2].addActionListener(e -> SceneManager.getInstance().loadShop());
-        buttons[3].addActionListener(e -> System.exit(0));
+        buttons[3].addActionListener(e -> {
+            Game.getInstance().resetGame();
+            System.exit(0);});
 
         gameOverLabel = new JLabel(Language.allStrings.get(31) + "!", SwingConstants.CENTER);
         gameOverLabel.setFont(font.deriveFont(100f));

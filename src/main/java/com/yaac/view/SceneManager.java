@@ -120,6 +120,7 @@ public class SceneManager {
         credits.requestFocus();
         creditsLoop.start();
         Settings.LOGGER.log(Level.INFO, "Credits loaded");
+        Settings.superSecretCounter = 0;
     }
 
     public void loadPauseMenu() {
