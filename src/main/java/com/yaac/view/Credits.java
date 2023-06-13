@@ -123,18 +123,17 @@ public class Credits extends JPanel {
         earthButton.addActionListener(actionEvent -> {
             superSecretCounter++;
             if(superSecretCounter == 5) {
-                hit = true;
                 SaveFileManager.getInstance().cheatCode();
                 earth = new ObjectAnimation("/GameSprite/BulletExplosionAnimation.png");
                 earth.scaleImage(700, 700);
                 eeUnlocked = true;
                 easterEggCompleted.setVisible(true);
                 SoundEngine.getInstance().playExplosion();
-                this.remove(earthButton);
-                this.revalidate();
                 LOGGER.log(Level.INFO, "Easter egg unlocked congratulations!");
                 superSecretCounter = 0;
                 this.grabFocus();
+                this.remove(earthButton);
+                this.revalidate();
             }
             else {
                 hit = true;
