@@ -33,17 +33,18 @@ public class GameSettings extends JPanel {
     private boolean layered = false;
 
     public GameSettings() {
+        this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         this.setLayout(null);
         if (!layered)
             createBG(bg, width, height);
 
 
-        int textX = width - 1088;
+        int textX = 192;
         font = loadFont(35f);
         // creazione delle label
-        language = createLabel(Language.allStrings.get(13), textX, height - 535, 350, 16, font, Color.WHITE);
-        music = createLabel(Language.allStrings.get(14), textX, height - 355, 350, 16, font, Color.WHITE);
-        sound = createLabel(Language.allStrings.get(15), textX, height - 175, 350, 16, font, Color.WHITE);
+        language = createLabel(Language.allStrings.get(13), textX, 535, 350, 16, font, Color.WHITE);
+        music = createLabel(Language.allStrings.get(14), textX, 355, 350, 16, font, Color.WHITE);
+        sound = createLabel(Language.allStrings.get(15), textX, 175, 350, 16, font, Color.WHITE);
 
         // creazione delle icone del menu delle impostazioni
         settingsIcons[0] = getImageIcon("/MenuSprite/BackButton0.png",buttonsSize+10, buttonsSize+10);
