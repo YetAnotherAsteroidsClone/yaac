@@ -79,8 +79,8 @@ public class Shop extends JPanel{
         PowerUpImages[3] = ImageUtility.scaleImage(PowerUpImages[3],38,38);
 
         //Font and colors
-        font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(35f);
-        scoreFont = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(50f);
+        font = MenuUtility.loadFont(Settings.FONT_SIZE);
+        scoreFont = MenuUtility.loadFont(50);
         gemsColor = new Color(250,230,0);
         powerUpColor = new Color(76,44,254);
 

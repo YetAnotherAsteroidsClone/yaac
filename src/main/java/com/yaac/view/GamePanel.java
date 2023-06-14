@@ -6,6 +6,7 @@ import com.yaac.model.GameConstraints;
 import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ImageUtility;
+import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.JPanel;
 import java.awt.*;
@@ -53,8 +54,7 @@ public class GamePanel extends JPanel{
         esc = ImageUtility.scaleImage(esc,40,40);
 
         // Caricamento del font
-        try {font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getResourceAsStream("/Font.ttf"))).deriveFont(45f);}
-        catch (FontFormatException | IOException e) {throw new RuntimeException(e);}
+        font = MenuUtility.loadFont(Settings.FONT_SIZE);
 
         // Caricamento delle animazioni dei proiettili
         bulletsAnimation = new ArrayList<>();
