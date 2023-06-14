@@ -37,15 +37,15 @@ public class LanguageSwitcher extends JPanel {
 
         add(leftButton);
 
-        flags[0] = loadImage("/Languages/ita.png");
+        flags[0] = loadImage("/Languages/png/ita.png");
         flags[0] = scaleImage(flags[0],60,40);
-        flags[1] = loadImage("/Languages/eng.png");
+        flags[1] = loadImage("/Languages/png/eng.png");
         flags[1] = scaleImage(flags[1],60,40);
-        flags[2] = loadImage("/Languages/esp.png");
+        flags[2] = loadImage("/Languages/png/esp.png");
         flags[2] = scaleImage(flags[2],60,40);
-        flags[3] = loadImage("/Languages/fra.png");
+        flags[3] = loadImage("/Languages/png/fra.png");
         flags[3] = scaleImage(flags[3],60,40);
-        flags[4] = loadImage("/Languages/cal.png");
+        flags[4] = loadImage("/Languages/png/cal.png");
         flags[4] = scaleImage(flags[4],60,40);
 
         flagLabel = new JLabel();
