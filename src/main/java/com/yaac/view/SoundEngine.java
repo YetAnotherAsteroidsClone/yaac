@@ -106,33 +106,32 @@ public class SoundEngine {
         }
     }
 
-    public void increaseVolume(){
+    /**
+     * Metodo per impostare il volume della musica <br>
+     * Salva il volume impostato nel file di salvataggio
+     * @param volume volume dei suoni
+     * @see SaveFileManager
+     */
+    public void setMusicVolume(float volume){
         synchronized (this) {
-            for (int i = 0; i < audio.size()-1; i++)
-                volume = audio.get(i).incrementVolume();
-            SaveFileManager.getInstance().setVolume(volume);
-        }
-    }
-
-    public void decreaseVolume(){
-        synchronized (this) {
-            for (int i = 0; i < audio.size()-1; i++)
-                volume = audio.get(i).reduceVolume();
-            SaveFileManager.getInstance().setVolume(volume);
-        }
-    }
-
-    public void increaseMusicVolume(){
-        synchronized (this) {
-            musicVolume = audio.get(4).incrementVolume();
+            musicVolume = volume;
+            audio.get(4).setVolume(volume);
             SaveFileManager.getInstance().setMusicVolume(musicVolume);
         }
     }
 
-    public void decreaseMusicVolume(){
+    /**
+     * Metodo per impostare il volume dei suoni <br>
+     * Salva il volume impostato nel file di salvataggio
+     * @param volume volume dei suoni
+     * @see SaveFileManager
+     */
+    public void setVolume(float volume){
         synchronized (this) {
-            musicVolume = audio.get(4).reduceVolume();
-            SaveFileManager.getInstance().setMusicVolume(musicVolume);
+            this.volume = volume;
+            for(int i = 0; i < audio.size() - 1; i++)
+                audio.get(i).setVolume(volume);
+            SaveFileManager.getInstance().setVolume(volume);
         }
     }
 
