@@ -24,7 +24,7 @@ public class PauseMenu extends JPanel {
     public PauseMenu() {
         this.setLayout(null);
 
-        font = loadFont(35f);
+        font = loadFont(Settings.FONT_SIZE);
 
         buttons[0] = createButton(Language.allStrings.get(25), widthCenter - 100, heightCenter - 80, 200, 50, font);
         buttons[1] = createButton(Language.allStrings.get(26), widthCenter - 100, heightCenter, 200, 50, font);

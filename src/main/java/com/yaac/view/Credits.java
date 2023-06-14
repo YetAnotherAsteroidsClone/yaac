@@ -38,7 +38,7 @@ public class Credits extends JPanel {
 
     public Credits() {
         this.setLayout(null);
-        font = loadFont(35f);
+        font = loadFont(FONT_SIZE);
 
         earthBtnX = width/2-(wh/2);
         earthBtnY = height/2-(wh/2);

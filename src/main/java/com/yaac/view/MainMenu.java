@@ -34,7 +34,7 @@ public class MainMenu extends JPanel {
     public MainMenu() {
         this.setLayout(null);                               //Elimina il layout di default
         createBG(bg, Settings.width, Settings.height);      // Caricamento e scaling dello sfondo
-        font = loadFont(35f);                           // Caricamento del font
+        font = loadFont(Settings.FONT_SIZE);                           // Caricamento del font
 
         int buttonXPos = widthCenter - 100;
         int buttonWidth = 200;

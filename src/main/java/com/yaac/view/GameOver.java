@@ -15,7 +15,7 @@ public class GameOver extends JPanel {
 
     public GameOver() {
         this.setLayout(null);
-        font = loadFont(35f);
+        font = loadFont(FONT_SIZE);
         int widthCenter = width / 2;
         int heightCenter = height / 2;
 
