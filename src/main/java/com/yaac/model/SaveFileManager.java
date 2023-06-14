@@ -47,7 +47,7 @@ public class SaveFileManager {
                     0,4,
                     new boolean[]{true, false, false, false},
                     new boolean[]{true, false, false, false}, 0,0,
-                    Language.languageList.ITA);
+                    Language.languageList.ITA, Settings.resolutions[1]);
             save();
             Settings.LOGGER.log(Level.INFO, "New save file created");
         } catch (ClassNotFoundException e) {
@@ -180,4 +180,7 @@ public class SaveFileManager {
         this.saveFile.setGems(GameConstraints.getInstance().getGems());
         save();
     }
+
+    public String getResolution(){return this.saveFile.getResolution();}
+    public void setResolution(String resolution){this.saveFile.setResolution(resolution); save();}
 }

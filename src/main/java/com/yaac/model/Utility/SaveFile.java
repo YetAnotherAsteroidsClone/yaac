@@ -26,9 +26,9 @@ public class SaveFile implements Serializable {
     private  boolean[] unlockedWeapons;
     private Language.languageList language;
 
+    private String resolution;
 
-
-    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int currentGems, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons, float volume, float musicVolume, Language.languageList language) {
+    public SaveFile(int score, int gems, int speedLvl, int bulletSpeedLvl, int bulletDmgLvl, int bulletRatioLvl, boolean shield, boolean speed, int engine, int weapon, int checkpoint, int currentScore, int currentGems, int highScore, int lives, boolean[] unlockedEngines, boolean[] unlockedWeapons, float volume, float musicVolume, Language.languageList language, String resolution) {
         this.score = score;
         this.gems = gems;
         this.speedLvl = speedLvl;
@@ -49,6 +49,7 @@ public class SaveFile implements Serializable {
         this.volume = volume;
         this.musicVolume = musicVolume;
         this.language = language;
+        this.resolution = resolution;
     }
 
     public int getScore() {
@@ -143,9 +144,6 @@ public class SaveFile implements Serializable {
     public void setUnlockedWeapon(int index) {this.unlockedWeapons[index] = true;}
     public void setVolume(float volume) {this.volume = volume;}
     public float getVolume() {return this.volume;}
-    public boolean isShield() {return shield;}
-
-    public boolean isSpeed() {return speed;}
 
     public void setUnlockedEngines(boolean[] unlockedEngines) {this.unlockedEngines = unlockedEngines;}
 
@@ -156,4 +154,7 @@ public class SaveFile implements Serializable {
     public void setLanguage(Language.languageList language) {this.language = language;}
     public float getMusicVolume() {return musicVolume;}
     public void setMusicVolume(float musicVolume) {this.musicVolume = musicVolume;}
+
+    public String getResolution() {return resolution;}
+    public void setResolution(String resolution) {this.resolution = resolution;}
 }
