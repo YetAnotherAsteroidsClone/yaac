@@ -29,7 +29,7 @@ public class GameConstraints {
 
     private final double[] weaponSpeedCoefficient = {1, 0.4, 1.5, 2};
     private final double[] weaponDamageCoefficient = {1, 4, 1.2, 0.3};
-    private final double[] weaponRatioCoefficient = {1, 0.6, 1, 1.1};
+    private final double[] weaponRatioCoefficient = {1, 0.8, 1, 1.1};
 
     private final int maxGems = 15;
     private final int maxAsteroids = 20;
