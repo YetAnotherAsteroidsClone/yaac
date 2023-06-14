@@ -19,8 +19,6 @@ import com.yaac.Loop;
  * Classe che gestisce il pannello di gioco.
  */
 public class GamePanel extends JPanel{
-
-    Game game;
     Loop loop;
     private final SpaceShipView spaceShipView;
     private final ObjectAnimation backgroundL1;
@@ -39,7 +37,6 @@ public class GamePanel extends JPanel{
 
     public GamePanel(){
         super();
-        game = Game.getInstance();
 
         // Caricamento del background e eventualmente scala lo sfondo
         backgroundL1 = new ObjectAnimation("/Background/BackgroundL1.png", 640, 360);
@@ -97,11 +94,11 @@ public class GamePanel extends JPanel{
         spaceShipView.setCurrentWeapon(SaveFileManager.getInstance().getWeapon());
         spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         spaceShipView.setBody(GameConstraints.lives - SaveFileManager.getInstance().getLives());
-        game.addOnDeathListener(() -> {
+        Game.getInstance().addOnDeathListener(() -> {
             spaceShipView.setExplosion(true);
             spaceShipView.nextBody();
             SoundEngine.getInstance().playExplosion();});
-        game.addGameOverListener(() -> {
+        Game.getInstance().addGameOverListener(() -> {
             spaceShipView.setExplosion(true);
             SoundEngine.getInstance().playExplosion();
             SaveFileManager.getInstance().saveData();
@@ -109,12 +106,12 @@ public class GamePanel extends JPanel{
             SaveFileManager.getInstance().resetLives();
             loop.stop();
             SceneManager.getInstance().loadGameOver();
-            game.stopAllActions();
+            Game.getInstance().stopAllActions();
             spaceShipView.nextBody();});
-        game.addOnShieldStatusChangedListener(() -> spaceShipView.setShield(game.isShielded()));
-        game.setBulletType(spaceShipView.getCurrentWeapon());
+        Game.getInstance().addOnShieldStatusChangedListener(() -> spaceShipView.setShield(Game.getInstance().isShielded()));
+        Game.getInstance().setBulletType(spaceShipView.getCurrentWeapon());
 
-        game.setScore(SaveFileManager.getInstance().getCurrentScore());
+        Game.getInstance().setScore(SaveFileManager.getInstance().getCurrentScore());
     }
 
     /**
@@ -131,66 +128,66 @@ public class GamePanel extends JPanel{
         g.drawImage(backgroundL3.getCurrentFrame(), 0, 0, null);
 
         // Disegna la nave
-        g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), game.getSpaceShip().getRotation()), (int) (game.getSpaceShip().getX() - game.getSpaceShip().getRadius()), (int) (game.getSpaceShip().getY() - game.getSpaceShip().getRadius()), null);
+        g.drawImage(ImageUtility.rotateImage((BufferedImage) spaceShipView.getSpaceship().draw(), Game.getInstance().getSpaceShip().getRotation()), (int) (Game.getInstance().getSpaceShip().getX() - Game.getInstance().getSpaceShip().getRadius()), (int) (Game.getInstance().getSpaceShip().getY() - Game.getInstance().getSpaceShip().getRadius()), null);
 
         // Disegna i proiettili
-        for(int i = 0; i < game.getBullets().size(); i++) {
-            ObjectAnimation currentBulletTypeAnimation = bulletsAnimation.get(game.getBullets().get(i).getType());
-            Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) game.getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
-            g.drawImage(ImageUtility.rotateImage(ImageUtility.ImageToBuffered(currentBulletFrame), game.getBullets().get(i).getRotation()), (int) game.getBullets().get(i).getX() - 16, (int) game.getBullets().get(i).getY() - 16, null);
+        for(int i = 0; i < Game.getInstance().getBullets().size(); i++) {
+            ObjectAnimation currentBulletTypeAnimation = bulletsAnimation.get(Game.getInstance().getBullets().get(i).getType());
+            Image currentBulletFrame = currentBulletTypeAnimation.getImage((int) Game.getInstance().getBullets().get(i).getTick() % currentBulletTypeAnimation.size());
+            g.drawImage(ImageUtility.rotateImage(ImageUtility.ImageToBuffered(currentBulletFrame), Game.getInstance().getBullets().get(i).getRotation()), (int) Game.getInstance().getBullets().get(i).getX() - 16, (int) Game.getInstance().getBullets().get(i).getY() - 16, null);
         }
 
 
         // Disegna gli asteroidi
-        for(int i = 0; i < game.getAsteroids().size(); i++) {
-            double asteroidSize = game.getAsteroids().get(i).getRadius();
+        for(int i = 0; i < Game.getInstance().getAsteroids().size(); i++) {
+            double asteroidSize = Game.getInstance().getAsteroids().get(i).getRadius();
             BufferedImage asteroid = ImageUtility.scaleImage(asteroidsImage, (int) (asteroidSize * 5), (int) (asteroidSize * 5));
-            asteroid = ImageUtility.rotateImage(asteroid, game.getAsteroids().get(i).getRotation());
-            g.drawImage(asteroid, (int) game.getAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) game.getAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);
+            asteroid = ImageUtility.rotateImage(asteroid, Game.getInstance().getAsteroids().get(i).getRotation());
+            g.drawImage(asteroid, (int) Game.getInstance().getAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) Game.getInstance().getAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);
         }
 
         // Disegna l'esplosione dei proiettili
-        for(int i = 0; i < game.getDestroyedBullets().size(); i++){
-            double bulletSize = game.getDestroyedBullets().get(i).getRadius();
-            Image bulletExplosionFrameUnscaled = bulletExplosionAnimation.getImage((int) ((game.getDestroyedBullets().get(i).getTick() + 1) / 2) % bulletExplosionAnimation.size());
+        for(int i = 0; i < Game.getInstance().getDestroyedBullets().size(); i++){
+            double bulletSize = Game.getInstance().getDestroyedBullets().get(i).getRadius();
+            Image bulletExplosionFrameUnscaled = bulletExplosionAnimation.getImage((int) ((Game.getInstance().getDestroyedBullets().get(i).getTick() + 1) / 2) % bulletExplosionAnimation.size());
             BufferedImage bulletExplosion = ImageUtility.scaleImage(ImageUtility.ImageToBuffered(bulletExplosionFrameUnscaled) , (int) bulletSize, (int) bulletSize);
-            g.drawImage(bulletExplosion, (int) (game.getDestroyedBullets().get(i).getX() - bulletSize * 0.8), (int) (game.getDestroyedBullets().get(i).getY() - bulletSize * 0.8), null);
+            g.drawImage(bulletExplosion, (int) (Game.getInstance().getDestroyedBullets().get(i).getX() - bulletSize * 0.8), (int) (Game.getInstance().getDestroyedBullets().get(i).getY() - bulletSize * 0.8), null);
         }
 
         // Disegna l'esplosione degli asteroidi
-        for(int i = 0; i < game.getDestroyedAsteroids().size(); i++) {
-            double asteroidSize = game.getDestroyedAsteroids().get(i).getRadius();
-            Image asteroidCurrentFrame = deadAsteroidsAnimation.getImage((int) ((game.getDestroyedAsteroids().get(i).getTick() + 1) / 2) % deadAsteroidsAnimation.size());
+        for(int i = 0; i < Game.getInstance().getDestroyedAsteroids().size(); i++) {
+            double asteroidSize = Game.getInstance().getDestroyedAsteroids().get(i).getRadius();
+            Image asteroidCurrentFrame = deadAsteroidsAnimation.getImage((int) ((Game.getInstance().getDestroyedAsteroids().get(i).getTick() + 1) / 2) % deadAsteroidsAnimation.size());
             asteroidCurrentFrame = ImageUtility.scaleImage(ImageUtility.ImageToBuffered(asteroidCurrentFrame), (int) (asteroidSize * 5), (int) (asteroidSize * 5));
-            asteroidCurrentFrame = ImageUtility.rotateImage((BufferedImage) asteroidCurrentFrame, game.getDestroyedAsteroids().get(i).getRotation());
-            g.drawImage(asteroidCurrentFrame, (int) game.getDestroyedAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) game.getDestroyedAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);
+            asteroidCurrentFrame = ImageUtility.rotateImage((BufferedImage) asteroidCurrentFrame, Game.getInstance().getDestroyedAsteroids().get(i).getRotation());
+            g.drawImage(asteroidCurrentFrame, (int) Game.getInstance().getDestroyedAsteroids().get(i).getX() - (int)(asteroidSize * 2.5), (int) Game.getInstance().getDestroyedAsteroids().get(i).getY() - (int) (asteroidSize * 2.5), null);
         }
 
         // Disegna le gemme
-        for(int i = 0; i < game.getGems().size(); i++) {
-            if(game.getGems().get(i).getTick() > 192 && game.getGems().get(i).getTick() % 6 > 3)
+        for(int i = 0; i < Game.getInstance().getGems().size(); i++) {
+            if(Game.getInstance().getGems().get(i).getTick() > 192 && Game.getInstance().getGems().get(i).getTick() % 6 > 3)
                 continue;
-            ObjectAnimation currentGemTypeAnimation = gemsAnimation.get(game.getGems().get(i).getType() - 1);
-            Image currentGemFrame = currentGemTypeAnimation.getImage((int) (game.getGems().get(i).getTick() / 2 )% currentGemTypeAnimation.size());
-            g.drawImage(currentGemFrame, (int) (game.getGems().get(i).getX() - game.getGems().get(i).getRadius()), (int) (game.getGems().get(i).getY() - game.getGems().get(i).getRadius()), null);
+            ObjectAnimation currentGemTypeAnimation = gemsAnimation.get(Game.getInstance().getGems().get(i).getType() - 1);
+            Image currentGemFrame = currentGemTypeAnimation.getImage((int) (Game.getInstance().getGems().get(i).getTick() / 2 )% currentGemTypeAnimation.size());
+            g.drawImage(currentGemFrame, (int) (Game.getInstance().getGems().get(i).getX() - Game.getInstance().getGems().get(i).getRadius()), (int) (Game.getInstance().getGems().get(i).getY() - Game.getInstance().getGems().get(i).getRadius()), null);
         }
 
         // OVERLAY: punteggio, vite, gemme, istruzioni di pausa, stage, PwUp disponibili
         g.setColor(Color.WHITE);
         g.setFont(font);
-        g.drawString(Language.allStrings.get(16) + ": " + game.getScore(),40,50);
-        for(int i=0; i < game.getLives();i++){
+        g.drawString(Language.allStrings.get(16) + ": " + Game.getInstance().getScore(),40,50);
+        for(int i=0; i < Game.getInstance().getLives();i++){
             g.drawImage(life,40*(i+1),70,null);
         }
         g.drawImage(gemCounter.getCurrentFrame(),GameConstraints.WORLDWIDTH-150,20,null);
         gemCounter.update();
         g.setColor(Color.WHITE);
-        g.drawString("x" + game.getGemCount(),GameConstraints.WORLDWIDTH-105,55);
+        g.drawString("x" + Game.getInstance().getGemCount(),GameConstraints.WORLDWIDTH-105,55);
         g.drawImage(esc,25,Settings.height-60,null);
         g.drawString(": " + Language.allStrings.get(23),70,Settings.height-30);
-        if(game.getStagePause()){
+        if(Game.getInstance().getStagePause()){
             g.setColor(Color.YELLOW);
-            g.drawString(Language.allStrings.get(24) + " " + game.getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
+            g.drawString(Language.allStrings.get(24) + " " + Game.getInstance().getStage(),(Settings.width/2)-50,(Settings.height/2)-10);
         }
         g.setColor(Color.WHITE);
         if(GameConstraints.getInstance().getShopShield()){
