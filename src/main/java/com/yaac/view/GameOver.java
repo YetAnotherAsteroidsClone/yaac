@@ -23,7 +23,7 @@ public class GameOver extends JPanel {
         JButton[] buttons = new JButton[4];
 
         buttons[0] = createButton(Language.allStrings.get(29), widthCenter - 100, heightCenter - 80, 200, 50, font);
-        buttons[1] = createButton(Language.allStrings.get(30), widthCenter - 100, heightCenter, 200, 50, font);
+        buttons[1] = createButton(Language.allStrings.get(30), widthCenter - 100, heightCenter, 200, 50, font.deriveFont(25f));
         buttons[2] = createButton(Language.allStrings.get(1), widthCenter - 100, heightCenter + 80, 200, 50, font);
         buttons[3] = createButton(Language.allStrings.get(4), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
