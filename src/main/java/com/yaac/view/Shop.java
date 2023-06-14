@@ -11,7 +11,6 @@ import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.logging.Level;
 
 @SuppressWarnings("FieldCanBeLocal")

@@ -262,7 +262,7 @@ public class SpaceShipView {
     }
 
     /** Ritorna l'indice del motore corrente
-     * @return
+     * @return indice del motore corrente
      */
     public int getCurrentEngine() {
         return currentEngine;
