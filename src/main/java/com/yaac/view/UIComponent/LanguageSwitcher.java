@@ -83,5 +83,6 @@ public class LanguageSwitcher extends JPanel {
 
     public void updateLanguageLabel(){
         languageLabel.setText(Language.allStrings.get(13));
+        languageLabel.setFont(loadFont(Settings.FONT_SIZE));
     }
 }
