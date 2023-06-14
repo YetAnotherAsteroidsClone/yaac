@@ -75,7 +75,7 @@ public class GameSettings extends JPanel {
 
         if(!SceneManager.getInstance().isInGame()){
             // JComboBox per selezionare la risoluzione
-            resolutionSelector = new ResolutionSelector();
+            resolutionSelector = new ResolutionSelector(Language.allStrings.get(31));
             resolutionSelector.setBounds(componentsX, 400, 900, 50);
             resolutionSelector.addComboBoxActionListener(e -> {
                 String[] res = ((String) Objects.requireNonNull(resolutionSelector.getComboBox().getSelectedItem())).split("x");
@@ -114,6 +114,7 @@ public class GameSettings extends JPanel {
     public void updateStrings(){
         musicSlider.setLabelText(Language.allStrings.get(14));
         soundSlider.setLabelText(Language.allStrings.get(15));
+        resolutionSelector.setResolutionText(Language.allStrings.get(31));
         languageSwitcher.updateFlag();
         languageSwitcher.updateLanguageLabel();
     }

@@ -20,12 +20,12 @@ public class ResolutionSelector extends JPanel {
     private final JComboBox<String> resolution;
     private final JLabel resolutionText;
 
-    public ResolutionSelector() {
+    public ResolutionSelector(String text) {
         // setOpaque(false) rende il pannello trasparente
         setOpaque(false);
         setLayout(new GridLayout());
 
-        resolutionText = new JLabel(Language.allStrings.get(31));
+        resolutionText = new JLabel(text);
         resolutionText.setFont(loadFont(Settings.FONT_SIZE));
         resolutionText.setForeground(Color.WHITE);
         add(resolutionText);
