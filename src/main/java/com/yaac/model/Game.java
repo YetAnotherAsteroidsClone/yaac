@@ -229,8 +229,6 @@ public class Game {
     }
 
     private void stageChangeTransition(){
-        if(stage % 5 == 0) //Autosalvataggio ogni 5 stage
-            SaveFileManager.getInstance().saveData();
         if(stageTickTransition<=0){stagePause = false; stageTickTransition=50;}
         else{stageTickTransition--;}
     }
@@ -421,14 +419,16 @@ public class Game {
                 default -> stage * 300;
             };
                 if (scoreCount >= pointsToStage) {
-                stage += 1;
-                Settings.LOGGER.log(Level.INFO, "Stage " + stage + " reached!");
-                stagePause = true;
-                for (GameObject asteroid2 : asteroids)
-                    asteroid2.setTick(0);
-                destroyedAsteroids.add(asteroids);
-                asteroids.clear();
-            }
+                    stage += 1;
+                    Settings.LOGGER.log(Level.INFO, "Stage " + stage + " reached!");
+                    stagePause = true;
+                    for (GameObject asteroid2 : asteroids)
+                        asteroid2.setTick(0);
+                    destroyedAsteroids.add(asteroids);
+                    asteroids.clear();
+                    if(stage % 5 == 0) //Autosalvataggio ogni 5 stage
+                        SaveFileManager.getInstance().saveData();
+                }
 
             // Generazione gemma
             if (Math.random() < GameConstraints.getInstance().getGemChance() && gems.size() <= GameConstraints.getInstance().getMaxGems())
