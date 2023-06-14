@@ -27,7 +27,7 @@ public class Shop extends JPanel{
     private ObjectAnimation backgroundL1, backgroundL2, gems, shield, boost;
     private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD; PowerUpImages[5] = BOOST
     private BufferedImage locker;
-    private ImageIcon plusIcon, menuIcon, backIcon, right, left;
+    private ImageIcon plusIcon, menuIcon, backIcon, right, left, right1, left1;
     private SpaceShipView spaceShipView;
 
     //BUTTONS
@@ -59,6 +59,8 @@ public class Shop extends JPanel{
         plusIcon = ImageUtility.getImageIcon("/MenuSprite/plusButton.png",38,38);
         right = ImageUtility.getImageIcon("/MenuSprite/rightArrow0.png", 48,58);
         left = ImageUtility.getImageIcon("/MenuSprite/leftArrow0.png", 48,58);
+        right1 = ImageUtility.getImageIcon("/MenuSprite/rightArrow1.png", 48,58);
+        left1 = ImageUtility.getImageIcon("/MenuSprite/leftArrow1.png", 48,58);
         locker = ImageUtility.loadImage("/GameSprite/locker.png");
         locker = ImageUtility.scaleImage(locker,40,40);
         gems = new ObjectAnimation("/GameSprite/GemL1.png");
@@ -161,23 +163,39 @@ public class Shop extends JPanel{
         {   spaceShipView.previousWeapon();
             spaceShipView.setCurrentWeaponAnimation(true);
             currentWeaponUnlocked = SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
-            Settings.LOGGER.log(Level.INFO, "Weapon changed to "+spaceShipView.getCurrentWeapon());
+            if(currentWeaponUnlocked)
+                Settings.LOGGER.log(Level.INFO, "Weapon changed to "+spaceShipView.getCurrentWeapon());
+            else
+                Settings.LOGGER.log(Level.INFO, "Weapon "+ spaceShipView.getCurrentWeapon() +" not unlocked");
+            this.grabFocus();
         });
         switchWeapon[1].addActionListener(actionEvent ->
         {   spaceShipView.nextWeapon();
             spaceShipView.setCurrentWeaponAnimation(true);
             currentWeaponUnlocked = SaveFileManager.getInstance().saveWeapon(spaceShipView.getCurrentWeapon());
-            Settings.LOGGER.log(Level.INFO, "Weapon changed to "+spaceShipView.getCurrentWeapon());
+            if(currentWeaponUnlocked)
+                Settings.LOGGER.log(Level.INFO, "Weapon changed to "+spaceShipView.getCurrentWeapon());
+            else
+                Settings.LOGGER.log(Level.INFO, "Weapon "+ spaceShipView.getCurrentWeapon() +" not unlocked");
+            this.grabFocus();
         });
         switchEngine[0].addActionListener(actionEvent ->
         {   spaceShipView.previousEngine();
             currentEngineUnlocked = SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
-            Settings.LOGGER.log(Level.INFO, "Engine changed to "+spaceShipView.getCurrentEngine());
+            if(currentEngineUnlocked)
+                Settings.LOGGER.log(Level.INFO, "Engine changed to "+spaceShipView.getCurrentEngine());
+            else
+                Settings.LOGGER.log(Level.INFO, "Engine "+ spaceShipView.getCurrentEngine() +" not unlocked");
+            this.grabFocus();
         });
         switchEngine[1].addActionListener(actionEvent ->
         {   spaceShipView.nextEngine();
             currentEngineUnlocked = SaveFileManager.getInstance().saveEngine(spaceShipView.getCurrentEngine());
-            Settings.LOGGER.log(Level.INFO, "Engine changed to "+spaceShipView.getCurrentEngine());
+            if(currentEngineUnlocked)
+                Settings.LOGGER.log(Level.INFO, "Engine changed to "+spaceShipView.getCurrentEngine());
+            else
+                Settings.LOGGER.log(Level.INFO, "Engine "+ spaceShipView.getCurrentEngine() +" not unlocked");
+            this.grabFocus();
         });
 
         for(JButton button : switchWeapon)
@@ -185,10 +203,10 @@ public class Shop extends JPanel{
         for(JButton button : switchEngine)
             this.add(button);
 
-        MenuUtility.drawJButton(switchWeapon[0],left,(Settings.width/2)-260,100,50,60);
-        MenuUtility.drawJButton(switchWeapon[1],right,(Settings.width/2)+195,100,50,60);
-        MenuUtility.drawJButton(switchEngine[0],left,(Settings.width/2)-260,300,50,60);
-        MenuUtility.drawJButton(switchEngine[1],right,(Settings.width/2)+195,300,50,60);
+        MenuUtility.drawJButton(switchWeapon[0],left,(Settings.width/2)-260,100,60,60,left1);
+        MenuUtility.drawJButton(switchWeapon[1],right,(Settings.width/2)+195,100,60,60,right1);
+        MenuUtility.drawJButton(switchEngine[0],left,(Settings.width/2)-260,300,60,60,left1);
+        MenuUtility.drawJButton(switchEngine[1],right,(Settings.width/2)+195,300,60,60,right1);
 
         //Show score and gem count
         scoreCount = MenuUtility.createLabel(Language.allStrings.get(16) + ": " + gameConstraints.getScore(),50,40,300,25,scoreFont,Color.LIGHT_GRAY);
