@@ -210,4 +210,23 @@ public class SceneManager {
 
     public boolean isInGame() {return inGame;}
     public void setInGame(boolean inGame) {this.inGame = inGame;}
+
+    /**
+     * Cambia la risoluzione del gioco
+     * @param width
+     * @param height
+     */
+    public void changeResolution(int width, int height){
+        Settings.width = width;
+        Settings.height = height;
+        mainFrame.setSize(width, height);
+        mainFrame.setLocationRelativeTo(null);
+        if(gamePanel != null) gamePanel.setBounds(0,0,width,height);
+        if(mainMenu != null) mainMenu.setBounds(0,0,width,height);
+        if(gameOver != null) gameOver.setBounds(0,0,width,height);
+        if(pauseMenu != null) pauseMenu.setBounds(0,0,width,height);
+        if(gameSettings != null) gameSettings.setBounds(0,0,width,height);
+        if(credits != null) credits.setBounds(0,0,width,height);
+        if(shop != null) shop.setBounds(0,0,width,height);
+    }
 }
