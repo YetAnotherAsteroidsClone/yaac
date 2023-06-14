@@ -28,8 +28,8 @@ public class PauseMenu extends JPanel {
 
         buttons[0] = createButton(Language.allStrings.get(25), widthCenter - 100, heightCenter - 80, 200, 50, font);
         buttons[1] = createButton(Language.allStrings.get(26), widthCenter - 100, heightCenter, 200, 50, font);
-        buttons[2] = createButton(Language.allStrings.get(27), widthCenter - 100, heightCenter + 80, 200, 50, font);
-        buttons[3] = createButton(Language.allStrings.get(28), widthCenter - 100, heightCenter + 160, 200, 50, font);
+        buttons[2] = createButton(Language.allStrings.get(2), widthCenter - 100, heightCenter + 80, 200, 50, font);
+        buttons[3] = createButton(Language.allStrings.get(4), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
         buttons[0].addActionListener(e -> SceneManager.getInstance().unloadPauseMenu());
         buttons[1].addActionListener(e -> SaveFileManager.getInstance().saveData());
