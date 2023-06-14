@@ -41,6 +41,7 @@ public class Shop extends JPanel{
     private boolean currentWeaponUnlocked;
     private boolean currentEngineUnlocked;
 
+    private boolean layered = false;
 
     //CONSTRUCTOR
     public Shop() throws IOException, FontFormatException {
@@ -85,10 +86,15 @@ public class Shop extends JPanel{
 
         //Buttons
         mainMenu = new JButton();
-        mainMenu.addActionListener(actionEvent -> SceneManager.getInstance().loadMainMenu());
+        mainMenu.addActionListener(actionEvent -> {
+            if(layered) {
+                SceneManager.getInstance().unloadGameOver();
+                Game.reset();
+            }
+            SceneManager.getInstance().loadMainMenu();});
 
         back = new JButton();
-        back.addActionListener(actionEvent -> {SceneManager.getInstance().loadGame();});
+        back.addActionListener(actionEvent -> {SceneManager.getInstance().unloadShop();});
 
         for(int i = 0; i<2; i++){
             switchWeapon[i] = new JButton();
@@ -262,4 +268,8 @@ public class Shop extends JPanel{
     }
 
     public void update() {super.repaint();}
+
+    public void setLayered(boolean layered){
+        this.layered = layered;
+    }
 }

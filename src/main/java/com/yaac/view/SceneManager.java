@@ -147,6 +147,7 @@ public class SceneManager {
         gameOver = null;
         SoundEngine.getInstance().loopMusic();
         gamePanel.requestFocus();
+        gamePanel.getSpaceShipView().nextBody();
         gameLoop.start();
         Settings.LOGGER.log(Level.INFO, "Game restarted");
     }
@@ -165,17 +166,35 @@ public class SceneManager {
         Settings.LOGGER.log(Level.INFO, "Game started");
     }
 
-    public void loadShop(){
+    public void loadShop(boolean layered){
         try {shop = new Shop();}
         catch (IOException | FontFormatException e) {throw new RuntimeException(e);}
         shop.setCurrentGadgets();
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
+        shop.addKeyListener(controller);
         Loop shopLoop = new Loop(controller);
-        loadScene(shop);
+        if(layered) { // Lo shop è stato chiamato dal menu di fine partita
+            loadScene(shop, JLayeredPane.DEFAULT_LAYER);
+            shop.setLayered(true);
+            gameOver.setVisible(false);
+            layeredPane.moveToFront(shop);
+        }
+        else{
+            loadScene(shop);
+            shop.setLayered(false);
+        }
         shop.requestFocus();
         shopLoop.start();
         Settings.LOGGER.log(Level.INFO, "Shop opened");
+    }
+
+    public void unloadShop(){
+        unloadScene(shop);
+        gameOver.setVisible(true);
+        gameOver.requestFocus();
+        gameOver.grabFocus();
+        Settings.LOGGER.log(Level.INFO, "Shop closed");
     }
 
     public void unloadPauseMenu(){

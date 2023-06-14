@@ -104,10 +104,9 @@ public class GamePanel extends JPanel{
             SaveFileManager.getInstance().saveData();
             SaveFileManager.getInstance().resetCurrent();
             SaveFileManager.getInstance().resetLives();
+            GameConstraints.getInstance().setLife(GameConstraints.lives);
             loop.stop();
-            SceneManager.getInstance().loadGameOver();
-            Game.getInstance().stopAllActions();
-            spaceShipView.nextBody();});
+            SceneManager.getInstance().loadGameOver();});
         Game.getInstance().addOnShieldStatusChangedListener(() -> spaceShipView.setShield(Game.getInstance().isShielded()));
         Game.getInstance().setBulletType(spaceShipView.getCurrentWeapon());
 

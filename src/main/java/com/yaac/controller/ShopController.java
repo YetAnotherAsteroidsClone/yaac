@@ -1,18 +1,18 @@
 package com.yaac.controller;
-import com.yaac.Settings;
-import com.yaac.model.Game;
-import com.yaac.model.GameConstraints;
+
 import com.yaac.view.SceneManager;
 import com.yaac.view.Shop;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.logging.Level;
+
 
 /**
  * Controller dello shop
  */
-public class ShopController extends MouseAdapter implements Updatable{
+public class ShopController extends MouseAdapter implements Updatable, KeyListener {
     private final Shop shop;
 
     public ShopController(Shop shop){this.shop=shop;}
@@ -28,4 +28,17 @@ public class ShopController extends MouseAdapter implements Updatable{
         return true;
     }
 
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if(e.getKeyChar() == KeyEvent.VK_ESCAPE && !SceneManager.getInstance().isInGame())
+            SceneManager.getInstance().loadMainMenu();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
 }

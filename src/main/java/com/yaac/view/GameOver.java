@@ -28,14 +28,15 @@ public class GameOver extends JPanel {
         buttons[3] = createButton(Language.allStrings.get(4), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
         buttons[0].addActionListener(e -> {
-            Game.getInstance().resetGame();
+            Game.reset();
             SceneManager.getInstance().unloadGameOver();});
         buttons[1].addActionListener(e -> {
-            Game.getInstance().resetGame();
+            Game.reset();
             SceneManager.getInstance().loadMainMenu();});
-        buttons[2].addActionListener(e -> SceneManager.getInstance().loadShop());
+        buttons[2].addActionListener(e -> {
+            SceneManager.getInstance().loadShop(true);});
         buttons[3].addActionListener(e -> {
-            Game.getInstance().resetGame();
+            Game.reset();
             System.exit(0);});
 
         gameOverLabel = new JLabel(Language.allStrings.get(28) + "!", SwingConstants.CENTER);
