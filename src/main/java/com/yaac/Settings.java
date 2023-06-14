@@ -11,8 +11,8 @@ public class Settings {
     public static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
     public static final Level logLevel = Level.INFO;
     public static final String TITLE = "YAAC - Yet Another Asteroids Clone";
-    public static int width;
-    public static int height;
+    public static int width = Integer.parseInt(SaveFileManager.getInstance().getResolution().split("x")[0]);
+    public static int height = Integer.parseInt(SaveFileManager.getInstance().getResolution().split("x")[1]);
     public static int superSecretCounter = 0;
     public static boolean superSecretValue = true;
     public static final String[] resolutions = new String[]{"1920x1080", "1280x720"};

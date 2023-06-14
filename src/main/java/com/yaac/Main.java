@@ -1,5 +1,6 @@
 package com.yaac;
 
+import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.SceneManager;
 
@@ -16,9 +17,6 @@ public class Main {
         // Queste due impostazioni servono a migliorare la qualità del font
         System.setProperty("awt.useSystemAAFontSettings","off");
         System.setProperty("swing.aatext", "false");
-
-        Settings.width = Integer.parseInt(SaveFileManager.getInstance().getResolution().split("x")[0]);
-        Settings.height = Integer.parseInt(SaveFileManager.getInstance().getResolution().split("x")[1]);
 
         SceneManager.getInstance().openMainFrame();
         SceneManager.getInstance().loadMainMenu();
