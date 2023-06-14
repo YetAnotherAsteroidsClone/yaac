@@ -1,4 +1,7 @@
-![YAAC (Yet Another Asteroids Clone)](./src/main/resources/MenuSprite/GameLogo.png)
+<p align="center">
+  <img src="./src/main/resources/MenuSprite/GameLogo.png" />
+</p>
+
 
 YAAC è un clone del celeberrimo Asteroids con alcune novità.
 
