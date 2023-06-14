@@ -61,6 +61,7 @@ public class GameSettings extends JPanel implements Layered {
         musicSlider.addSliderChangeListener(e -> {
             SoundEngine.getInstance().setMusicVolume((float) (20*Math.log10((double) musicSlider.getSlider().getValue() /100)));
             musicSlider.setVolumeValue(musicSlider.getSlider().getValue());
+            this.grabFocus();
         });
 
 
@@ -70,6 +71,7 @@ public class GameSettings extends JPanel implements Layered {
         soundSlider.addSliderChangeListener(e -> {
             SoundEngine.getInstance().setVolume((float) (20*Math.log10((double) soundSlider.getSlider().getValue() /100)));
             soundSlider.setVolumeValue(soundSlider.getSlider().getValue());
+            this.grabFocus();
         });
 
         if(!SceneManager.getInstance().isInGame()){
@@ -83,6 +85,7 @@ public class GameSettings extends JPanel implements Layered {
                 SaveFileManager.getInstance().setResolution(Settings.width+"x"+Settings.height);
                 SceneManager.getInstance().changeResolution(Settings.width, Settings.height);
                 updateResolution();
+                this.grabFocus();
             });
             this.add(resolutionSelector);
         }
@@ -93,8 +96,8 @@ public class GameSettings extends JPanel implements Layered {
             languageSwitcher.setBounds(componentsX, 550, width, 50);
         else
             languageSwitcher.setBounds(componentsX, 400, width, 50);
-        languageSwitcher.addLeftButtonActionListener(e -> MenuUtility.setPreviousLanguage(this));
-        languageSwitcher.addRightButtonActionListener(e -> MenuUtility.setNextLanguage(this));
+        languageSwitcher.addLeftButtonActionListener(e -> {MenuUtility.setPreviousLanguage(this); this.grabFocus();});
+        languageSwitcher.addRightButtonActionListener(e -> {MenuUtility.setNextLanguage(this); this.grabFocus();});
         this.add(languageSwitcher);
 
         this.add(backButton);

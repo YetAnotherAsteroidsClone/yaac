@@ -47,6 +47,13 @@ public class Credits extends JPanel {
 
         createBG(bg, width, height);
 
+        JLabel stringVersion = new JLabel(VERSION,SwingConstants.RIGHT);
+        stringVersion.setFont(loadFont(FONT_SIZE));
+        stringVersion.setForeground(Color.YELLOW);
+        stringVersion.setBounds(0, height-50, width, 40);
+        stringVersion.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        this.add(stringVersion);
+
         flame = new ObjectAnimation("/GameSprite/BulletExplosionAnimation.png");
         earth = new ObjectAnimation("/MenuSprite/Earth.png", 96,96);
         earth.scaleImage(700, 700);

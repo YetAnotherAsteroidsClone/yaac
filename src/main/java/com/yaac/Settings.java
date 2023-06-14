@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Settings {
+    public static final String VERSION = "1.0.0";
     public static final Level logLevel = /*Level.INFO*/ Level.OFF;
     public static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
     public static final String TITLE = "YAAC - Yet Another Asteroids Clone";

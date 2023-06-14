@@ -8,9 +8,11 @@ import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.Layered;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.logging.Level;
 
 /*
@@ -22,7 +24,11 @@ public class SceneManager {
     private static final SceneManager instance;
 
     static {
-        instance = new SceneManager();
+        try {
+            instance = new SceneManager();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private boolean inGame;
 
@@ -39,9 +45,10 @@ public class SceneManager {
 
     public static SceneManager getInstance() {return instance;}
 
-    private SceneManager() {
+    private SceneManager() throws IOException {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
+        mainFrame.setIconImage(new ImageIcon(ImageIO.read(Objects.requireNonNull(SceneManager.class.getResourceAsStream("/MenuSprite/GameLogo.png")))).getImage());
         mainFrame.setUndecorated(true);
         mainFrame.setResizable(false);
         mainFrame.setLocationRelativeTo(null);

@@ -1,9 +1,7 @@
 package com.yaac.model;
-import com.yaac.Main;
 import com.yaac.Settings;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -22,16 +20,16 @@ public class Language {
         try {
             BufferedReader in = null;
             switch (l){
-                case ITA -> in = new BufferedReader(new FileReader(new File(Objects.requireNonNull(Main.class.getResource("/Languages/ITALIANO.txt")).toURI())));
-                case ENG -> in = new BufferedReader(new FileReader(new File(Objects.requireNonNull(Main.class.getResource("/Languages/ENGLISH.txt")).toURI())));
-                case SPA -> in = new BufferedReader(new FileReader(new File(Objects.requireNonNull(Main.class.getResource("/Languages/SPANISH.txt")).toURI())));
-                case FRA -> in = new BufferedReader(new FileReader(new File(Objects.requireNonNull(Main.class.getResource("/Languages/FRENCH.txt")).toURI())));
-                case JAP -> in = new BufferedReader(new FileReader((new File(Objects.requireNonNull(Main.class.getResource("/Languages/JAPANESE.txt")).toURI()))));
-                case CAL -> in = new BufferedReader(new FileReader(new File(Objects.requireNonNull(Main.class.getResource("/Languages/CALABRESE.txt")).toURI())));
+                case ITA -> in = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Language.class.getResourceAsStream("/Languages/ITALIANO.txt"))));
+                case ENG -> in = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Language.class.getResourceAsStream("/Languages/ENGLISH.txt"))));
+                case SPA -> in = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Language.class.getResourceAsStream("/Languages/SPANISH.txt"))));
+                case FRA -> in = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Language.class.getResourceAsStream("/Languages/FRENCH.txt"))));
+                case JAP -> in = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Language.class.getResourceAsStream("/Languages/JAPANESE.txt"))));
+                case CAL -> in = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Language.class.getResourceAsStream("/Languages/CALABRESE.txt"))));
             }
             while(in.ready()){allStrings.add(in.readLine());}
         }
-        catch (IOException | URISyntaxException e) {throw new RuntimeException(e);}
+        catch (IOException e) {throw new RuntimeException(e);}
     }
 
     private static final Language instance = new Language();

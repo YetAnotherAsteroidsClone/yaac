@@ -1,10 +1,12 @@
 package com.yaac.view.Utility;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+import com.yaac.Settings;
+
+import javax.sound.sampled.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
 
 /**
  * Classe che gestisce la riproduzione dei suoni.
@@ -20,11 +22,12 @@ public class Sound {
      */
     public Sound(String name) {
         try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/Sounds/" + name)));
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new BufferedInputStream(Objects.requireNonNull(Sound.class.getResourceAsStream("/Sounds/" + name))));
             clip = AudioSystem.getClip();
             clip.open(audioIn);
-        } catch (Exception e) {
-            System.out.println("Errore nella riproduzione del suono: " + name);
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            Settings.LOGGER.log(Level.INFO,"Errore nella riproduzione del suono: " + name);
+            e.printStackTrace();
             clip = null;
         }
     }
