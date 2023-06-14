@@ -87,14 +87,11 @@ public class SaveFileManager {
         this.saveFile.setCurrentScore(Game.getInstance().getScore());
         this.saveFile.setCurrentGems(Game.getInstance().getGemCount());
         this.saveFile.setLanguage(Settings.language);
-        if(this.saveFile.getCurrentScore() > this.saveFile.getHighScore()) {
+        if(Game.getInstance().getScore() > this.saveFile.getHighScore()) {
             this.saveFile.setHighScore(this.saveFile.getCurrentScore());
             GameConstraints.getInstance().setHighScore(this.saveFile.getHighScore());
         }
         this.saveFile.setLives(Game.getInstance().getLives());
-        GameConstraints.getInstance().setLife(this.saveFile.getLives());
-        GameConstraints.getInstance().setGems(this.saveFile.getGems());
-        GameConstraints.getInstance().setScore(this.saveFile.getScore());
         GameConstraints.getInstance().setCheckpoint(this.saveFile.getCheckpoint());
         for(int i = 0; i < 3; i++) {
             if (this.saveFile.getScore() >= GameConstraints.getInstance().getUnlockWeaponsScore(i))
@@ -171,9 +168,6 @@ public class SaveFileManager {
     /** Sblocca: motori, armi e fornisce molte gemme
      */
     public void cheatCode(){
-        /*
-        if(this.saveFile.getScore() < GameConstraints.getInstance().getUnlockEnginesScore(2))
-            this.saveFile.setScore(9999);*/
         this.saveFile.setUnlockedWeapons(new boolean[]{true,true,true,true});
         this.saveFile.setUnlockedEngines(new boolean[]{true,true,true,true});
         GameConstraints.getInstance().setGems(999999);

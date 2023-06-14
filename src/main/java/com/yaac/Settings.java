@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Settings {
-    public static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
     public static final Level logLevel = /*Level.INFO*/ Level.OFF;
+    public static final Logger LOGGER = Logger.getLogger(Settings.class.getName());
     public static final String TITLE = "YAAC - Yet Another Asteroids Clone";
     public static final String[] resolutions = new String[]{"1920x1080", "1280x720"};
     public static int width = Integer.parseInt(SaveFileManager.getInstance().getResolution().split("x")[0]);
