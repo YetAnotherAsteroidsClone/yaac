@@ -409,7 +409,14 @@ public class Game {
             scoreCount += ((Asteroid) asteroid).getScore();
             GameConstraints.getInstance().setScore(GameConstraints.getInstance().getScore() + (int)((Asteroid) asteroid).getScore());
             SoundEngine.getInstance().playExplosion();
-            if (scoreCount >= stage * 100) {
+            int pointsToStage = switch (stage) {
+                case 1, 2, 3 -> stage * 100;
+                case 4, 5 -> stage * 150;
+                case 6, 7 -> stage * 200;
+                case 8, 9, 10 -> stage * 250;
+                default -> stage * 300;
+            };
+                if (scoreCount >= pointsToStage) {
                 stage += 1;
                 Settings.LOGGER.log(Level.INFO, "Stage " + stage + " reached!");
                 stagePause = true;
