@@ -95,6 +95,7 @@ public class GamePanel extends JPanel{
         spaceShipView.setCurrentEngine(SaveFileManager.getInstance().getEngine());
         spaceShipView.setBody(GameConstraints.lives - SaveFileManager.getInstance().getLives());
         Game.getInstance().addOnDeathListener(() -> {
+            spaceShipView.setBoost(false);
             spaceShipView.setExplosion(true);
             spaceShipView.nextBody();
             SoundEngine.getInstance().playExplosion();});
@@ -108,6 +109,7 @@ public class GamePanel extends JPanel{
             loop.stop();
             SceneManager.getInstance().loadGameOver();});
         Game.getInstance().addOnShieldStatusChangedListener(() -> spaceShipView.setShield(Game.getInstance().isShielded()));
+        Game.getInstance().addOnSpeedBoostStatusChangedListener(() -> spaceShipView.setBoost(Game.getInstance().isBoosted()));
         Game.getInstance().setBulletType(spaceShipView.getCurrentWeapon());
 
         Game.getInstance().setScore(SaveFileManager.getInstance().getCurrentScore());

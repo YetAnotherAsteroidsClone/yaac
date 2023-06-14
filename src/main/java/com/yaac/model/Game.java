@@ -14,6 +14,7 @@ public class Game {
     private final ArrayList<OnDeathListener> onDeathListeners;
     private final ArrayList<GameOverListener> gameOverListeners;
     private final ArrayList<OnShieldStatusChangedListener> onShieldStatusChangedListeners;
+    private final ArrayList<OnBoostStatusChangedListener> onBoostStatusChangedListeners;
     GameComponentsManager asteroids;
     GameComponentsManager destroyedAsteroids;
     GameComponentsManager bullets;
@@ -58,6 +59,7 @@ public class Game {
         onDeathListeners = new ArrayList<>();
         gameOverListeners = new ArrayList<>();
         onShieldStatusChangedListeners = new ArrayList<>();
+        onBoostStatusChangedListeners = new ArrayList<>();
         stage = SaveFileManager.getInstance().getCheckPoint();
         stagePause = true;
         tick = 0;
@@ -168,6 +170,8 @@ public class Game {
             speedBoostActivated = true;
             Settings.LOGGER.log(Level.INFO, "Boost activated");
             tickBoost = 0;
+            for(OnBoostStatusChangedListener listener : onBoostStatusChangedListeners)
+                listener.onBoostStatusChanged();
         }
     }
 
@@ -505,6 +509,9 @@ public class Game {
     public void addOnShieldStatusChangedListener(OnShieldStatusChangedListener listener){
         onShieldStatusChangedListeners.add(listener);
     }
+    public void addOnSpeedBoostStatusChangedListener(OnBoostStatusChangedListener listener){
+        onBoostStatusChangedListeners.add(listener);
+    }
     public void setBulletType(int bulletType){
         this.spaceShip.setBulletType(bulletType);
     }
@@ -513,6 +520,7 @@ public class Game {
     public boolean isShielded(){
         return shieldActivated;
     }
+    public boolean isBoosted(){return speedBoostActivated;}
 
     /**
      * Metodo per fermare tutte le azioni della navicella
