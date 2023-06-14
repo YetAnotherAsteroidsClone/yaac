@@ -87,7 +87,10 @@ public class Credits extends JPanel {
         g.setFont(font.deriveFont(35f));
         g.drawImage(exitIcon.getImage(), 25, height - 60, null);
         g.drawString(Language.allStrings.get(12), 80, height - 30);
-        g.setFont(font.deriveFont(70f));
+        if(Settings.language == Language.languageList.JAP)
+            g.setFont(font.deriveFont(40f));
+        else
+            g.setFont(font.deriveFont(70f));
         g.setColor(Color.YELLOW);
         g.drawString("Emanuele Galardo", 20, height/2 - 100);
         g.drawString("Giovanni Palermo", 20, height/2 + 100);
@@ -108,7 +111,10 @@ public class Credits extends JPanel {
         earthButton.setBorderPainted(false);
 
         // Easter egg label
-        JLabel easterEggCompleted = MenuUtility.createLabel(Language.allStrings.get(10), 0, 10,width,25,font.deriveFont(50f), Color.YELLOW);
+        Font eeLabelFont = font.deriveFont(50f);
+        if(language == Language.languageList.JAP)
+            eeLabelFont = font.deriveFont(25f);
+        JLabel easterEggCompleted = MenuUtility.createLabel(Language.allStrings.get(10), 0, 10,width,25,eeLabelFont, Color.YELLOW);
         easterEggCompleted.setVisible(false);
         easterEggCompleted.setHorizontalAlignment(SwingConstants.CENTER);
         this.add(easterEggCompleted);
