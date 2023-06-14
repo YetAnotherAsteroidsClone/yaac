@@ -42,7 +42,9 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_ESCAPE -> {
                 Game.getInstance().stopAllActions();
                 loop.stop();
-                SceneManager.getInstance().loadPauseMenu();}
+                gamePanel.getSpaceShipView().setPowering(false);
+                SceneManager.getInstance().loadPauseMenu();
+            }
         }
     }
 
