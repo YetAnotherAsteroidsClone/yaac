@@ -3,6 +3,8 @@ package com.yaac.view;
 import com.yaac.Loop;
 import com.yaac.Settings;
 import com.yaac.controller.*;
+import com.yaac.model.Game;
+import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
 import javax.swing.*;
 import java.awt.*;
@@ -228,5 +230,7 @@ public class SceneManager {
         if(gameSettings != null) gameSettings.setBounds(0,0,width,height);
         if(credits != null) credits.setBounds(0,0,width,height);
         if(shop != null) shop.setBounds(0,0,width,height);
+        GameConstraints.getInstance().updateWorldSize();
+        Game.reset();
     }
 }

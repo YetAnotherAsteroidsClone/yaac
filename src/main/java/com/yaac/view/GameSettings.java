@@ -26,7 +26,7 @@ public class GameSettings extends JPanel {
     ObjectAnimation[] bg =  new ObjectAnimation[3];
     private boolean layered = false;
     private final VolumeSlider musicSlider, soundSlider;
-    private final ResolutionSelector resolutionSelector;
+    private ResolutionSelector resolutionSelector;
     private final LanguageSwitcher languageSwitcher;
     private final int componentsX = 192;
     public GameSettings() {
@@ -73,22 +73,27 @@ public class GameSettings extends JPanel {
             soundSlider.setVolumeValue(soundSlider.getSlider().getValue());
         });
 
-        // JComboBox per selezionare la risoluzione
-        resolutionSelector = new ResolutionSelector();
-        resolutionSelector.setBounds(componentsX, 400, 900, 50);
-        resolutionSelector.addComboBoxActionListener(e -> {
-            String[] res = ((String) Objects.requireNonNull(resolutionSelector.getComboBox().getSelectedItem())).split("x");
-            Settings.width = Integer.parseInt(res[0]);
-            Settings.height = Integer.parseInt(res[1]);
-            SaveFileManager.getInstance().setResolution(Settings.width+"x"+Settings.height);
-            SceneManager.getInstance().changeResolution(Settings.width, Settings.height);
-            updateResolution();
-        });
-        this.add(resolutionSelector);
+        if(!SceneManager.getInstance().isInGame()){
+            // JComboBox per selezionare la risoluzione
+            resolutionSelector = new ResolutionSelector();
+            resolutionSelector.setBounds(componentsX, 400, 900, 50);
+            resolutionSelector.addComboBoxActionListener(e -> {
+                String[] res = ((String) Objects.requireNonNull(resolutionSelector.getComboBox().getSelectedItem())).split("x");
+                Settings.width = Integer.parseInt(res[0]);
+                Settings.height = Integer.parseInt(res[1]);
+                SaveFileManager.getInstance().setResolution(Settings.width+"x"+Settings.height);
+                SceneManager.getInstance().changeResolution(Settings.width, Settings.height);
+                updateResolution();
+            });
+            this.add(resolutionSelector);
+        }
 
         // Cambio della lingua
         languageSwitcher = new LanguageSwitcher();
-        languageSwitcher.setBounds(componentsX, 550, width, 50);
+        if(!SceneManager.getInstance().isInGame())
+            languageSwitcher.setBounds(componentsX, 550, width, 50);
+        else
+            languageSwitcher.setBounds(componentsX, 400, width, 50);
         languageSwitcher.addLeftButtonActionListener(e -> MenuUtility.setPreviousLanguage(this));
         languageSwitcher.addRightButtonActionListener(e -> MenuUtility.setNextLanguage(this));
         this.add(languageSwitcher);

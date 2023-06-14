@@ -55,6 +55,11 @@ public class GameConstraints {
     public static int WORLDWIDTH = Settings.width;
     public static int WORLDHEIGHT = Settings.height;
 
+    public void updateWorldSize() {
+        WORLDWIDTH = Settings.width;
+        WORLDHEIGHT = Settings.height;
+    }
+
     //GETTERS
     public double getMaxSpeed() {return maxSpeed + lvlMaxSpeed * maxSpeedCoefficient + (speedBoostCoefficient * Game.isBoostActivated());}
     public double getShipAcceleration() {return shipAcceleration + lvlMaxSpeed * accelerationCoefficient;}
