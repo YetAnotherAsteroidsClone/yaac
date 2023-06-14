@@ -493,14 +493,6 @@ public class Game {
             gems.add(new Gem(x, y, 3));
     }
 
-    public void resetGame(){
-        stage = 1;
-        lives = GameConstraints.lives;
-        scoreCount = 0;
-        gemCount = 0;
-        spaceShip.reset();
-    }
-
     public static void reset(){
         instance = null;
     }
