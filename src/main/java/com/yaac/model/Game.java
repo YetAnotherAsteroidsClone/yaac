@@ -157,6 +157,8 @@ public class Game {
     public void activateShield(){
         if (pwUpShield && !shieldActivated) {
             GameConstraints.getInstance().setShopShield(false);
+            SaveFileManager.getInstance().setShield(GameConstraints.getInstance().getShopShield());
+            updatePwUpShield();
             shieldActivated = true;
             Settings.LOGGER.log(Level.INFO, "Shield activated");
             tickShield = 0;
@@ -167,6 +169,8 @@ public class Game {
     public void activateBoost(){
         if (pwUpSpeed && !speedBoostActivated) {
             GameConstraints.getInstance().setShopBoost(false);
+            SaveFileManager.getInstance().setSpeed(GameConstraints.getInstance().getShopBoost());
+            updatePwUpBoost();
             speedBoostActivated = true;
             Settings.LOGGER.log(Level.INFO, "Boost activated");
             tickBoost = 0;
