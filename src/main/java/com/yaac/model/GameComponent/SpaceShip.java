@@ -11,6 +11,7 @@ import static java.lang.Math.max;
  * Estende la classe MovableObject
  * Implementa i metodi per la gestione della accelerazione e della rotazione
  */
+@SuppressWarnings("unused")
 public class SpaceShip extends GameObject{
     int shotTick = 0;
     int bulletType = 0;
@@ -228,7 +229,6 @@ public class SpaceShip extends GameObject{
 
     /**
      * Imposta il tipo di proiettile
-     * @return tipo di proiettile
      */
     public void setBulletType(int bulletType){
         this.bulletType = bulletType;

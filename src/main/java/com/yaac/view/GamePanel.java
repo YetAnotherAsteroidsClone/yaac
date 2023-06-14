@@ -1,5 +1,4 @@
 package com.yaac.view;
-import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
@@ -11,9 +10,8 @@ import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
+
 import com.yaac.Loop;
 
 /**
@@ -34,7 +32,8 @@ public class GamePanel extends JPanel{
     private final ObjectAnimation bulletExplosionAnimation;
     private final ArrayList<ObjectAnimation> gemsAnimation;
     private ObjectAnimation gemCounter;
-    private ObjectAnimation shieldPwUp, boostPwUp;
+    private final ObjectAnimation shieldPwUp;
+    private final ObjectAnimation boostPwUp;
 
     public GamePanel(){
         super();

@@ -16,6 +16,7 @@ import java.util.Objects;
  * Classe che contiene metodi utili per la creazione di componenti grafici.
  */
 
+@SuppressWarnings("unused")
 public class MenuUtility {
     /**
      * Metodo per la creazione di un bottone.
@@ -185,7 +186,7 @@ public class MenuUtility {
                 MenuUtility.drawShopButton(button,plusIcon,x+314,y,30,30,Color.LIGHT_GRAY,g);
                 panel.add(button);
             }
-            g.drawString(""+GameConstraints.getInstance().getCost(levels-1), x+314,y-15);
+            g.drawString(String.valueOf(GameConstraints.getInstance().getCost(levels - 1)), x+314,y-15);
 
             g.setColor(Color.WHITE);
             g.drawString("LVL "+levels,x,y-10);
@@ -238,7 +239,7 @@ public class MenuUtility {
                 drawShopButton(button,pwUpIcon,x,y,width,height,gemsColor,g);
                 panel.add(button);
             }
-            g.drawString(""+cost,x+25,y+105);
+            g.drawString(String.valueOf(cost),x+25,y+105);
         }
     }
 

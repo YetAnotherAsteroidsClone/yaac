@@ -1,10 +1,7 @@
 package com.yaac;
 
-import com.yaac.model.GameConstraints;
-import com.yaac.model.SaveFileManager;
 import com.yaac.view.SceneManager;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 

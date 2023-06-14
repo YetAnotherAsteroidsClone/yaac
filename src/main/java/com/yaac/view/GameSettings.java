@@ -6,6 +6,7 @@ import com.yaac.model.SaveFileManager;
 import com.yaac.view.UIComponent.LanguageSwitcher;
 import com.yaac.view.UIComponent.ResolutionSelector;
 import com.yaac.view.UIComponent.VolumeSlider;
+import com.yaac.view.Utility.Layered;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import com.yaac.view.Utility.Sound;
@@ -21,9 +22,9 @@ import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.view.Utility.ImageUtility.*;
 import static com.yaac.Settings.*;
 
-public class GameSettings extends JPanel {
-    ImageIcon[] settingsIcons = new ImageIcon[6];
-    ObjectAnimation[] bg =  new ObjectAnimation[3];
+public class GameSettings extends JPanel implements Layered {
+    final ImageIcon[] settingsIcons = new ImageIcon[6];
+    final ObjectAnimation[] bg =  new ObjectAnimation[3];
     private boolean layered = false;
     private final VolumeSlider musicSlider, soundSlider;
     private ResolutionSelector resolutionSelector;
@@ -43,9 +44,7 @@ public class GameSettings extends JPanel {
         backButton.setRolloverIcon(settingsIcons[5]);
         drawJButton(backButton, getImageIcon("/MenuSprite/BackButton0.png", buttonsSize +10, buttonsSize +10), 0, 0, buttonsSize, buttonsSize, getImageIcon("/MenuSprite/backButton1.png", buttonsSize +10, buttonsSize +10));
 
-        backButton.addActionListener(e -> {
-            checkLoading();
-        });
+        backButton.addActionListener(e -> checkLoading());
 
         // Esc per tornare indietro
         this.addKeyListener(new KeyAdapter() {

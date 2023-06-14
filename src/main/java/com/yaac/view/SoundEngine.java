@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * Per segnalare al thread di fermare la riproduzione della musica, chiamare il metodo {@link #stopMusic() stopMusic} <br>
  * @see Sound
  */
+@SuppressWarnings("unused")
 public class SoundEngine {
     private ScheduledExecutorService executor;
     private static final SoundEngine instance = new SoundEngine();

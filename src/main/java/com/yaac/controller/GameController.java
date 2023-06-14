@@ -61,8 +61,8 @@ public class GameController extends KeyAdapter implements Updatable {
             case KeyEvent.VK_SPACE -> {
                 Game.getInstance().stopShot();
                 gamePanel.getSpaceShipView().setCurrentWeaponAnimation(false);}
-            case KeyEvent.VK_S -> {Game.getInstance().activateShield();}
-            case KeyEvent.VK_B -> {Game.getInstance().activateBoost();}
+            case KeyEvent.VK_S -> Game.getInstance().activateShield();
+            case KeyEvent.VK_B -> Game.getInstance().activateBoost();
         }
     }
 
@@ -81,7 +81,7 @@ public class GameController extends KeyAdapter implements Updatable {
 
     /** Metodo che setta il loop (fondamentale per poter fermare il gioco)
      * @see Loop
-     * @param loop
+     * @param loop loop di gioco
      */
     public void setLoop(Loop loop){
         this.loop = loop;

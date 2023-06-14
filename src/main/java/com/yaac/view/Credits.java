@@ -9,31 +9,30 @@ import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.logging.Level;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.Settings.*;
 
+@SuppressWarnings("unused")
 public class Credits extends JPanel {
-    ObjectAnimation[] bg =  new ObjectAnimation[3];
-    ObjectAnimation flame;
+    final ObjectAnimation[] bg =  new ObjectAnimation[3];
+    final ObjectAnimation flame;
     int hitX,hitY = 0;
     ObjectAnimation earth;
-    ImageIcon exitIcon;
-    Image gameLogo;
-    Font font;
+    final ImageIcon exitIcon;
+    final Image gameLogo;
+    final Font font;
     private boolean eeUnlocked = false;
     private boolean exploded = false;
     private int explosionTicks = 0;
     private int hitTicks = 0;
     private boolean hit = false;
-    private int earthBtnX, earthBtnY;
+    private final int earthBtnX;
+    private final int earthBtnY;
     private final int wh = 350;
 
     public Credits() {

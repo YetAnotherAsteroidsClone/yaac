@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 
+@SuppressWarnings("unused")
 public class SaveFileManager {
 
     private static final SaveFileManager instance = new SaveFileManager();
@@ -141,7 +142,7 @@ public class SaveFileManager {
 
     /** Metodo per salvare il motore selezionato <br>
      * Se il motore non è sbloccato, non viene salvato
-     * @param index
+     * @param index indice del motore
      */
     public boolean saveEngine(int index){
         if(isEngineUnlocked(index)) {
@@ -154,7 +155,7 @@ public class SaveFileManager {
 
     /** Metodo per salvare l'arma selezionata <br>
      * Se l'arma non è sbloccata, non viene salvata
-     * @param index
+     * @param index indice dell'arma
      */
     public boolean saveWeapon(int index){
         if(isWeaponUnlocked(index)) {

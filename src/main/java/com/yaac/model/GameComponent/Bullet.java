@@ -7,6 +7,7 @@ import com.yaac.model.GameConstraints;
  * Estende la classe GameObject
  * Implementa la gestione del danno
  */
+@SuppressWarnings("unused")
 public class Bullet extends GameObject{
     private int type = 0;
     private double damage;

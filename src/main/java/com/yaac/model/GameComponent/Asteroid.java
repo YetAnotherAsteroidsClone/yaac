@@ -12,6 +12,7 @@ import static java.lang.Math.min;
  * Implementa la gestione della vita, dello score e del della divisione in due asteroidi
  * @see GameObject
  */
+@SuppressWarnings("unused")
 public class Asteroid extends GameObject{
     private double life;
     private final double score;

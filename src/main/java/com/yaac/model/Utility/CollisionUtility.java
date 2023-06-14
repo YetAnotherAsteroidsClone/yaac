@@ -5,6 +5,7 @@ import com.yaac.model.GameComponent.GameObject;
 /**
  * Classe delle utility per il calcolo delle collisioni
  */
+@SuppressWarnings("unused")
 public class CollisionUtility {
     /**
      * Metodo per la collisione tra due oggetti

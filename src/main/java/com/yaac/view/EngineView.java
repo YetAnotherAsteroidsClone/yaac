@@ -6,6 +6,7 @@ import java.awt.Image;
 
 /** Classe che rappresenta il motore della navicella
  */
+@SuppressWarnings("unused")
 public class EngineView {
 
     /** Animazione del motore in stato di idle

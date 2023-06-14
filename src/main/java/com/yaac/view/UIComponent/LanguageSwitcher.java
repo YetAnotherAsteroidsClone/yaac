@@ -10,14 +10,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import static com.yaac.view.Utility.ImageUtility.*;
-import static com.yaac.view.Utility.ImageUtility.getImageIcon;
 import static com.yaac.view.Utility.MenuUtility.loadFont;
 
 public class LanguageSwitcher extends JPanel {
     private final JButton leftButton, rightButton;
     private final ImageIcon flag;
     private final JLabel flagLabel, languageLabel;
-    BufferedImage[] flags = new BufferedImage[Language.languageList.values().length];
+    final BufferedImage[] flags = new BufferedImage[Language.languageList.values().length];
 
     public LanguageSwitcher() {
         super();

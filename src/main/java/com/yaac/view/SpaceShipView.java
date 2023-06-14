@@ -15,9 +15,7 @@ import java.util.List;
 public class SpaceShipView {
     private final ArrayList<Image> bodies;
     private final ArrayList<ObjectAnimation> weapons;
-    private final ArrayList<ObjectAnimation> locked_weapons;
     private final ArrayList<EngineView> engines;
-    private final ArrayList<EngineView> locked_engines;
     private final CompositeSprite spaceship;
     private int currentWeapon = SaveFileManager.getInstance().getWeapon();
     private int currentEngine = SaveFileManager.getInstance().getEngine();
@@ -46,7 +44,7 @@ public class SpaceShipView {
         for(ObjectAnimation weapon : weapons)
             weapon.scaleImage(width, height);
 
-        locked_weapons = new ArrayList<>(List.of(
+        ArrayList<ObjectAnimation> locked_weapons = new ArrayList<>(List.of(
                 new ObjectAnimation("/GameSprite/WeaponBigCannon_locked.png"),
                 new ObjectAnimation("/GameSprite/WeaponRocket_locked.png"),
                 new ObjectAnimation("/GameSprite/WeaponZapper_locked.png")
@@ -81,7 +79,7 @@ public class SpaceShipView {
             engine.getIdleState().scaleImage(width, height);
         }
 
-        locked_engines = new ArrayList<>(List.of(
+        ArrayList<EngineView> locked_engines = new ArrayList<>(List.of(
                 new EngineView(
                         null,
                         new ObjectAnimation("/GameSprite/BigEngine-Powering_locked.png"),
@@ -176,7 +174,7 @@ public class SpaceShipView {
     }
 
     /** Imposta l'arma corrente
-     * @param currentWeapon
+     * @param currentWeapon arma corrente
      */
     public void setCurrentWeapon(int currentWeapon) {
         this.currentWeapon = currentWeapon;
@@ -241,7 +239,7 @@ public class SpaceShipView {
     }
 
     /** Imposta l'animazione dello scudo della navicella
-     * @param shield
+     * @param shield true se lo scudo dev'essere attivato
      */
     public void setShield(boolean shield){
         if(shield)
@@ -258,7 +256,6 @@ public class SpaceShipView {
     }
 
     /** Ritorna l'indice del motore corrente
-     * @return
      */
     public int getCurrentWeapon() {
         return currentWeapon;
@@ -272,7 +269,6 @@ public class SpaceShipView {
     }
 
     /** Disabilita tutte le animazioni della navicella
-     * @return
      */
     private void disableAnimations(){
         spaceship.disableAnimation(0, false);
@@ -283,7 +279,6 @@ public class SpaceShipView {
     }
 
     /** Abilita le animazioni della navicella
-     * @return
      */
     public void enableAnimations(){
         setPowering(false);
@@ -295,7 +290,7 @@ public class SpaceShipView {
     }
 
     /** Imposta l'animazione dell'esplosione della navicella
-     * @param explosion
+     * @param explosion true se bisogna attivare l'animazione di esplosione
      */
     public void setExplosion(boolean explosion){
         if(explosion) {

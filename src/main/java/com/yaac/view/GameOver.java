@@ -3,16 +3,16 @@ package com.yaac.view;
 import javax.swing.*;
 import java.awt.*;
 
-import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.Language;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.Settings.*;
 
+@SuppressWarnings("unused")
 public class GameOver extends JPanel {
-    Font font;
-    JLabel gameOverLabel;
+    final Font font;
+    final JLabel gameOverLabel;
 
     public GameOver() {
         this.setLayout(null);
@@ -39,8 +39,7 @@ public class GameOver extends JPanel {
         buttons[1].addActionListener(e -> {
             Game.reset();
             SceneManager.getInstance().loadMainMenu();});
-        buttons[2].addActionListener(e -> {
-            SceneManager.getInstance().loadShop(true);});
+        buttons[2].addActionListener(e -> SceneManager.getInstance().loadShop(true));
         buttons[3].addActionListener(e -> {
             Game.reset();
             System.exit(0);});

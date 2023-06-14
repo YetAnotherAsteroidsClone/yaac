@@ -6,21 +6,21 @@ import com.yaac.model.Utility.*;
 import com.yaac.view.SoundEngine;
 
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.logging.Level;
 
+@SuppressWarnings("unused")
 public class Game {
     static Game instance = null;
     private final ArrayList<OnDeathListener> onDeathListeners;
     private final ArrayList<GameOverListener> gameOverListeners;
     private final ArrayList<OnShieldStatusChangedListener> onShieldStatusChangedListeners;
     private final ArrayList<OnBoostStatusChangedListener> onBoostStatusChangedListeners;
-    GameComponentsManager asteroids;
-    GameComponentsManager destroyedAsteroids;
-    GameComponentsManager bullets;
-    GameComponentsManager gems;
-    GameComponentsManager destroyedBullets;
-    SpaceShip spaceShip;
+    final GameComponentsManager asteroids;
+    final GameComponentsManager destroyedAsteroids;
+    final GameComponentsManager bullets;
+    final GameComponentsManager gems;
+    final GameComponentsManager destroyedBullets;
+    final SpaceShip spaceShip;
     static boolean speedBoostActivated;
     static boolean shieldActivated;
     int gemCount;

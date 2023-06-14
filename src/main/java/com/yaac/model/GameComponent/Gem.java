@@ -5,6 +5,7 @@ package com.yaac.model.GameComponent;
  * Implementa la classe GameObject
  * @see GameObject
  */
+@SuppressWarnings("unused")
 public class Gem extends GameObject{
     private final int type;
 

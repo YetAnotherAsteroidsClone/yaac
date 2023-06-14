@@ -6,6 +6,8 @@ import com.yaac.controller.*;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.model.SaveFileManager;
+import com.yaac.view.Utility.Layered;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -14,16 +16,13 @@ import java.util.logging.Level;
 /*
     *  Classe dedicata alla gestione delle scene
  */
+@SuppressWarnings({"BooleanMethodIsAlwaysInverted", "unused"})
 public class SceneManager {
 
     private static final SceneManager instance;
 
     static {
-        try {
-            instance = new SceneManager();
-        } catch (IOException | FontFormatException e) {
-            throw new RuntimeException(e);
-        }
+        instance = new SceneManager();
     }
     private boolean inGame;
 
@@ -40,7 +39,7 @@ public class SceneManager {
 
     public static SceneManager getInstance() {return instance;}
 
-    private SceneManager() throws IOException, FontFormatException {
+    private SceneManager() {
         mainFrame = new JFrame(Settings.TITLE);
         mainFrame.setSize(Settings.width, Settings.height);
         mainFrame.setUndecorated(true);
@@ -59,7 +58,7 @@ public class SceneManager {
 
     /** Carica un JPanel nel layer di default (0) <br>
      *  Rimuove tutti i JPanel presenti nel layer
-     * @param panel
+     * @param panel JPanel
      */
     private void loadScene(JPanel panel){
         layeredPane.removeAll();
@@ -67,9 +66,10 @@ public class SceneManager {
     }
 
     /** Carica un JPanel nel layer specificato
-     * @param panel
-     * @param layer
+     * @param panel JPanel
+     * @param layer livello in cui caricare il JPanel
      */
+    @SuppressWarnings("SameParameterValue")
     private void loadScene(JPanel panel, int layer){
         layeredPane.add(panel, layer);
         panel.setBounds(0,0,Settings.width,Settings.height);
@@ -97,17 +97,7 @@ public class SceneManager {
         gameSettings = new GameSettings();
         GameSettingsController controller = new GameSettingsController(gameSettings);
         Loop gameSettingsLoop = new Loop(controller);
-        if(layered) { // Le impostazioni sono state chiamate dal menu di pausa
-            loadScene(gameSettings, JLayeredPane.DEFAULT_LAYER);
-            gameSettings.setLayered(true);
-            pauseMenu.setVisible(false);
-            layeredPane.moveToFront(gameSettings);
-        }
-        else{
-            loadScene(gameSettings);
-            gameSettings.setLayered(false);
-        }
-        gameSettings.requestFocus();
+        checkLayered(gameSettings,pauseMenu,layered);// Le impostazioni potrebbero essere state chiamate dal menu di pausa
         gameSettings.grabFocus();
         gameSettingsLoop.start();
         Settings.LOGGER.log(Level.INFO, "Game settings loaded");
@@ -167,24 +157,13 @@ public class SceneManager {
     }
 
     public void loadShop(boolean layered){
-        try {shop = new Shop();}
-        catch (IOException | FontFormatException e) {throw new RuntimeException(e);}
+        shop = new Shop();
         shop.setCurrentGadgets();
         ShopController controller = new ShopController(shop);
         shop.addMouseListener(controller);
         shop.addKeyListener(controller);
         Loop shopLoop = new Loop(controller);
-        if(layered) { // Lo shop è stato chiamato dal menu di fine partita
-            loadScene(shop, JLayeredPane.DEFAULT_LAYER);
-            shop.setLayered(true);
-            gameOver.setVisible(false);
-            layeredPane.moveToFront(shop);
-        }
-        else{
-            loadScene(shop);
-            shop.setLayered(false);
-        }
-        shop.requestFocus();
+        checkLayered(shop,gameOver,layered);// Lo shop potrebbe essere stato chiamato dalla schermata di game over
         shopLoop.start();
         Settings.LOGGER.log(Level.INFO, "Shop opened");
     }
@@ -222,7 +201,7 @@ public class SceneManager {
 
     /**
      * Controlla se il pannello è caricato
-     * @param panel
+     * @param panel JPanel
      * @return true se il pannello è caricato, false altrimenti
      */
     public static boolean isLoaded(JPanel panel){
@@ -234,8 +213,8 @@ public class SceneManager {
 
     /**
      * Cambia la risoluzione del gioco
-     * @param width
-     * @param height
+     * @param width larghezza
+     * @param height alteza
      */
     public void changeResolution(int width, int height){
         Settings.width = width;
@@ -251,5 +230,25 @@ public class SceneManager {
         if(shop != null) shop.setBounds(0,0,width,height);
         GameConstraints.getInstance().updateWorldSize();
         Game.reset();
+    }
+
+    /** Controlla se il JPanel è stato chiamato da un altro JPanel
+     * @param callee JPanel Layered chiamato
+     * @param caller JPanel chiamante
+     * @param layered true se il JPanel chiamato si trova in un layer
+     * @see com.yaac.view.Utility.Layered
+     */
+    private void checkLayered(Layered callee, JPanel caller, boolean layered){
+        if(layered) {
+            loadScene((JPanel) callee, JLayeredPane.DEFAULT_LAYER);
+            callee.setLayered(true);
+            caller.setVisible(false);
+            layeredPane.moveToFront((Component) callee);
+        }
+        else{
+            loadScene((JPanel) callee);
+            callee.setLayered(false);
+        }
+        ((JPanel)callee).requestFocus();
     }
 }

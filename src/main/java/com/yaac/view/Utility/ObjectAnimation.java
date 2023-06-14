@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ObjectAnimation {
 
     private boolean enabled = true, drawable = true;
-    private ArrayList<Image> images = new ArrayList<>();
+    private final ArrayList<Image> images;
     private int index = 0;
 
     /**
@@ -36,9 +36,7 @@ public class ObjectAnimation {
      *  @param height altezza
      */
     public void scaleImage(int width, int height) {
-        for (int i = 0; i < images.size(); i++) {
-            images.set(i, images.get(i).getScaledInstance(width, height, Image.SCALE_SMOOTH));
-        }
+        images.replaceAll(image -> image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * Implementa il metodo update per aggiornare i componenti
  * @see ArrayList
  */
+@SuppressWarnings("unused")
 public class GameComponentsManager extends ArrayList<GameObject> {
 
     /**

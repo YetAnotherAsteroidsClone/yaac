@@ -11,8 +11,9 @@ import java.awt.event.KeyEvent;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 
+@SuppressWarnings("unused")
 public class PauseMenu extends JPanel {
-    Font font;
+    final Font font;
     JLabel pauseLabel;
 
     private final int widthCenter = Settings.width / 2;

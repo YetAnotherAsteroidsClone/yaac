@@ -2,15 +2,16 @@ package com.yaac.model;
 
 import com.yaac.Settings;
 
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class GameConstraints {
-    public int gemVanishingTime = 240;
+    public final int gemVanishingTime = 240;
     private double maxSpeed = 5;
     private double shipAcceleration = 2;
     private double bulletSpeed = 6;
     private double bulletDamage = 10;
     private double bulletRatio = 10;
     private double shieldDuration = 600;
-    private double boostDuration = 600;
+    private final double boostDuration = 600;
     private int shipRotation = 7;
     private double shipDeceleration = 0.90;
 

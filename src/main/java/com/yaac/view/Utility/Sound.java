@@ -9,9 +9,9 @@ import java.util.Objects;
 /**
  * Classe che gestisce la riproduzione dei suoni.
  */
+@SuppressWarnings("unused")
 public class Sound {
 
-    private AudioInputStream audioIn;
     private Clip clip;
 
     /**
@@ -20,7 +20,7 @@ public class Sound {
      */
     public Sound(String name) {
         try {
-            audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/Sounds/" + name)));
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(getClass().getResourceAsStream("/Sounds/" + name)));
             clip = AudioSystem.getClip();
             clip.open(audioIn);
         } catch (Exception e) {

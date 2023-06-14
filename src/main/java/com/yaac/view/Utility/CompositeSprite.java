@@ -8,6 +8,7 @@ import com.yaac.model.Utility.DrawListener;
 /** Classe che rappresenta un oggetto composto da più immagini
  * Utilizzata per la gestione delle animazioni e gli sprites
  */
+@SuppressWarnings("unused")
 public class CompositeSprite {
 
     private final ArrayList<DrawListener> drawListeners;
@@ -118,8 +119,8 @@ public class CompositeSprite {
     }
 
     /** Imposta l'immagine alla posizione index
-     * @param image
-     * @param index
+     * @param image immagine
+     * @param index indice dell'immagine
      */
     public void setImage(Image image, int index){
         images.set(index, image);
@@ -133,7 +134,7 @@ public class CompositeSprite {
     }
 
     /** Metodo per l'aggiornamento dello sprite corrente
-     * @param index
+     * @param index indice dello sprite
      */
     public void setCurrentSprite(int index){
         currentSprite = index;

@@ -5,6 +5,7 @@ package com.yaac.model.GameComponent;
  *  Implementa posizione, rotazione e velocità <br>
  *  Implementa il metodo update() per l'aggiornamento dei componenti <br>
  */
+@SuppressWarnings("unused")
 public abstract class GameObject{
     protected long tick = 0;
     protected double vx = 0;
@@ -32,6 +33,7 @@ public abstract class GameObject{
      *  @param y posizione y
      *  @param rotation rotazione
      */
+    @SuppressWarnings("SameParameterValue")
     protected GameObject(double x, double y, int rotation){
         this.x = x;
         this.y = y;

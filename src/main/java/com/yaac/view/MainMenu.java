@@ -15,13 +15,16 @@ import static com.yaac.view.Utility.MenuUtility.*;
 /**
  * Classe che gestisce la schermata del menu principale.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class MainMenu extends JPanel {
-    ObjectAnimation[] bg =  new ObjectAnimation[3]; // Immagini di background
-    Font font;
-    JLabel gameLogoLabel, highscore, numHighScore; // Logo del gioco, punteggio massimo
-    ImageIcon gameLogoIcon; // Icona del logo del gioco
-    String commandsText; // Testo dei comandi, testo del punteggio massimo
-    JTextArea commands; // Area di testo dei comandi, area di testo del punteggio massimo
+    final ObjectAnimation[] bg =  new ObjectAnimation[3]; // Immagini di background
+    final Font font;
+    final JLabel gameLogoLabel;
+    final JLabel highscore;
+    final JLabel numHighScore; // Logo del gioco, punteggio massimo
+    final ImageIcon gameLogoIcon; // Icona del logo del gioco
+    final String commandsText; // Testo dei comandi, testo del punteggio massimo
+    final JTextArea commands; // Area di testo dei comandi, area di testo del punteggio massimo
 
     private final int widthCenter = Settings.width / 2;
     private final int heightCenter = Settings.height / 2;
@@ -71,7 +74,7 @@ public class MainMenu extends JPanel {
         commands = createTextArea(commandsText, 15, Settings.height - 200, 390, 250, font.deriveFont(34f), Color.YELLOW);
 
         highscore = createLabel(Language.allStrings.get(11),Settings.width - 250, Settings.height - 70,300,20, font, Color.YELLOW);
-        numHighScore = createLabel(""+GameConstraints.getInstance().getHighScore(),Settings.width - 250,Settings.height - 40,300,20, font, Color.WHITE);
+        numHighScore = createLabel(String.valueOf(GameConstraints.getInstance().getHighScore()),Settings.width - 250,Settings.height - 40,300,20, font, Color.WHITE);
 
         //Aggiunta del titolo e dei testi al pannello
         this.add(gameLogoLabel);

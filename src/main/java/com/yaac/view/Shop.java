@@ -1,50 +1,63 @@
 package com.yaac.view;
-import com.yaac.Main;
 import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.GameConstraints;
 import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
 import com.yaac.view.Utility.ImageUtility;
+import com.yaac.view.Utility.Layered;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.logging.Level;
 
-public class Shop extends JPanel{
+@SuppressWarnings("FieldCanBeLocal")
+public class Shop extends JPanel implements Layered {
 
     //FONT AND COLORS
-    private Font font, scoreFont;
-    private JLabel scoreCount, gemCount;
-    private Color gemsColor;
-    private Color powerUpColor;
+    private final Font font;
+    private final Font scoreFont;
+    private final JLabel scoreCount;
+    private JLabel gemCount;
+    private final Color gemsColor;
+    private final Color powerUpColor;
 
     //IMAGES, ICONS AND ANIMATIONS
-    private ObjectAnimation backgroundL1, backgroundL2, gems, shield, boost;
-    private BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD; PowerUpImages[5] = BOOST
+    private final ObjectAnimation backgroundL1;
+    private final ObjectAnimation backgroundL2;
+    private final ObjectAnimation gems;
+    private final ObjectAnimation shield;
+    private final ObjectAnimation boost;
+    private final BufferedImage[] PowerUpImages = new BufferedImage[5];      //PowerUpImages[0] = SPEED; PowerUpImages[1] = BULLET SPEED; PowerUpImages[2] = BULLET DAMAGE; PowerUpImages[3] = BULLET RATIO; PowerUpImages[4] = SHIELD; PowerUpImages[5] = BOOST
     private BufferedImage locker;
-    private ImageIcon plusIcon, menuIcon, backIcon, right, left, right1, left1;
+    private final ImageIcon plusIcon;
+    private final ImageIcon menuIcon;
+    private final ImageIcon backIcon;
+    private final ImageIcon right;
+    private final ImageIcon left;
+    private final ImageIcon right1;
+    private final ImageIcon left1;
     private SpaceShipView spaceShipView;
 
     //BUTTONS
-    public JButton[] switchWeapon = new JButton[2];
-    public JButton[] switchEngine = new JButton[2];
-    public JButton[] pwUpButtons = new JButton[6];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD; buttons[5] = BOOST
-    private JButton mainMenu, back;
+    public final JButton[] switchWeapon = new JButton[2];
+    public final JButton[] switchEngine = new JButton[2];
+    public final JButton[] pwUpButtons = new JButton[6];     //buttons[0] = SPEED; buttons[1] = BULLET SPEED; buttons[2] = BULLET DAMAGE; buttons[3] = BULLET RATIO; buttons[4] = SHIELD; buttons[5] = BOOST
+    private final JButton mainMenu;
+    private final JButton back;
 
     //OTHERS
-    private GameConstraints gameConstraints = GameConstraints.getInstance();
+    private final GameConstraints gameConstraints = GameConstraints.getInstance();
     private boolean currentWeaponUnlocked;
     private boolean currentEngineUnlocked;
 
     private boolean layered = false;
 
     //CONSTRUCTOR
-    public Shop() throws IOException, FontFormatException {
+    public Shop() {
         this.setPreferredSize(new Dimension(Settings.width, Settings.height));
         this.setLayout(null);
         //bg image
@@ -96,7 +109,7 @@ public class Shop extends JPanel{
             SceneManager.getInstance().loadMainMenu();});
 
         back = new JButton();
-        back.addActionListener(actionEvent -> {SceneManager.getInstance().unloadShop();});
+        back.addActionListener(actionEvent -> SceneManager.getInstance().unloadShop());
 
         for(int i = 0; i<2; i++){
             switchWeapon[i] = new JButton();
