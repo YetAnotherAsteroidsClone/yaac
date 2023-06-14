@@ -45,8 +45,10 @@ public class LanguageSwitcher extends JPanel {
         flags[2] = scaleImage(flags[2],60,40);
         flags[3] = loadImage("/Languages/png/fra.png");
         flags[3] = scaleImage(flags[3],60,40);
-        flags[4] = loadImage("/Languages/png/cal.png");
+        flags[4] = loadImage("/Languages/png/jap.png");
         flags[4] = scaleImage(flags[4],60,40);
+        flags[5] = loadImage("/Languages/png/cal.png");
+        flags[5] = scaleImage(flags[5],60,40);
 
         flagLabel = new JLabel();
 
@@ -74,7 +76,8 @@ public class LanguageSwitcher extends JPanel {
             case ENG -> flag.setImage(flags[1]);
             case SPA -> flag.setImage(flags[2]);
             case FRA -> flag.setImage(flags[3]);
-            case CAL -> flag.setImage(flags[4]);
+            case JAP -> {flag.setImage(flags[4]); languageLabel.setFont(loadFont(Settings.FONT_SIZE));}
+            case CAL -> flag.setImage(flags[5]);
         }
         flagLabel.setIcon(flag);
     }

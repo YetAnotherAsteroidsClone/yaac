@@ -52,4 +52,9 @@ public class ResolutionSelector extends JPanel {
     public JComboBox<String> getComboBox() {
         return resolution;
     }
+
+    public void reloadFont() {
+        resolutionText.setFont(loadFont(Settings.FONT_SIZE));
+        resolution.setFont(loadFont(Settings.FONT_SIZE));
+    }
 }

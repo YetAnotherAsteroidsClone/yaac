@@ -113,8 +113,11 @@ public class GameSettings extends JPanel {
 
     public void updateStrings(){
         musicSlider.setLabelText(Language.allStrings.get(14));
+        musicSlider.reloadFont();
         soundSlider.setLabelText(Language.allStrings.get(15));
+        soundSlider.reloadFont();
         resolutionSelector.setResolutionText(Language.allStrings.get(31));
+        resolutionSelector.reloadFont();
         languageSwitcher.updateFlag();
         languageSwitcher.updateLanguageLabel();
     }

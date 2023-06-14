@@ -3,6 +3,7 @@ package com.yaac.view;
 import javax.swing.*;
 import java.awt.*;
 
+import com.yaac.Settings;
 import com.yaac.model.Game;
 import com.yaac.model.Language;
 
@@ -22,8 +23,13 @@ public class GameOver extends JPanel {
         // [0] restartButton, [1] menuButton, [2] shopButton, [3] exitButton;
         JButton[] buttons = new JButton[4];
 
+        Font mainMenuFont = font.deriveFont(25f);
+        if(language == Language.languageList.JAP) {
+            mainMenuFont = font.deriveFont(20f);
+        }
+
         buttons[0] = createButton(Language.allStrings.get(29), widthCenter - 100, heightCenter - 80, 200, 50, font);
-        buttons[1] = createButton(Language.allStrings.get(30), widthCenter - 100, heightCenter, 200, 50, font.deriveFont(25f));
+        buttons[1] = createButton(Language.allStrings.get(30), widthCenter - 100, heightCenter, 200, 50, mainMenuFont);
         buttons[2] = createButton(Language.allStrings.get(1), widthCenter - 100, heightCenter + 80, 200, 50, font);
         buttons[3] = createButton(Language.allStrings.get(4), widthCenter - 100, heightCenter + 160, 200, 50, font);
 
@@ -41,7 +47,7 @@ public class GameOver extends JPanel {
 
         gameOverLabel = new JLabel(Language.allStrings.get(28) + "!", SwingConstants.CENTER);
         gameOverLabel.setFont(font.deriveFont(100f));
-        gameOverLabel.setBounds(widthCenter - 300, heightCenter - 300, 600, 200);
+        gameOverLabel.setBounds(0, heightCenter - 300, width, 200);
         gameOverLabel.setForeground(Color.RED);
         this.add(gameOverLabel);
 

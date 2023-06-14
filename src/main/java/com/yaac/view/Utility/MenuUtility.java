@@ -286,6 +286,8 @@ public class MenuUtility {
      * @return il font di gioco con dimensione size
      **/
     public static Font loadFont(float size) {
+        if(Settings.language == Language.languageList.JAP)
+            return new Font(Font.SANS_SERIF, Font.PLAIN, 20);
         try {
             return Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream(Settings.FONT))).deriveFont(size);
         } catch (IOException | FontFormatException ex) {

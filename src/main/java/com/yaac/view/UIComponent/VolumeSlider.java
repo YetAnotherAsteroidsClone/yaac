@@ -57,4 +57,9 @@ public class VolumeSlider extends JPanel{
     public void setLabelText(String text) {
         this.volumeText.setText(text);
     }
+
+    public void reloadFont() {
+        volumeText.setFont(loadFont(Settings.FONT_SIZE));
+        volumeLabel.setFont(loadFont(Settings.FONT_SIZE));
+    }
 }
