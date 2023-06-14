@@ -3,135 +3,99 @@ package com.yaac.view;
 import com.yaac.Settings;
 import com.yaac.model.Language;
 import com.yaac.model.SaveFileManager;
+import com.yaac.view.UIComponent.LanguageSwitcher;
+import com.yaac.view.UIComponent.ResolutionSelector;
+import com.yaac.view.UIComponent.VolumeSlider;
 import com.yaac.view.Utility.MenuUtility;
 import com.yaac.view.Utility.ObjectAnimation;
 import com.yaac.view.Utility.Sound;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Objects;
 
 import static com.yaac.view.Utility.MenuUtility.*;
 import static com.yaac.view.Utility.ImageUtility.*;
 import static com.yaac.Settings.*;
 
 public class GameSettings extends JPanel {
-    Font font;
-    JLabel language, sound, music;
-
-    // [0] backIcon [1] leftArrowIcon [2] rightArrowIcon
-    // [3] leftArrowIconClicked [4] rightArrowIconClicked, [5] backIconClicked
     ImageIcon[] settingsIcons = new ImageIcon[6];
-    BufferedImage[] flags = new BufferedImage[Language.languageList.values().length]; // immagini delle bandiere
     ObjectAnimation[] bg =  new ObjectAnimation[3];
-
-    // 0 = leftLang, 1 = leftSound, 2 = leftMusic
-    JButton[] leftButtons = new JButton[3];
-
-    // 0 = rightLang, 1 = rightSound, 2 = rightMusic
-    JButton[] rightButtons = new JButton[3];
     private boolean layered = false;
-    private final JLabel musicVolume;
-    private final JLabel soundVolume;
+    private final VolumeSlider musicSlider, soundSlider;
+    private final ResolutionSelector resolutionSelector;
+    private final LanguageSwitcher languageSwitcher;
+    private final int componentsX = 192;
     public GameSettings() {
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(null);
-        if (!layered)
-            createBG(bg, width, height);
+        createBG(bg, width, height);
 
-        int textX = 192;
-        font = loadFont(35f);
-        // creazione delle label
-        language = createLabel(Language.allStrings.get(13), textX, 535, 350, 16, font, Color.WHITE);
-        music = createLabel(Language.allStrings.get(14), textX, 355, 350, 16, font, Color.WHITE);
-        sound = createLabel(Language.allStrings.get(15), textX, 175, 350, 16, font, Color.WHITE);
-        musicVolume = createLabel(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())), width/2+160, 355, 350, 16, font, Color.WHITE);
-        soundVolume = createLabel(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())), width/2+160, 175, 350, 16, font, Color.WHITE);
+        UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new Color(0,0,0,0)));
+        UIManager.put("ComboBox.selectionForeground", new ColorUIResource(Color.WHITE));
 
-        // creazione delle icone del menu delle impostazioni
+        // creazione del tasto indietro
         int buttonsSize = 30;
-        settingsIcons[0] = getImageIcon("/MenuSprite/BackButton0.png", buttonsSize +10, buttonsSize +10);
-        settingsIcons[1] = getImageIcon("/MenuSprite/leftArrow0.png", buttonsSize, buttonsSize);
-        settingsIcons[2] = getImageIcon("/MenuSprite/rightArrow0.png", buttonsSize, buttonsSize);
-        settingsIcons[3] = getImageIcon("/MenuSprite/leftArrow1.png", buttonsSize, buttonsSize);
-        settingsIcons[4] = getImageIcon("/MenuSprite/rightArrow1.png", buttonsSize, buttonsSize);
-        settingsIcons[5] = getImageIcon("/MenuSprite/backButton1.png", buttonsSize +10, buttonsSize +10);
-
         JButton backButton = new JButton();
         backButton.setRolloverIcon(settingsIcons[5]);
-        drawJButton(backButton, settingsIcons[0], width-1216, height-684, buttonsSize, buttonsSize, settingsIcons[5]);
+        drawJButton(backButton, getImageIcon("/MenuSprite/BackButton0.png", buttonsSize +10, buttonsSize +10), 0, 0, buttonsSize, buttonsSize, getImageIcon("/MenuSprite/backButton1.png", buttonsSize +10, buttonsSize +10));
 
-        for (int i = 0; i < leftButtons.length; i++) {
-            leftButtons[i] = new JButton();
-            rightButtons[i] = new JButton();
-        }
-
-        // creazione dei bottoni per le impostazioni
-        int leftButtonX = width / 2;
-        int rightButtonX = width - 300;
-        drawJButton(leftButtons[0], settingsIcons[1], leftButtonX, language.getY()-5, buttonsSize, buttonsSize, settingsIcons[3]);
-        drawJButton(rightButtons[0], settingsIcons[2], rightButtonX, language.getY()-5, buttonsSize, buttonsSize, settingsIcons[4]);
-        drawJButton(leftButtons[1], settingsIcons[1], leftButtonX, music.getY()-5, buttonsSize, buttonsSize, settingsIcons[3]);
-        drawJButton(rightButtons[1], settingsIcons[2], rightButtonX, music.getY()-5, buttonsSize, buttonsSize, settingsIcons[4]);
-        drawJButton(leftButtons[2], settingsIcons[1], leftButtonX, sound.getY()-5, buttonsSize, buttonsSize, settingsIcons[3]);
-        drawJButton(rightButtons[2], settingsIcons[2], rightButtonX, sound.getY()-5, buttonsSize, buttonsSize, settingsIcons[4]);
-
-        // aggiunta dei bottoni al pannello
-        for (int i = 0; i < leftButtons.length; i++) {
-            this.add(leftButtons[i]);
-            this.add(rightButtons[i]);
-        }
-
-        // Se le impostazioni si trovano in un layer allora siamo certi che sono state caricate dal menu di pausa
         backButton.addActionListener(e -> {
-            if (layered)
-                SceneManager.getInstance().unloadSettings();
-            else SceneManager.getInstance().loadMainMenu();
+            checkLoading();
         });
 
-        // creazione delle bandiere e dei bottoni per la lingua
-        flags[0] = loadImage("/Languages/ita.png");
-        flags[0] = scaleImage(flags[0],60,40);
-        flags[1] = loadImage("/Languages/eng.png");
-        flags[1] = scaleImage(flags[1],60,40);
-        flags[2] = loadImage("/Languages/spa.png");
-        flags[2] = scaleImage(flags[2],60,40);
-        flags[3] = loadImage("/Languages/fra.png");
-        flags[3] = scaleImage(flags[3],60,40);
-        flags[4] = loadImage("/Languages/cal.png");
-        flags[4] = scaleImage(flags[4],60,40);
-        leftButtons[0].addActionListener(e -> MenuUtility.setPreviousLanguage(this));
-        rightButtons[0].addActionListener(e -> MenuUtility.setNextLanguage(this));
-
-        
-        // cambio del volume della musica
-        rightButtons[1].addActionListener(e -> {
-            SoundEngine.getInstance().increaseMusicVolume();
-            musicVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())));
+        // Esc per tornare indietro
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                checkLoading();
+            }
         });
 
-        leftButtons[1].addActionListener(e -> {
-            SoundEngine.getInstance().decreaseMusicVolume();
-            musicVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())));
+        // Cambio del volume della musica
+        musicSlider = new VolumeSlider(Language.allStrings.get(14),(Sound.decibelPercentage(SaveFileManager.getInstance().getMusicVolume())));
+        musicSlider.setBounds(componentsX, 100, width, 50);
+        musicSlider.addSliderChangeListener(e -> {
+            SoundEngine.getInstance().setMusicVolume((float) (20*Math.log10((double) musicSlider.getSlider().getValue() /100)));
+            musicSlider.setVolumeValue(musicSlider.getSlider().getValue());
         });
 
-        // cambio del volume degli effetti sonori
-        rightButtons[2].addActionListener(e -> {
-            SoundEngine.getInstance().increaseVolume();
-            soundVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())));
+
+        // Cambio del volume degli effetti sonori
+        soundSlider = new VolumeSlider(Language.allStrings.get(15),(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())));
+        soundSlider.setBounds(componentsX, 250, width, 50);
+        soundSlider.addSliderChangeListener(e -> {
+            SoundEngine.getInstance().setVolume((float) (20*Math.log10((double) soundSlider.getSlider().getValue() /100)));
+            soundSlider.setVolumeValue(soundSlider.getSlider().getValue());
         });
 
-        leftButtons[2].addActionListener(e -> {
-            SoundEngine.getInstance().decreaseVolume();
-            soundVolume.setText(String.valueOf(Sound.decibelPercentage(SaveFileManager.getInstance().getVolume())));
+        // JComboBox per selezionare la risoluzione
+        resolutionSelector = new ResolutionSelector();
+        resolutionSelector.setBounds(componentsX, 400, 900, 50);
+        resolutionSelector.addComboBoxActionListener(e -> {
+            String[] res = ((String) Objects.requireNonNull(resolutionSelector.getComboBox().getSelectedItem())).split("x");
+            Settings.width = Integer.parseInt(res[0]);
+            Settings.height = Integer.parseInt(res[1]);
+            SaveFileManager.getInstance().setResolution(Settings.width+"x"+Settings.height);
+            SceneManager.getInstance().changeResolution(Settings.width, Settings.height);
+            updateResolution();
         });
+        this.add(resolutionSelector);
 
-        this.add(language);
-        this.add(music);
-        this.add(sound);
+        // Cambio della lingua
+        languageSwitcher = new LanguageSwitcher();
+        languageSwitcher.setBounds(componentsX, 550, width, 50);
+        languageSwitcher.addLeftButtonActionListener(e -> MenuUtility.setPreviousLanguage(this));
+        languageSwitcher.addRightButtonActionListener(e -> MenuUtility.setNextLanguage(this));
+        this.add(languageSwitcher);
+
         this.add(backButton);
-        this.add(musicVolume);
-        this.add(soundVolume);
+        this.add(musicSlider);
+        this.add(soundSlider);
 
         setBackground(new Color(0,0,0,0));
     }
@@ -140,20 +104,19 @@ public class GameSettings extends JPanel {
         super.paintComponent(g);
         drawAndUpdateBG(g, bg);
         drawBox(g);
-        switch (Settings.language){
-            case ITA -> g.drawImage(flags[0], width/2+160,language.getY()-10,null );
-            case ENG -> g.drawImage(flags[1],width/2+160,language.getY()-10,null);
-            case SPA -> g.drawImage(flags[2],width/2+160,language.getY()-10,null);
-            case FRA -> g.drawImage(flags[3],width/2+160,language.getY()-10,null);
-            case CAL -> g.drawImage(flags[4],width/2+160,language.getY()-10,null);
-        }
-
     }
 
     public void updateStrings(){
-        language.setText(Language.allStrings.get(13));
-        music.setText(Language.allStrings.get(14));
-        sound.setText(Language.allStrings.get(15));
+        musicSlider.setLabelText(Language.allStrings.get(14));
+        soundSlider.setLabelText(Language.allStrings.get(15));
+        languageSwitcher.updateFlag();
+        languageSwitcher.updateLanguageLabel();
+    }
+
+    public void updateResolution(){
+        createBG(bg, width, height);
+        musicSlider.setBounds(componentsX, 100, width, 50);
+        soundSlider.setBounds(componentsX, 250, width, 50);
     }
     public void update(){
         this.repaint();
@@ -161,5 +124,12 @@ public class GameSettings extends JPanel {
 
     public void setLayered(boolean layered) {
         this.layered = layered;
+    }
+
+    private void checkLoading(){
+        // Se le impostazioni si trovano in un layer allora siamo certi che sono state caricate dal menu di pausa
+        if (layered)
+            SceneManager.getInstance().unloadSettings();
+        else SceneManager.getInstance().loadMainMenu();
     }
 }
